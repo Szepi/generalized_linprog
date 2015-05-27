@@ -1,0 +1,172 @@
+\usepackage{etex}
+\usepackage{times}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage{paralist}
+\usepackage{latexsym}
+\usepackage{url}
+\usepackage[all]{xy}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{comment}
+\usepackage{enumitem}
+\usepackage{xcolor}
+%\usepackage[colorlinks=true,linkcolor=blue,citecolor=purple]{hyperref}
+%\usepackage{hyperref}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{pifont}
+%\usepackage{natbib}
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+%\usepackage{pseudocode}
+%\usepackage{algpseudocode}
+\usepackage{savesym}
+\savesymbol{AND}
+\usepackage{xspace}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{pgf}
+\usepackage{natbib}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{xspace}
+\usepackage{comment}
+\usepackage{placeins}
+
+%\usepackage{style/ssltr}
+%\usepackage{style/macros}
+\usetikzlibrary{intersections}
+\usetikzlibrary{arrows,calc,fit,patterns,plotmarks,shapes.geometric,shapes.misc,shapes.symbols,   shapes.arrows,   shapes.callouts,   shapes.multipart,   shapes.gates.logic.US,   shapes.gates.logic.IEC,   er,   automata,   backgrounds,   chains,   topaths,   trees,   petri,   mindmap,   matrix,   calendar,   folding, fadings,   through,   positioning,   scopes,   decorations.fractals,   decorations.shapes,   decorations.text,   decorations.pathmorphing,   decorations.pathreplacing,   decorations.footprints,   decorations.markings, shadows,circuits}
+\tikzstyle{decision}=[diamond,draw]
+\tikzstyle{line}=[draw]
+\tikzstyle{elli}=[draw,ellipse]
+\tikzstyle{arrow} = [thick]
+%\usepackage{subfig}
+\newcommand{\mb}{\mbox{ }}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\nn}{\nonumber}
+\newcommand{\minp}{(\min,+)}
+\newcommand{\R}{\mathbf{R}}
+\newcommand{\Rm}{\mathbf{R}_{\min}}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\om}{\otimes}
+\newcommand{\op}{\oplus}
+\newcommand{\RA}{\Rightarrow}
+\newcommand{\LA}{\Leftarrow}
+\newcommand{\E}{\mathbf{E}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\et}{||\Gamma J^*-\hg J^*||_\infty}
+\newcommand{\etmn}{||\Gamma J^*-\hg J^*||_{\mn}}
+\newcommand{\ini}{\lceil \frac{n}{k}\rceil}
+\newcommand{\I}{\mathcal{I}}
+\newcommand{\mut}{\tilde{\mu}}
+\newcommand{\mn}{\infty,1/\psi}
+\newcommand{\tj}{\tilde{J}_c}
+\newcommand{\hj}{\hat{J}_c}
+\newcommand{\jd}{J'_c}
+\newcommand{\bj}{\bar{J}}
+\newcommand{\tv}{\tilde{V}}
+\newcommand{\hv}{\hat{V}}
+
+\newcommand{\tu}{\tilde{u}}
+\newcommand{\hu}{\hat{u}}
+
+\newcommand{\muh}{\hat{\mu}}
+\newcommand{\mui}{{\mu}^i}
+
+\newcommand{\br}{\bar{r}}
+\newcommand{\hr}{\hat{r}_c}
+\newcommand{\tr}{\tilde{r}_c}
+
+
+
+
+
+
+
+
+
+\newcommand{\tg}{\tilde{\Gamma}}
+
+
+
+\newcommand{\conf}{\sqrt{\frac{2\ln t}{t_i}}}
+%\newcommand{\tg}{\tilde{\Gamma}}
+\newcommand{\hg}{\hat{\Gamma}}
+\newcommand{\gd}{\Gamma'}
+\newcommand{\vd}{V'}
+%\newcommand{\qed}{\blacksquare}
+
+\newcommand{\keywords}[1]{{\bf Keywords: } #1\par}
+\newenvironment{proof}{{\bf Proof:} }{}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{assumption}{Assumption}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem{note}{Note}
+\newcommand{\alert}[1]{\textcolor{red}{#1}} 
+
+
+
+\def\v{\mathbf{v}}
+\def\r{\mathbf{r}}
+\def\p{\mathbf{p}}
+\def\q{\mathbf{q}}
+\def\R{\mathrm{R}}
+\def\Re{\mathbb{R}}
+\def\Z{\mathbb{Z}}
+\def\P{\mathrm{P}}
+\def\S{\mathcal{S}}
+\def\A{\mathcal{A}}
+
+\newcommand{\ith}[2][th]{$#2^{\text{#1}}$}
+
+\newcounter{subequation}[equation]
+\newcommand{\thesubequationonly}{\alph{subequation}}
+\renewcommand{\thesubequation}{\text{\theequation(\thesubequationonly)}}
+\newcommand{\subequationitem}{\refstepcounter{subequation}(\thesubequationonly)\thinspace}
+
+\def\mathdisplay#1{%
+  \ifmmode \@badmath
+  \else
+    $$\def\@currenvir{#1}%
+    \let\dspbrk@context\z@
+    \let\tag\tag@in@display \SK@equationtrue %\let\label\label@in@display
+    \global\let\df@label\@empty \global\let\df@tag\@empty
+    \global\tag@false
+    \let\mathdisplay@push\mathdisplay@@push
+    \let\mathdisplay@pop\mathdisplay@@pop
+    \if@fleqn
+      \edef\restore@hfuzz{\hfuzz\the\hfuzz\relax}%
+      \hfuzz\maxdimen
+      \setbox\z@\hbox to\displaywidth\bgroup
+        \let\split@warning\relax \restore@hfuzz
+        \everymath\@emptytoks \m@th $\displaystyle
+    \fi
+%   \fi
+}
+
+\newcommand{\algorithmicinput}{\textbf{Input:} }
+\newcommand{\INPUT}{\item[\algorithmicinput]}
+\newcommand{\algorithmicoutput}{\textbf{Output:} }
+\newcommand{\OUTPUT}{\item[\algorithmicoutput]}
+\newcounter{algostep}
+\newcommand{\Step}[1][\STATE]{#1\textbf{\refstepcounter{algostep}\thealgostep}. }
+
+\newenvironment{algoequation}{\refstepcounter{equation}$}{$\hfill (\theequation)}
+
+\newenvironment{nonfloatalgorithm}[1]{\vspace{1ex}\hrule\vspace{0.5ex} \refstepcounter{algorithm}\textbf{Algorithm \thealgorithm}\hspace{1em} #1 \vspace{0.5ex}\hrule}{\hrule\vspace{1.5ex}\setcounter{algostep}{0}}
+
+\newcounter{acalgorithm}
+
+\newenvironment{nonfloatactorcriticalgorithm}[1]{\vspace{1ex}\hrule\vspace{0.5ex} \textbf{Actor-Critic Algorithm \refstepcounter{acalgorithm}\theacalgorithm}\hspace{1em} #1 \vspace{0.5ex}\hrule\addcontentsline{loa}{algorithm}{\protect\numberline{\theacalgorithm}{\ignorespaces #1}}}{\hrule\vspace{1.5ex}\setcounter{algostep}{0}}

@@ -1,0 +1,41 @@
+\textbf{Main Result $2$: Control Error bound in modified $L_\infty$-norm}\\
+We now bound the performance of the greedy policy $\hu$.
+\begin{theorem}\label{polthe}
+Let $\hu$ be the greedy policy with respect to the solution $\hj$ of the GRLP and $J_{\hu}$ be its value function. Let $r^*$ be as in Theorem~\ref{mt2mn}, then
+\begin{align}\label{polthebnd}
+||J_{\hu}-\hj||_{1,c}&\leq 2\big(\frac{c^\top \psi}{1-\beta_{\psi}}\big)^2 \big(6 ||J^*-\Phi r^*||_{\mn}
+%\nn\\&
++2||\Gamma J^*-\hg J^*||_{\mn}\big).
+\end{align}
+\end{theorem}
+\begin{proof}
+\begin{align}\label{polderv}
+||J_{\hu}-\hj||_{1,c}&=||(I-\alpha P_{\hu})^{-1}(T\hj-\hj)||_{1,c}\nn\\
+&\leq c^\top(I-\alpha P_{\hu})^{-1}|T\hj-\hj|\nn\\
+&\leq c^\top (I-\alpha P_{\hu})^{-1} \psi ||T\hj-\hj||_{\mn}\nn\\
+&\leq \frac{c^\top \psi}{1-\beta_{\psi}}||T\hj-\hj||_{\mn}\nn\\
+&\leq \frac{c^\top \psi}{1-\beta_{\psi}}||T\hj-TJ^* +J^*- \hj||_{\mn}\nn\\
+&\leq \frac{c^\top \psi}{1-\beta_{\psi}}(||T\hj-TJ^*||_{\mn} +||J^*- \hj||_{\mn})\nn\\
+&\leq \frac{c^\top \psi}{1-\beta_{\psi}}(1+\beta_{\psi})||J^*- \hj||_{\mn},
+\end{align}
+where in the second inequality, for $x=(x_1,\ldots,x_n)^\top\in \R^n$, $|x|=(|x_1|,\ldots,|x_n|)^\top\in \R^n$. Now
+\begin{align}
+||J^*-J_{\hu}||_{1,c}&\leq ||J^*-\hj||_{1,c}+||J_{\hu}-\hj||_{1,c}\nn\\
+&\leq c^\top \psi ||J^*-\hj||_{\mn}+c^\top \psi\frac{1+\beta_\psi}{1-\beta_\psi}||J^*- \hj||_{\mn}\nn\\
+&=\frac{2c^\top \psi}{1-\beta_{\psi}}||J^*- \hj||_{\mn}.
+\end{align}
+The result now follows by substituting the value of $||J^*- \hj||_{\mn}$ from Corollary~\ref{cmt2mn}.
+\end{proof}
+\begin{note}
+By letting $\etmn=||\Gamma J^*-J^*+J^*-\hg J^*||_{\mn}\leq 2||J^*-\Phi r^*||_{\infty,1/\psi}+||J^*-\hg J^*||_{\mn}$ (inequality follows from Lemma~\ref{bestbndmn}), we can also modifiy the bounds in \eqref{finalbnd} and \eqref{polthe} as
+\begin{align}
+\label{loose1}||J^*-\hj||_{1,c}&\leq\frac{c^\top\psi}{1-\beta_\psi}(10 ||J^*-\Phi r^*||_{\mn}
+%\nn\\&
++2||J^*-\hg J^*||_{\mn}).\\
+\label{loose2}||J_{\hu}-\hj||_{1,c}&\leq 2\big(\frac{c^\top \psi}{1-\beta_{\psi}}\big)^2 \big(10 ||J^*-\Phi r^*||_{\mn}
+%\nn\\&
++2||J^*-\hg J^*||_{\mn}\big).
+\end{align}
+Here the term $||J^*-\hg J^*||$ in \eqref{loose1} and \eqref{loose2} captures the error due to the use of both $\Phi$ and $W$. Though, \eqref{loose1} and \eqref{loose2} might be loser bounds than \eqref{finalbndmn} and \eqref{polthebnd} respectively, the aim here is to capture the error due to function approximation as well as constraint reduction in a single term.
+\end{note}
+

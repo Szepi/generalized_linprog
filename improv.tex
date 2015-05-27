@@ -1,0 +1,100 @@
+\section{Improved Bounds}\label{sec:improv}
+In this section, we present improved error bounds by making use of Lyapunov functions. 
+\begin{lemma}\label{bestbndmn}
+Let $r^*\in \R^k$ be defined as $r^*\stackrel{\Delta}{=}\arg\min_{r\in R^k}||J^*-\Phi r||_{\infty,1/\psi}$, then 
+\begin{align}
+||J^*-\bj||_{\infty,1/\psi}\leq 2||J^*-\Phi r^*||_{\infty,1/\psi}.
+\end{align}
+\end{lemma}
+\begin{proof}
+The result follows from the definition of $\Gamma$ in \eqref{gamdef}, Assumption~\ref{lyap} and the fact that $\Phi r^*+||J^*-\Phi r^*||_{\infty,1/\psi} \psi\geq TJ^*$.
+\end{proof}
+
+Since most of our analysis in sections~\ref{sec:lubp} and ~\ref{sec:alubp} depended on showing that $\Gamma$ is a contraction map in the $L_\infty$ norm we first show that $\Gamma$ is also a contraction map in the modified $L_\infty$ norm.
+\begin{lemma}\label{gshiftmn}
+Let $J_1\in \R^n$ and $k\in \R$ be a constant. If $J_2=J_1+k\psi$, then $\Gamma J_2\leq \Gamma J_1+\beta_{\psi} k\psi$.
+\end{lemma}
+\begin{proof}
+The result follows in a similar manner as the proofs for Lemmas~\ref{gshift} and ~\ref{tgshift} by using the result in Lemma~\ref{lpsol}.
+\end{proof}
+\begin{theorem}\label{gmaxcontramn}
+The operator $\Gamma  \colon \R^n\ra \R^n$ is a contraction operator in modified $L_\infty$ with factor $\beta_{\psi}$.
+\end{theorem}
+\begin{proof}
+Given $J_1,J_2\in \R^n$ let $\epsilon=||J_1-J_2||_{\infty,1/\psi}$. Thus
+\begin{align}\label{ineq}
+J_2-\epsilon\psi\leq J_1\leq J_2+\epsilon \psi.
+\end{align}
+From Lemmas~\ref{gmonotone} and ~\ref{gshiftmn}, we can write
+\begin{align}\label{ineq}
+\Gamma J_2-\beta_{\psi} \epsilon\psi\leq \Gamma J_1\leq \Gamma J_2+\beta_{\psi} \epsilon\psi.
+\end{align}
+Thus
+\begin{align}
+||\Gamma J_1-\Gamma J_2||_{\infty,1/\psi}\leq \beta_{\psi} ||J_1-J_2||_{\infty,1/\psi}.
+\end{align}
+\end{proof}
+\begin{corollary}\label{hgmaxcontramn}
+$\hg$ is also a contraction map in the modified $L_\infty$ norm.
+\end{corollary}
+\begin{proof}
+Follows from arguments similar to Theorem~\ref{gmaxcontramn}.
+\end{proof}
+\begin{lemma}\label{cmt1mn}
+Let $\hv$, $\bj$ be as in Theorem~\ref{mt1} and let $r^*\stackrel{\Delta}{=}\arg\min_{r\in \R^k}||J^*-\Phi r||_{\infty,1/\psi}$ then
+\begin{align}
+||J^*-\hv||_{\infty,1/\psi}\leq \frac{2||J^*-\Phi r^*||_{\infty,1/\psi}+||\Gamma J^*-\hg J^*||_{\infty,1/\psi}}{1-\beta_{\psi}}.
+\end{align}
+\end{lemma}
+\begin{proof}
+The proof follows from Lemma~\ref{gmaxcontramn}, Corollary~\ref{hgmaxcontramn} and by replacing the $||\cdot||_\infty$ norm by $||\cdot||_{\infty,1/\psi}$ in the arguments presented in sections~\ref{sec:lubp} and ~\ref{sec:alubp} leading to Corollary~\ref{cmt1}.
+\end{proof}\\
+We now recall Lemma~$4.3$ of \cite{ALP}.
+\begin{lemma}\label{restate}
+Let $\psi$ be a Lyapunov function that belongs to the column span of $\Phi$ , $r \in \R^k$ be an arbitrary vector and let $r'$ be such that
+\begin{align}
+\Phi r'=\Phi r+||J^*-\Phi r||_{\mn}(\frac{1+\beta_{\psi}}{1-\beta_{\psi}})\psi.
+\end{align}
+Then $r'$ is feasible for the ALP in \eqref{alp}.
+\end{lemma}
+\begin{theorem}\label{mt2mn}
+Let $\hv$ be the solution to the iterative scheme in \eqref{apvi} and let $\hj=\Phi \hr$ be the solution to the GRLP. Let $\bj$ be the best possible approximation to $J^*$ as in Definition~\ref{bestproj}, and $||\Gamma J^* -\hg J^*||_{\infty,1/\psi}$ be the error due to ALUB projection and let $r^*\stackrel{\Delta}{=}\underset{r\in \R^k}{\arg\min}||J^*-\Phi r||_{\infty,1/\psi}$, then
+\begin{align}
+||\hj-\hv||_{1,c}&\leq \frac{c^\top \psi}{1-\beta_\psi}(4||J^*-\Phi r^*||_{\mn}
+%\nn\\&
++||\Gamma J^*-\hg J^*||_{\mn}).
+\end{align}
+\end{theorem}
+\begin{proof}
+Let $\gamma=||J^*-\Phi r^*||_{\infty,1/\psi}$, then by choosing $r'$ as in Lemma~\ref{restate} we have
+\begin{align}
+||\Phi r'-J^*||_{\mn}&\leq ||\Phi r^*-J^*||_{\mn}+||\Phi r'-\Phi r^*||_{\mn}\nn\\
+&=\gamma+\frac{1+\beta_\psi}{1-\beta_\psi}\gamma\nn\\
+&=\frac{2}{1-\beta_\psi}\gamma.\nn
+\end{align}
+Since $r'$ is also feasible for the GRLP in \eqref{grlp} we have
+\begin{align}
+||\hj-\hv||_{1,c}&\leq||\Phi r'-\hv||_{1,c}\nn\\
+&=\sum_{s\in S}c(s)\psi(s)\frac{|\Phi r'(s)-\hv(s)|}{\psi(s)}\nn\\
+&\leq c^\top \psi ||\Phi r'-\hv||_{\infty,1/\psi}\nn\\
+&\leq c^\top \psi (||\Phi r'-J^*||_{\infty,1/\psi}+||J^*-\hv||_{\infty,1/\psi}).
+\end{align}
+The result follows from Corollary~\ref{cmt1}.\\
+\textbf{Main Result~$1$: Prediction Error bound in modified $L_\infty$-norm}
+\end{proof}
+\begin{theorem}\label{cmt2mn}
+Let $\hj$, $\hv$, $r^*$ and $J^*$ be as in Theorem~\ref{mt2mn}, then
+\begin{align}\label{finalbndmn}
+||J^*-\hj||_{1,c}&\leq\frac{c^\top\psi}{1-\beta_\psi}(6 ||J^*-\Phi r^*||_{\mn}
+%\nn\\&
++2||\Gamma J^*-\hg J^*||_{\mn}).
+\end{align}
+\end{theorem}
+\begin{proof}
+\begin{align}
+||J^*-\hj||_{1,c}&\leq||J^*-\hv||_{1,c}+||\hv-\hj||_{1,c}\nn\\
+&\leq c^\top \psi ||J^*-\hv||_{\mn}+||\hv-\hj||_{1,c}.\nn
+\end{align}
+The result now follows from Lemma~\ref{cmt1mn} and Theorem~\ref{mt2mn}.
+\end{proof}\\
+

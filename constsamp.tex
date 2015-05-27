@@ -1,0 +1,49 @@
+\section{Constraint sampling}
+The most important work in the direction of constraint reduction is constraint sampling \cite{CS} wherein a reduced linear program (RLP) is solved instead of the ALP. While the objective function of the RLP is the same as that of the ALP, the RLP has only $m<<nd$ constraints sampled from the original ALP according to a given probability distribution. The reduced linear program is then given by
+\small
+\begin{align}\label{rlp}
+\min_{J\in \R^n} &c^\top J\nn\\
+\text{s.t}\mb &J(s)\geq g_a(s)+\alpha\sum_{s'}p_a(s,s')J(s'), \mb\forall (s,a) \in \I,
+\end{align}
+\normalsize
+where $\I$ is the index set containing the $m$ sampled state-action pairs. Using the index set $\I$ we define an $nd\times m$ matrix $\M$, called the constraint sampling matrix as below.
+\begin{definition}\label{csampmat}
+Let $\I=\{(s_1,a_1),\ldots,(s_m,a_m)\}$ be the sampled state-action pairs and let $q_i\stackrel{\Delta}{=}s_i+(a_i-1)\times n,\forall i=1,\ldots,m$. Then the constraint sampling matrix associated with the index set $\I$ is given by
+\begin{align}
+\M(i,j)&=1, \mb\text{if}\mb q_i=j\nn\\
+&=0, \mb\text{otherwise}.
+\end{align}
+\end{definition}
+The RLP can then be represented in short as
+\begin{align}\label{rlpshort}
+\min_{r\in \N} &c^\top \Phi r\nn\\
+\text{s.t}\mb & \M^\top E \Phi r \geq \M^\top H \Phi r,
+\end{align}
+where $\M$ is a constraint sampling matrix as in Definition~\ref{csampmat} and $\N\subset \R^k$ is a bounded set such that $\tr \in \N$. Note that the feasible set of the RLP is a superset of the feasible set of the ALP.\\
+The RLP based on constraint sampling has been found to perform well empirically in application domains ranging from controlled queuing networks (see section $6.2$ of \cite{ALP} and section $7$ of \cite{SALP}) to Tetris (see \cite{CST} and section $6$ of \cite{SALP}). However, the theoretical guarantees for the RLP are available only under a restricted setting \cite{CS}. We present the main result of \cite{CS} on constraint sampling, and to that end define the following:
+\begin{definition}\label{sampdist}
+Given a policy $u$ and Lyapunov function $\psi$ in the column span of $\Phi$, we define probability distributions $\mu_u$, $\mu_{u,\psi}$ and constant $\theta$ as 
+\begin{align}
+\mu^\top&\stackrel{\Delta}{=}(1-\alpha)c^\top (I-\alpha P_u)^{-1},\nn\\
+\mu_{u,\psi}(s,a)&\stackrel{\Delta}{=}\frac{\mu_{u}(s) \psi(s)}{\mu_u^\top \psi d},\nn\\
+\theta&\stackrel{\Delta}{=}\frac{(1+\beta_{\psi})}{2}\frac{\mu_{u^*}^\top \psi}{c^\top J^*}\sup_{r\in \N}||J^*-\Phi r||_{\mn}.
+\end{align}
+\end{definition}
+We now recall Theorem~$3.1$ of \cite{CS} below.
+\begin{theorem}\label{csresult}
+Let $\epsilon$ and $\delta$ be scalars in $(0,1)$. Let $u^*$ be the optimal policy and $\I$ an index set containing the $m$ state-action pairs sampled independently according to the distribution $\psi_{u^*,\psi}$, for some Lyapunov function $\psi$, where
+\begin{align}
+m\geq \frac{16d\theta}{(1-\alpha)\epsilon}\big(k\ln\frac{48d\theta}{(1-\alpha)\epsilon}+\ln\frac{2}{\delta}\big).
+\end{align}
+Let $\tilde{r}$ be an optimal	solution of the ALP and let $\hat{r}$ be the solution of the corresponding RLP, then with probability at least $1-\delta$, we have
+\begin{align}
+||J^*-\Phi \hat{r}||_{1,c}\leq ||J^*-\Phi \tilde{r}||_{1,c}+\epsilon||J^*||_{1,c}.
+\end{align}
+\end{theorem}
+\textbf{Motivation for our work:}\\
+The result in Theorem~\ref{csresult} has a significant limitation in that the sampling distribution $\mu_{u^*,\psi}$ requires the knowledge of $u^*$. The optimal policy $u^*$ might not be available in practice and hence it would not be possible to even formulate the specific RLP for which the bound in Theorem~\ref{csresult} applies. However, as mentioned before, the RLP has performed reasonably well even when the sampling distribution is not $\mu_{u^*,\psi}$. Thus there is a gap between the theoretical understanding of the RLP and its practical efficacy which merits our attention. The gap also indicates that the RLP might be a special case of a generalized constraint reduction scheme with provable performance guarantees. Understanding such a generalized method would result in an ALP based ADP techinque that would have theoretical performance guarantees while being practically useful. In particular, we wish to answer the following open questions.
+\begin{itemize}
+\item  As a natural generalization of the RLP, what happens if we define a generalized reduced linear program (GRLP) whose constraints are positive linear combinations of the original constraints of the ALP?
+\item Unlike \cite{CS} which provides error bounds for a specific RLP formulated using an idealized sampling distribution, is it possible to provide error bounds for any GRLP (and hence any RLP)?
+\end{itemize}
+In this paper, we address both of the questions above.

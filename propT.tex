@@ -1,0 +1,21 @@
+\subsection{Properties of $T$}
+\begin{lemma}\label{maxnorm}
+$T$ is a $\max$-norm contraction operator, i.e., given $J_1, J_2 \in \mathbf{R}^n$,
+\begin{align}
+||TJ_1-TJ_2||_\infty\leq \alpha ||J_1-J_2||_\infty.
+\end{align}
+\end{lemma}
+\begin{corollary}\label{uniquesol}
+$J^*$ is a unique fixed point of $T$, i.e., $J^*=TJ^*$.
+\end{corollary}
+The Bellman operator $T$ exhibits two more important properties presented in the following lemmas (see \cite{BertB} for proofs):
+\begin{lemma}\label{monotone}
+$T$ is a monotone map, i.e., given $J_1,J_2 \in \R^n$ such that $J_2\geq J_1$, we have $T J_2\geq T J_1$. Further, if $J\in \R^n$ is such that $J\geq TJ$, it follows that $J\geq J^*$.
+\end{lemma}
+\begin{lemma}\label{shift}
+Given $J\in \R^n$, $t \in \R$ and $\mathbf{1} \in \R^n$, a vector with all entries $1$, we have
+\begin{align}
+T(J+t\mathbf{1})=TJ+\alpha t\mathbf{1}.
+\end{align}
+\end{lemma}
+Note that Lemmas~\ref{maxnorm}-\ref{shift} also hold for the $Q$-Bellman operator $H$.
