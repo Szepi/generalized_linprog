@@ -55,19 +55,18 @@ Let $\hv$ be the fixed point of the iterative scheme in \eqref{apvi} and let $\b
 \begin{proof}
 Let $\epsilon=||J^*-\bj||_\infty$, and $\{V_n\},n\geq 0$ be the iterates of the scheme in \eqref{apvi} with $V_0=\hg J^*$, then
 \begin{align}
-||J^*-\hg J^*||_\infty&\leq||J^*-\Gamma J^*||_\infty+||\Gamma J^*-\hg J^*||_\infty\nn\\\vspace{10pt}
+||J^*-\hg J^*||_\infty&\leq||J^*-\Gamma J^*||_\infty+||\Gamma J^*-\hg J^*||_\infty\nn\\
 &= \epsilon+\beta,
 \end{align}
 where $\beta=||\Gamma J^*-\hg J^*||_\infty$. Now
 \begin{align}
 ||J^*-\hv||_\infty&\leq ||J^*-V_0+V_0-V_1+V_1\ldots-\hv||_\infty\nn\\
 &\leq ||J^*-V_0||_\infty+||V_0-V_1||_\infty+||V_1-V_2||_\infty+\ldots\nn\\
-&=||J^*-V_0||_\infty+||\hg J^*-\hg V_0||_\infty+\ldots\nn\\\vspace{10pt}
+&=||J^*-V_0||_\infty+||\hg J^*-\hg V_0||_\infty+\ldots\nn\\
 &\leq (\epsilon+\beta)+\alpha(\epsilon+\beta)+\ldots\nn\\
 &=\frac{\epsilon+\beta}{1-\alpha}.
 \end{align}
 \end{proof}
-
 \begin{corollary}\label{cmt1}
 Let $\hv$, $\bj$ be as in Theorem~\ref{mt1} and let $r^*\stackrel{\Delta}{=}\arg\min_{r\in \R^k}||J^*-\Phi r||_\infty$, then
 \begin{align}
