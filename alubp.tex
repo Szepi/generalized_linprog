@@ -8,7 +8,7 @@ Given $J\in \R^n$, its approximate least upper bound (ALUB) projection is denote
 \end{align}
 where $r_{e_j}$ is a solution to the linear program in \eqref{alubplp} for $c=e_j$, and $e_j$ is the same as in Definition~\ref{lubpop}.
 \begin{align}\label{alubplp}
-r_c\stackrel{\Delta}{=}\min_{r\in \chi} &c^\top \Phi r,\nn\\
+r_c\stackrel{\Delta}{=}\argmin_{r\in \chi} &c^\top \Phi r,\nn\\
 \text{s.t}\mb &W^\top E \Phi r\geq W^\top HJ, W \in \R^{nd\times m}_+ .
 \end{align}
 \end{definition}
