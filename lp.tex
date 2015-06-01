@@ -1,3 +1,4 @@
+%!TEX root =  autocontgrlp.tex
 \section{Approximate Linear Programming}
 The LP formulation in \eqref{mdplp} can be represented in short as,
 \begin{align}\label{mdplpshort}
@@ -35,14 +36,14 @@ $\psi\colon S \ra \R^+$ is a Lyapunov function and is present in the column span
 \end{assumption}
 It is straightforward to check that the function $\one$ is a Lyapunov function and trivially is present in the column span of $\Phi$. 
 \begin{definition}\label{modlone}
-The modified $L_1$-norm is defined as
+The modified $L_1$-norm is defined as \todoc{modified $\Rightarrow$ weighted?}
 \begin{align}
 ||J||_{1,c}=\sum_{s \in S} c(s)|J(s)|,
 \end{align}
 where $c$ obeys Assumption~\ref{probdist}.
 \end{definition}
 \begin{definition}\label{modnorm}
-The modified $L_\infty$-norm is defined as follows:
+The modified $L_\infty$-norm is defined as follows:  \todoc{modified $\Rightarrow$ weighted? Also, the convention in math is to divide in the case of the $L_{\infty}$ norm. Not a high priority to change this, but maybe it would be good to do this in the longer term.}
 \begin{align}
 ||J||_{\infty,\rho}=\max_{s \in S} \rho(s) |J(s)|,
 \end{align}

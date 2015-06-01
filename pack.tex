@@ -1,4 +1,14 @@
+%!TEX root =  autocontgrlp.tex
 \usepackage{etex}
+
+\setlength{\marginparwidth}{20mm}
+\usepackage[textsize=tiny]{todonotes}
+%\usepackage[disable]{todonotes}
+\newcommand{\todoc}[2][]{\todo[color=red!20!white,#1]{Cs: #2}}
+\newcommand{\todoch}[2][]{\todo[color=blue!20!white,#1]{C: #2}}
+\newcommand{\todos}[2][]{\todo[inline,color=blue!20!white,#1]{S: #2}}
+
+
 \usepackage{times}
 \usepackage{helvet}
 \usepackage{courier}
@@ -83,8 +93,12 @@
 \newcommand{\br}{\bar{r}}
 \newcommand{\hr}{\hat{r}_c}
 \newcommand{\tr}{\tilde{r}_c}
-
-
+\DeclareMathOperator{\argmin}{argmin}
+\DeclareMathOperator{\argmax}{argmax}
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\inorm}[1]{\|#1\|_{\infty}}
+\newcommand{\snorm}[1]{\left\|#1\right\|}
+\newcommand{\sinorm}[1]{\left\|#1\right\|_{\infty}}
 
 
 
@@ -105,15 +119,15 @@
 
 \newcommand{\keywords}[1]{{\bf Keywords: } #1\par}
 \newenvironment{proof}{{\bf Proof:} }{}
-\newtheorem{theorem}{Theorem}
+\newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{assumption}{Assumption}
-\newtheorem{definition}[theorem]{Definition}
 \newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{corollary}{Corollary}
-\newtheorem{remark}{Remark}
-\newtheorem{example}{Example}
-\newtheorem{note}{Note}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{assumption}{Assumption}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{note}{Note}[section]
 \newcommand{\alert}[1]{\textcolor{red}{#1}} 
 
 
