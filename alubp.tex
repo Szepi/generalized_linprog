@@ -1,9 +1,10 @@
+%!TEX root =  autocontgrlp.tex
 \section{Approximate Least Upper Bound Projection}\label{sec:alubp}
 We define an approximate least upper bound (ALUB) projection operator which has a structure similar to the GRLP and is an approximation to the LUB operator.
 \begin{definition}\label{alubpop}
 Given $J\in \R^n$, its approximate least upper bound (ALUB) projection is denoted by $\hg J$ and is defined as 
 \begin{align}\label{tgamdef}
-(\hg J)(i)\stackrel{\Delta}{=}\underset{j=1,\ldots,k}{\min} (\Phi r_{e_j})(i), \mb \forall i=1,\ldots,n,
+(\hg J)(i)\stackrel{\Delta}{=}\underset{j=1,\ldots,k}{\min} (\Phi r_{e_j})(i), \mb i=1,\ldots,n,
 \end{align}
 where $r_{e_j}$ is a solution to the linear program in \eqref{alubplp} for $c=e_j$, and $e_j$ is the same as in Definition~\ref{lubpop}.
 \begin{align}\label{alubplp}
@@ -27,7 +28,7 @@ The proof follows from Assumption~\ref{wassump} and ~\ref{one}, as well as Lemma
 \begin{theorem}\label{tgmaxcontra}
 The operator $\hg \colon \R^n\ra \R^n$ obeys the $\max$-norm contraction property with factor $\alpha$ and the following iterative scheme based on the ALUB projection operator $\hg$, see \eqref{apvi}, converges to a unique fixed point $\hv$.
 \begin{align}\label{apvi}
-V_{n+1}&=\hg V_n,\mb\forall n\geq 0.
+V_{n+1}&=\hg V_n,\mb n\geq 0.
 \end{align}
 \end{theorem}
 \begin{proof}
@@ -37,23 +38,24 @@ Follows along similar lines as the proof of Theorem~\ref{gmaxcontra}.
 The unique fixed point $\hv$ of the iteration in \eqref{apvi} and the solution $\hj$ of the GRLP obey $\hj\geq\hv$.
 \end{lemma}
 \begin{proof}
-Follows in a similar manner as the proof of Lemma~\ref{relation1}. To elaborate, let $\Phi r_1, \Phi r_2,\ldots,\Phi r_n$ be solutions to the GRLP in \eqref{grlp} for $c=e_1, e_2,\ldots,e_n$ respectively. Now consider the iterative scheme in \eqref{apvi} with $V_0(i)=\underset{j=1,\ldots,n}{\min}(\Phi r_j)(i)$. It is clear from the definition of $V_0$ that $\hj(i)\geq\Phi r_i(i)\geq V_0(i), \mb \forall i=1,\ldots,n$. Also from the monotone property of $T$ we have 
+Follows in a similar manner as the proof of Lemma~\ref{relation1}. To elaborate, let $\Phi r_1, \Phi r_2,\ldots,\Phi r_n$ be solutions to the GRLP in \eqref{grlp} for $c=e_1, e_2,\ldots,e_n$ respectively. Now consider the iterative scheme in \eqref{apvi} with $V_0(i)=\underset{j=1,\ldots,n}{\min}(\Phi r_j)(i)$. It is clear from the definition of $V_0$ that $\hj(i)\geq\Phi r_i(i)\geq V_0(i)$, $i=1,\ldots,n$. Also from the monotone property of $T$ we have 
 \begin{align}
 \Phi r_i&\geq V_0,\nn\\
 H\Phi r_i&\geq H V_0,\mbox{we also have}\nn\\
 E\Phi r_i\geq H\Phi r_i&\geq HV_0,\mb\text{by taking component-wise minimum},\nn\\
 E V_0\geq H V_0.
 \end{align}
-Since $V_1=\hg V_0$, from the definition of $\hg$ in \eqref{gamdef} and the construction of $V_0$, we have $V_0\geq V_1$, and recursively $V_{n}\geq V_{n+1}, \mb\forall n\geq 0$. So it follows that $\hj\geq V_0\geq V_1\ldots\geq \hv$.
+Since $V_1=\hg V_0$, from the definition of $\hg$ in \eqref{gamdef} and the construction of $V_0$, we have $V_0\geq V_1$, and recursively $V_{n}\geq V_{n+1}, \mb n\geq 0$. So it follows that $\hj\geq V_0\geq V_1\ldots\geq \hv$.
 \end{proof}
 \begin{theorem}\label{mt1}
-Let $\hv$ be the fixed point of the iterative scheme in \eqref{apvi} and let $\bj$ be the best possible approximation of $J^*$ as in Definition~\ref{bestproj}, then
+Let $\hv$ be the fixed point of the iterative scheme in \eqref{apvi} and let $\bj$ be the best possible LUB approximation of $J^*$ as in Definition~\ref{bestproj}. Then,
 \begin{align}
 ||J^*-\hv||_\infty\leq \frac{||J^*-\bj||_\infty+||\Gamma J^*-\hg J^*||_\infty}{1-\alpha}.
 \end{align}
 \end{theorem}
 \begin{proof}
 Let $\epsilon=||J^*-\bj||_\infty$, and $\{V_n\},n\geq 0$ be the iterates of the scheme in \eqref{apvi} with $V_0=\hg J^*$, then
+\todoc{Can the proof be simplified similarly to that of Theorem~\ref{fxpres}? Not a high priority.}
 \begin{align}
 ||J^*-\hg J^*||_\infty&\leq||J^*-\Gamma J^*||_\infty+||\Gamma J^*-\hg J^*||_\infty\nn\\\vspace{10pt}
 &= \epsilon+\beta,

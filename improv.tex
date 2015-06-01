@@ -1,3 +1,4 @@
+%!TEX root =  autocontgrlp.tex
 \section{Improved Bounds}\label{sec:improv}
 In this section, we present improved error bounds by making use of Lyapunov functions. 
 \begin{lemma}\label{bestbndmn}
@@ -49,13 +50,13 @@ Let $\hv$, $\bj$ be as in Theorem~\ref{mt1} and let $r^*\stackrel{\Delta}{=}\arg
 \begin{proof}
 The proof follows from Lemma~\ref{gmaxcontramn}, Corollary~\ref{hgmaxcontramn} and by replacing the $||\cdot||_\infty$ norm by $||\cdot||_{\infty,1/\psi}$ in the arguments presented in sections~\ref{sec:lubp} and ~\ref{sec:alubp} leading to Corollary~\ref{cmt1}.
 \end{proof}\\
-We now recall Lemma~$4.3$ of \cite{ALP}.
+We now recall Lemma~$4.5$ of \cite{ALP}. \todoc{You had 4.3 here, but in the official journal version this seems to be Lemma 5 in Section 4.}
 \begin{lemma}\label{restate}
 Let $\psi$ be a Lyapunov function that belongs to the column span of $\Phi$ , $r \in \R^k$ be an arbitrary vector and let $r'$ be such that
 \begin{align}
-\Phi r'=\Phi r+||J^*-\Phi r||_{\mn}(\frac{1+\beta_{\psi}}{1-\beta_{\psi}})\psi.
+\Phi r'=\Phi r+||J^*-\Phi r||_{\mn} \left(\frac{1+\beta_{\psi}}{1-\beta_{\psi}}\right)\, \psi.
 \end{align}
-Then $r'$ is feasible for the ALP in \eqref{alp}.
+Then $r'$ is feasible for the ALP in \eqref{alp}. 
 \end{lemma}
 \begin{theorem}\label{mt2mn}
 Let $\hv$ be the solution to the iterative scheme in \eqref{apvi} and let $\hj=\Phi \hr$ be the solution to the GRLP. Let $\bj$ be the best possible approximation to $J^*$ as in Definition~\ref{bestproj}, and $||\Gamma J^* -\hg J^*||_{\infty,1/\psi}$ be the error due to ALUB projection and let $r^*\stackrel{\Delta}{=}\underset{r\in \R^k}{\arg\min}||J^*-\Phi r||_{\infty,1/\psi}$, then

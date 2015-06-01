@@ -1,3 +1,4 @@
+%!TEX root =  autocontgrlp.tex
 \section{A simple bound}
 The following lemmas relate the fixed point $\hv$ of $\hg$ to the solution $\hj$ of the GRLP in \eqref{grlp}.
 \begin{lemma}\label{srw}
@@ -8,7 +9,11 @@ $\hat{r} \in \R^k$ is a solution to GRLP in \eqref{grlp} iff it solves the follo
 \end{align}
 \end{lemma}
 \begin{proof}
-We know from Lemma~\ref{relation2} that $\hj\geq\hv$, and thus minimizing $||\Phi r-\hv||_{1,c}=\sum_{i=1}^n c(i) |(\Phi r)(i)-\hv(i)|=c^\top \Phi r-c^\top \hv$, is the same as minimizing $c^\top \Phi r$.
+We know from Lemma~\ref{relation2} that $\hj\geq\hv$, and thus minimizing 
+\begin{align*}
+||\Phi r-\hv||_{1,c}=\sum_{i=1}^n c(i) |(\Phi r)(i)-\hv(i)|=c^\top \Phi r-c^\top \hv
+\end{align*} 
+is the same as minimizing $c^\top \Phi r$.
 \end{proof}
 \begin{theorem}\label{mt2}
 Let $\hv$ be the solution to the iterative scheme in \eqref{apvi} and let $\hj=\Phi \hr$ be the solution to the GRLP. Let $\bj$ be the best possible approximation to $J^*$ as in Definition~\ref{bestproj}, and $||\Gamma J^* -\hg J^*||_\infty$ be the error due to ALUB projection and let $r^*\stackrel{\Delta}{=}\underset{r\in \R^k}{\arg\min}||J^*-\Phi r||_\infty$, then
@@ -22,21 +27,23 @@ Let $\gamma=||J^*-\Phi r^*||_\infty$, then  it is easy to see that
 ||J^*-T\Phi r^*||_\infty&=||TJ^*-T\Phi r^*||_\infty\leq\alpha\gamma,\mb\text{and}\nn\\\vspace{10pt}
 ||T\Phi r^*-\Phi r^*||_\infty&\leq(1+\alpha)\gamma.
 \end{align}
-From Assumption~\ref{one} there exists $r'\in \R^k$ such that $\Phi r'=\Phi r^*+\frac{(1+\alpha)\gamma}{1-\alpha}\one$ and $r'$ is feasible to the ALP. Now
+From Assumption~\ref{one} there exists $r'\in \R^k$ such that $\Phi r'=\Phi r^*+\frac{(1+\alpha)\gamma}{1-\alpha}\one$ and $r'$ is feasible to the ALP. \todoc{Why not just state that let $r' = r^* + \frac{(1+\alpha)\gamma}{1-\alpha} e_1$?}
+Now
 \begin{align}
 ||\Phi r'-J^*||_\infty&\leq ||\Phi r^* -J^*||_\infty+||\Phi r'-\Phi r^*||_\infty\nn\\&\leq \gamma+\frac{(1+\alpha)\gamma}{1-\alpha}=\frac{2\gamma}{1-\alpha}.
+\label{mt2eq1}
 \end{align}
 Since $r'$ is also feasible for GRLP in \eqref{grlp} we have
 \begin{align}
-||\hj-\hv||_{1,c}&\leq||\Phi r'-\hv||_{1,c}\nn\\\vspace{10pt}
-&\leq||\Phi r'-\hv||_\infty\mb\text{(Since $c$ is a distribution)}\nn\\
-&\leq||\Phi r'-J^*||_\infty+||J^*-\hv||_\infty.\nn
+||\hj-\hv||_{1,c}&\leq||\Phi r'-\hv||_{1,c}\nn &(\text{thanks to Lemma~\ref{srw}}) \\ %\vspace{10pt}
+&\leq||\Phi r'-\hv||_\infty\mb & \text{(since $c$ is a distribution)}\nn\\
+&\leq||\Phi r'-J^*||_\infty+||J^*-\hv||_\infty\,,\nn
 \end{align}
-The result follows from Corollary~\ref{cmt1}.
+The result follows from \eqref{mt2eq1} and Corollary~\ref{cmt1}.
 \end{proof}\\
 \textbf{Prediction Error bound in the $L_\infty$-norm}\\
 \begin{corollary}\label{cmt2}
-Let $\hj$, $\hv$, $r^*$ and $J^*$ be as in Theorem~\ref{mt2}, then
+Let $\hj$, $\hv$, $r^*$ and $J^*$ be as in Theorem~\ref{mt2}, then \todoc{Where is the effect of $\chi$?}
 \begin{align}\label{finalbnd}
 ||J^*-\hj||_{1,c}\leq\frac{6 ||J^*-\Phi r^*||_\infty+2||\Gamma J^*-\hg J^*||_\infty}{1-\alpha}.
 \end{align}
