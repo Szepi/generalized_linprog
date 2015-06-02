@@ -4,8 +4,10 @@ The following lemmas relate the fixed point $\hv$ of $\hg$ to the solution $\hj$
 \begin{lemma}\label{srw}
 $\hat{r} \in \R^k$ is a solution to GRLP in \eqref{grlp} iff it solves the following program:
 \begin{align}\label{grlpeqprog}
-\min_{r\in \chi} &||\Phi r-\hv||_{1,c}\nn\\
+\begin{split}
+\min_{r\in \chi}\, &||\Phi r-\hv||_{1,c}\\
 \text{s.t}\mb & W^\top \Phi r\geq W^\top T \Phi r.
+\end{split}
 \end{align}
 \end{lemma}
 \begin{proof}

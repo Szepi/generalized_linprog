@@ -40,15 +40,15 @@ Given $J \in \R^n$, $TJ$ is the `one-step' greedy value function. It is also use
 \begin{definition}
 A policy $\tilde{u}$ is said to be greedy with respect to $\tilde{J}$ if
 \begin{align}\label{subpol}
-\tilde{u}(s)=\underset{a \in A}{\arg\max}(g_a(s)+\alpha\sum_{s'} p_a(s,s')\tilde{J}(s')).
+\tilde{u}(s)=\underset{a \in A}{\argmax} \, \big(g_a(s)+\alpha\sum_{s'} p_a(s,s')\tilde{J}(s')\big)\,.
 \end{align}
 \end{definition}
+We also define the Bellman operator $H$ for action values  \cite{BertB}: \todoc{$Q$-Bellman is a bad name.}
 \begin{definition}
-We also define the $Q$-Bellman operator \cite{BertB} $H$. Given any $J\in \R^n$ we have,
-
+Let $H: \R^n \to \R^{nd}$ be defined as follows: For $J\in \R^n$,
 \begin{align}
 HJ&=\left[ {\begin{array}{c} H_1 J  \\ \vdots \\ H_d J\end{array}} \right]\in \R^{nd},\mbox{where}\nn\\
-(H_a J)(s)&= g_a(s)+\alpha \sum_{s'}p_a(s,s') J(s'), \qquad s\in S, a\in A,
+(H_a J)(s)&= g_a(s)+\alpha \sum_{s'}p_a(s,s') J(s'), \qquad s\in S, a\in A.
 \end{align}
 \end{definition}
  We now state without proof the important properties related to the Bellman operator. Though in these results, we make use of the Bellman operator $T$, the results also trivially hold for $T_u$ as well.
@@ -76,8 +76,10 @@ Note that Lemmas~\ref{maxnorm}-\ref{shift} also hold for the $Q$-Bellman operato
 Solving an MDP involves handling two sub-problems namely the problem of \emph{control} and the problem of \emph{prediction}. The problem of \emph{control} deals with coming up with a good (and if possible the optimal) policy. Often, in order to solve the problem of \emph{control}, one needs to solve the problem of \emph{prediction}, which deals with computing the value function $J_u$ of the policy $u$. The fact that the two problems are related is reflected in the Bellman equation in \eqref{bell}, where $J^*$ from \eqref{bellval} is used in \eqref{bellpol} to obtain the optimal policy $u^*$. Thus, the Bellman equation is at the heart of the solution methods to MDPs. Any solution method to MDP is said to be complete only if it satisfactorily (with provable performance guarantees) addresses both the prediction and the control problems. \\
 The basic solution methods namely value iteration, policy iteration and linear programming (LP) formulation \cite{BertB} solve both the control and prediction problems. Of the three basic methods, in this paper, we are interested in the LP formulation given by
 \begin{align}\label{mdplp}
-\min_{J\in \R^n} &c^\top J\nn\\
+\begin{split}
+\min_{J\in \R^n}\, &c^\top J\\
 \text{s.t}\mb &J(s)\geq g_a(s)+\alpha\sum_{s'}p_a(s,s')J(s'), \qquad s\in S, a \in A,
+\end{split}
 \end{align}
 where $c\in \R^n_+$ is any vector whose components are all non-negative. One can show that $J^*$ is the solution to the LP formulation \eqref{mdplp} \cite{BertB}. 
 Also, of the three methods, value iteration and LP formulation are value function based methods, i.e., they compute $J^*$ directly and then $u^*$ is obtained by plugging $J^*$ in \eqref{bellpol}.\\

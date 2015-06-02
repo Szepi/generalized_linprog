@@ -1,24 +1,30 @@
 %!TEX root =  autocontgrlp.tex
 \section{Constraint sampling}
 The most important work in the direction of constraint reduction is constraint sampling \cite{CS} wherein a reduced linear program (RLP) is solved instead of the ALP. While the objective function of the RLP is the same as that of the ALP, the RLP has only $m<<nd$ constraints sampled from the original ALP according to a given probability distribution. The reduced linear program is then given by
-\small
 \begin{align}\label{rlp}
-\min_{J\in \R^n} &c^\top J\nn\\
+\begin{split}
+\min_{J\in \R^n}\, &c^\top J\\
 \text{s.t}\mb &J(s)\geq g_a(s)+\alpha\sum_{s'}p_a(s,s')J(s'), \mb (s,a) \in \I,
+\end{split}
 \end{align}
-\normalsize
 where $\I$ is the index set containing the $m$ sampled state-action pairs. Using the index set $\I$ we define an $nd\times m$ matrix $\M$, called the constraint sampling matrix as below.
 \begin{definition}\label{csampmat}
 Let $\I=\{(s_1,a_1),\ldots,(s_m,a_m)\}$ be the sampled state-action pairs and let $q_i\stackrel{\Delta}{=}s_i+(a_i-1)\times n$, $i=1,\ldots,m$. Then the constraint sampling matrix associated with the index set $\I$ is given by
 \begin{align}
-\M(i,j)&=1, \mb\text{if}\mb q_i=j\nn\\
-&=0, \mb\text{otherwise}.
+\M(i,j)
+=
+\begin{cases}
+1, & \text{ if } q_i = j;\\
+0, & \text{ otherwise }.
+\end{cases}
 \end{align}
 \end{definition}
 The RLP can then be represented in short as
 \begin{align}\label{rlpshort}
-\min_{r\in \N} &c^\top \Phi r\nn\\
+\begin{split}
+\min_{r\in \N}\, &c^\top \Phi r\\
 \text{s.t}\mb & \M^\top E \Phi r \geq \M^\top H \Phi r,
+\end{split}
 \end{align}
 where $\M$ is a constraint sampling matrix as in Definition~\ref{csampmat} and $\N\subset \R^k$ is a bounded set such that $\tr \in \N$. Note that the feasible set of the RLP is a superset of the feasible set of the ALP.\\
 The RLP based on constraint sampling has been found to perform well empirically in application domains ranging from controlled queuing networks (see section $6.2$ of \cite{ALP} and section $7$ of \cite{SALP}) to Tetris (see \cite{CST} and section $6$ of \cite{SALP}). However, the theoretical guarantees for the RLP are available only under a restricted setting \cite{CS}. We present the main result of \cite{CS} on constraint sampling, and to that end define the following:

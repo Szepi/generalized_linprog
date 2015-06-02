@@ -8,8 +8,8 @@ Given $J\in \R^n$, its approximate least upper bound (ALUB) projection is denote
 \end{align}
 where $r_{e_j}$ is a solution to the linear program in \eqref{alubplp} for $c=e_j$, and $e_j$ is the same as in Definition~\ref{lubpop}.
 \begin{align}\label{alubplp}
-r_c\stackrel{\Delta}{=}\argmin_{r\in \chi} &c^\top \Phi r,\nn\\
-\text{s.t}\mb &W^\top E \Phi r\geq W^\top HJ, W \in \R^{nd\times m}_+ .
+r_c\stackrel{\Delta}{=} & \argmin_{r\in \chi} c^\top \Phi r,\nn\\
+& \text{s.t.}\,\,\, W^\top E \Phi r\geq W^\top HJ,\,\, W \in \R^{nd\times m}_+ .
 \end{align}
 \end{definition}
 Note that $W$ in \eqref{alubplp} is the same matrix that is used in \eqref{grlp} and satisfies Assumption~\ref{wassump}.
@@ -35,16 +35,26 @@ V_{n+1}&=\hg V_n,\mb n\geq 0.
 Follows along similar lines as the proof of Theorem~\ref{gmaxcontra}.
 \end{proof}
 \begin{lemma}\label{relation2}
-The unique fixed point $\hv$ of the iteration in \eqref{apvi} and the solution $\hj$ of the GRLP obey $\hj\geq\hv$.
+The unique fixed point $\hv$ of the iteration in \eqref{apvi} and the solution $\hj$ of the GRLP \eqref{grlp} obey $\hj\geq\hv$.
 \end{lemma}
 \begin{proof}
-Follows in a similar manner as the proof of Lemma~\ref{relation1}. To elaborate, let $\Phi r_1, \Phi r_2,\ldots,\Phi r_n$ be solutions to the GRLP in \eqref{grlp} for $c=e_1, e_2,\ldots,e_n$ respectively. Now consider the iterative scheme in \eqref{apvi} with $V_0(i)=\underset{j=1,\ldots,n}{\min}(\Phi r_j)(i)$. It is clear from the definition of $V_0$ that $\hj(i)\geq\Phi r_i(i)\geq V_0(i)$, $i=1,\ldots,n$. Also from the monotone property of $T$ we have 
-\begin{align}
-\Phi r_i&\geq V_0,\nn\\
-H\Phi r_i&\geq H V_0,\mbox{we also have}\nn\\
-E\Phi r_i\geq H\Phi r_i&\geq HV_0,\mb\text{by taking component-wise minimum},\nn\\
-E V_0\geq H V_0.
-\end{align}
+The proof follows in a similar manner as the proof of Lemma~\ref{relation1}. To elaborate, let $\Phi r_1, \Phi r_2,\ldots,\Phi r_n$ be solutions to the GRLP in \eqref{grlp} for $c=e_1, e_2,\ldots,e_n$ respectively. Fix some other $c\in [0,1]^n$, $\sum_i c(i)=1$.
+Now consider the iterative scheme in \eqref{apvi} with $V_0(i)=\underset{j=1,\ldots,n}{\min}(\Phi r_j)(i)$. 
+It is clear from the definition of $V_0$ that $\hj(i),(\Phi r_j)(i)\geq(\Phi r_i)(i)$, $i=1,\ldots,n$.
+In particular, it follows that $V_0(i) =( \Phi r_i)(i)$ and so
+$\Phi r_i \geq V_0$.
+From the monotone property of $T$ (viz. $H$) we have 
+$H\Phi r_i\geq H V_0$ and also, by minimizing component-wise
+$E\Phi r_i\geq H\Phi r_i\geq HV_0$. Thus,
+$E V_0\geq H V_0$. 
+\todoc[inline]{I lost why this was needed.
+I think the proof would be much easier to understand if we introduced $r_{c,J} = \argmin_{r} \{ c^\top \Phi r \,|\, W^\top E \Phi r \ge W^\top H J\}$. We could start by saying we need $V_1\le V_0 \le \hj$ because then Lemma~\ref{tgmonotone} will give the desired result. Next, $V_0\le \hj$ holds because on the one hand, $\hj(i) \ge (\Phi r_i)(i)$ for any $i$, while on the other hand,
+$(\Phi r_j)(i) \ge (\Phi r_i)(i)$ also holds for any $i,j$, hence $V_0(i)  = (\Phi r_i)(i)$. 
+Now, for showing that $V_1 \le V_0$ holds, fix any $i$. We need to show that $(\hg V_0)(i) = \min_j (\Phi r_{e_j,V_0})(i) = (\Phi r_{e_i,V_0})(i)$ is less than $V_0(i)$. By the definition of $r_{e_j,V_0}$ we know that $(\Phi r_{e_i,V_0})(i) \le (\Phi r)(i)$
+holds for any $r$ such that $W^\top E \Phi r \ge W^\top H V_0$. Thus, it suffices to show that $r_i$ satisfies this latter inequality,
+i.e., $W^\top E \Phi r_i \ge W^\top H V_0$. For this, it clearly sufficient if $\Phi r_i \ge V_0$. This however directly follows 
+from the definition of $V_0$.
+}
 Since $V_1=\hg V_0$, from the definition of $\hg$ in \eqref{gamdef} and the construction of $V_0$, we have $V_0\geq V_1$, and recursively $V_{n}\geq V_{n+1}, \mb n\geq 0$. So it follows that $\hj\geq V_0\geq V_1\ldots\geq \hv$.
 \end{proof}
 \begin{theorem}\label{mt1}
@@ -70,7 +80,7 @@ where $\beta=||\Gamma J^*-\hg J^*||_\infty$. Now
 \end{align}
 \end{proof}
 \begin{corollary}\label{cmt1}
-Let $\hv$, $\bj$ be as in Theorem~\ref{mt1} and let $r^*\stackrel{\Delta}{=}\arg\min_{r\in \R^k}||J^*-\Phi r||_\infty$, then
+Let $\hv$, $\bj$ be as in Theorem~\ref{mt1} and let $r^*\stackrel{\Delta}{=}\argmin_{r\in \R^k}||J^*-\Phi r||_\infty$, then
 \begin{align}
 ||J^*-\hv||_\infty\leq \frac{2||J^*-\Phi r^*||_\infty+||\Gamma J^*-\hg J^*||_\infty}{1-\alpha}.
 \end{align}

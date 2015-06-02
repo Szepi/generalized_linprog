@@ -2,7 +2,7 @@
 \section{Improved Bounds}\label{sec:improv}
 In this section, we present improved error bounds by making use of Lyapunov functions. 
 \begin{lemma}\label{bestbndmn}
-Let $r^*\in \R^k$ be defined as $r^*\stackrel{\Delta}{=}\arg\min_{r\in R^k}||J^*-\Phi r||_{\infty,1/\psi}$, then 
+Let $r^*\in \R^k$ be defined as $r^*\stackrel{\Delta}{=}\argmin_{r\in R^k}||J^*-\Phi r||_{\infty,1/\psi}$, then 
 \begin{align}
 ||J^*-\bj||_{\infty,1/\psi}\leq 2||J^*-\Phi r^*||_{\infty,1/\psi}.
 \end{align}
@@ -42,7 +42,7 @@ $\hg$ is also a contraction map in the modified $L_\infty$ norm.
 Follows from arguments similar to Theorem~\ref{gmaxcontramn}.
 \end{proof}
 \begin{lemma}\label{cmt1mn}
-Let $\hv$, $\bj$ be as in Theorem~\ref{mt1} and let $r^*\stackrel{\Delta}{=}\arg\min_{r\in \R^k}||J^*-\Phi r||_{\infty,1/\psi}$ then
+Let $\hv$, $\bj$ be as in Theorem~\ref{mt1} and let $r^*\stackrel{\Delta}{=}\argmin_{r\in \R^k}||J^*-\Phi r||_{\infty,1/\psi}$ then
 \begin{align}
 ||J^*-\hv||_{\infty,1/\psi}\leq \frac{2||J^*-\Phi r^*||_{\infty,1/\psi}+||\Gamma J^*-\hg J^*||_{\infty,1/\psi}}{1-\beta_{\psi}}.
 \end{align}
