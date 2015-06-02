@@ -1,28 +1,39 @@
 %!TEX root =  autocontgrlp.tex
 \section{Markov Decision Processes (MDPs)}
 In this section, we briefly discuss the basics of Markov Decision Processes (MDPs) (the reader is referred to \cite{BertB,Puter} for a detailed treatment).\\
-An MDP is a $4$-tuple $\langle S,A,P,g\rangle$, where $S$ is the state space, $A$ is the action space, $P$ is the probability transition kernel and $g$ is the reward function. We consider MDPs with large but finite number of states, i.e., $S=\{1,2,\ldots,n\}$ for some large $n$, and the action set is given by $A=\{1,2,\ldots,d\}$. For simplicity, we assume that all actions are feasible in all states. The probability transition kernel $P$ specifies the probability $p_a(s,s')$ of transitioning from state $s$ to state $s'$ under the action $a$. We denote the reward obtained for performing action $a\in A$ in state $s\in S$ by $g_a(s)$.\\
-A policy $\mu$ specifies the action selection mechanism, and is described by the sequence $\mu=(u_1,u_2,\ldots,u_n,\ldots)$, where $u_n\colon S \ra A$ for all $n \geq 0$. A stationary deterministic policy (SDP) is one where $u_n\equiv u$ for all $n\geq 0$ for some $u\colon S \ra A$. By abuse of notation we denote the SDP by $u$ itself instead of $\mu$. In the setting that we consider, one can find an SDP that is optimal \cite{BertB,Puter}. In this paper, we restrict our focus to the class $U$ of SDPs.  Under an SDP $u$, the MDP is a Markov chain with probability transition kernel $P_u$.\\
+An MDP is a $4$-tuple $\langle S,A,P,g\rangle$, where $S$ is the state space, $A$ is the action space, $P$ is the probability transition kernel and $g$ is the reward function. We consider MDPs with large but finite number of states. We also assume that the number of actions is finite.
+Without the loss of generality, we set  $S=\{1,2,\ldots,n\}$  and the action set is given by $A=\{1,2,\ldots,d\}$. For simplicity, we assume that all actions are feasible in all states. The probability transition kernel $P$ specifies the probability $p_a(s,s')$ of transitioning from state $s$ to state $s'$ under the action $a$. We denote the reward obtained for performing action $a\in A$ in state $s\in S$ by $g_a(s)$.
+
+A policy $\mu$ specifies the action selection mechanism, and is described by the sequence $\mu=(u_1,u_2,\ldots,u_n,\ldots)$, where $u_n\colon S \ra A$ for all $n \geq 0$. \todoc{This is somewhat limited; normally we should allow history dependent,
+and also stochastic policies.} 
+A stationary deterministic policy (SDP) is one where $u_n\equiv u$ for all $n\geq 0$ for some $u\colon S \ra A$. By abuse of notation we denote the SDP by $u$ itself instead of $\mu$. In the setting that we consider, one can find an SDP that is optimal \cite{BertB,Puter}. In this paper, we restrict our focus to the class $U$ of SDPs.  Under an SDP $u$, the MDP is a Markov chain with probability transition kernel $P_u$.
+
 Given an SDP $u$, the infinite horizon discounted reward corresponding to state $s$ under $u$ is denoted by $J_u(s)$ and is defined by
 \begin{align}
 J_u(s)\stackrel{\Delta}{=}\E[\sum_{n=0}^\infty \alpha^n g_{a_n}(s_n)|s_0=s,a_n=u(s_n), n= 0,1,\dots],\nn
 \end{align}
 where $\alpha \in (0,1)$ is a given discount factor. Here $J_u(s)$ is known as the value of the state $s$ under the SDP $u$, and the vector quantity $J_u\stackrel{\Delta}{=}(J_u(s))_{s\in S}\in R^n$ is called the value-function corresponding to the SDP $u$.\\
-The optimal policy $u^*$ is obtained as $u^*(s)\stackrel{\Delta}{=}\arg\max_{u\in U}J_u(s)$\footnote{Such $u^*$ exists and is well defined in the case of infinite horizon discounted reward MDP, for more details see \cite{Puter}.}. The optimal value-function $J^*$ is the one obtained under the optimal policy, i.e., $J^*=J_{u^*}$. Given an MDP, our aim is to find the optimal value function $J^*$ and the optimal policy $u^*$. The optimal policy and value function obey the Bellman equation (BE) as under: for all $ s \in S$,
+The optimal policy $u^*$ is any policy whose value is the largest possible under any policy: 
+$J_{u^*}(s) = \max_{u\in U} J_u(s)$ for all $s\in S$. Such $u^*$ exists and is well defined in the case of infinite horizon discounted reward MDP \cite{Puter}.
+\todoc{A stronger definition allows any policy, including history dependent and yet the statement will hold true.}
+ The optimal value-function $J^*$ is the one obtained under the optimal policy, i.e., $J^*=J_{u^*}$. \todoc{Probably better to define first $J^*$ as the pointwise max and then the optimal policy's definition could use $J^*$.}
+Given an MDP, our aim is to find the optimal value function $J^*$ and the optimal policy $u^*$. The optimal policy and value function obey the Bellman equation (BE): for all $ s \in S$, \todoc{Non-unique maximizers in the policy def?}
 \begin{subequations}\label{bell}
 \begin{align}
 \label{bellval}J^*(s)&=\max_{ a\in A}\big(g_a(s)+\alpha \sum_{s'}p_a(s,s')J^*(s')\big),\\
 \label{bellpol}u^*(s)&=\arg\max_{ a\in A}\big(g_a(s)+\alpha \sum_{s'}p_a(s,s')J^*(s')\big).
 \end{align}
 \end{subequations}
-Typically $J^*$ is computed first and $u^*$ is obtained by substituting $J^*$ in \eqref{bellpol}. The Bellman operator $T$ is defined using the model parameters of the MDP as follows:
+If $J^*$ is computed first, then $u^*$ can be obtained by substituting $J^*$ in \eqref{bellpol}. The Bellman operator $T$ is defined using the model parameters of the MDP as follows:
 \begin{definition}
+The Bellman operator $T: \R^n \to \R^n$ is defined by 
 \begin{align}
-(TJ)(s)=\max_{a \in A}\big(g_a(s)+\alpha \sum_{s'} p_a(s,s')J(s')\big), 
+(TJ)(s)=\max_{a \in A}\big(g_a(s)+\alpha \sum_{s'} p_a(s,s')J(s')\big)\,, 
 \end{align}
-where $J\in \R^n$. Similarly one can define the Bellman operator restricted to an SDP $u$ as follows:
+where $J\in \R^n$ and $J_s = J(s)$, $s\in S = \{1,\dots,n\}$.  
+Similarly one can define the Bellman operator $T_u:\R^n \to \R^n$ restricted to an SDP $u$ as follows:
 \begin{align}
-(T_uJ)(s)=\big(g_{u(s)}(s)+\alpha \sum_{s'} p_{u(s)}(s,s')J(s')\big).
+(T_uJ)(s)=g_{u(s)}(s)+\alpha \sum_{s'} p_{u(s)}(s,s')J(s')\,.
 \end{align}
 \end{definition}
 Given $J \in \R^n$, $TJ$ is the `one-step' greedy value function. It is also useful to define the notion of a one-step greedy policy as below:
