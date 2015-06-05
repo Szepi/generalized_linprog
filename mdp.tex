@@ -3,21 +3,22 @@
 In this section, we briefly discuss the basics of Markov Decision Processes (MDPs) (the reader is referred to \cite{BertB,Puter} for a detailed treatment).\\
 An MDP is a $4$-tuple $\langle S,A,P,g\rangle$, where $S$ is the state space, $A$ is the action space, $P$ is the probability transition kernel and $g$ is the reward function. We consider MDPs with large but finite number of states. We also assume that the number of actions is finite.
 Without the loss of generality, we set  $S=\{1,2,\ldots,n\}$  and the action set is given by $A=\{1,2,\ldots,d\}$. For simplicity, we assume that all actions are feasible in all states. The probability transition kernel $P$ specifies the probability $p_a(s,s')$ of transitioning from state $s$ to state $s'$ under the action $a$. We denote the reward obtained for performing action $a\in A$ in state $s\in S$ by $g_a(s)$.
-
-A policy $\mu$ specifies the action selection mechanism, and is described by the sequence $\mu=(u_1,u_2,\ldots,u_n,\ldots)$, where $u_n\colon S \ra A$ for all $n \geq 0$. \todoc{This is somewhat limited; normally we should allow history dependent,
+\todoc{This is somewhat limited; normally we should allow history dependent,
 and also stochastic policies.} 
-A stationary deterministic policy (SDP) is one where $u_n\equiv u$ for all $n\geq 0$ for some $u\colon S \ra A$. By abuse of notation we denote the SDP by $u$ itself instead of $\mu$. In the setting that we consider, one can find an SDP that is optimal \cite{BertB,Puter}. In this paper, we restrict our focus to the class $U$ of SDPs.  Under an SDP $u$, the MDP is a Markov chain with probability transition kernel $P_u$.
-
-Given an SDP $u$, the infinite horizon discounted reward corresponding to state $s$ under $u$ is denoted by $J_u(s)$ and is defined by
+By a policy, we mean a sequence $\pi=\{\pi_0,\ldots,\pi_n,\ldots\}$ of functions $\pi_i, i\geq 0$ that describe the manner in which an action is picked in a given state at time $i$. The most general class of policies is the class of \emph{history-dependent randomized policies} denoted by $\pi$ and is defined below.
+\begin{definition}
+Let $h_n=\{s_0,\ldots,s_n, \pi_0, \ldots, \pi_{n-1}\}$ denote the \emph{history}. A policy $\pi$ is said to be a \emph{history-dependent randomized} policy if $\pi_n,n\geq 0$ is such that for every $s\in S$, $\pi_n(s,\cdot|h_n)$ is a probability distribution over the set of actions.
+\end{definition}
+We denote the class of policies by $\Pi$. The infinite horizon discounted reward corresponding to state $s$ under a policy $\pi$ is denoted by $J_\pi(s)$ and is defined by
 \begin{align}
-J_u(s)\stackrel{\Delta}{=}\E[\sum_{n=0}^\infty \alpha^n g_{a_n}(s_n)|s_0=s,a_n=u(s_n), n= 0,1,\dots],\nn
+J_\pi(s)\stackrel{\Delta}{=}\E[\sum_{n=0}^\infty \alpha^n g_{a_n}(s_n)|\pi],\nn
 \end{align}
-where $\alpha \in (0,1)$ is a given discount factor. Here $J_u(s)$ is known as the value of the state $s$ under the SDP $u$, and the vector quantity $J_u\stackrel{\Delta}{=}(J_u(s))_{s\in S}\in R^n$ is called the value-function corresponding to the SDP $u$.\\
-The optimal policy $u^*$ is any policy whose value is the largest possible under any policy: 
-$J_{u^*}(s) = \max_{u\in U} J_u(s)$ for all $s\in S$. Such $u^*$ exists and is well defined in the case of infinite horizon discounted reward MDP \cite{Puter}.
+where $a_{n} \sim \pi_n(s,\cdot)$ and $\alpha \in (0,1)$ is a given discount factor.  Here $J_\pi(s)$ is known as the value of the state $s$ under the policy $\pi$, and the vector quantity $J_\pi\stackrel{\Delta}{=}(J_\pi(s))_{s\in S}\in R^n$ is called the value-function corresponding to the policy $\pi$. The optimal value function $J^*$ is defined as $J^*(s)\stackrel{def}{=}\underset{\pi \in \Pi}{\max} J_\pi(s)$.\par
+A stationary deterministic policy (SDP) is one where $\pi_n\equiv u$ for all $n\geq 0$ for some $u\colon S \ra A$. By abuse of notation we denote the SDP by $u$ itself instead of $\pi$. In the setting that we consider, one can find an SDP that is optimal \cite{BertB,Puter}, i.e., there exists an SDP $u^*$ such that $J_{u^*}(s)=J^*(s),\forall s\in S$. In this paper, we restrict our focus to the class $U$ of SDPs and without loss of generality we assume that there exists a unique SDP $u^*$ that is optimal. Under a stationary policy $u$ (or $\pi$), the MDP is a Markov chain and we denote its probability transition kernel by $P_u=(p_{u(i)}(i,j),i,j=1,\ldots,n)$ (or $P_\pi=(p_{\pi(i)}(i,j),i,j=1,\ldots,n)$, where $p_{\pi(i)}(i,j)=\sum_{a\in A}\pi(i,a)p_a(i,j)$ and $\pi(i)=(\pi(i,a), a\in A)$).\par
 \todoc{A stronger definition allows any policy, including history dependent and yet the statement will hold true.}
- The optimal value-function $J^*$ is the one obtained under the optimal policy, i.e., $J^*=J_{u^*}$. \todoc{Probably better to define first $J^*$ as the pointwise max and then the optimal policy's definition could use $J^*$.}
-Given an MDP, our aim is to find the optimal value function $J^*$ and the optimal policy $u^*$. The optimal policy and value function obey the Bellman equation (BE): for all $ s \in S$, \todoc{Non-unique maximizers in the policy def?}
+%The optimal value-function $J^*$ is the one obtained under the optimal policy, i.e., $J^*=J_{u^*}$. 
+\todoc{Probably better to define first $J^*$ as the pointwise max and then the optimal policy's definition could use $J^*$.}
+Given an MDP, our aim is to find the optimal value function $J^*$ and the optimal policy SDP $u^*$. The optimal policy and value function obey the Bellman equation (BE): for all $ s \in S$, \todoc{Non-unique maximizers in the policy def?}
 \begin{subequations}\label{bell}
 \begin{align}
 \label{bellval}J^*(s)&=\max_{ a\in A}\big(g_a(s)+\alpha \sum_{s'}p_a(s,s')J^*(s')\big),\\
@@ -44,7 +45,7 @@ A policy $\tilde{u}$ is said to be greedy with respect to $\tilde{J}$ if
 \end{align}
 \end{definition}
 We also define the Bellman operator $H$ for action values  \cite{BertB}: \todoc{$Q$-Bellman is a bad name.}
-\begin{definition}
+\begin{definition}\label{bellactval}
 Let $H: \R^n \to \R^{nd}$ be defined as follows: For $J\in \R^n$,
 \begin{align}
 HJ&=\left[ {\begin{array}{c} H_1 J  \\ \vdots \\ H_d J\end{array}} \right]\in \R^{nd},\mbox{where}\nn\\
@@ -72,7 +73,7 @@ Given $J\in \R^n$, $t \in \R$ and $\mathbf{1} \in \R^n$, a vector with all entri
 T(J+t\mathbf{1})=TJ+\alpha t\mathbf{1}.
 \end{align}
 \end{lemma}
-Note that Lemmas~\ref{maxnorm}-\ref{shift} also hold for the $Q$-Bellman operator $H$.
+Note that Lemmas~\ref{maxnorm}-\ref{shift} also hold for the Bellman operator $H$ defined for the action values in Definition~\ref{bellactval}.\par
 Solving an MDP involves handling two sub-problems namely the problem of \emph{control} and the problem of \emph{prediction}. The problem of \emph{control} deals with coming up with a good (and if possible the optimal) policy. Often, in order to solve the problem of \emph{control}, one needs to solve the problem of \emph{prediction}, which deals with computing the value function $J_u$ of the policy $u$. The fact that the two problems are related is reflected in the Bellman equation in \eqref{bell}, where $J^*$ from \eqref{bellval} is used in \eqref{bellpol} to obtain the optimal policy $u^*$. Thus, the Bellman equation is at the heart of the solution methods to MDPs. Any solution method to MDP is said to be complete only if it satisfactorily (with provable performance guarantees) addresses both the prediction and the control problems. \\
 The basic solution methods namely value iteration, policy iteration and linear programming (LP) formulation \cite{BertB} solve both the control and prediction problems. Of the three basic methods, in this paper, we are interested in the LP formulation given by
 \begin{align}\label{mdplp}
