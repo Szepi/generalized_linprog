@@ -4,31 +4,34 @@ The least upper bound (LUB) projection operator $\Gamma \colon \R^n \ra\R^n$ is 
 \begin{definition}\label{lubpop}
 Given $J\in \R^n$, its least upper bound projection is denoted by $\Gamma J$ and is defined as 
 \begin{align}\label{gamdef}
-(\Gamma J)(i)\stackrel{\Delta}{=}\underset{j=1,\ldots,k}{\min} (\Phi r_{e_j})(i),\quad i=1,\ldots,n,
+(\Gamma J)(i)\stackrel{\Delta}{=}(\Phi r_{e_i,J})(i),\quad i=1,\ldots,n,
 \end{align}
 where $V(i)$ denotes the $i^{th}$ component of the vector $V\in \R^n$. Also in \eqref{gamdef}, $e_j$ is the vector with $1$ in the $j^{th}$ place and zeros elsewhere, and $r_{e_j}$ is a solution to the linear program in \eqref{lubplp} for $c=e_j$:
 \begin{align}\label{lubplp}
- r_c   \stackrel{\Delta}{=}& \argmin_{r\in \chi} c^\top \Phi r,\nn\\
+ r_{c,J}   \stackrel{\Delta}{=}& \underset{r\in \N}{\argmin} \mbox{ } c^\top \Phi r,\nn\\
  \text{s.t}& \mb \Phi r\geq  TJ.
 \end{align}
 \end{definition}
-Note that $r_{e_j}$ depends on $J$, but this dependence is suppressed to reduce clutter. 
+%Note that $r_{e_j}$ depends on $J$, but this dependence is suppressed to reduce clutter. 
 \begin{remark}
 \begin{enumerate}
 \item The definition of LUB operator $\Gamma \colon \R^n \ra \R^n$ involves $n$ associated linear programs.
 \item Observe that $\Gamma J\geq TJ$ (follows from the fact that if $a\geq c$ and $b\geq c$, then $\min(a,b)\geq c$, where $a, b, c \in \R$).
 \item Given $\Phi$ and $J\in \R^n$, define $\F\stackrel{\Delta}{=}\{\Phi r|\Phi r\geq TJ\}$. Thus $\F$ is the set of all vectors in the span of $\Phi$ that upper bound $TJ$. By fixing $c$ in the linear program in \eqref{lubplp} we select a unique vector $\Phi r_c \in \F$. The LUB projection operator $\Gamma$ picks $n$ vectors $\Phi r_{e_i},i=1,\ldots,n$ from the set $\F$ and $\Gamma J$ is obtained by computing their component-wise minimum.
 \item Even though $\Gamma J$ does not belong to the span of $\Phi$, $\Gamma J$ collates the various best upper bounds that can be obtained via the linear program in \eqref{lubplp}.
+\begin{comment}
 \item The LUB operator $\Gamma$ in \eqref{gamdef} bears close similarity to the ALP in \eqref{alp}.
-In fact, it is not hard to observe that $(\Gamma J)(i) = (\Phi r_{e_i})(i)$ for any $1\le i \le n$; the reason $\Gamma$ is defined the way it is so that this resembles to \eqref{alp} will be clear. \todoc{In fact, I would prefer the simpler definition without the $\min$ and then changing this remark.}
+In fact, it is not hard to observe that $(\Gamma J)(i) = (\Phi r_{e_i})(i)$ for any $1\le i \le n$; the reason $\Gamma$ is defined the way it is so that this resembles to \eqref{alp} will be clear. 
+\end{comment}
+\todoc{In fact, I would prefer the simpler definition without the $\min$ and then changing this remark.}
 \end{enumerate}
 \end{remark}
 \begin{definition}\label{bestproj}
 The LUB projection of $J^*$ is denoted by $\bj=\Gamma J^*$.
 \end{definition}
 We now characterize the LUB projection operator $\Gamma$ in the following lemmas. 
-As mentioned earlier, the error analysis depends on two $\max$-norm contraction operators the first of which is $\Gamma$. The important result of this section is Theorem~\ref{fxpres} and it relates the fixed point $\tilde{V}$ of $\Gamma$ to $J^*$.
-\todoc{Poor choice of symbols: $\tilde{V}$ is the fixed point of $\Gamma$ and $\hat{V}$ will be the fixed point of $\tilde{\Gamma}$? Hmm.. Not a high priority to change it, but still..}
+As mentioned earlier, the error analysis depends on two $\max$-norm contraction operators the first of which is $\Gamma$. The important result of this section is Theorem~\ref{fxpres} and it relates the fixed point $\tv$ of $\Gamma$ to $J^*$.
+\todoc{Poor choice of symbols: $\tv$ is the fixed point of $\Gamma$ and $\hat{V}$ will be the fixed point of $\tilde{\Gamma}$? Hmm.. Not a high priority to change it, but still..}
 \begin{lemma}\label{bestbnd}
 Let $r^*\in \R^k$ be defined as $r^*\stackrel{\Delta}{=}\argmin_{r\in R^k}||J^*-\Phi r||_\infty$, then 
 \begin{align}
@@ -51,7 +54,7 @@ Thus,
 For $J_1, J_2\in \R^n$ such that $J_1\geq J_2$, we have $\Gamma J_1\geq \Gamma J_2$.
 \end{lemma}
 \begin{proof}
-Choose any $i\in \{1,\ldots,n\}$ and let $r^1_{e_i}$ and $r^2_{e_i}$ be solutions to the linear program in \eqref{lubplp} for $c=e_i$ with $J=J_1$ and $J=J_2$ respectively. Since $J_1\geq J_2$, we have $TJ_1\geq TJ_2$ and $e_i^\top \Phi r^1_{e_i} \geq e_i^\top \Phi r^2_{e_i}$, i.e., $(\Phi r^1_{e_i})(i)\geq (\Phi r^2_{e_i})(i)$. The result follows from the fact that $(\Gamma J)(i)=(\Phi r_{e_i})(i)$, $J\in \R^n$, and our choice of $i$ was arbitrary.
+Choose any $i\in \{1,\ldots,n\}$ and let $r_{e_i,J_1}$ and $r_{e_i,J_2}$ be solutions to the linear program in \eqref{lubplp} for $c=e_i$ with $J=J_1$ and $J=J_2$ respectively. Since $J_1\geq J_2$, we have $TJ_1\geq TJ_2$ and $e_i^\top \Phi r_{e_i,J_1} \geq e_i^\top \Phi r_{e_i,J_2}$, i.e., $(\Phi r_{e_i,J_1})(i)\geq (\Phi r_{e_i,J_2})(i)$. The result follows from the fact that $(\Gamma J)(i)=(\Phi r_{e_i,J})(i)$, $J\in \R^n$, and our choice of $i$ was arbitrary.
 \end{proof}
 \begin{lemma}\label{lpsol}
 Let $A\in \R^{u\times v}$, $b,c\in R^u$, $x_0 \in R^v$ and $b_0=Ax_0$. Then
@@ -92,7 +95,7 @@ Then, $V_n$ converges to the the unique fixed point $\tv$ of $\Gamma$.
  $\tv$, the unique fixed point of the iterative scheme \eqref{pvi}, obeys $\tv\geq T\tv$.
 \end{lemma}
 \begin{proof}
-Consider the $i^{th}$ linear program associated with $\Gamma \tv$. We know that $\Phi r_{e_i}\geq T \tv$, for all $i=1,\ldots, n$. The result follows from noting that $\tv$ is the unique fixed point of $\Gamma $ and that $\tv(i)=\underset{j=1,\ldots,n}{\min}(\Phi r_{e_j})(i)$.
+Consider the $i^{th}$ linear program associated with $\Gamma \tv$. We know that $\Phi r_{e_i}\geq T \tv$, for all $i=1,\ldots, n$. The result follows from noting that $\tv$ is the unique fixed point of $\Gamma $ and that $\tv(i)=(\Phi r_{e_i,V})(i)$.
 \end{proof}
 \begin{lemma}\label{relation1}
  $\tv$, the unique fixed point of the iterative scheme \eqref{pvi}, and the solution $\tj$ to the ALP in \eqref{alp}, obey the relation $\tj\geq\tv\geq J^*$.

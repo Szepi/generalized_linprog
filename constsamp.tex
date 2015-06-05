@@ -26,7 +26,7 @@ The RLP can then be represented in short as
 \text{s.t}\mb & \M^\top E \Phi r \geq \M^\top H \Phi r,
 \end{split}
 \end{align}
-where $\M$ is a constraint sampling matrix as in Definition~\ref{csampmat} and $\N\subset \R^k$ is a bounded set such that $\tr \in \N$. Note that the feasible set of the RLP is a superset of the feasible set of the ALP.\\
+where $\M$ is a constraint sampling matrix as in Definition~\ref{csampmat} and $\N\subset \R^k$ is a bounded set such that $\tr \in \N$. The purpose of $\N$ is to ensure that the solution to the RLP is always bounded\todoc{explained the role of $\N$ and used the same in the definitions of LUB and ALUB operators}. Note that the feasible set of the RLP is a superset of the feasible set of the ALP.\\
 The RLP based on constraint sampling has been found to perform well empirically in application domains ranging from controlled queuing networks (see section $6.2$ of \cite{ALP} and section $7$ of \cite{SALP}) to Tetris (see \cite{CST} and section $6$ of \cite{SALP}). However, the theoretical guarantees for the RLP are available only under a restricted setting \cite{CS}. We present the main result of \cite{CS} on constraint sampling, and to that end define the following:
 \begin{definition}\label{sampdist}
 Given a policy $u$ and Lyapunov function $\psi$ in the column span of $\Phi$, we define probability distributions $\mu_u$, $\mu_{u,\psi}$ and constant $\theta$ as 

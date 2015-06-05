@@ -1,10 +1,10 @@
 %!TEX root =  autocontgrlp.tex
 \section{Approximate Dynamic Programming}
-\emph{Curse-of-dimensionality} is a term used to denote the fact that the number of states grows exponentially in the number of state variables. \todoc{This itself won't be a curse, would it be? The problem is that the computation cost also grows exponentially. Note that we never defined what we mean by state variables.}
-Most MDPs arising in practical applications suffer from the curse, i.e., have large number of states and it is difficult to compute $J^*/J_u\in \R^n$ exactly in such scenarios. Approximate dynamic programming (ADP) \cite{lspi,lspe,ALP,wang2014approximate} methods compute an approximate value function $\tilde{J}$ instead of $J^*/J_u$. In order to tackle the curse, ADP methods resort to dimensionality reduction by parameterizing the value function and/or the policy. Value-function based ADP methods form an important subclass of ADP methods whose brief overview is given below.
+\emph{Curse-of-dimensionality} is a term used to denote the fact that the number of states and computational costs grow exponentially in the dimensions of the state space. \todoc{This itself won't be a curse, would it be? The problem is that the computation cost also grows exponentially. Note that we never defined what we mean by state variables.}
+Most MDPs arising in practical applications suffer from the curse, i.e., have large number of states and it is difficult to compute $J^*/J_u\in \R^n$ exactly in such scenarios. Approximate dynamic programming (ADP) \cite{lspi,lspe,ALP,wang2014approximate} methods compute an approximate value function $\tilde{J}$ instead of $J^*/J_u$. In order to tackle the curse, ADP methods resort to dimensionality reduction by parametrizing the value function and/or the policy. Value-function based ADP methods form an important subclass of ADP methods whose brief overview is given below.
 
 \subsection{Value-Function based ADP}
-In the value-function based ADP schemes a parameterized family is chosen and the approximate value-function $\tilde{J}$ is picked from the chosen parameterized class.
+In the value-function based ADP schemes a parametrized family is chosen and the approximate value-function $\tilde{J}$ is picked from the chosen parametrized class.
 Once the approximate value function $\tilde{J}$ is computed, a sub-optimal policy $\tilde{u}$ can be obtained as the one-step greedy policy with respect to $\tilde{J}$ by making use of \eqref{subpol}.
 The following lemma characterizes the degree of sub-optimality of the greedy policy $\tilde{u}$.
 \begin{lemma}\label{subopt}
@@ -16,7 +16,7 @@ Let $\tilde{J}$ be the approximate value function and $\tilde{u}$ be as in \eqre
 The quality of any ADP method depends on the approximation guarantees it offers for the quantities $||J^*-\tilde{J}||$ and $||J^*-J_{\tu}||$, where $||\cdot||$ is an appropriate norm. The term  $||J^*-\tilde{J}||$ denotes the error in prediction and $||J^*-J_{\tu}||$ denotes the loss in performance resulting from the sub-optimal policy $\tu$ with respect to the optimal policy $u^*$. Of the two error terms, $||J^*-J_{\tu}||$ is more important because ultimately we are interested in coming up with a useful policy. In the context of ADP methods, the control and prediction problems are said to be addressed when the error terms $||J^*-\tilde{J}||$ and $||J^*-J_{\tu}||$ are bounded by ``small'' constants.
 
 \subsection{Linear Function Approximation}
-The most widely used parameterized class to approximate the value-function is the linear function approximator (LFA). Under LFA, the value-function is approximated as $\tilde{J}=\Phi r^*$, with $\Phi=[\phi_1|\ldots|\phi_k]$ being an $n\times k$ feature matrix and $r^*$ is the parameter to be learnt.
+The most widely used parametrized class to approximate the value-function is the linear function approximator (LFA). Under LFA, the value-function is approximated as $\tilde{J}=\Phi r^*$, with $\Phi=[\phi_1|\ldots|\phi_k]$ being an $n\times k$ feature matrix and $r^*$ is the parameter to be learnt.
 
 There are two important approaches to value function approximation. Both the approaches start out with a basic solution method and appropriately introduce function approximation in it. The two approaches are:
 \begin{enumerate}
