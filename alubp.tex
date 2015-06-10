@@ -4,11 +4,11 @@ We define an approximate least upper bound (ALUB) projection operator which has 
 \begin{definition}\label{alubpop}
 Given $J\in \R^n$, its approximate least upper bound (ALUB) projection is denoted by $\hg J$ and is defined as 
 \begin{align}\label{tgamdef}
-(\hg J)(i)\stackrel{\Delta}{=}(\Phi r_{e_i,J})(i), \mb i=1,\ldots,n,
+(\hg J)(i)\eqdef(\Phi r_{e_i,J})(i), \mb i=1,\ldots,n,
 \end{align}
 where $r_{e_j}$ is a solution to the linear program in \eqref{alubplp} for $c=e_j$, and $e_j$ is the same as in Definition~\ref{lubpop}.
 \begin{align}\label{alubplp}
-r_{c,J}\stackrel{\Delta}{=} & \underset{r\in \N}{\argmin}\mb c^\top \Phi r,\nn\\
+r_{c,J} \eqdef & \underset{r\in \N}{\argmin}\mb c^\top \Phi r,\nn\\
 & \text{s.t.}\,\,\, W^\top E \Phi r\geq W^\top HJ,\,\, W \in \R^{nd\times m}_+ .
 \end{align}
 \end{definition}
@@ -84,7 +84,7 @@ where $\beta=||\Gamma J^*-\hg J^*||_\infty$. Now
 \end{align}
 \end{proof}
 \begin{corollary}\label{cmt1}
-Let $\hv$, $\bj$ be as in Theorem~\ref{mt1} and let $r^*\stackrel{\Delta}{=}\argmin_{r\in \R^k}||J^*-\Phi r||_\infty$, then
+Let $\hv$, $\bj$ be as in Theorem~\ref{mt1} and let $r^*\eqdef\argmin_{r\in \R^k}||J^*-\Phi r||_\infty$, then
 \begin{align}
 ||J^*-\hv||_\infty\leq \frac{2||J^*-\Phi r^*||_\infty+||\Gamma J^*-\hg J^*||_\infty}{1-\alpha}.
 \end{align}

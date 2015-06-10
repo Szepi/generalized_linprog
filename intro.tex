@@ -14,9 +14,12 @@ Or we assume sparsity? Or we assume that one can query the next state distributi
 \todoc{Why do we discuss control and prediction?}
 The optimal value function $J^*$ collects the highest values achievable in each state.
 A policy $u^*$ is optimal if it achieves the optimal value in each state, i.e., if $J^* = J_{u^*}$.
-``Exact'' solution methods for MDPs \cite{BertB} such as value iteration, policy iteration and linear programming 
-compute $J^*$, the optimal value function, 
-which can then be plugged in the Bellman equation (BE) to get the optimal policy $u^*$.
+A key observation that goes back to Bellman is that $J^*$ is the solution of a nonlinear fixed point equation,
+	known as the Bellman equation (BE),
+	and that an optimal policy can be obtained via the knowledge of $J^*$ through this fixed point equation.
+Dynamic programming based solution methods for MDPs \cite{BertB},
+	such as value iteration, policy iteration and linear programming,
+	hence compute $J^*$ to then obtain an optimal policy.
 %Ideally, we would be interested in computing the optimal value function $J^*$ and the optimal policy $u^*$. 
 %Under reasonable conditions, the optimal value function is known to be the fixed point of the (so-called) Bellman equation (BE),
 %in which case $u^*$ can be obtained as a `greedy/one-step look ahead' policy by substituting $J^*$ in the BE. 
@@ -24,7 +27,8 @@ which can then be plugged in the Bellman equation (BE) to get the optimal policy
 %compute $J^*$ and $u^*$ by either directly or indirectly solving the Bellman equation. 
 By computing $J^*$ and $u^*$, the conventional methods address both the prediction and control problems. 
 \todoc{So is the prediction problem to predict $J_{u^*}$?}
-However, in the case of MDPs with large number of states, computing $u^*$ and $J^*$ using the exact methods is infeasible. \todoc{Do we have a source to cite here? What does it mean to solve an MDP anyways? Find an optimal policy? Find a near-optimal policy? I think the story is that knowing the optimal value function helps, but I have not seen any claim that it is \emph{necessary} to compute it to find.}
+However, in the case of MDPs with large number of states, computing $u^*$ and $J^*$ using 
+	these exact methods is infeasible. 
 
 
 \emph{Approximate dynamic programming} (ADP) \cite{dpchapter,powell} 
@@ -35,34 +39,36 @@ The key idea in value-function-only%
 		Since this paper is concerned with results related to the approximate linear programming formulation we do not 
 		discuss other classes of ADP methods such as \emph{actor-only} and \emph{actor-critic} methods.} 
 	(or \emph{critic-only}) ADP methods is to employ a parametrized class of functions
-	to approximate the value functions that occur in the iterations of dynamic programming.
-The most widely used parametrization is linear.
+	to approximate the optimal value function.
+Linear parameterization is the most common.
 Methods employing such a \emph{linear function approximator} (LFA) 
 	approximate the value function as $\Phi r^*$, 
 	where $\Phi$ is a feature matrix whose columns are the basis functions 
 	and $r^*$ is a weight vector to be learned. 
-Computational advantage (in terms of the number of unknowns) 
+A representational advantage (in terms of the number of unknowns) 
 	is achieved by choosing fewer number of basis functions compared to the number of states. 
 Once the set of basis function is chosen, 
 	the way to compute $r^*$ varies across the different ADP methods.
 
-A host of value-function-based ADP methods solve 
-	the \emph{projected Bellman equation} (PBE), 
+Building on policy iteration, a host of value-function-based ADP methods solve 
+	the \emph{projected Bellman equation} (PBE) 
 	which is obtained by including the least squares projection operator in the BE 
-	so as to project quantities onto the lower dimensional subspace. 
+	so as to project the value function onto the lower dimensional subspace. 
 A limitation of using the least squares projection operator is that 
-	it reduces the prediction error $L_2$-norm and cannot in general ensure monotonous policy improvement 
-	which requires the prediction error to be minimum in the $L_\infty$-norm. 
-Due to this norm mismatch, monotonous policy improvement cannot be guaranteed 
-	and \emph{policy-chattering} (policy-oscillations) can occur in practice \cite{dpchapter}. 
-As a result, the performance loss is difficult to control unless 
-	one is willing to assume some extra technical conditions which may be difficult to guarantee in practice 
-	\cite{anszemu:mlj07,FaMuSz10}.
-
+	it minimizes the $L_2$-norm distance to the chosen subspace of linearly parameterized functions 
+	and cannot in general ensure monotonous policy improvement 
+	which requires the distance to be minimum in the $L_\infty$-norm. 
+Due to this norm mismatch, in the lack of monotonous policy improvement 
+	\emph{policy-chattering} (policy-oscillations) can occur \cite{dpchapter}. 
+The performance loss can still be controlled \cite{FaMuSz10}, 
+	though only at the price of posing extra, limiting assumptions on the MDP. 
+	\todoc{How about value-iteration based methods? The paragraph
+	should/could capture both of these..}
+	
 The \emph{approximate linear programming} (ALP) \cite{ALP,CS,SALP,ALP-Bor,gkp,fs,npalp} host of methods 
 	also employs LFA. 
 However, ALP solves a linear program to compute $J^*\approx\tilde{J}=\Phi r^*$, 
-	and computes a one-step greedy policy $\tilde{u}$. 
+	based on which a one-step greedy policy $\tilde{u}$ is then computed as an approximation to $u^*$. 
 Since ALP computes an approximation to $J^*$ and outputs only a single policy $\tilde{u}$, 
 	there is no issue of policy-chattering. 
 The ALP formulation also provides theoretical performance guarantees, 
@@ -89,7 +95,7 @@ Thus, there is a gap in the theoretical understanding of RLP
 	and constraint reduction/approximation. 
 Our aim in this paper is to fill this gap by providing theoretical guarantees 
 	which will make the RLP a complete ADP method that addresses 
-	both the prediction and the control problems. \todoc{Why is ALP and ADP method? Where is the dynamic programming?}
+	both the prediction and the control problems. 
 
 In particular, in this paper we develop a novel theoretical framework 
 	to study a generalized constraint reduction technique 

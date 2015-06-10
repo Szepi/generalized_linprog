@@ -1,12 +1,18 @@
 %!TEX root =  autocontgrlp.tex
 \section{Approximate Dynamic Programming}
-\emph{Curse-of-dimensionality} is a term used to denote the fact that the number of states and computational costs grow exponentially in the dimensions of the state space. \todoc{This itself won't be a curse, would it be? The problem is that the computation cost also grows exponentially. Note that we never defined what we mean by state variables.}
-Most MDPs arising in practical applications suffer from the curse, i.e., have large number of states and it is difficult to compute $J^*/J_u\in \R^n$ exactly in such scenarios. Approximate dynamic programming (ADP) \cite{lspi,lspe,ALP,wang2014approximate} methods compute an approximate value function $\tilde{J}$ instead of $J^*/J_u$. In order to tackle the curse, ADP methods resort to dimensionality reduction by parametrizing the value function and/or the policy. Value-function based ADP methods form an important subclass of ADP methods whose brief overview is given below.
+In practical problems, often the states are best described as multi-dimensional tuples.
+In this context, the term \emph{curse-of-dimensionality} refers to the fact that the number of states
+	grows exponentially as a function of the number of dimensions
+	and thus solution methods whose computation cost grows at least linearly with the size of the state space
+	quickly become intractable.
+%Most MDPs arising in practical applications suffer from the curse, i.e., have large number of states and it is difficult to compute $J^*/J_u\in \R^n$ exactly in such scenarios. 
+Approximate dynamic programming (ADP) \cite{lspi,lspe,ALP,wang2014approximate} methods compute an approximate value function $\tilde{J}$ instead of $J^*/J_u$. 
+In order to tackle the curse, ADP methods resort to dimensionality reduction by parametrizing the value function and/or the policy. Value-function based ADP methods form an important subclass of ADP methods whose brief overview is given below.
 
 \subsection{Value-Function based ADP}
 In the value-function based ADP schemes a parametrized family is chosen and the approximate value-function $\tilde{J}$ is picked from the chosen parametrized class.
 Once the approximate value function $\tilde{J}$ is computed, a sub-optimal policy $\tilde{u}$ can be obtained as the one-step greedy policy with respect to $\tilde{J}$ by making use of \eqref{subpol}.
-The following lemma characterizes the degree of sub-optimality of the greedy policy $\tilde{u}$.
+The following lemma characterizes the degree of sub-optimality of the greedy policy $\tilde{u}$. \todoc{Add citation.}
 \begin{lemma}\label{subopt}
 Let $\tilde{J}$ be the approximate value function and $\tilde{u}$ be as in \eqref{subpol}, then 
 \begin{align}
