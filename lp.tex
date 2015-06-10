@@ -5,7 +5,7 @@ The LP formulation in \eqref{mdplp} can be represented in short as,
 \begin{split}
 \label{mdplpshort}
 \min_{J\in \R^n}\, &c^\top J\\
-\text{s.t}\mb &J\geq T J,
+\text{s.t.}\mb &J\geq T J,
 \end{split}
 \end{align}
 or 
@@ -14,7 +14,7 @@ or
 \begin{split}
 \label{shortalter}
 \min_{J\in \R^n} \,&c^\top J\\
-\text{s.t}\mb &EJ\geq H J,
+\text{s.t.}\mb &EJ\geq H J,
 \end{split}
 \end{align}
 where $J\geq TJ$ is a shorthand for the $nd$ constraints in \eqref{mdplp} and $E$ is an $nd\times n$ matrix given by $E=[I,\ldots,I]^\top$, i.e., $E$ is obtained by stacking $d$ identical $n\times n$ identity matrices one over the other. Note that \eqref{mdplpshort} and \eqref{shortalter} are identical programs and differ only in notation. We use notation of type \eqref{mdplpshort} whenever we prefer brevity and we use notation \eqref{shortalter} in some definitions and proof for the sake of clarity.
@@ -22,7 +22,7 @@ The approximate linear program (ALP) is obtained by making use of LFA in the LP,
 \begin{align}\label{alp}
 \begin{split}
 \min_{r\in \R^k}\, &c^\top \Phi r\\
-\text{s.t}\mb &\Phi r\geq T \Phi r.
+\text{s.t.}\mb &\Phi r\geq T \Phi r.
 \end{split}
 \end{align}
 Unless specified otherwise we use $\tr$ to denote any solution\todoc{instead of saying the solution} to the ALP and $\tj=\Phi \tr$ to denote the corresponding approximate value function. We now state the assumptions and definitions used for the rest of the paper.
@@ -59,7 +59,7 @@ The weighted $L_\infty$-norm is defined as follows:  \todoc{modified $\Rightarro
 \end{align*}
 where $\rho \colon \S \ra \R^+$ is the weighing function and $J\in \R^n$.
 \end{definition}
-In Definition~\ref{modnorm}, the use of the weighting function $\rho$ allows us to measure the error taking into account the relative importance of the various states. A lower value of $\rho(s)$ means that the state $s$ is less important and vice-versa.\\
+In Definition~\ref{modnorm}, the use of the weighting function $\rho$ allows us to measure the error taking into account the relative importance of the various states. A higher value of $\rho(s)$ means that the state $s$ is less important and vice-versa.\\
 We recall below Theorem~$4.2$ of \cite{ALP} which bounds the error in the approximate value function.
 \begin{theorem}\label{restateval}
 Let $\tr$ be the solution to the ALP in \eqref{alp}, $\tilde{J}_c=\Phi \tilde{r}_c$, $\psi$ be a Lyapunov function and $c$ be a distribution as in \eqref{probdist}, then 

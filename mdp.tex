@@ -10,16 +10,19 @@ In the most general case, $\pi_n$ maps $(S \times A)^n \times S$, i.e.,
 	histories $h_n =(s_0,a_0,\dots,s_{n-1},a_{n-1},s_n)$ 
 	of state-action sequences of length $2n+1$, to a distribution over the actions. 
 We denote the class of policies by $\Pi$. 
-The infinite horizon discounted reward corresponding to state $s$ under a policy $\pi$ is denoted by $J_\pi(s)$ and is defined by
+The infinite horizon discounted reward corresponding to state $s$ under a policy $\pi$ is denoted by $J_\pi(s)$ and is defined by \todoc{Explain the meaning of $\eqdef$.}
 \begin{align}
-J_\pi(s)\stackrel{\Delta}{=}\E\left[\sum_{n=0}^\infty \alpha^n g_{a_n}(s_n)\,\Large|\,\pi\right]\,,\nn
+J_\pi(s) \eqdef
+	\E\left[\sum_{n=0}^\infty \alpha^n g_{a_n}(s_n)\,\Large|\,\pi\right]\,,\nn
 \end{align}
 	where $a_{n} \sim \pi_n(\,\cdot\,|s_0,a_0,\dots,s_{n-1},a_{n-1},s_n)$, $s_{n+1} \sim p_{a_n}(s_n,\cdot)$ 
 	and $\alpha \in (0,1)$ is a given discount factor. 
 Here $J_\pi(s)$ is known as the value of the state $s$ under the policy $\pi$, and $J_\pi:S\to \R$ is 
- %the vector quantity $J_\pi\stackrel{\Delta}{=}(J_\pi(s))_{s\in S}\in R^n$ is 
+ %the vector quantity $J_\pi\eqdef(J_\pi(s))_{s\in S}\in R^n$ is 
  called the value-function corresponding to the policy $\pi$. 
- The optimal value function $J^*:S\to \R$ is defined as $J^*(s)\stackrel{def}{=}\underset{\pi \in \Pi}{\max} J_\pi(s)$, $s\in S$.
+ The optimal value function $J^*:S\to \R$ is defined as $J^*(s) \eqdef
+ \sup_{\pi\in\Pi} J_\pi(s)$, $s\in S$.
+ %\underset{\pi \in \Pi}{\sup}\, J_\pi(s)$, $s\in S$.
  
 A stationary deterministic policy (SDP) is one where $\pi_n\equiv u$ for all $n\geq 0$ for some $u\colon S \ra A$
 in the sense that $\pi_n(a|s_0,a_0,\dots,s_{n-1},a_{n-1},s_n)$ is one for $a = u(s_n)$ and is zero elsewhere.
@@ -47,8 +50,10 @@ Any optimal policy $u^*$ and the value function $J^*$ obey the Bellman equation 
 \end{align}
 \end{subequations}
 If $J^*$ is computed first, then $u^*$ can be obtained via \eqref{bellpol}. 
+
 For convenience, in what follows we identify $\R^n$ with $\R^{S}$:
 Any vector $J\in \R^n$ is viewed as a real-valued function over $S$ via $J(s) = J_s$ and vice versa.
+We now define some operators acting on $\R^n$ (equivalently, on $\R^S$) that will be useful later.
 The Bellman operator $T$ is defined using the model parameters of the MDP as follows:
 \begin{definition}
 The Bellman operator $T: \R^n \to \R^n$ is defined by 
@@ -84,6 +89,7 @@ Though in these results, we make use of the Bellman operator $T$, the results al
 %\subsection{Properties of $T$}
 \begin{lemma}\label{maxnorm}
 $T$ is a $\max$-norm contraction operator with contraction factor $\alpha$, i.e., given $J_1, J_2 \in \mathbf{R}^n$,
+\todoc{Introduce $\norm{\cdot}_{\infty}$. Should we have a notation/symbols section?}
 \begin{align}
 ||TJ_1-TJ_2||_\infty\leq \alpha ||J_1-J_2||_\infty.
 \end{align}

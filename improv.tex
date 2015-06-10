@@ -2,7 +2,7 @@
 \section{Improved Bounds}\label{sec:improv}
 In this section, we present improved error bounds by making use of Lyapunov functions. 
 \begin{lemma}\label{bestbndmn}
-Let $r^*\in \R^k$ be defined as $r^*\stackrel{\Delta}{=}\argmin_{r\in R^k}||J^*-\Phi r||_{\infty,1/\psi}$, then 
+Let $r^*\in \R^k$ be defined as $r^*\eqdef\argmin_{r\in R^k}||J^*-\Phi r||_{\infty,1/\psi}$, then 
 \begin{align}
 ||J^*-\bj||_{\infty,1/\psi}\leq 2||J^*-\Phi r^*||_{\infty,1/\psi}.
 \end{align}
@@ -11,7 +11,7 @@ Let $r^*\in \R^k$ be defined as $r^*\stackrel{\Delta}{=}\argmin_{r\in R^k}||J^*-
 The result follows from the definition of $\Gamma$ in \eqref{gamdef}, Assumption~\ref{lyap} and the fact that $\Phi r^*+||J^*-\Phi r^*||_{\infty,1/\psi} \psi\geq TJ^*$.
 \end{proof}
 
-Since most of our analysis in sections~\ref{sec:lubp} and ~\ref{sec:alubp} depended on showing that $\Gamma$ is a contraction map in the $L_\infty$ norm we first show that $\Gamma$ is also a contraction map in the modified $L_\infty$ norm.
+Since most of our analysis in sections~\ref{sec:lubp} and ~\ref{sec:alubp} depended on showing that $\Gamma$ is a contraction map in the $L_\infty$ norm we first show that $\Gamma$ is also a contraction map in the weighted $L_\infty$ norm.
 \begin{lemma}\label{gshiftmn}
 Let $J_1\in \R^n$ and $k\in \R$ be a constant. If $J_2=J_1+k\psi$, then $\Gamma J_2\leq \Gamma J_1+\beta_{\psi} k\psi$.
 \end{lemma}
@@ -19,7 +19,7 @@ Let $J_1\in \R^n$ and $k\in \R$ be a constant. If $J_2=J_1+k\psi$, then $\Gamma 
 The result follows in a similar manner as the proofs for Lemmas~\ref{gshift} and ~\ref{tgshift} by using the result in Lemma~\ref{lpsol}.
 \end{proof}
 \begin{theorem}\label{gmaxcontramn}
-The operator $\Gamma  \colon \R^n\ra \R^n$ is a contraction operator in modified $L_\infty$ with factor $\beta_{\psi}$.
+The operator $\Gamma  \colon \R^n\ra \R^n$ is a contraction operator in weighted $L_\infty$ with factor $\beta_{\psi}$.
 \end{theorem}
 \begin{proof}
 Given $J_1,J_2\in \R^n$ let $\epsilon=||J_1-J_2||_{\infty,1/\psi}$. Thus
@@ -36,13 +36,13 @@ Thus
 \end{align}
 \end{proof}
 \begin{corollary}\label{hgmaxcontramn}
-$\hg$ is also a contraction map in the modified $L_\infty$ norm.
+$\hg$ is also a contraction map in the weighted $L_\infty$ norm.
 \end{corollary}
 \begin{proof}
 Follows from arguments similar to Theorem~\ref{gmaxcontramn}.
 \end{proof}
 \begin{lemma}\label{cmt1mn}
-Let $\hv$, $\bj$ be as in Theorem~\ref{mt1} and let $r^*\stackrel{\Delta}{=}\argmin_{r\in \R^k}||J^*-\Phi r||_{\infty,1/\psi}$ then
+Let $\hv$, $\bj$ be as in Theorem~\ref{mt1} and let $r^*\eqdef\argmin_{r\in \R^k}||J^*-\Phi r||_{\infty,1/\psi}$ then
 \begin{align}
 ||J^*-\hv||_{\infty,1/\psi}\leq \frac{2||J^*-\Phi r^*||_{\infty,1/\psi}+||\Gamma J^*-\hg J^*||_{\infty,1/\psi}}{1-\beta_{\psi}}.
 \end{align}
@@ -59,7 +59,7 @@ Let $\psi$ be a Lyapunov function that belongs to the column span of $\Phi$ , $r
 Then $r'$ is feasible for the ALP in \eqref{alp}. 
 \end{lemma}
 \begin{theorem}\label{mt2mn}
-Let $\hv$ be the solution to the iterative scheme in \eqref{apvi} and let $\hj=\Phi \hr$ be the solution to the GRLP. Let $\bj$ be the best possible approximation to $J^*$ as in Definition~\ref{bestproj}, and $||\Gamma J^* -\hg J^*||_{\infty,1/\psi}$ be the error due to ALUB projection and let $r^*\stackrel{\Delta}{=}\underset{r\in \R^k}{\arg\min}||J^*-\Phi r||_{\infty,1/\psi}$, then
+Let $\hv$ be the solution to the iterative scheme in \eqref{apvi} and let $\hj=\Phi \hr$ be the solution to the GRLP. Let $\bj$ be the best possible approximation to $J^*$ as in Definition~\ref{bestproj}, and $||\Gamma J^* -\hg J^*||_{\infty,1/\psi}$ be the error due to ALUB projection and let $r^*\eqdef\underset{r\in \R^k}{\arg\min}||J^*-\Phi r||_{\infty,1/\psi}$, then
 \begin{align}
 ||\hj-\hv||_{1,c}&\leq \frac{c^\top \psi}{1-\beta_\psi}(4||J^*-\Phi r^*||_{\mn}
 %\nn\\&
@@ -81,7 +81,7 @@ Since $r'$ is also feasible for the GRLP in \eqref{grlp} we have
 &\leq c^\top \psi (||\Phi r'-J^*||_{\infty,1/\psi}+||J^*-\hv||_{\infty,1/\psi}).
 \end{align}
 The result follows from Corollary~\ref{cmt1}.\\
-\textbf{Main Result~$1$: Prediction Error bound in modified $L_\infty$-norm}
+\textbf{Main Result~$1$: Prediction Error bound in weighted $L_\infty$-norm}
 \end{proof}
 \begin{theorem}\label{cmt2mn}
 Let $\hj$, $\hv$, $r^*$ and $J^*$ be as in Theorem~\ref{mt2mn}, then

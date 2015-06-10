@@ -9,7 +9,7 @@ The most important work in the direction of constraint reduction is constraint s
 \end{align}
 where $\I$ is the index set containing the $m$ sampled state-action pairs. Using the index set $\I$ we define an $nd\times m$ matrix $\M$, called the constraint sampling matrix as below.
 \begin{definition}\label{csampmat}
-Let $\I=\{(s_1,a_1),\ldots,(s_m,a_m)\}$ be the sampled state-action pairs and let $q_i\stackrel{\Delta}{=}s_i+(a_i-1)\times n$, $i=1,\ldots,m$. Then the constraint sampling matrix associated with the index set $\I$ is given by
+Let $\I=\{(s_1,a_1),\ldots,(s_m,a_m)\}$ be the sampled state-action pairs and let $q_i \eqdef s_i+(a_i-1)\times n$, $i=1,\ldots,m$. Then the constraint sampling matrix associated with the index set $\I$ is given by
 \begin{align}
 \M(i,j)
 =
@@ -31,9 +31,9 @@ The RLP based on constraint sampling has been found to perform well empirically 
 \begin{definition}\label{sampdist}
 Given a policy $u$ and Lyapunov function $\psi$ in the column span of $\Phi$, we define probability distributions $\mu_u$, $\mu_{u,\psi}$ and constant $\theta$ as 
 \begin{align}
-\mu^\top&\stackrel{\Delta}{=}(1-\alpha)c^\top (I-\alpha P_u)^{-1},\nn\\
-\mu_{u,\psi}(s,a)&\stackrel{\Delta}{=}\frac{\mu_{u}(s) \psi(s)}{\mu_u^\top \psi d},\nn\\
-\theta&\stackrel{\Delta}{=}\frac{(1+\beta_{\psi})}{2}\frac{\mu_{u^*}^\top \psi}{c^\top J^*}\sup_{r\in \N}||J^*-\Phi r||_{\mn}.
+\mu^\top& \eqdef (1-\alpha)c^\top (I-\alpha P_u)^{-1},\nn\\
+\mu_{u,\psi}(s,a)&\eqdef\frac{\mu_{u}(s) \psi(s)}{\mu_u^\top \psi d},\nn\\
+\theta&\eqdef\frac{(1+\beta_{\psi})}{2}\frac{\mu_{u^*}^\top \psi}{c^\top J^*}\sup_{r\in \N}||J^*-\Phi r||_{\mn}.
 \end{align}
 \end{definition}
 We now recall Theorem~$3.1$ of \cite{CS} below.
