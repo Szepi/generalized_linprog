@@ -68,17 +68,20 @@ The error bound will be given in terms of a Lyapunov function $\psi$ for $P$ tha
 $\psi\colon S \ra \R_+$ is a Lyapunov function for $P$
 and is present in the column span of the feature matrix $\Phi$.
 \end{assumption}
-It is straightforward to check that the vector $\one$ when viewed as a $S \to \R_+$ function 
+It is straightforward to check that the vector $\one$ when viewed as an $S \to \R_+$ function 
 is a Lyapunov function. 
 Further, by \cref{one}, $\one$ is trivially present in the column span of $\Phi$, 
 hence, \cref{lyap} is not limiting.
+In what follows we will always assume that Assumptions \ref{probdist}--\ref{lyap} hold. 
 
 %In Definition~\ref{modnorm}, the use of the weighting function $\rho$ allows us to measure the error taking into account the relative importance of the various states. A higher value of $\rho(s)$ means that the state $s$ is less important and vice-versa.\\
 With this, we can recall the said result.  %below  which bounds the error in the approximate value function.
 \begin{theorem}[Theorem~$4.2$ of \cite{ALP}]
 \label{restateval}
-Let $\tr$ be the solution to the ALP in \eqref{alp}, $\tilde{J}_c=\Phi \tilde{r}_c$, $\psi$ be as in \cref{lyap} 
-and $c$ be a distribution as in \eqref{probdist}. Then, it holds that
+Let $\tr$ be the solution to the ALP in \eqref{alp}, $\tilde{J}_c=\Phi \tilde{r}_c$.
+% $\psi$ be as in \cref{lyap} 
+%and $c$ be a distribution as in \eqref{probdist}. 
+Then, it holds that
 \begin{align*}
 ||J^*-\tj||_{1,c}\leq \frac{2c^\top \psi}{1-\beta_{\psi}}\min_{r}||J^*-\Phi r||_{\mn}\,.
 \end{align*}
@@ -86,12 +89,12 @@ and $c$ be a distribution as in \eqref{probdist}. Then, it holds that
 The next result  the loss in performance of a policy that is greedy w.r.t. $J_{\tu}$:
 \begin{theorem}[Theorem~$3.1$ of \cite{ALP}]
 \label{restatepol}
-Let $\tilde{u}$ be the greedy policy with respect to the solution $\tj$ of the ALP, then 
+Let $\tilde{u}$ be the greedy policy with respect to the solution $\tj$ of the ALP. Then,
 \begin{align*}
 ||J^*-J_{\tu}||_{1,c}\leq \frac{1}{1-\alpha}||J^*-\tj||_{1,c'}\,,
 \end{align*}
 where $c'=(1-\alpha)c^\top(I-\alpha P_{\tu})^{-1}$.
 \end{theorem}
 Theorems~\ref{restateval} and ~\ref{restatepol} together imply that the ALP addresses both the control and prediction problems. Please refer to \cite{ALP} for a more detailed treatment of the ALP.\\
-Note that the ALP is a linear program in $k$ ($<<n$) variables as opposed to the LP in \eqref{mdplpshort} which has $n$ variables. Nevertheless, the ALP has $nd$ constraints (same as the LP) which is an issue when $n$ is large and calls for constraint approximation/reduction techniques.
+Note that the ALP is a linear program in $k$ ($\ll n$) variables as opposed to the LP in \eqref{mdplpshort} which has $n$ variables. Nevertheless, the ALP has $nd$ constraints (same as the LP) which is an issue when $n$ is large and calls for constraint approximation/reduction techniques.
 \todoc{Column generation, Dantzig-Wolf decomposition?}

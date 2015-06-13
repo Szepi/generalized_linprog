@@ -2,13 +2,13 @@
 \section{Improved Bounds}\label{sec:improv}
 In this section, we present improved error bounds by making use of Lyapunov functions. 
 \begin{lemma}\label{bestbndmn}
-Let $r^*\in \R^k$ be defined as $r^*\eqdef\argmin_{r\in R^k}||J^*-\Phi r||_{\infty,1/\psi}$, then 
+Let $r^*\in \R^k$ be defined as $r^*\eqdef\argmin_{r\in R^k}||J^*-\Phi r||_{\mn}$, then 
 \begin{align}
-||J^*-\bj||_{\infty,1/\psi}\leq 2||J^*-\Phi r^*||_{\infty,1/\psi}.
+||J^*-\bj||_{\mn}\leq 2||J^*-\Phi r^*||_{\mn}.
 \end{align}
 \end{lemma}
 \begin{proof}
-The result follows from the definition of $\Gamma$ in \eqref{gamdef}, Assumption~\ref{lyap} and the fact that $\Phi r^*+||J^*-\Phi r^*||_{\infty,1/\psi} \psi\geq TJ^*$.
+The result follows from the definition of $\Gamma$ in \eqref{gamdef}, Assumption~\ref{lyap} and the fact that $\Phi r^*+||J^*-\Phi r^*||_{\mn} \psi\geq TJ^*$.
 \end{proof}
 
 Since most of our analysis in sections~\ref{sec:lubp} and ~\ref{sec:alubp} depended on showing that $\Gamma$ is a contraction map in the $L_\infty$ norm we first show that $\Gamma$ is also a contraction map in the weighted $L_\infty$ norm.
@@ -22,7 +22,7 @@ The result follows in a similar manner as the proofs for Lemmas~\ref{gshift} and
 The operator $\Gamma  \colon \R^n\ra \R^n$ is a contraction operator in weighted $L_\infty$ with factor $\beta_{\psi}$.
 \end{theorem}
 \begin{proof}
-Given $J_1,J_2\in \R^n$ let $\epsilon=||J_1-J_2||_{\infty,1/\psi}$. Thus
+Given $J_1,J_2\in \R^n$ let $\epsilon=||J_1-J_2||_{\mn}$. Thus
 \begin{align}\label{ineq}
 J_2-\epsilon\psi\leq J_1\leq J_2+\epsilon \psi.
 \end{align}
@@ -32,7 +32,7 @@ From Lemmas~\ref{gmonotone} and ~\ref{gshiftmn}, we can write
 \end{align}
 Thus
 \begin{align}
-||\Gamma J_1-\Gamma J_2||_{\infty,1/\psi}\leq \beta_{\psi} ||J_1-J_2||_{\infty,1/\psi}.
+||\Gamma J_1-\Gamma J_2||_{\mn}\leq \beta_{\psi} ||J_1-J_2||_{\mn}.
 \end{align}
 \end{proof}
 \begin{corollary}\label{hgmaxcontramn}
@@ -42,13 +42,13 @@ $\hg$ is also a contraction map in the weighted $L_\infty$ norm.
 Follows from arguments similar to Theorem~\ref{gmaxcontramn}.
 \end{proof}
 \begin{lemma}\label{cmt1mn}
-Let $\hv$, $\bj$ be as in Theorem~\ref{mt1} and let $r^*\eqdef\argmin_{r\in \R^k}||J^*-\Phi r||_{\infty,1/\psi}$ then
+Let $\hv$, $\bj$ be as in Theorem~\ref{mt1} and let $r^*\eqdef\argmin_{r\in \R^k}||J^*-\Phi r||_{\mn}$ then
 \begin{align}
-||J^*-\hv||_{\infty,1/\psi}\leq \frac{2||J^*-\Phi r^*||_{\infty,1/\psi}+||\Gamma J^*-\hg J^*||_{\infty,1/\psi}}{1-\beta_{\psi}}.
+||J^*-\hv||_{\mn}\leq \frac{2||J^*-\Phi r^*||_{\mn}+||\Gamma J^*-\hg J^*||_{\mn}}{1-\beta_{\psi}}.
 \end{align}
 \end{lemma}
 \begin{proof}
-The proof follows from Lemma~\ref{gmaxcontramn}, Corollary~\ref{hgmaxcontramn} and by replacing the $||\cdot||_\infty$ norm by $||\cdot||_{\infty,1/\psi}$ in the arguments presented in sections~\ref{sec:lubp} and ~\ref{sec:alubp} leading to Corollary~\ref{cmt1}.
+The proof follows from Lemma~\ref{gmaxcontramn}, Corollary~\ref{hgmaxcontramn} and by replacing the $||\cdot||_\infty$ norm by $||\cdot||_{\mn}$ in the arguments presented in sections~\ref{sec:lubp} and ~\ref{sec:alubp} leading to Corollary~\ref{cmt1}.
 \end{proof}
 
 We now recall Lemma~$4.5$ of \cite{ALP}. \todoc{You had 4.3 here, but in the official journal version this seems to be Lemma 5 in Section 4.}
@@ -60,7 +60,7 @@ Let $\psi$ be a Lyapunov function that belongs to the column span of $\Phi$ , $r
 Then $r'$ is feasible for the ALP in \eqref{alp}. 
 \end{lemma}
 \begin{theorem}\label{mt2mn}
-Let $\hv$ be the solution to the iterative scheme in \eqref{apvi} and let $\hj=\Phi \hr$ be the solution to the GRLP. Let $\bj$ be the best possible approximation to $J^*$ as in Definition~\ref{bestproj}, and $||\Gamma J^* -\hg J^*||_{\infty,1/\psi}$ be the error due to ALUB projection and let $r^*\eqdef\underset{r\in \R^k}{\arg\min}||J^*-\Phi r||_{\infty,1/\psi}$, then
+Let $\hv$ be the solution to the iterative scheme in \eqref{apvi} and let $\hj=\Phi \hr$ be the solution to the GRLP. Let $\bj$ be the best possible approximation to $J^*$ as in Definition~\ref{bestproj}, and $||\Gamma J^* -\hg J^*||_{\mn}$ be the error due to ALUB projection and let $r^*\eqdef\underset{r\in \R^k}{\arg\min}||J^*-\Phi r||_{\mn}$, then
 \begin{align}
 ||\hj-\hv||_{1,c}&\leq \frac{c^\top \psi}{1-\beta_\psi}(4||J^*-\Phi r^*||_{\mn}
 %\nn\\&
@@ -68,7 +68,7 @@ Let $\hv$ be the solution to the iterative scheme in \eqref{apvi} and let $\hj=\
 \end{align}
 \end{theorem}
 \begin{proof}
-Let $\gamma=||J^*-\Phi r^*||_{\infty,1/\psi}$, then by choosing $r'$ as in Lemma~\ref{restate} we have
+Let $\gamma=||J^*-\Phi r^*||_{\mn}$, then by choosing $r'$ as in Lemma~\ref{restate} we have
 \begin{align}
 ||\Phi r'-J^*||_{\mn}&\leq ||\Phi r^*-J^*||_{\mn}+||\Phi r'-\Phi r^*||_{\mn}\nn\\
 &=\gamma+\frac{1+\beta_\psi}{1-\beta_\psi}\gamma\nn\\
@@ -78,8 +78,8 @@ Since $r'$ is also feasible for the GRLP in \eqref{grlp} we have
 \begin{align}
 ||\hj-\hv||_{1,c}&\leq||\Phi r'-\hv||_{1,c}\nn\\
 &=\sum_{s\in S}c(s)\psi(s)\frac{|\Phi r'(s)-\hv(s)|}{\psi(s)}\nn\\
-&\leq c^\top \psi ||\Phi r'-\hv||_{\infty,1/\psi}\nn\\
-&\leq c^\top \psi (||\Phi r'-J^*||_{\infty,1/\psi}+||J^*-\hv||_{\infty,1/\psi}).
+&\leq c^\top \psi ||\Phi r'-\hv||_{\mn}\nn\\
+&\leq c^\top \psi (||\Phi r'-J^*||_{\mn}+||J^*-\hv||_{\mn}).
 \end{align}
 The result follows from Corollary~\ref{cmt1}.\\
 \textbf{Main Result~$1$: Prediction Error bound in weighted $L_\infty$-norm}
