@@ -17,63 +17,81 @@ or
 \text{s.t.}\mb &EJ\geq H J,
 \end{split}
 \end{align}
-where $J\geq TJ$ is a shorthand for the $nd$ constraints in \eqref{mdplp} and $E$ is an $nd\times n$ matrix given by $E=[I,\ldots,I]^\top$, i.e., $E$ is obtained by stacking $d$ identical $n\times n$ identity matrices one over the other. Note that \eqref{mdplpshort} and \eqref{shortalter} are identical programs and differ only in notation. We use notation of type \eqref{mdplpshort} whenever we prefer brevity and we use notation \eqref{shortalter} in some definitions and proof for the sake of clarity.
-The approximate linear program (ALP) is obtained by making use of LFA in the LP, i.e., by letting $J=\Phi r$ in \eqref{mdplpshort} and is given as
+where $J\geq TJ$ is a shorthand for the $nd$ constraints in \eqref{mdplp} and $E$ is an $nd\times n$ matrix given by $E=[I,\ldots,I]^\top$, i.e., $E$ is obtained by stacking $d$ identical $n\times n$ identity matrices one over the other. Note that \eqref{mdplpshort} and \eqref{shortalter} are identical programs and differ only in notation. We use notation of type \eqref{mdplpshort} whenever we prefer brevity and we use notation \eqref{shortalter} in some definitions and proofs for the sake of clarity.
+Recall that the vector $c\in \R^n$ must have positive entries to guarantee that the unique solution to the above LP is the optimal value function. By convention, we will also assume that $c$ is also normalized:
+\begin{assumption}\label{probdist}
+$c=(c(i),i=1,\ldots,n)\in \R^n$ is a positive probability distribution, i.e., $c(i)>0$ and $\sum_{i=1}^n c(i)=1$.
+\todoc{I am pretty sure the positivity is needed.}
+\end{assumption}
+
+The approximate linear program (ALP) is obtained by making use of LFA in the LP, i.e., by adding the extra constraint $J=\Phi r$ in \eqref{mdplpshort} with $\Phi \in \R^{n\times k}$ and the new variables $r\in \R^k$. 
+By substitution, this leads to
 \begin{align}\label{alp}
 \begin{split}
 \min_{r\in \R^k}\, &c^\top \Phi r\\
 \text{s.t.}\mb &\Phi r\geq T \Phi r.
 \end{split}
 \end{align}
-Unless specified otherwise we use $\tr$ to denote any solution\todoc{instead of saying the solution} to the ALP and $\tj=\Phi \tr$ to denote the corresponding approximate value function. We now state the assumptions and definitions used for the rest of the paper.
+Unless specified otherwise we use $\tr$ to denote any solution\todoc{instead of saying the solution} to the ALP and $\tj=\Phi \tr$ to denote the corresponding approximate value function. 
+The extra constraint added that $J$ lies in the (column) span of $\Phi$ could lead to an infeasible LP. An easy way to prevent this is if the vector $\one$ whose components are all equal to one is in the span of $\Phi$.
+Indeed, by \cref{shift}, for any $t\in \R$, $T (t\one ) =  \alpha t \one+T \zero \le \alpha t \one + \max_{s,a} g_a(s)$, hence $t\one \ge \alpha t \one+T\zero $ happens as soon as
+$t\ge \frac{1}{1-\alpha}\max_{s,a} g_a(s)$. 
+This leads to the following assumption:
 \begin{assumption}\label{one}
-The first column of the feature matrix $\Phi$ (i.e., $\phi_1$) is $\one \in \R^n$. In other words, the constant function is part of the basis.
+The first column of the feature matrix $\Phi$ (i.e., $\phi_1$) is $\one \in \R^n$. 
+In other words, the constant function is part of the basis.
 \end{assumption}
-\begin{assumption}\label{probdist}
-$c=(c(i),i=1,\ldots,n)\in \R^n$ is a probability distribution, i.e., $c(i)\geq 0$ and $\sum_{i=1}^n c(i)=1$.
-\end{assumption}
-\begin{definition}
-Given a function $\chi\colon S\ra \R^+$ we define the quantity $\beta_{\chi}$ as
+
+We will now recall two results due to de Farias and Van Roy 
+	that bound the error due to the introduction of the extra constraint in the ALP.
+For this, we will need the definition of weighted $L_1$ and $L_\infty$ norms.
+For any $c,\rho:S \to \R$ positive valued functions
+the weighted $L_1$-norms $\norm{\cdot}_{1,c}$ 
+and 
+the weighted $L_\infty$-norms  $\norm{\cdot}_{\infty,\rho}$ are defined as
+\begin{align*}
+||J||_{1,c}=\sum_{s \in S} c(s)|J(s)|\,, \qquad
+||J||_{\infty,\rho}=\max_{s \in S} \frac{|J(s)|}{\rho(s)}\,, \qquad J:S\to \R\,.
+\end{align*}
+
+We let $\R_+$ denote the set of nonnegative reals. \todoc{Move up?}
+For any function $\chi\colon S\ra \R_+$, define the discounted maximal inflation of $\chi$ due to $P = (p_a)_{a\in A}$ as
 \begin{align*}
 \beta_{\chi}=\max_{s \in S} \frac{\underset{a \in A}{\max}\big(\alpha\sum_{s'}p_a(s,s')\chi(s')\big)}{\chi(s)}\,.
 \end{align*}
-\end{definition}
 \begin{definition}
-The function $\chi$ is then said to be a \emph{Lyapunov} function if $\beta_{\chi}<1$.
+A function $\chi:S\to\R_+$ is said to be a \emph{Lyapunov} function for $P = (p_a)_{a\in A}$ 
+	if $\beta_{\chi}<1$.
 \end{definition}
+The error bound will be given in terms of a Lyapunov function $\psi$ for $P$ that is in the column span of $\Phi$:
 \begin{assumption}\label{lyap}
-$\psi\colon S \ra \R^+$ is a Lyapunov function and is present in the column span of the feature matrix $\Phi$.
+$\psi\colon S \ra \R_+$ is a Lyapunov function for $P$
+and is present in the column span of the feature matrix $\Phi$.
 \end{assumption}
-It is straightforward to check that the function $\one$ is a Lyapunov function and trivially is present in the column span of $\Phi$. 
-\begin{definition}\label{modlone}
-The weighted $L_1$-norm is defined as \todoc{modified $\Rightarrow$ weighted?}
+It is straightforward to check that the vector $\one$ when viewed as a $S \to \R_+$ function 
+is a Lyapunov function. 
+Further, by \cref{one}, $\one$ is trivially present in the column span of $\Phi$, 
+hence, \cref{lyap} is not limiting.
+
+%In Definition~\ref{modnorm}, the use of the weighting function $\rho$ allows us to measure the error taking into account the relative importance of the various states. A higher value of $\rho(s)$ means that the state $s$ is less important and vice-versa.\\
+With this, we can recall the said result.  %below  which bounds the error in the approximate value function.
+\begin{theorem}[Theorem~$4.2$ of \cite{ALP}]
+\label{restateval}
+Let $\tr$ be the solution to the ALP in \eqref{alp}, $\tilde{J}_c=\Phi \tilde{r}_c$, $\psi$ be as in \cref{lyap} 
+and $c$ be a distribution as in \eqref{probdist}. Then, it holds that
 \begin{align*}
-||J||_{1,c}=\sum_{s \in S} c(s)|J(s)|,
-\end{align*}
-where $c$ obeys Assumption~\ref{probdist}.
-\end{definition}
-\begin{definition}\label{modnorm}
-The weighted $L_\infty$-norm is defined as follows:  \todoc{modified $\Rightarrow$ weighted? Also, the convention in math is to divide in the case of the $L_{\infty}$ norm. Not a high priority to change this, but maybe it would be good to do this in the longer term.}
-\begin{align*}
-||J||_{\infty,\rho}=\max_{s \in S} \frac{|J(s)|}{\rho(s)},
-\end{align*}
-where $\rho \colon \S \ra \R^+$ is the weighing function and $J\in \R^n$.
-\end{definition}
-In Definition~\ref{modnorm}, the use of the weighting function $\rho$ allows us to measure the error taking into account the relative importance of the various states. A higher value of $\rho(s)$ means that the state $s$ is less important and vice-versa.\\
-We recall below Theorem~$4.2$ of \cite{ALP} which bounds the error in the approximate value function.
-\begin{theorem}\label{restateval}
-Let $\tr$ be the solution to the ALP in \eqref{alp}, $\tilde{J}_c=\Phi \tilde{r}_c$, $\psi$ be a Lyapunov function and $c$ be a distribution as in \eqref{probdist}, then 
-\begin{align*}
-||J^*-\tj||_{1,c}\leq \frac{2c^\top \psi}{1-\beta_{\psi}}\min_{r}||J^*-\Phi r||_{\mn}.
+||J^*-\tj||_{1,c}\leq \frac{2c^\top \psi}{1-\beta_{\psi}}\min_{r}||J^*-\Phi r||_{\mn}\,.
 \end{align*}
 \end{theorem}
-We now recall Theorem~$3.1$ of \cite{ALP} that characterizes the loss in performance of the greedy policy.
-\begin{theorem}\label{restatepol}
+The next result  the loss in performance of a policy that is greedy w.r.t. $J_{\tu}$:
+\begin{theorem}[Theorem~$3.1$ of \cite{ALP}]
+\label{restatepol}
 Let $\tilde{u}$ be the greedy policy with respect to the solution $\tj$ of the ALP, then 
 \begin{align*}
-||J^*-J_{\tu}||_{1,c}\leq \frac{1}{1-\alpha}||J^*-\tj||_{1,c'},
+||J^*-J_{\tu}||_{1,c}\leq \frac{1}{1-\alpha}||J^*-\tj||_{1,c'}\,,
 \end{align*}
 where $c'=(1-\alpha)c^\top(I-\alpha P_{\tu})^{-1}$.
 \end{theorem}
 Theorems~\ref{restateval} and ~\ref{restatepol} together imply that the ALP addresses both the control and prediction problems. Please refer to \cite{ALP} for a more detailed treatment of the ALP.\\
 Note that the ALP is a linear program in $k$ ($<<n$) variables as opposed to the LP in \eqref{mdplpshort} which has $n$ variables. Nevertheless, the ALP has $nd$ constraints (same as the LP) which is an issue when $n$ is large and calls for constraint approximation/reduction techniques.
+\todoc{Column generation, Dantzig-Wolf decomposition?}
