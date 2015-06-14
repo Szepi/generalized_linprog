@@ -38,13 +38,18 @@ The RLP based on constraint sampling has been found to perform well empirically 
 %\begin{definition}\label{sampdist}
 Given a policy $u$, a Lyapunov function $\psi$ in the column span of $\Phi$
 and a probability distribution $c$ over the states
-we define probability distributions $\mu_{u,c}$, $\mu_{u,\c,\psi}$ and constant $\theta_{u,c,\psi}$ as 
+we define probability distributions $\mu_{u,c}$, $\mu_{u,c,\psi}$ and constant $\theta_{u,c,\psi}$ as 
 \begin{align}
 \mu_{u,c}^\top& \eqdef (1-\alpha)c^\top (I-\alpha P_u)^{-1},\nn\\
 \mu_{u,c,\psi}(s,a)&\eqdef (d \, \mu_u^\top \psi)^{-1} \, \mu_{u}(s) \psi(s),\nn\qquad s\in \S,a\in  \A\,,\\
-\theta_{u,c,\psi} &\eqdef\mfrac{(1+\beta_{\psi})}{2} \, \mfrac{\mu_{u,c}^\top \,\psi}{c^\top J^*}\, \sup_{r\in \N}||J^*-\Phi r||_{\mn}.
+\theta_{u,c,\psi} &\eqdef\mfrac{(1+\beta_{\psi})}{2} \, \mfrac{\mu_{u,c}^\top \,\psi}{\norm{J^*}_{1,c}}\, \sup_{r\in \N}||J^*-\Phi r||_{\mn}.
 \end{align}
 %\end{definition}
+Note that in the definition of $\theta_{u,c,\psi}$ the \emph{supremum} 
+of the error of approximating $J^*$ by the LFA over $\N$ appears.
+De Farias and Van Roy show through an example how this term can still be reasonable controlled  \cite{CS}.
+\todoc{If we avoid this, this would be great!}
+
 We now recall Theorem~$3.1$ of \cite{CS} below. \todoc{Assumptions? }
 \begin{theorem}\label{csresult}
 Let $\epsilon$ and $\delta$ be scalars in $(0,1)$,
