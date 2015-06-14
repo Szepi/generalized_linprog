@@ -14,11 +14,15 @@ For $2\le i \le k$, $\sup_{r\in \N} | e_i^\top r | <+\infty$.
 \item \label{ass:n3}
 For each $1\le i \le n$, there exists a solution $r_i\in \R^k$ to the ALP \eqref{alp} with $c = e_i$ such that
 $r_i\in \N$.
+\item \label{ass:n4}
+For each $1\le i \le n$, there exists a solution $r_i\in \R^k$ to the GRLP \eqref{grlp} with $c = e_i$ such that
+$r_i\in \N$.
 \end{enumerate}
 \end{assumption}
 Recalling that the first column vector of $\Phi$ is $\one$, \eqref{ass:n1} implies that $\{\Phi r \,:\,r\in \N \}$ is invariant to shifts by constants, a property that will prove to be useful.
 Part~\eqref{ass:n2} is required to guarantee that solutions to the LPs we define below are bounded.
-To satisfy \eqref{ass:n2} and \eqref{ass:n3} simultaneously, it is enough to select $\N$ to be contained in 
+To satisfy \eqref{ass:n2}, \eqref{ass:n3} and \eqref{ass:n4} 
+simultaneously, it is enough to select $\N$ to be contained in 
 $\{ r = (r_1,\dots,r_k)^\top \in \R^k \,:\, \max_{2\le i \le k} |r_i| \le r_{\max} \}$ with $r_{\max}>0$ sufficiently large.
 \todoc{Can we calculate an a priori bound on how $r_{\max}$ should be? It is a major weakness if we cannot
 suggest a way to define $\N$.}
@@ -156,7 +160,8 @@ Then, $V_n$ converges to the the unique fixed point $\tv$ of $\Gamma$.
 \end{corollary}
 \fi
 Define $\tv$ denote the unique fixed point of $\Gamma$.
-\todoc{Poor choice of symbols: $\tv$ is the fixed point of $\Gamma$ and $\hat{V}$ will be the fixed point of $\tilde{\Gamma}$? Hmm.. Not a high priority to change it, but still..}
+\todoc{I am mildly unhappy with denoting the fixed point of $\Gamma$ by $\tv$, but much happier with denoting
+the fixed point of $\hg$ by $\hv$. So this is progress:)}
 \begin{lemma}\label{gfp}
 The vector $\tv$ obeys $\tv\geq T\tv$.
 \end{lemma}
@@ -181,7 +186,7 @@ such that $r_1,\dots,r_n\in \N$. It is possible to find such solutions thanks to
 Define $V_0\in \R^n$ by $V_0(i)=\underset{j=1,\ldots, n}{\min}(\Phi r_j)(i)$, $1\le i \le n$. 
 It is clear from the definition of $V_0$ that $\tj(i), \Phi r_j(i) \geq\Phi r_i(i)\geq V_0(i)$, $1\le i,j \le n$. 
 Also from the monotone property of $T$, we have $T\Phi r_j\geq T V_0$,
-hence we also have,
+hence, by the definition of $r_j$ we also have,
 $\Phi r_j\geq T\Phi r_j \geq T V_0$, 
 and so by taking component-wise minimum,
 $V_0 \geq T V_0$.
