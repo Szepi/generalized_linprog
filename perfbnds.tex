@@ -2,14 +2,14 @@
 Recall that $\bj = \Gamma J^*$.
 \begin{theorem}\label{fxpres}
 %Let $\tv$ be the fixed point of the iterative scheme in \eqref{pvi} and let $\bj$ be the best possible LUB projection of $J^*$ as in Definition~\ref{bestproj}. Then,
-We have \todoc{Must add conditions.}
+We have 
 \begin{align}
 ||J^*-\tv||_\infty\leq \frac{1}{1-\alpha}||J^*-\bj||_\infty\,.
 \end{align}
 \end{theorem}
 \begin{proof}
-Note that by definition $\bj = \Gamma J^*$.
-Hence, by the triangle inequality and since $\Gamma$ is an $\alpha$-contraction,
+Recall that $\bj = \Gamma J^*$.
+Now, by the triangle inequality and since $\Gamma$ is an $\alpha$-contraction,
 \begin{align*}
 \inorm{J^* - \tv } \le \inorm{ J^* - \Gamma J^* } + \inorm{\Gamma J^* - \Gamma \tv }
 \le  \inorm{ J^* - \bj } + \alpha \inorm{J^* - \tv}\,.

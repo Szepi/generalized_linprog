@@ -24,7 +24,8 @@ $c=(c(i),i=1,\ldots,n)\in \R^n$ is a positive probability distribution, i.e., $c
 \todoc{I am pretty sure the positivity is needed.}
 \end{assumption}
 
-The approximate linear program (ALP) is obtained by making use of LFA in the LP, i.e., by adding the extra constraint $J=\Phi r$ in \eqref{mdplpshort} with $\Phi \in \R^{n\times k}$ and the new variables $r\in \R^k$. 
+The approximate linear program (ALP) is obtained by making use of LFA in the LP, i.e., by adding the extra constraint $J=\Phi r$ in \eqref{mdplpshort} with $\Phi \in \R^{n\times k}$ and introducing 
+the new variables $r\in \R^k$. 
 By substitution, this leads to
 \begin{align}\label{alp}
 \begin{split}
@@ -32,7 +33,8 @@ By substitution, this leads to
 \text{s.t.}\mb &\Phi r\geq T \Phi r.
 \end{split}
 \end{align}
-Unless specified otherwise we use $\tr$ to denote any solution\todoc{instead of saying the solution} to the ALP and $\tj=\Phi \tr$ to denote the corresponding approximate value function. 
+Unless specified otherwise we use $\tr$ to denote any solution 
+to the ALP and $\tj=\Phi \tr$ to denote the corresponding approximate value function. 
 The extra constraint added that $J$ lies in the (column) span of $\Phi$ could lead to an infeasible LP. An easy way to prevent this is if the vector $\one$ whose components are all equal to one is in the span of $\Phi$.
 Indeed, by \cref{shift}, for any $t\in \R$, $T (t\one ) =  \alpha t \one+T \zero \le \alpha t \one + \max_{s,a} g_a(s)$, hence $t\one \ge \alpha t \one+T\zero $ happens as soon as
 $t\ge \frac{1}{1-\alpha}\max_{s,a} g_a(s)$. 
@@ -41,6 +43,7 @@ This leads to the following assumption:
 The first column of the feature matrix $\Phi$ (i.e., $\phi_1$) is $\one \in \R^n$. 
 In other words, the constant function is part of the basis.
 \end{assumption}
+Under this assumption \eqref{alp} is thus feasible and since \eqref{alp} is obtained by adding an extra constraint to the LP \eqref{mdplpshort}, the solutions to  \eqref{alp} are bounded and $\tj$ is uniquely defined.
 
 We will now recall two results due to de Farias and Van Roy 
 	that bound the error due to the introduction of the extra constraint in the ALP.

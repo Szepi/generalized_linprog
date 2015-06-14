@@ -1,17 +1,31 @@
 %!TEX root =  autocontgrlp.tex
 \section{Least Upper Bound Projection}\label{sec:lubp}
 Let $e_j$ denote the $j$th basis vector in the standard Euclidean bases of $\R^n$.
+We make the following assumption on $\N$:
+\begin{assumption}
+\label{ass:n}
+The set $\N$ satisfies the following conditions:
+\begin{enumerate}[(i)]
+\item \label{ass:n1}
+For any $t\in \R$, $t e_1 + \N \eqdef \{ r + t e_1 \,:\, r\in \N \} = \N$, i.e., 
+$\N$ is invariant to shifts by vectors of the form $t e_1$.
+\item \label{ass:n2}
+For $2\le k \le n$, $\sup_{r\in \N} | e_k^\top r | <+\infty$.
+\item \label{ass:n3}
+For each $1\le i \le n$, there exists a solution $r_i\in \R^k$ to the ALP \eqref{alp} with $c = e_i$ such that
+$r_i\in \N$.
+\end{enumerate}
+\end{assumption}
 The least upper bound (LUB) projection operator $\Gamma \colon \R^n \ra\R^n$ is defined as below:
 \begin{definition}\label{lubpop}
-Given $J\in \R^n$, $c\in \R^n$ positive-valued vector define $r_{c,J}$ to be the solution to 
+Given $J\in \R^n$ and the nonnegative valued vector $c\in \R^n_+$, define $r_{c,J}$ to be the solution to 
 \begin{align}
 \label{lubplp}
 \begin{split}
- \underset{r\in \N}{\min} &\,\, c^\top \Phi r\,,\\
- \text{s.t.}& \mb \Phi r\geq  TJ\,,
+ \underset{r\in \R^k}{\min} &\,\, c^\top \Phi r\,,\\
+ \text{s.t.}& \mb \Phi r\geq  TJ\,, \qquad r\in \N\,.
  \end{split}
 \end{align}
-where it is assumed that a (bounded) solution exists.
 Then, for $J\in \R^n$, $\Gamma J$,
 the least upper bound projection of $J$ is defined as 
 \begin{align}\label{gamdef}
@@ -22,12 +36,21 @@ the least upper bound projection of $J$ is defined as
 \begin{remark}\label{lubremark}
 The following hold: 
 \begin{enumerate}
+\item Thanks to \cref{ass:n} \eqref{ass:n1} and \eqref{ass:n2}, 
+for arbitrary $J$ and arbitrary \emph{nonnegative valued} $c$,
+ $\Phi r_{c,J}$ is uniquely defined.
+Indeed, although $r_{c,J}$ might not be unique, but $\Phi r$ where $r$ belongs to the feasible
+ region underlying \eqref{lubplp}, is bounded from below, hence  $\Phi r_{c,J}$ is uniquely defined.
+It also follows that $\Gamma$ is well-defined.
 \item Assuming that $\N$ is polyhedral, 
 	the definition of LUB operator $\Gamma \colon \R^n \ra \R^n$ involves $n$ associated linear programs.
 \item It holds that $\Gamma J\geq TJ$ (this follows from the fact that if $a\geq c$ and $b\geq c$, then $\min(a,b)\geq c$, where $a, b, c \in \R$).
-\item Given $J\in \R^n$, define $\F_J\eqdef\{\,\Phi r\,|\,\Phi r\geq TJ, r\in \N\,\}$. 
+\item Given $J\in \R^n$, define 
+\begin{align*}
+\F_J\eqdef\{\,\Phi r\,|\,\Phi r\geq TJ, r\in \N\,\}\,.
+\end{align*}
 Thus $\F_J$ contains vectors in the span of $\Phi$ that upper bound $TJ$. 
-Further, since $(\Gamma J)(i) = \min\{ V(i) \,|\, V\in \F_J \}$, it also follows that $\Gamma J \le V$ for any $V\in \F_J$.
+Further, since $(\Gamma J)(i) = \min\{ V(i) \,|\, V\in \F_J \}$, it also follows that $\Gamma J \le V$ holds for any $V\in \F_J$.
 %By fixing $c$ in the linear program in \eqref{lubplp} we select a unique vector $\Phi r_c \in \F$. The LUB projection operator $\Gamma$ picks $n$ vectors $\Phi r_{e_i},i=1,\ldots,n$ from the set $\F$ and $\Gamma J$ is obtained by computing their component-wise minimum.
 \item Even though $\Gamma J$ does not belong to the span of $\Phi$, $\Gamma J$ collates the various best upper bounds that can be obtained via the linear program in \eqref{lubplp}.
 \begin{comment}
@@ -36,13 +59,18 @@ In fact, it is not hard to observe that $(\Gamma J)(i) = (\Phi r_{e_i})(i)$ for 
 \end{comment}
 \end{enumerate}
 \end{remark}
-\begin{definition}\label{bestproj}
-The LUB projection of $J^*$ is denoted by $\bj=\Gamma J^*$. \todoc{It is a bit strange to call this a definition. A numbered equation could be enough.}
-\end{definition}
+%\begin{definition}\label{bestproj}
+%\end{definition}
 We now characterize the LUB projection operator $\Gamma$ in the following lemmas. 
-As mentioned earlier, the error analysis depends on two $\max$-norm contraction operators the first of which is $\Gamma$. The important result of this section is Theorem~\ref{fxpres} and it relates the fixed point $\tv$ of $\Gamma$ to $J^*$.
-\todoc{Poor choice of symbols: $\tv$ is the fixed point of $\Gamma$ and $\hat{V}$ will be the fixed point of $\tilde{\Gamma}$? Hmm.. Not a high priority to change it, but still..}
-In what follows, we let $r^*\in \R^k$ be defined as $r^*\eqdef\argmin_{r\in R^k}||J^*-\Phi r||_\infty$.
+%As mentioned earlier, the error analysis depends on two $\max$-norm contraction operators the first of which is $\Gamma$. The important result of this section is Theorem~\ref{fxpres} and it relates the fixed point $\tv$ of $\Gamma$ to $J^*$.
+In what follows, we let $r^*\in \R^k$, $\bj\in \R^n$ be defined by
+\begin{align*}
+r^* & \eqdef \argmin_{r\in R^k}||J^*-\Phi r||_\infty\,\\
+\bj & \eqdef \Gamma J^*\,.
+\end{align*}
+If $r^*$ is non-unique, one may choose any minimizer.
+We will now show that $\Gamma$ is a contraction and that its fixed point is close to $J^*$ as long as $\bj$ is closed to $J^*$.
+The following lemma shows that this latter always holds as long as $\Phi$ is well-chosen:
 \begin{lemma}\label{bestbnd}
 It holds that
 \begin{align}
@@ -72,6 +100,9 @@ Thus,
 \fi
 \end{proof}
 
+We now show that $\Gamma$ is a contraction. 
+By \cref{maxnorm}, it suffices to show that $\Gamma$ is monotone and linear along $[\one]$-rays.
+We start with monotonicity.
 \begin{lemma}\label{gmonotone}
 For $J_1, J_2\in \R^n$ such that $J_1\geq J_2$, we have $\Gamma J_1\geq \Gamma J_2$.
 \end{lemma}
@@ -83,9 +114,9 @@ Since $i$ was arbitrary, the result follows.
 \end{proof}
 \begin{lemma}\label{lpsol}
 Let $A\in \R^{u\times v}$, $b,c\in \R^u$ and $b_0=Ax_0$ for 
-some $x_0 \in \R^v$, $\N \subset \R^v$. Then
+some $x_0 \in \R^v$, $\N \subset \R^v$ such that $\N =x_0+ \N$. Then
 \begin{align}
-\min\{c^\top Ax:Ax\geq b+b_0, x\in \N\} =\min\{c^\top A y:Ay \geq b, y+x_0 \in \N \}+c^\top b_0.
+\min\{c^\top Ax:Ax\geq b+b_0, x\in \N\} =\min\{c^\top A y:Ay \geq b, y \in \N \}+c^\top b_0.
 \end{align}
 \end{lemma}
 \begin{proof}
@@ -93,14 +124,12 @@ The claim follows by the change of variables $y := x-x_0$.
 \end{proof}
 \begin{lemma}\label{gshift}
 Let $J\in \R^n$ and $t\in \R$ be a constant.
-Then, $\Gamma (J+t\one) = \Gamma J + \alpha t \one$ provided that $r\in \N$ holds if and only $r+s e_1\in \N$ holds for any $s\in \R$.
+Then, $\Gamma (J+t\one) = \Gamma J + \alpha t \one$.
 \end{lemma}
 \begin{proof}
 Consider the $i^{th}$ linear programs associated with $\Gamma J$ and $\Gamma (J+ t\one)$. 
 The result follows by using Lemma~\ref{lpsol} with $A=\Phi$, $b=TJ$, $c=e_i$, $b_0=\alpha t\mathbf{1}$ 
-and $x_0=\alpha t e_1$, noting that by our assumption on $\N$,
-$\{ y\,: \, \Phi y \geq TJ, y + \alpha t e_1\in \N \}
-= \{ y\,: \, \Phi y \geq TJ, y \in \N \}$. \todoc{This is where this assumption is needed.}
+and $x_0=\alpha t e_1$, noting that by our assumption on $\N$, $\N = \N + \alpha t e_1$.
 \end{proof}
 \begin{theorem}\label{gmaxcontra}
 The operator $\Gamma  \colon \R^n\ra \R^n$ obeys the $\max$-norm contraction property with factor $\alpha$.
@@ -117,26 +146,29 @@ V_{n+1}&=\Gamma V_n, \quad n\geq 0\,.
 Then, $V_n$ converges to the the unique fixed point $\tv$ of $\Gamma$.
 \end{corollary}
 \fi
-Define $\tv$ to be the unique fixed point of $\Gamma$.
+Define $\tv$ denote the unique fixed point of $\Gamma$.
+\todoc{Poor choice of symbols: $\tv$ is the fixed point of $\Gamma$ and $\hat{V}$ will be the fixed point of $\tilde{\Gamma}$? Hmm.. Not a high priority to change it, but still..}
 \begin{lemma}\label{gfp}
 The vector $\tv$ obeys $\tv\geq T\tv$.
 \end{lemma}
 \begin{proof}
-Let $1\le i \le n$. We have $\tv(i) = (\Gamma \tv)(i) = (\Phi r_{e_i,\tv})(i) \ge (T\tv)(i)$.
+From the definitions we have $\tv(i) = (\Gamma \tv)(i) = (\Phi r_{e_i,\tv})(i) \ge (T\tv)(i)$, $1\le i \le n$.
 \if0
 Consider the $i^{th}$ linear program associated with $\Gamma \tv$. We know that $\Phi r_{e_i}\geq T \tv$, for all $i=1,\ldots, n$. The result follows from noting that $\tv$ is the unique fixed point of $\Gamma $ and that $\tv(i)=(\Phi r_{e_i,V})(i)$.
 \fi
 \end{proof}
 Recall that $\tj$ denotes the solution to the ALP in \eqref{alp}.
+The fixed point of $\Gamma$ is sandwiched between $J^*$ and $\tj$:
 \begin{lemma}\label{relation1}
-Assume that $\N$ is such that if $r_i$ is
-the solution to the ALP in \eqref{alp} for $c=e_i$ then $r_i\in \N$, $1\le i \le n$.
+%Assume that $\N$ is such that if $r_i$ is
+%the solution to the ALP in \eqref{alp} for $c=e_i$ then $r_i\in \N$, $1\le i \le n$.
 % $\tv$, the unique fixed point of the iterative scheme \eqref{pvi}, and the solution $\tj$ to the ALP in \eqref{alp}, obey 
-Then, the relation $\tj\geq\tv\geq J^*$ holds.
+The relation $\tj\geq\tv\geq J^*$ holds.
 \end{lemma}
 \begin{proof}
 Since $\tv\geq T\tv$ it follows that $\tv\geq J^*$. 
-%Let $\Phi r_1, \Phi r_2,\ldots,\Phi r_n$ be solutions to the ALP in \eqref{alp} for $c=e_1, e_2,\ldots,e_n$ respectively. 
+Let $r_1, r_2,\ldots, r_n$ be solutions to the ALP in \eqref{alp} for $c=e_1, e_2,\ldots,e_n$ respectively
+such that $r_1,\dots,r_n\in \N$. It is possible to find such solutions thanks to \cref{ass:n} \eqref{ass:n3}.
 Define $V_0\in \R^n$ by $V_0(i)=\underset{j=1,\ldots, n}{\min}(\Phi r_j)(i)$, $1\le i \le n$. 
 It is clear from the definition of $V_0$ that $\tj(i), \Phi r_j(i) \geq\Phi r_i(i)\geq V_0(i)$, $1\le i,j \le n$. 
 Also from the monotone property of $T$, we have $T\Phi r_j\geq T V_0$,
@@ -148,7 +180,8 @@ $V_0 \geq T V_0$.
 Now let $V_{n+1} = \Gamma V_n$, $n=0,1,\dots$. Then, $V_1(i) = (\Gamma V_0)(i) = \min\{ V(i) \,:\, V\in \F_{V_0} \}
 \le \min\{ V(i) \,:\, V\ge V_0, V = \Phi r, r\in \N \} \le \min\{ V(i)\,:\, V \ge V_0, V = \Phi r_j, 1\le j \le n \} = V_0(i)$,
 where in the last step we used that $r_1,\dots,r_n \in \N$.
-Hence, $V_1 \le V_0$. Using~\cref{gmonotone}, we then get $V_{n+1}\le V_n$ for $n\ge 0$ and thus 
+Hence, $V_1 \le V_0$. Using the monotone property of $\Gamma$ (i.e., \cref{gmonotone})
+we then get $V_{n+1}\le V_n$ for $n\ge 0$ and thus 
 $\tj\geq V_0\geq V_1\ldots\geq \tv \geq J^*$.
 \end{proof}
 \input{perfbnds}
