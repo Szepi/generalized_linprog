@@ -3,8 +3,8 @@
 In this section we present the generalized reduced linear program (GRLP) which is obtained by replacing the set of sampled constraints in the RLP by a set of constraints which are obtained as linear combinations of the original constraints of the ALP. Formally, we define the generalized reduced linear program (GRLP) as follows:
 \begin{align}\label{grlp}
 \begin{split}
-\underset{r\in \N}{\min}\, &\, c^\top \Phi r,\\
-\text{s.t.}\mb & \,W^\top E\Phi r\geq W^\top H \Phi r, 
+\underset{r\in \R^k}{\min}\, &\, c^\top \Phi r,\\
+\text{s.t.}\mb & \,W^\top E\Phi r\geq W^\top H \Phi r, \qquad r\in \N\,,
 \end{split}
 \end{align}
 where $W \in \R_+^{nd\times m}$ is an $nd\times m$ matrix with all nonnegative entries and 

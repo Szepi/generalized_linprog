@@ -2,61 +2,74 @@
 \section{A simple bound}
 The following lemmas relate the fixed point $\hv$ of $\hg$ to the solution $\hj$ of the GRLP in \eqref{grlp}.
 \begin{lemma}\label{srw}
-The vector
+A vector
 $\hat{r} \in \R^k$ is a solution to GRLP \eqref{grlp} iff it solves the following program:
 \begin{align}\label{grlpeqprog}
 \begin{split}
 \min_{r\in \R^k}\, &||\Phi r-\hv||_{1,c}\\
-\text{s.t.}\mb &\, W^\top \Phi r\geq W^\top T \Phi r\,, \qquad r\in \N\,.
+\text{s.t.}\mb &\, W^\top E \Phi r\geq W^\top H \Phi r\,, \qquad r\in \N\,.
 \end{split}
 \end{align}
 \end{lemma}
 \begin{proof}
-We know from Lemma~\ref{relation2} that $\hj\geq\hv$, and thus minimizing 
+We know from Lemma~\ref{relation2} that $\hj = \Phi \hr \geq\hv$, and thus
+the solutions to \eqref{grlp} do not change if we add the constraint $\Phi r \ge \hv$.
+Now, under this constraint, minimizing $c^\top \Phi r$ is the same as
+ minimizing 
 \begin{align*}
-||\Phi r-\hv||_{1,c}=\sum_{i=1}^n c(i) |(\Phi r)(i)-\hv(i)|=c^\top \Phi r-c^\top \hv
+||\Phi r-\hv||_{1,c}=\sum_{i=1}^n c(i) |(\Phi r)(i)-\hv(i)|=c^\top \Phi r-c^\top \hv\,.
 \end{align*} 
-is the same as minimizing $c^\top \Phi r$.
 \end{proof}
 \begin{theorem}\label{mt2}
-Let $\hv$ be the solution to the iterative scheme in \eqref{apvi} and let $\hj=\Phi \hr$ be the solution to the GRLP. Let $\bj$ be the best possible approximation to $J^*$ as in Definition~\ref{bestproj}, and $||\Gamma J^* -\hg J^*||_\infty$ be the error due to ALUB projection and let $r^*\eqdef\underset{r\in \R^k}{\arg\min}||J^*-\Phi r||_\infty$, then
+%Let $\hv$ be the solution to the iterative scheme in \eqref{apvi} and let $\hj=\Phi \hr$ be the solution to the GRLP. Let $\bj$ be the best possible approximation to $J^*$ as in Definition~\ref{bestproj}, and $||\Gamma J^* -\hg J^*||_\infty$ be the error due to ALUB projection and let $r^*\eqdef\underset{r\in \R^k}{\arg\min}||J^*-\Phi r||_\infty$, then
+It holds that
 \begin{align}
 ||\hj-\hv||_{1,c}\leq\frac{4||J^*-\Phi r^*||_\infty+||\Gamma J^*-\hg J^*||_\infty}{1-\alpha}.
 \end{align}
 \end{theorem}
 \begin{proof}
-Let $\gamma=||J^*-\Phi r^*||_\infty$, then  it is easy to see that
-\begin{align}
-||J^*-T\Phi r^*||_\infty&=||TJ^*-T\Phi r^*||_\infty\leq\alpha\gamma,\mb\text{and}\nn\\
-||T\Phi r^*-\Phi r^*||_\infty&\leq(1+\alpha)\gamma.
+Let $\gamma=||J^*-\Phi r^*||_\infty$. Then, since $T$ is an $\alpha$-contraction in the $\max$-norm,
+$||J^*-T\Phi r^*||_\infty=||TJ^*-T\Phi r^*||_\infty\leq\alpha\gamma$ and hence by the triangle inequality,
+\begin{align}\label{eq:tphir}
+||T\Phi r^*-\Phi r^*||_\infty&\leq(1+\alpha)\gamma\,.
 \end{align}
-From Assumption~\ref{one} there exists $r'= r^*+\frac{(1+\alpha)\gamma}{1-\alpha}\one$ and $r'$ is feasible to the ALP. \todoc{Why not just state that let $r' = r^* + \frac{(1+\alpha)\gamma}{1-\alpha} e_1$?}
-Now
-\begin{align}
-||\Phi r'-J^*||_\infty&\leq ||\Phi r^* -J^*||_\infty+||\Phi r'-\Phi r^*||_\infty\nn\\&\leq \gamma+\frac{(1+\alpha)\gamma}{1-\alpha}=\frac{2\gamma}{1-\alpha}.
-\label{mt2eq1}
-\end{align}
-Since $r'$ is also feasible for GRLP in \eqref{grlp} we have
+Let $r'= r^*+t e_1$ with $t>0$ to be chosen later.
+Then, from \cref{one},
+$T\Phi r' = T(\Phi r^* + t \one) = T \Phi r^* + \alpha t \one \le \Phi r^* + (\alpha t+ (1+\alpha) \gamma) \one$,
+ where the inequality follows from~\eqref{eq:tphir}.
+ Choosing $t$ so that $t = \alpha t+ (1+\alpha) \gamma$, or $t = \frac{(1+\alpha)\gamma}{1-\alpha}$, we get
+ that $T\Phi r' \le \Phi r'$. Hence, $r'$ is feasible to the ALP \eqref{alp} and 
+since, thanks to \cref{wassump}, 
+any feasible solution to \eqref{alp} is also a feasible solution to the GRLP  \eqref{grlp},
+$r'$ is also feasible to \eqref{grlp}. Thus, 
 \begin{align}
 ||\hj-\hv||_{1,c}&\leq||\Phi r'-\hv||_{1,c}\nn &(\text{thanks to Lemma~\ref{srw}}) \\ %\vspace{10pt}
 &\leq||\Phi r'-\hv||_\infty\mb & (\text{since $c$ is a distribution})\nn\\
-&\leq||\Phi r'-J^*||_\infty+||J^*-\hv||_\infty\,.\nn
+&\leq||\Phi r'-J^*||_\infty+||J^*-\hv||_\infty\,. & (\text{triangle inequality}) \label{mt2eq0}
 \end{align}
-The result follows from \eqref{mt2eq1} and Corollary~\ref{cmt1}.
+Now, by another triangle inequality,
+\begin{align}
+||\Phi r'-J^*||_\infty&\leq ||\Phi r^* -J^*||_\infty+||\Phi r'-\Phi r^*||_\infty
+\leq \gamma+\frac{(1+\alpha)\gamma}{1-\alpha}=\frac{2\gamma}{1-\alpha}.
+\label{mt2eq1}
+\end{align}
+The result follows by combining this bound with \eqref{mt2eq0} and Corollary~\ref{cmt1}.
 \end{proof}
 
-\paragraph{Prediction Error bound in the $L_\infty$-norm.}
-\begin{corollary}\label{cmt2}
-Let $\hj$, $\hv$, $r^*$ and $J^*$ be as in Theorem~\ref{mt2}, then \todoc{Where is the effect of $\chi$?}
+\begin{corollary}[Prediction error bound]
+\label{cmt2}
+%Let $\hj$, $\hv$, $r^*$ and $J^*$ be as in Theorem~\ref{mt2}, then \todoc{Where is the effect of $\chi$?}
+We have
 \begin{align}\label{finalbnd}
-||J^*-\hj||_{1,c}\leq\frac{6 ||J^*-\Phi r^*||_\infty+2||\Gamma J^*-\hg J^*||_\infty}{1-\alpha}.
+||J^*-\hj||_{1,c}\leq\frac{6 ||J^*-\Phi r^*||_\infty+2||\Gamma J^*-\hg J^*||_\infty}{1-\alpha}\,.
 \end{align}
 \end{corollary}
 \begin{proof}
-\begin{align}
-||J^*-\hj||_{1,c}&\leq||J^*-\hv||_{1,c}+||\hv-\hj||_{1,c}\nn\\
-&\leq||J^*-\hv||_\infty+||\hv-\hj||_{1,c}\nn
-\end{align}
+We have
+$
+||J^*-\hj||_{1,c}\leq||J^*-\hv||_{1,c}+||\hv-\hj||_{1,c}
+\leq||J^*-\hv||_\infty+||\hv-\hj||_{1,c}
+$.
 The result now follows from Corollary~\ref{cmt1} and Theorem~\ref{mt2}.
 \end{proof}
-The results presented in Corollary~\ref{cmt2} is in the $L_\infty$-norm. In the next section, we use of Lyapunov functions to provide an improved bound in a modified $L_\infty$-norm.
+The results presented in Corollary~\ref{cmt2} is in the $L_\infty$-norm. In the next section, we make use of Lyapunov functions to provide an improved bound in the weighted $L_\infty$-norm.
