@@ -1,44 +1,65 @@
 %!TEX root =  autocontgrlp.tex
 \section{Least Upper Bound Projection}\label{sec:lubp}
+Let $e_j$ denote the $j$th basis vector in the standard Euclidean bases of $\R^n$.
 The least upper bound (LUB) projection operator $\Gamma \colon \R^n \ra\R^n$ is defined as below:
 \begin{definition}\label{lubpop}
-Given $J\in \R^n$, its least upper bound projection is denoted by $\Gamma J$ and is defined as 
-\begin{align}\label{gamdef}
-(\Gamma J)(i)\eqdef(\Phi r_{e_i,J})(i),\quad i=1,\ldots,n,
+Given $J\in \R^n$, $c\in \R^n$ positive-valued vector define $r_{c,J}$ to be the solution to 
+\begin{align}
+\label{lubplp}
+\begin{split}
+ \underset{r\in \N}{\min} &\,\, c^\top \Phi r\,,\\
+ \text{s.t.}& \mb \Phi r\geq  TJ\,,
+ \end{split}
 \end{align}
-where $V(i)$ denotes the $i^{th}$ component of the vector $V\in \R^n$. Also in \eqref{gamdef}, $e_j$ is the vector with $1$ in the $j^{th}$ place and zeros elsewhere, and $r_{e_j}$ is a solution to the linear program in \eqref{lubplp} for $c=e_j$:
-\begin{align}\label{lubplp}
- r_{c,J}   \eqdef& \underset{r\in \N}{\argmin} \mbox{ } c^\top \Phi r,\nn\\
- \text{s.t.}& \mb \Phi r\geq  TJ.
+where it is assumed that a (bounded) solution exists.
+Then, for $J\in \R^n$, $\Gamma J$,
+the least upper bound projection of $J$ is defined as 
+\begin{align}\label{gamdef}
+(\Gamma J)(i)\eqdef(\Phi r_{e_i,J})(i),\quad i=1,\ldots,n\,.
 \end{align}
 \end{definition}
 %Note that $r_{e_j}$ depends on $J$, but this dependence is suppressed to reduce clutter. 
-\begin{remark}
+\begin{remark}\label{lubremark}
+The following hold: 
 \begin{enumerate}
-\item The definition of LUB operator $\Gamma \colon \R^n \ra \R^n$ involves $n$ associated linear programs.
-\item Observe that $\Gamma J\geq TJ$ (follows from the fact that if $a\geq c$ and $b\geq c$, then $\min(a,b)\geq c$, where $a, b, c \in \R$).
-\item Given $\Phi$ and $J\in \R^n$, define $\F\eqdef\{\Phi r|\Phi r\geq TJ\}$. Thus $\F$ is the set of all vectors in the span of $\Phi$ that upper bound $TJ$. By fixing $c$ in the linear program in \eqref{lubplp} we select a unique vector $\Phi r_c \in \F$. The LUB projection operator $\Gamma$ picks $n$ vectors $\Phi r_{e_i},i=1,\ldots,n$ from the set $\F$ and $\Gamma J$ is obtained by computing their component-wise minimum.
+\item Assuming that $\N$ is polyhedral, 
+	the definition of LUB operator $\Gamma \colon \R^n \ra \R^n$ involves $n$ associated linear programs.
+\item It holds that $\Gamma J\geq TJ$ (this follows from the fact that if $a\geq c$ and $b\geq c$, then $\min(a,b)\geq c$, where $a, b, c \in \R$).
+\item Given $J\in \R^n$, define $\F_J\eqdef\{\,\Phi r\,|\,\Phi r\geq TJ, r\in \N\,\}$. 
+Thus $\F_J$ contains vectors in the span of $\Phi$ that upper bound $TJ$. 
+Further, since $(\Gamma J)(i) = \min\{ V(i) \,|\, V\in \F_J \}$, it also follows that $\Gamma J \le V$ for any $V\in \F_J$.
+%By fixing $c$ in the linear program in \eqref{lubplp} we select a unique vector $\Phi r_c \in \F$. The LUB projection operator $\Gamma$ picks $n$ vectors $\Phi r_{e_i},i=1,\ldots,n$ from the set $\F$ and $\Gamma J$ is obtained by computing their component-wise minimum.
 \item Even though $\Gamma J$ does not belong to the span of $\Phi$, $\Gamma J$ collates the various best upper bounds that can be obtained via the linear program in \eqref{lubplp}.
 \begin{comment}
 \item The LUB operator $\Gamma$ in \eqref{gamdef} bears close similarity to the ALP in \eqref{alp}.
 In fact, it is not hard to observe that $(\Gamma J)(i) = (\Phi r_{e_i})(i)$ for any $1\le i \le n$; the reason $\Gamma$ is defined the way it is so that this resembles to \eqref{alp} will be clear. 
 \end{comment}
-\todoc{In fact, I would prefer the simpler definition without the $\min$ and then changing this remark.}
 \end{enumerate}
 \end{remark}
 \begin{definition}\label{bestproj}
-The LUB projection of $J^*$ is denoted by $\bj=\Gamma J^*$.
+The LUB projection of $J^*$ is denoted by $\bj=\Gamma J^*$. \todoc{It is a bit strange to call this a definition. A numbered equation could be enough.}
 \end{definition}
 We now characterize the LUB projection operator $\Gamma$ in the following lemmas. 
 As mentioned earlier, the error analysis depends on two $\max$-norm contraction operators the first of which is $\Gamma$. The important result of this section is Theorem~\ref{fxpres} and it relates the fixed point $\tv$ of $\Gamma$ to $J^*$.
 \todoc{Poor choice of symbols: $\tv$ is the fixed point of $\Gamma$ and $\hat{V}$ will be the fixed point of $\tilde{\Gamma}$? Hmm.. Not a high priority to change it, but still..}
+In what follows, we let $r^*\in \R^k$ be defined as $r^*\eqdef\argmin_{r\in R^k}||J^*-\Phi r||_\infty$.
 \begin{lemma}\label{bestbnd}
-Let $r^*\in \R^k$ be defined as $r^*\eqdef\argmin_{r\in R^k}||J^*-\Phi r||_\infty$, then 
+It holds that
 \begin{align}
-||J^*-\bj||_\infty\leq 2||J^*-\Phi r^*||_\infty.
+||J^*-\bj||_\infty\leq 2||J^*-\Phi r^*||_\infty\,.
 \end{align}
 \end{lemma}
 \begin{proof}
+By our earlier remark, 
+\begin{align} \label{eq:jtjgj}
+J^* = T J^* \le \Gamma J^*\,.
+\end{align}
+Define $\eps = \norm{J^* - \Phi r^*}_{\infty}$. Then, $\Phi(r^* + \eps e_1) = \Phi r^* + \eps \one \ge J^* = TJ^*$.
+Hence, $\Phi(r^* + \eps e_1) \in \F_{J^*}$ and thus
+by Remark~\ref{lubremark}, $\Phi(r^* + \eps e_1) \ge \Gamma J^*$. This, together with~\eqref{eq:jtjgj} means that
+$J^* \le \Gamma J^* \le \Phi r^* + \eps \one$ and thus
+$0 \le \Gamma J^* - J^* \le \Phi r^* - J^* + \eps \one \le 2 \eps \one$. Taking maximum over the components gives the result.
+\if0
 The result follows from the definition of $\Gamma$ in \eqref{gamdef} and the construction of $V_0$, Assumption~\ref{one}, and the fact that $\Phi r^*+||J^*-\Phi r^*||_\infty \one\geq TJ^*$. To see this, note that
 \begin{align}
 \Gamma J^*=\hj \geq J^*,\nn \text{ and }
@@ -48,42 +69,46 @@ Thus,
 \begin{align}
 \Phi r^* +||J^*-\Phi r^*||_\infty\geq \Gamma J^*\geq TJ^*.
 \end{align}
+\fi
 \end{proof}
 
 \begin{lemma}\label{gmonotone}
 For $J_1, J_2\in \R^n$ such that $J_1\geq J_2$, we have $\Gamma J_1\geq \Gamma J_2$.
 \end{lemma}
 \begin{proof}
-Choose any $i\in \{1,\ldots,n\}$ and let $r_{e_i,J_1}$ and $r_{e_i,J_2}$ be solutions to the linear program in \eqref{lubplp} for $c=e_i$ with $J=J_1$ and $J=J_2$ respectively. Since $J_1\geq J_2$, we have $TJ_1\geq TJ_2$ and $e_i^\top \Phi r_{e_i,J_1} \geq e_i^\top \Phi r_{e_i,J_2}$, i.e., $(\Phi r_{e_i,J_1})(i)\geq (\Phi r_{e_i,J_2})(i)$. The result follows from the fact that $(\Gamma J)(i)=(\Phi r_{e_i,J})(i)$, $J\in \R^n$, and our choice of $i$ was arbitrary.
+Choose any $i\in \{1,\ldots,n\}$. 
+Since $J_1\geq J_2$, we have $TJ_1\geq TJ_2$.
+Hence, $\F_{J_1} \subset \F_{J_2}$ and thus $(\Gamma J_1)(i) \ge (\Gamma J_2)(i)$. 
+Since $i$ was arbitrary, the result follows.
 \end{proof}
 \begin{lemma}\label{lpsol}
-Let $A\in \R^{u\times v}$, $b,c\in R^u$, $x_0 \in R^v$ and $b_0=Ax_0$. Then
+Let $A\in \R^{u\times v}$, $b,c\in \R^u$ and $b_0=Ax_0$ for 
+some $x_0 \in \R^v$, $\N \subset \R^v$. Then
 \begin{align}
-\min\{c^\top Ax:Ax\geq b+b_0\} =\min\{c^\top Ax:Ax\geq b\}+c^\top b_0.
+\min\{c^\top Ax:Ax\geq b+b_0, x\in \N\} =\min\{c^\top A y:Ay \geq b, y+x_0 \in \N \}+c^\top b_0.
 \end{align}
 \end{lemma}
 \begin{proof}
-The claim can be shown by a simple change of variables.
+The claim follows by the change of variables $y := x-x_0$.
 \end{proof}
 \begin{lemma}\label{gshift}
-Let $J_1\in \R^n$ and $t\in \R$ be a constant. If $J_2=J_1+t\one$, then $\Gamma J_2=\Gamma J_1+\alpha t\one$.
+Let $J\in \R^n$ and $t\in \R$ be a constant.
+Then, $\Gamma (J+t\one) = \Gamma J + \alpha t \one$ provided that $r\in \N$ holds if and only $r+s e_1\in \N$ holds for any $s\in \R$.
 \end{lemma}
 \begin{proof}
-Consider the $i^{th}$ linear programs associated with $\Gamma J_1$ and $\Gamma J_2$. The result follows by using Lemma~\ref{lpsol} with $A=\Phi$, $b=TJ$, $c=e_i$, $b_0=\alpha t\mathbf{1}$ and $x_0=\alpha t e_i$.
+Consider the $i^{th}$ linear programs associated with $\Gamma J$ and $\Gamma (J+ t\one)$. 
+The result follows by using Lemma~\ref{lpsol} with $A=\Phi$, $b=TJ$, $c=e_i$, $b_0=\alpha t\mathbf{1}$ 
+and $x_0=\alpha t e_1$, noting that by our assumption on $\N$,
+$\{ y\,: \, \Phi y \geq TJ, y + \alpha t e_1\in \N \}
+= \{ y\,: \, \Phi y \geq TJ, y \in \N \}$. \todoc{This is where this assumption is needed.}
 \end{proof}
 \begin{theorem}\label{gmaxcontra}
 The operator $\Gamma  \colon \R^n\ra \R^n$ obeys the $\max$-norm contraction property with factor $\alpha$.
 \end{theorem}
 \begin{proof}
-Given $J_1,J_2\in \R^n,$ let $\epsilon=||J_1-J_2||_\infty$. Thus,
-\begin{align}\label{ineq}
-J_2-\epsilon\one\leq J_1\leq J_2+\epsilon \one.
-\end{align}
-From Lemmas~\ref{gmonotone} and ~\ref{gshift}, we can write
-\begin{align}\label{ineq}
-\Gamma J_2-\alpha \epsilon\one\leq \Gamma J_1\leq \Gamma J_2+\alpha \epsilon\one.
-\end{align}
+The statement follows immediately from Lemmas~\ref{gmonotone} and~\ref{gshift}, and \cref{maxnorm}.
 \end{proof}
+\if0
 \begin{corollary}
 Let $V_0$ be arbitrary and $(V_n)$ be defined recursively by
 \begin{align}\label{pvi}
@@ -91,26 +116,39 @@ V_{n+1}&=\Gamma V_n, \quad n\geq 0\,.
 \end{align}
 Then, $V_n$ converges to the the unique fixed point $\tv$ of $\Gamma$.
 \end{corollary}
+\fi
+Define $\tv$ to be the unique fixed point of $\Gamma$.
 \begin{lemma}\label{gfp}
- $\tv$, the unique fixed point of the iterative scheme \eqref{pvi}, obeys $\tv\geq T\tv$.
+The vector $\tv$ obeys $\tv\geq T\tv$.
 \end{lemma}
 \begin{proof}
+Let $1\le i \le n$. We have $\tv(i) = (\Gamma \tv)(i) = (\Phi r_{e_i,\tv})(i) \ge (T\tv)(i)$.
+\if0
 Consider the $i^{th}$ linear program associated with $\Gamma \tv$. We know that $\Phi r_{e_i}\geq T \tv$, for all $i=1,\ldots, n$. The result follows from noting that $\tv$ is the unique fixed point of $\Gamma $ and that $\tv(i)=(\Phi r_{e_i,V})(i)$.
+\fi
 \end{proof}
+Recall that $\tj$ denotes the solution to the ALP in \eqref{alp}.
 \begin{lemma}\label{relation1}
- $\tv$, the unique fixed point of the iterative scheme \eqref{pvi}, and the solution $\tj$ to the ALP in \eqref{alp}, obey the relation $\tj\geq\tv\geq J^*$.
+Assume that $\N$ is such that if $r_i$ is
+the solution to the ALP in \eqref{alp} for $c=e_i$ then $r_i\in \N$, $1\le i \le n$.
+% $\tv$, the unique fixed point of the iterative scheme \eqref{pvi}, and the solution $\tj$ to the ALP in \eqref{alp}, obey 
+Then, the relation $\tj\geq\tv\geq J^*$ holds.
 \end{lemma}
 \begin{proof}
-Since $\tv\geq T\tv$ it follows that $\tv\geq J^*$. Let $\Phi r_1, \Phi r_2,\ldots,\Phi r_n$ be solutions to the ALP in \eqref{alp} for $c=e_1, e_2,\ldots,e_n$ respectively. Now consider the iterative scheme in \eqref{pvi} with $V_0(i)=\underset{j=1,\ldots, n}{\min}(\Phi r_j)(i)$. It is clear from the definition of $V_0$ that $\tj(i)\geq\Phi r_i(i)\geq V_0(i)$, $i=1,\ldots,n$. Also from the monotone property of $T$, we have 
-\begin{align}\label{lineq}
-\Phi r_i&\geq V_0,\nn\\
-T\Phi r_i&\geq T V_0,\nn
-\end{align}
+Since $\tv\geq T\tv$ it follows that $\tv\geq J^*$. 
+%Let $\Phi r_1, \Phi r_2,\ldots,\Phi r_n$ be solutions to the ALP in \eqref{alp} for $c=e_1, e_2,\ldots,e_n$ respectively. 
+Define $V_0\in \R^n$ by $V_0(i)=\underset{j=1,\ldots, n}{\min}(\Phi r_j)(i)$, $1\le i \le n$. 
+It is clear from the definition of $V_0$ that $\tj(i), \Phi r_j(i) \geq\Phi r_i(i)\geq V_0(i)$, $1\le i,j \le n$. 
+Also from the monotone property of $T$, we have $T\Phi r_j\geq T V_0$,
 hence we also have,
-$\Phi r_i\geq T\Phi r_i \geq T V_0$, 
+$\Phi r_j\geq T\Phi r_j \geq T V_0$, 
 and so by taking component-wise minimum,
 $V_0 \geq T V_0$.
 
-From the first three inequalities in \eqref{lineq}, $\Phi r_i\geq T \Phi r_i\geq T V_0$, $i=1,\dots, n$ and hence $V_0\geq TV_0$. Since $V_1=\Gamma V_0$, from the definition of $\Gamma$ in \eqref{gamdef} we have $V_0\geq V_1$, and recursively $V_{n}\geq V_{n+1}$, $n\geq 0$. So it follows that $\tj\geq V_0\geq V_1\ldots\geq \tv$.
+Now let $V_{n+1} = \Gamma V_n$, $n=0,1,\dots$. Then, $V_1(i) = (\Gamma V_0)(i) = \min\{ V(i) \,:\, V\in \F_{V_0} \}
+\le \min\{ V(i) \,:\, V\ge V_0, V = \Phi r, r\in \N \} \le \min\{ V(i)\,:\, V \ge V_0, V = \Phi r_j, 1\le j \le n \} = V_0(i)$,
+where in the last step we used that $r_1,\dots,r_n \in \N$.
+Hence, $V_1 \le V_0$. Using~\cref{gmonotone}, we then get $V_{n+1}\le V_n$ for $n\ge 0$ and thus 
+$\tj\geq V_0\geq V_1\ldots\geq \tv \geq J^*$.
 \end{proof}
 \input{perfbnds}
