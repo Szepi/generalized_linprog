@@ -62,10 +62,11 @@ Let $\I$ be an index set obtained by sampling $m$ state-action pairs
 \begin{align}
 m\geq \frac{16d\theta}{(1-\alpha)\epsilon}\left(k\ln\frac{48d\theta}{(1-\alpha)\epsilon}+\ln\frac{2}{\delta}\right).
 \end{align}
-Let $\tilde{r}$ be an optimal	solution of the ALP and let $\hat{r}$ be the solution of the corresponding RLP. 
+Let $\tilde{r}_c$ be an optimal	solution of the ALP and let $\hat{r}_c$ be the solution of the corresponding RLP. 
+Assume that $\tilde{r}_c\in \N$.
 Then, with probability at least $1-\delta$, we have
 \begin{align}
-||J^*-\Phi \hat{r}||_{1,c}\leq ||J^*-\Phi \tilde{r}||_{1,c}+\epsilon||J^*||_{1,c}.
+||J^*-\Phi \hat{r}_c||_{1,c}\leq ||J^*-\Phi \tilde{r}_c||_{1,c}+\epsilon||J^*||_{1,c}.
 \end{align}
 \end{theorem}
 \noindent \textbf{Motivation for our work:}
