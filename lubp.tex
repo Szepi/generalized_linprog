@@ -10,12 +10,19 @@ The set $\N$ satisfies the following conditions:
 For any $t\in \R$, $t e_1 + \N \eqdef \{ r + t e_1 \,:\, r\in \N \} = \N$, i.e., 
 $\N$ is invariant to shifts by vectors of the form $t e_1$.
 \item \label{ass:n2}
-For $2\le k \le n$, $\sup_{r\in \N} | e_k^\top r | <+\infty$.
+For $2\le i \le k$, $\sup_{r\in \N} | e_i^\top r | <+\infty$.
 \item \label{ass:n3}
 For each $1\le i \le n$, there exists a solution $r_i\in \R^k$ to the ALP \eqref{alp} with $c = e_i$ such that
 $r_i\in \N$.
 \end{enumerate}
 \end{assumption}
+Recalling that the first column vector of $\Phi$ is $\one$, \eqref{ass:n1} implies that $\{\Phi r \,:\,r\in \N \}$ is invariant to shifts by constants, a property that will prove to be useful.
+Part~\eqref{ass:n2} is required to guarantee that solutions to the LPs we define below are bounded.
+To satisfy \eqref{ass:n2} and \eqref{ass:n3} simultaneously, it is enough to select $\N$ to be contained in 
+$\{ r = (r_1,\dots,r_k)^\top \in \R^k \,:\, \max_{2\le i \le k} |r_i| \le r_{\max} \}$ with $r_{\max}>0$ sufficiently large.
+\todoc{Can we calculate an a priori bound on how $r_{\max}$ should be? It is a major weakness if we cannot
+suggest a way to define $\N$.}
+
 The least upper bound (LUB) projection operator $\Gamma \colon \R^n \ra\R^n$ is defined as below:
 \begin{definition}\label{lubpop}
 Given $J\in \R^n$ and the nonnegative valued vector $c\in \R^n_+$, define $r_{c,J}$ to be the solution to 
@@ -47,10 +54,10 @@ It also follows that $\Gamma$ is well-defined.
 \item It holds that $\Gamma J\geq TJ$ (this follows from the fact that if $a\geq c$ and $b\geq c$, then $\min(a,b)\geq c$, where $a, b, c \in \R$).
 \item Given $J\in \R^n$, define 
 \begin{align*}
-\F_J\eqdef\{\,\Phi r\,|\,\Phi r\geq TJ, r\in \N\,\}\,.
+\F_J\eqdef\{\,\Phi r\,:\,\Phi r\geq TJ, r\in \N\,\}\,.
 \end{align*}
 Thus $\F_J$ contains vectors in the span of $\Phi$ that upper bound $TJ$. 
-Further, since $(\Gamma J)(i) = \min\{ V(i) \,|\, V\in \F_J \}$, it also follows that $\Gamma J \le V$ holds for any $V\in \F_J$.
+Further, since $(\Gamma J)(i) = \min\{ V(i) \,:\, V\in \F_J \}$, it also follows that $\Gamma J \le V$ holds for any $V\in \F_J$.
 %By fixing $c$ in the linear program in \eqref{lubplp} we select a unique vector $\Phi r_c \in \F$. The LUB projection operator $\Gamma$ picks $n$ vectors $\Phi r_{e_i},i=1,\ldots,n$ from the set $\F$ and $\Gamma J$ is obtained by computing their component-wise minimum.
 \item Even though $\Gamma J$ does not belong to the span of $\Phi$, $\Gamma J$ collates the various best upper bounds that can be obtained via the linear program in \eqref{lubplp}.
 \begin{comment}
@@ -101,15 +108,15 @@ Thus,
 \end{proof}
 
 We now show that $\Gamma$ is a contraction. 
-By \cref{maxnorm}, it suffices to show that $\Gamma$ is monotone and linear along $[\one]$-rays.
+By \cref{maxnorm}, it suffices to show that $\Gamma$ is monotone and linear along $[\one]$-rays with a factor smaller than one.
 We start with monotonicity.
 \begin{lemma}\label{gmonotone}
-For $J_1, J_2\in \R^n$ such that $J_1\geq J_2$, we have $\Gamma J_1\geq \Gamma J_2$.
+For $J_1, J_2\in \R^n$ such that $J_1\leq J_2$, we have $\Gamma J_1\leq \Gamma J_2$.
 \end{lemma}
 \begin{proof}
 Choose any $i\in \{1,\ldots,n\}$. 
-Since $J_1\geq J_2$, we have $TJ_1\geq TJ_2$.
-Hence, $\F_{J_1} \subset \F_{J_2}$ and thus $(\Gamma J_1)(i) \ge (\Gamma J_2)(i)$. 
+Since $J_1\leq J_2$, we have $TJ_1\leq TJ_2$.
+Hence, $\F_{J_2} \subset \F_{J_1}$ and thus $(\Gamma J_1)(i) \le (\Gamma J_2)(i)$. 
 Since $i$ was arbitrary, the result follows.
 \end{proof}
 \begin{lemma}\label{lpsol}
@@ -129,7 +136,9 @@ Then, $\Gamma (J+t\one) = \Gamma J + \alpha t \one$.
 \begin{proof}
 Consider the $i^{th}$ linear programs associated with $\Gamma J$ and $\Gamma (J+ t\one)$. 
 The result follows by using Lemma~\ref{lpsol} with $A=\Phi$, $b=TJ$, $c=e_i$, $b_0=\alpha t\mathbf{1}$ 
-and $x_0=\alpha t e_1$, noting that by our assumption on $\N$, $\N = \N + \alpha t e_1$.
+and $x_0=\alpha t e_1$, noting that thanks to
+\cref{one}, $A x_0 = b_0$ and that thanks to
+\cref{ass:n} \eqref{ass:n1}, $\N = \N + \alpha t e_1$.
 \end{proof}
 \begin{theorem}\label{gmaxcontra}
 The operator $\Gamma  \colon \R^n\ra \R^n$ obeys the $\max$-norm contraction property with factor $\alpha$.
