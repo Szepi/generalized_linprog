@@ -1,25 +1,26 @@
 %!TEX root =  autocontgrlp.tex
 \section{Markov Decision Processes (MDPs)}
 In this section, we briefly discuss the basics of Markov Decision Processes (MDPs) (the reader is referred to \cite{BertB,Puter} for a detailed treatment).\\
-An MDP is a $4$-tuple $\langle S,A,P,g\rangle$, where $S$ is the state space, $A$ is the action space, $P$ is the probability transition kernel and $g$ is the reward function. We consider MDPs with large but finite number of states. We also assume that the number of actions is finite.
+An MDP is a $4$-tuple $\langle S,A,P,g\rangle$, where $S$ is the state space, $A$ is the action space, $P$ is the probability transition kernel and $g:S\times A \to \R$ is the reward function. We consider MDPs with large but finite number of states. We also assume that the number of actions is finite.
 Without the loss of generality, we set  $S=\{1,2,\ldots,n\}$  and the action set is given by $A=\{1,2,\ldots,d\}$. For simplicity, we assume that all actions are feasible in all states. 
-The probability transition kernel $P= (p_a)_{a\in A}$ specifies the probability $p_a(s,s')$ of transitioning from state $s$ to state $s'$ under the action $a$. We denote the reward obtained for performing action $a\in A$ in state $s\in S$ by $g_a(s)$.
+The probability transition kernel $P= (p_a)_{a\in A}$ specifies the probability $p_a(s,s')$ of transitioning from state $s$ to state $s'$ under the action $a$. 
+We also denote the reward $g(s,a)$ obtained for performing action $a\in A$ in state $s\in S$ by $g_a(s)$.
 By a policy, we mean a sequence $\pi=\{\pi_0,\ldots,\pi_n,\ldots\}$ of functions $\pi_n, n\geq 0$ 
-	that describe the manner in which an action is picked in a given state at time $n$. 
+	that describe which action is to be picked in a given state at time $n$. 
 In the most general case, $\pi_n$ maps $(S \times A)^n \times S$, i.e., 
 	histories $h_n =(s_0,a_0,\dots,s_{n-1},a_{n-1},s_n)$ 
 	of state-action sequences of length $2n+1$, to a distribution over the actions. 
-We denote the class of policies by $\Pi$. 
-The infinite horizon discounted reward corresponding to state $s$ under a policy $\pi$ is denoted by $J_\pi(s)$ and is defined by \todoc{Explain the meaning of $\eqdef$.}
+Let $\Pi$ stand for the set of policies. 
+The infinite horizon discounted reward corresponding to state $s$ under a policy $\pi$,
+	or, in short, the value of $\pi$ in state $s$
+	is denoted by $J_\pi(s)$ and is defined by \todoc{Explain the meaning of $\eqdef$.}
 \begin{align}
 J_\pi(s) \eqdef
 	\E\left[\sum_{n=0}^\infty \alpha^n g_{a_n}(s_n)\,\Large|\,\pi\right]\,,\nn
 \end{align}
 	where $a_{n} \sim \pi_n(\,\cdot\,|s_0,a_0,\dots,s_{n-1},a_{n-1},s_n)$, $s_{n+1} \sim p_{a_n}(s_n,\cdot)$ 
-	and $\alpha \in (0,1)$ is a given discount factor. 
-Here $J_\pi(s)$ is known as the value of the state $s$ under the policy $\pi$, and $J_\pi:S\to \R$ is 
- %the vector quantity $J_\pi\eqdef(J_\pi(s))_{s\in S}\in R^n$ is 
- called the value-function corresponding to the policy $\pi$. 
+	and $\alpha \in (0,1)$ is the so-called discount factor. 
+The resulting function $J_\pi:S\to \R$ is called the value function of policy $\pi$.	
  The optimal value function $J^*:S\to \R$ is defined as $J^*(s) \eqdef
  \sup_{\pi\in\Pi} J_\pi(s)$, $s\in S$.
  %\underset{\pi \in \Pi}{\sup}\, J_\pi(s)$, $s\in S$.
@@ -83,33 +84,45 @@ HJ&=\left[ {\begin{array}{c} H_1 J  \\ \vdots \\ H_d J\end{array}} \right]\in \R
 (H_a J)(s)&= g_a(s)+\alpha \sum_{s'}p_a(s,s') J(s'), \qquad s\in S, a\in A.
 \end{align}
 \end{definition}
-We now state without proof the most important properties of the Bellman operator. 
-Though in these results, we make use of the Bellman operator $T$, the results also trivially hold for $T_u$ as well.
+We now state without proof the most important properties of the Bellman operator.
+The proofs are immediate from the definitions, but can also be found in \cite{BertB}.
 
 %\subsection{Properties of $T$}
+First, we introduce some extra notation:
+For $J_1,J_2\in \R^n$, we write $J_1\le J_2$ if $J_1(s)\le J_2(s)$ holds for all $s\in S$.
+We use $\one \in \R^n$ to denote a vector with all entries $1$.
+The maximum norm $\norm{\cdot}_{\infty}$ is defined by $ \norm{v}_{\infty} = \max_{s\in S} |v(s)|$.
+\begin{lemma}\label{monotone}
+$T$ is a monotone map, i.e., given $J_1,J_2 \in \R^n$ such that $J_1\leq J_2$, we have $T J_1\leq T J_2$. 
+Further, if $J\in \R^n$ is such that $J\geq TJ$ then $J\geq J^*$. \todoc{Should we move this second part out?}
+\end{lemma}
+\begin{lemma}\label{shift}
+Given $J\in \R^n$ and $t \in \R$, we have
+\begin{align}\label{eq:shift}
+T(J+t\one)=TJ+\alpha t\one.
+\end{align}
+\end{lemma}
+From these result, it immediately follows that $T$ is a contraction in the $L_\infty$-norm through the following lemma:
 \begin{lemma}\label{maxnorm}
+If $T: \R^n \to \R^n$ is any operator that is monotonous and satisfies~\eqref{eq:shift} then 
 $T$ is a $\max$-norm contraction operator with contraction factor $\alpha$, i.e., given $J_1, J_2 \in \mathbf{R}^n$,
-\todoc{Introduce $\norm{\cdot}_{\infty}$. Should we have a notation/symbols section?}
 \begin{align}
 ||TJ_1-TJ_2||_\infty\leq \alpha ||J_1-J_2||_\infty.
 \end{align}
 \end{lemma}
+\begin{proof}
+The proof is given as we will need this lemma later.
+Let $\eps = \norm{J_1 - J_2}_\infty$. Then $J_2 - \eps \one \le J_1 \le J_2 + \eps \one$. By the monotonicity of $T$,
+$T(J_2 - \eps \one) \le T J_1 \le T(J_2 + \eps \one)$. Using~\eqref{eq:shift}, we get 
+$TJ_2 - \alpha \eps \one \le T J_1 \le TJ_2 + \alpha \eps \one$, i.e., $-\alpha \eps \one \le T J_1 - T J_2 \le \alpha \eps \one$, from which the result follows.
+\end{proof}
+Through Banach's fixed point theorem, from \cref{maxnorm} we get the following lemma:
 \begin{lemma}\label{uniquesol} 
 $J^*$ is a unique fixed point of $T$, i.e., $J^*=TJ^*$.
 \end{lemma}
-For $J_1,J_2\in \R^n$, we write $J_1\le J_2$ if $J_1(s)\le J_2(s)$ holds for all $s\in S$.
-The Bellman operator $T$ exhibits two more important properties presented in the following lemmas (see \cite{BertB} for proofs):
-\begin{lemma}\label{monotone}
-$T$ is a monotone map, i.e., given $J_1,J_2 \in \R^n$ such that $J_1\leq J_2$, we have $T J_1\leq T J_2$. 
-Further, if $J\in \R^n$ is such that $J\geq TJ$ then $J\geq J^*$.
-\end{lemma}
-\begin{lemma}\label{shift}
-Given $J\in \R^n$, $t \in \R$ and $\mathbf{1} \in \R^n$, a vector with all entries $1$, we have
-\begin{align}
-T(J+t\mathbf{1})=TJ+\alpha t\mathbf{1}.
-\end{align}
-\end{lemma}
-Note that Lemmas~\ref{maxnorm}--\ref{shift} also hold for the Bellman operator $H$ defined for the action values in Definition~\ref{bellactval}.\par
+Though in these results, we make use of the Bellman operator $T$, the results also hold for $T_u$ and $H$ as well.
+%Note that Lemmas~\ref{maxnorm}--\ref{shift} also hold for the Bellman operator $H$ defined for the action values in Definition~\ref{bellactval}.\par
+
 Solving an MDP involves handling two sub-problems namely the problem of \emph{control} and the problem of \emph{prediction}. The problem of \emph{control} deals with coming up with a good (and if possible an optimal) policy. Often, in order to solve the problem of \emph{control}, one needs to solve the problem of \emph{prediction}, which deals with computing the value function $J_u$ of the policy $u$. The fact that the two problems are related is reflected in the Bellman equation in \eqref{bell}, where $J^*$ from \eqref{bellval} is used in \eqref{bellpol} to obtain an optimal policy $u^*$. Thus, the Bellman equation is at the heart of the solution methods to MDPs. Any solution method to MDP is said to be complete only if it satisfactorily (with provable performance guarantees) addresses both the prediction and the control problems. 
 \todoc{Why insist on prediction?}
 
