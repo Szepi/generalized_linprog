@@ -7,7 +7,7 @@ the RLP has only $m \ll nd$ constraints sampled from the original ALP according 
 \begin{align}\label{rlp}
 \begin{split}
 \min_{r\in \N}\, &c^\top \Phi r\\
-\text{s.t}\mb &(\Phi r)(s)\geq g_a(s)+\alpha\sum_{s'}p_a(s,s')(\Phi r)(s'), \mb (s,a) \in \I\,,
+\text{s.t.}\mb &(\Phi r)(s)\geq g_a(s)+\alpha\sum_{s'}p_a(s,s')(\Phi r)(s'), \mb (s,a) \in \I\,,
 \end{split}
 \end{align}
 where $\I$ is the index set containing $m$ sampled state-action pairs and
@@ -29,7 +29,7 @@ The RLP can then be represented in short as
 \begin{align}\label{rlpshort}
 \begin{split}
 \min_{r\in \N}\, &c^\top \Phi r\\
-\text{s.t}\mb & \M^\top E \Phi r \geq \M^\top H \Phi r\,.
+\text{s.t.}\mb & \M^\top E \Phi r \geq \M^\top H \Phi r\,.
 \end{split}
 \end{align}
 Note that apart from $r\in \N$ the feasible set of the RLP is a superset of the feasible set of the ALP.
