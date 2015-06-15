@@ -1,5 +1,5 @@
 %!TEX root =  autocontgrlp.tex
-\section{A simple bound}
+\section{A worst-case bound}
 The following lemmas relate the fixed point $\hv$ of $\hg$ to the solution $\hj$ of the GRLP in \eqref{grlp}.
 \begin{lemma}\label{srw}
 A vector
@@ -53,7 +53,7 @@ Now, by another triangle inequality,
 \leq \gamma+\frac{(1+\alpha)\gamma}{1-\alpha}=\frac{2\gamma}{1-\alpha}.
 \label{mt2eq1}
 \end{align}
-The result follows by combining this bound with \eqref{mt2eq0} and Corollary~\ref{cmt1}.
+The result follows by combining this bound with \eqref{mt2eq0} and \cref{cmt1}.
 \end{proof}
 
 \begin{corollary}[Prediction error bound]
@@ -70,6 +70,21 @@ $
 ||J^*-\hj||_{1,c}\leq||J^*-\hv||_{1,c}+||\hv-\hj||_{1,c}
 \leq||J^*-\hv||_\infty+||\hv-\hj||_{1,c}
 $.
-The result now follows from Corollary~\ref{cmt1} and Theorem~\ref{mt2}.
+The result now follows from \cref{cmt1} and \cref{mt2}.
 \end{proof}
-The results presented in Corollary~\ref{cmt2} is in the $L_\infty$-norm. In the next section, we make use of Lyapunov functions to provide an improved bound in the weighted $L_\infty$-norm.
+When no constraints are removed, $\Gamma = \hg$. In this case, \eqref{finalbnd} can be compared to the bound in \cref{restateval} instantiated with $\psi = \one$, in which case the right-hand side of \eqref{finalbnd}
+becomes $\frac{2\norm{J^* - \Phi r^*}_{\infty}}{1-\alpha}$, i.e., the bound  \eqref{finalbnd} is a off by a factor three 
+only from that in \cref{restateval}.
+We view this as a small price paid to be paid for the increased generality of \eqref{finalbnd}.
+In terms of the price of removing constraints,
+the result shows that there is effectively no price to be paid for removing constraints as long as
+those constraints that are binding in the definition of $\Gamma J^*(i)$, $1\le i \le n$ are kept: 
+a rather intuitive result.
+\todoc{I am still trying to understand whether it is good or bad that the result is independent of $\N$.
+}
+
+Just like in the case of RLPs, it is possible to tighten the bounds by using weighted $\max$-norms. 
+This is the subject of the next section.
+
+
+

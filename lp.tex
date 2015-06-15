@@ -69,13 +69,26 @@ A function $\chi:S\to\R_+$ is said to be a \emph{Lyapunov} function for $P = (p_
 The error bound will be given in terms of a Lyapunov function $\psi$ for $P$ that is in the column span of $\Phi$:
 \begin{assumption}\label{lyap}
 $\psi\colon S \ra \R_+$ is a Lyapunov function for $P$
-and is present in the column span of the feature matrix $\Phi$.
+and is present in the column span of the feature matrix $\Phi$: For some $r_0\in \R^k$, $\Phi r_0 = \psi$.
 \end{assumption}
 It is straightforward to check that the vector $\one$ when viewed as an $S \to \R_+$ function 
 is a Lyapunov function. 
 Further, by \cref{one}, $\one$ is trivially present in the column span of $\Phi$, 
 hence, \cref{lyap} is not limiting.
 In what follows we will always assume that Assumptions \ref{probdist}--\ref{lyap} hold. 
+When \cref{lyap} holds, it follows that for any $J\in \R^n$, $t>0$, $s\in S$,
+\begin{align*}
+(T(J+ t \psi))(s) &= 
+\max_{a} g_a(s) + \alpha \sum_{s'} p_a(s,s') J(s') + t \alpha  \sum_{s'} p_a(s,s') \psi(s') \\
+& \le 
+\max_{a} g_a(s) + \alpha \sum_{s'} p_a(s,s') J(s') + t \beta_{\psi} \psi(s) \\
+& = (T J)(s) + \beta_{\psi}\,t\,  \psi(s),
+\end{align*}
+or, in short,
+\begin{align}
+\label{eq:psilin}
+T(J+ t \psi ) \le TJ + \beta_{\psi}\,t\,  \psi\,\, \quad (J\in \R^n,\, t>0)\,.
+\end{align}
 
 %In Definition~\ref{modnorm}, the use of the weighting function $\rho$ allows us to measure the error taking into account the relative importance of the various states. A higher value of $\rho(s)$ means that the state $s$ is less important and vice-versa.\\
 With this, we can recall the said result.  %below  which bounds the error in the approximate value function.

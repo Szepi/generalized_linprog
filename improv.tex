@@ -1,26 +1,88 @@
 %!TEX root =  autocontgrlp.tex
-\section{Improved Bounds}\label{sec:improv}
-In this section, we present improved error bounds by making use of Lyapunov functions. 
+\section{Bounds using weighted norms}\label{sec:improv}
+In this section, we present error bounds by making use of Lyapunov functions and weighted norms.
+For the purpose of this section, we define $r^*$ to be 
+\begin{align*}
+r^*\eqdef\argmin_{r\in R^k}||J^*-\Phi r||_{\mn}\,.
+\end{align*}
+where $\psi$ is a Lyapunov function as in \cref{lyap}.
+We also replace \cref{ass:n} \eqref{ass:n1} by the following assumption,
+which is assumed to hold in the rest of this section:
+\begin{assumption}\label{ass:n4}
+The set $\N$ is such that $\N = \N + t r_0$ for any $t\in \R$, where $r_0\in \R^k$ 
+\todoc{Is not this a little problematic? In particular, this seems to contradict \cref{ass:n} \eqref{ass:n2}.
+How can we guarantee that $\Gamma$, $\hg$ are well-defined?
+}
+is the vector such that $\Phi r_0 = \psi$.
+\end{assumption}
 \begin{lemma}\label{bestbndmn}
-Let $r^*\in \R^k$ be defined as $r^*\eqdef\argmin_{r\in R^k}||J^*-\Phi r||_{\mn}$, then 
+We have
 \begin{align}
-||J^*-\bj||_{\mn}\leq 2||J^*-\Phi r^*||_{\mn}.
+||J^*-\Gamma J^*||_{\mn}\leq 2||J^*-\Phi r^*||_{\mn}.
 \end{align}
 \end{lemma}
 \begin{proof}
-The result follows from the definition of $\Gamma$ in \eqref{gamdef}, Assumption~\ref{lyap} and the fact that $\Phi r^*+||J^*-\Phi r^*||_{\mn} \psi\geq TJ^*$.
+The proof parallels that of \cref{bestbnd}.
+%By \cref{lyap}, there exists $r_0 \in \R^k$ such that $\psi = \Phi r_0$.
+Define $\eps = \norm{J^* - \Phi r^*}_{\mn}$ so that
+$|J^*(i) - (\Phi r^*)(i) | \le \eps \psi (i)$, $1 \le i \le n$.
+Then, $\Phi( r^* + \eps r_0 ) = \Phi r^* + \eps \psi \ge J^* = T J^*$.
+From this point the proof follows the same steps as those in \cref{bestbnd}
+with the obvious modifications.
+%The result follows from the definition of $\Gamma$ in \eqref{gamdef}, Assumption~\ref{lyap} and the fact that $\Phi r^*+||J^*-\Phi r^*||_{\mn} \psi\geq TJ^*$.
 \end{proof}
 
-Since most of our analysis in sections~\ref{sec:lubp} and ~\ref{sec:alubp} depended on showing that $\Gamma$ is a contraction map in the $L_\infty$ norm we first show that $\Gamma$ is also a contraction map in the weighted $L_\infty$ norm.
-\begin{lemma}\label{gshiftmn}
-Let $J_1\in \R^n$ and $k\in \R$ be a constant. If $J_2=J_1+k\psi$, then $\Gamma J_2\leq \Gamma J_1+\beta_{\psi} k\psi$.
+Since most of our analysis in sections~\ref{sec:lubp} and ~\ref{sec:alubp} depended on showing that $\Gamma$ is a contraction map in the $L_\infty$ norm, we first show that $\Gamma$ is also a contraction map in the weighted $L_\infty$ norm.
+The generalization of  \cref{maxnorm} for the weighted $L_{\infty}$ norm is as follows:
+\begin{lemma}\label{maxnormmn}
+Assume that $\Gamma: \R^n \to \R^n$ is monotone and 
+that there exists some $\beta\in [0,1)$ such that for any $J\in \R^n$ and $t>0$,
+\begin{align}
+\label{eq:shiftmn}
+\Gamma( J + t \psi) \le \Gamma J + \beta t \psi\,.
+\end{align} 
+for any $J\in \R^n$ and $t\ge 0$.
+Then $\Gamma$ is a $\norm{\cdot}_{\mn}$ contraction with factor $\beta$.
 \end{lemma}
 \begin{proof}
-The result follows in a similar manner as the proofs for Lemmas~\ref{gshift} and ~\ref{tgshift} by using the result in Lemma~\ref{lpsol}.
+The proof mimics that of  \cref{maxnorm}:
+First, we show that for any $t\ge 0$,  $J\in \R^n$,
+$\Gamma( J - t \psi) \ge \Gamma J - \beta t \psi$ also holds.
+To see this define $J' = J-t\psi$. Then, $J = J'+t\psi$, hence $\Gamma J \le \Gamma J' + \beta t \psi$. Reordering this inequality gives the result.
+Let $\eps = \norm{J_1 - J_2}_{\mn}$, where $J_1,J_2\in \R^n$ are arbitrary.
+Then $J_2 - \eps \psi \le J_1 \le J_2 + \eps \psi$. 
+By the monotonicity of $\Gamma$,
+$\Gamma(J_2 - \eps \psi) \le \Gamma J_1 \le \Gamma(J_2 + \eps \psi)$. 
+Using~\eqref{eq:shiftmn}, we get 
+$\Gamma J_2 - \beta \eps \psi \le \Gamma J_1 \le \Gamma J_2 + \beta \eps \psi$, i.e., $-\beta \eps \psi \le \Gamma J_1 - \Gamma J_2 \le \beta \eps \psi$, from which the result follows.
 \end{proof}
+Let us note in passing that from this result and~\eqref{eq:linpsi} it immediately follows that $T$ is an $\norm{\cdot}_{\mn}$-contraction with factor $\beta_{\psi}$.
+Returning to $\Gamma$,
+since we already now that $\Gamma$ is monotone (cf. \cref{gmonotone}), it remains to see that it satisfies \eqref{eq:shiftmn}:
+\begin{lemma}\label{gshiftmn}
+The operator $\Gamma$ satisfies \eqref{eq:shiftmn} with $\beta = \beta_\psi$.
+%For any $J\in \R^n$, $t\in \R_+$, $\Gamma (J+ t \psi ) \le \Gamma J + \beta_{\psi} t \psi$.
+\end{lemma}
+\begin{proof}
+The proof of the first part parallels that of \cref{gshift}:
+%Consider the $i^{th}$ linear programs associated with $\Gamma J$ and $\Gamma (J+ t\one)$. 
+By definition, for $1\le i \le n$,
+$(\Gamma (J+t\psi) )(i) = \min\{ e_i^\top \Phi r \,:\, \Phi r \ge T(J+t\psi), r\in \N \}$.
+By \cref{eq:psilin}, as $t>0$, $T(J+t\psi) \le TJ + t \beta \psi$. Thus,
+$(\Gamma (J+t\psi) )(i) \le 
+ \min\{ e_i^\top \Phi r \,:\, \Phi r \ge TJ+t\beta \psi, r\in \N \}$.
+Now, using Lemma~\ref{lpsol} with $A=\Phi$, $b=TJ$, $c=e_i$,
+ $b_0=\beta t \psi$ 
+and $x_0=t \beta r_0$, the statement follows
+as thanks to \cref{lyap}, $A x_0 = b_0$ and thanks to
+\cref{ass:n4}, $\N = \N + \alpha t r_0$.
+%The result follows in a similar manner as the proofs for Lemmas~\ref{gshift} and ~\ref{tgshift} by using the result in Lemma~\ref{lpsol}.
+\end{proof}
+From this result and \cref{maxnormmn}, we immediately get that $\Gamma$ is a contraction in $\norm{\cdot}_{\mn}$:
 \begin{theorem}\label{gmaxcontramn}
-The operator $\Gamma  \colon \R^n\ra \R^n$ is a contraction operator in weighted $L_\infty$ with factor $\beta_{\psi}$.
+The operator $\Gamma  \colon \R^n\ra \R^n$ is a contraction operator in $\norm{\cdot}_{\mn}$ with factor $\beta_{\psi}$.
 \end{theorem}
+\if0
 \begin{proof}
 Given $J_1,J_2\in \R^n$ let $\epsilon=||J_1-J_2||_{\mn}$. Thus
 \begin{align}\label{ineq}
@@ -35,11 +97,17 @@ Thus
 ||\Gamma J_1-\Gamma J_2||_{\mn}\leq \beta_{\psi} ||J_1-J_2||_{\mn}.
 \end{align}
 \end{proof}
-\begin{corollary}\label{hgmaxcontramn}
-$\hg$ is also a contraction map in the weighted $L_\infty$ norm.
-\end{corollary}
+\fi
+In a similar way, one can also show that $\hg$ is also a contraction:
+\begin{theorem}\label{hgmaxcontramn}
+The operator $\hg:\R^n\to\R^n$  is a contraction operator in $\norm{\cdot}_{\mn}$ with factor $\beta_{\psi}$.
+%$\hg$ is also a contraction map in the weighted $L_\infty$ norm.
+\end{theorem}
 \begin{proof}
-Follows from arguments similar to Theorem~\ref{gmaxcontramn}.
+We already know that $\hg$ is monotone. That $\hg$ satisfies~\cref{eq:shiftmn}
+with $\beta = \beta_{\psi}$ follows similarly to the argument used in  \cref{tgshift}
+with modifications similar to those introduced in the proof of \cref{gshiftmn}.
+Then, \cref{gmaxcontramn} gives the desired result.
 \end{proof}
 \begin{lemma}\label{cmt1mn}
 Let $\hv$, $\bj$ be as in Theorem~\ref{mt1} and let $r^*\eqdef\argmin_{r\in \R^k}||J^*-\Phi r||_{\mn}$ then
@@ -48,19 +116,24 @@ Let $\hv$, $\bj$ be as in Theorem~\ref{mt1} and let $r^*\eqdef\argmin_{r\in \R^k
 \end{align}
 \end{lemma}
 \begin{proof}
-The proof follows from Lemma~\ref{gmaxcontramn}, Corollary~\ref{hgmaxcontramn} and by replacing the $||\cdot||_\infty$ norm by $||\cdot||_{\mn}$ in the arguments presented in sections~\ref{sec:lubp} and ~\ref{sec:alubp} leading to Corollary~\ref{cmt1}.
+The proof follows from \cref{gmaxcontramn}, \cref{hgmaxcontramn} and by replacing the $||\cdot||_\infty$ norm by $||\cdot||_{\mn}$ in the arguments presented in 
+Sections~\ref{sec:lubp} and ~\ref{sec:alubp} leading to \cref{cmt1}.
 \end{proof}
 
-We now recall Lemma~$4.5$ of \cite{ALP}. \todoc{You had 4.3 here, but in the official journal version this seems to be Lemma 5 in Section 4.}
+We now recall Lemma~$5$ from Section 4.2 of \cite{ALP}. 
+For this result, recall that $r_\in \R^k$ is the vector such that $\psi = \Phi r_0$ by assumption.
 \begin{lemma}\label{restate}
-Let $\psi$ be a Lyapunov function that belongs to the column span of $\Phi$ , $r \in \R^k$ be an arbitrary vector and let $r'$ be such that
+%Let $\psi$ be a Lyapunov function that belongs to the column span of $\Phi$ ,
+For  $r \in \R^k$ arbitrary vector, let $r'$ be
 \begin{align}
-\Phi r'=\Phi r+||J^*-\Phi r||_{\mn} \left(\frac{1+\beta_{\psi}}{1-\beta_{\psi}}\right)\, \psi.
+ r'= r+||J^*-\Phi r||_{\mn} \left(\frac{1+\beta_{\psi}}{1-\beta_{\psi}}\right)\, r_0.
 \end{align}
 Then $r'$ is feasible for the ALP in \eqref{alp}. 
 \end{lemma}
+Recall that $\hv$ is the fixed point of $\hg$ and $\hj=\Phi \hr$ is the solution to the GRLP
+\eqref{grlp}. 
 \begin{theorem}\label{mt2mn}
-Let $\hv$ be the solution to the iterative scheme in \eqref{apvi} and let $\hj=\Phi \hr$ be the solution to the GRLP. Let $\bj$ be the best possible approximation to $J^*$ as in Definition~\ref{bestproj}, and $||\Gamma J^* -\hg J^*||_{\mn}$ be the error due to ALUB projection and let $r^*\eqdef\underset{r\in \R^k}{\arg\min}||J^*-\Phi r||_{\mn}$, then
+We have
 \begin{align}
 ||\hj-\hv||_{1,c}&\leq \frac{c^\top \psi}{1-\beta_\psi}(4||J^*-\Phi r^*||_{\mn}
 %\nn\\&
@@ -68,24 +141,27 @@ Let $\hv$ be the solution to the iterative scheme in \eqref{apvi} and let $\hj=\
 \end{align}
 \end{theorem}
 \begin{proof}
-Let $\gamma=||J^*-\Phi r^*||_{\mn}$, then by choosing $r'$ as in Lemma~\ref{restate} we have
-\begin{align}
-||\Phi r'-J^*||_{\mn}&\leq ||\Phi r^*-J^*||_{\mn}+||\Phi r'-\Phi r^*||_{\mn}\nn\\
-&=\gamma+\frac{1+\beta_\psi}{1-\beta_\psi}\gamma\nn\\
-&=\frac{2}{1-\beta_\psi}\gamma.\nn
-\end{align}
+Let $\gamma=||J^*-\Phi r^*||_{\mn}$. 
+Then, by choosing $r'$ as in Lemma~\ref{restate} we have
+\begin{align*}
+||\Phi r'-J^*||_{\mn}&\leq ||\Phi r^*-J^*||_{\mn}+||\Phi r'-\Phi r^*||_{\mn}\nn
+=\gamma+\frac{1+\beta_\psi}{1-\beta_\psi}\gamma\nn
+=\frac{2}{1-\beta_\psi}\gamma.\nn
+\end{align*}
 Since $r'$ is also feasible for the GRLP in \eqref{grlp} we have
 \begin{align}
-||\hj-\hv||_{1,c}&\leq||\Phi r'-\hv||_{1,c}\nn\\
-&=\sum_{s\in S}c(s)\psi(s)\frac{|\Phi r'(s)-\hv(s)|}{\psi(s)}\nn\\
-&\leq c^\top \psi ||\Phi r'-\hv||_{\mn}\nn\\
-&\leq c^\top \psi (||\Phi r'-J^*||_{\mn}+||J^*-\hv||_{\mn}).
+||\hj-\hv||_{1,c}&\leq||\Phi r'-\hv||_{1,c}\nn
+=\sum_{s\in S}c(s)\psi(s)\frac{|\Phi r'(s)-\hv(s)|}{\psi(s)}\nn\\
+&\leq c^\top \psi ||\Phi r'-\hv||_{\mn}\nn
+\leq c^\top \psi (||\Phi r'-J^*||_{\mn}+||J^*-\hv||_{\mn}).
 \end{align}
-The result follows from Corollary~\ref{cmt1}.\\
-\textbf{Main Result~$1$: Prediction Error bound in weighted $L_\infty$-norm}
+The result follows from \cref{cmt1mn}.
+%\textbf{Main Result~$1$: Prediction Error bound in weighted $L_\infty$-norm}
 \end{proof}
-\begin{theorem}\label{cmt2mn}
-Let $\hj$, $\hv$, $r^*$ and $J^*$ be as in Theorem~\ref{mt2mn}, then
+\begin{theorem}[Prediction error bound in $\norm{\cdot}_{\mn}$]
+\label{cmt2mn}
+%Let $\hj$, $\hv$, $r^*$ and $J^*$ be as in Theorem~\ref{mt2mn}, then
+It holds that
 \begin{align}\label{finalbndmn}
 ||J^*-\hj||_{1,c}&\leq\frac{c^\top\psi}{1-\beta_\psi}(6 ||J^*-\Phi r^*||_{\mn}
 %\nn\\&
@@ -93,9 +169,11 @@ Let $\hj$, $\hv$, $r^*$ and $J^*$ be as in Theorem~\ref{mt2mn}, then
 \end{align}
 \end{theorem}
 \begin{proof}
+We have
 \begin{align}
-||J^*-\hj||_{1,c}&\leq||J^*-\hv||_{1,c}+||\hv-\hj||_{1,c}\nn\\
-&\leq c^\top \psi ||J^*-\hv||_{\mn}+||\hv-\hj||_{1,c}.\nn
+||J^*-\hj||_{1,c}
+&\leq||J^*-\hv||_{1,c}+||\hv-\hj||_{1,c}\nn
+\leq c^\top \psi ||J^*-\hv||_{\mn}+||\hv-\hj||_{1,c}.\nn
 \end{align}
 The result now follows from Lemma~\ref{cmt1mn} and Theorem~\ref{mt2mn}.
 \end{proof}
