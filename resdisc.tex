@@ -1,14 +1,15 @@
 %!TEX root =  autocontgrlp.tex
 \section{Discussion}
-The error bounds in the main results (Theorems~\ref{cmt2mn} and \ref{polthe}) contain two factors namely
+The error bounds in the main results (Theorems~\ref{cmt2mn} and \ref{polthe}) contain two factors, namely
 \begin{enumerate}
-\item $\min_{r\in \R^k} ||J^*-\Phi r||_{\mn}$,
+\item $\min_{r\in \R^k} ||J^*-\Phi r||_{\mn}$, and
 \item $||\Gamma J^*-\hg J^*||_{\mn}$.
 \end{enumerate}
 The first factor is related to the best possible approximation that can be achieved with the chosen feature matrix $\Phi$. This term is inherent to the ALP formulation and it appears in the bounds provided by \cite{ALP}.\par
-The second factor is related to constraint approximation and is completely defined in terms of $\Phi$, $W$ and $T$, and does not require knowledge of stationary distribution of the optimal policy. It makes intuitive sense since given that $\Phi$ approximates $J^*$, it is enough for $W$ to depend on $\Phi$ and $T$ without any additional requirements.\par An interesting feature is that unlike prior work on constraint sampling based on concentration inequalities, our analysis is based on contraction operators. As a consequence, our result holds with probability $1$, unlike prior results on constraint sampling \cite{CS} that hold only with high probability. The error term $\etmn$ gives new insights into constraint selection. 
+The second factor is related to constraint approximation and is completely defined in terms of $\Phi$, $W$ and $T$, and does not require knowledge of stationary distribution of the optimal policy. It makes intuitive sense since given that $\Phi$ approximates $J^*$, it is enough for $W$ to depend on $\Phi$ and $T$ without any additional requirements.\par An interesting feature is that unlike prior work on constraint sampling based on concentration inequalities, our analysis is based on contraction operators and is completely deterministic, unlike prior results on constraint sampling \cite{CS} which are probabilistic.The error term $\etmn$ gives new insights into constraint selection:
 \begin{theorem}\label{st}
-Let $s\in S$ be a state whose constraint was selected. Then
+Let $s\in S$ be a state whose constraint is selected in $W$. \todoc{Try to rephrase this..}
+Then
 \begin{align}\label{sampexp}
 |\Gamma J^*(s)-\hg J^*(s)|<|\Gamma J^*(s)-J^*(s)|.
 \end{align}
@@ -16,4 +17,4 @@ Let $s\in S$ be a state whose constraint was selected. Then
 \begin{proof}
 Let $r_{e_s,J^*}$ and ${r}'_{e_s,J^*}$ be solutions to the linear programs in \eqref{lubplp} and \eqref{alubplp} respectively for $c=e_s$ and $J=J^*$. It is easy to note that $r_{e_s,J^*}$ is feasible for the linear program in \eqref{alubplp} for $c=e_s$ and $J^*$, and hence it follows that $(\Phi r_{e_s,J^*})(s)\geq (\Phi {r}'_{e_s,J^*})(s)$. However, since the constraints with respect to state $s$ have been sampled we know that $(\Phi {r}'_{e_s,J^*})(s)\geq J^*$. The proof follows from noting that $(\Gamma J^*)(s)=(\Phi r_{e_s,J^*})(s)$ and $\hg J^*(s)=(\Phi {r}_{e_s,J^*})(s)$.
 \end{proof}
-The expression in \eqref{sampexp} in Theorem~\ref{st} says that the additional error $|\Gamma J^*(s) -\hg J^*(s)|$ due to constraint sampling is less than the original projection error $|\Gamma J^*(s)-J^*(s)|$ due to function approximation. This means that for the RLP to perform well it is enough to retain those states for which the linear function approximation via $\Phi$ is known to perform well. The modified $L_\infty$ norm in \eqref{finalbndmn} comes to our rescue to control the error due to those states that are not sampled.
+The expression in \eqref{sampexp} in Theorem~\ref{st} says that the additional error $|\Gamma J^*(s) -\hg J^*(s)|$ due to constraint sampling \todoc{??} is less than the original projection error $|\Gamma J^*(s)-J^*(s)|$ due to function approximation. This means that for the RLP to perform well it is enough to retain those states for which the linear function approximation via $\Phi$ is known to perform well. The modified $L_\infty$ norm in \eqref{finalbndmn} comes to our rescue to control the error due to those states that are not sampled. \todoc{??}

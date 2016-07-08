@@ -1,6 +1,7 @@
 %!TEX root =  autocontgrlp.tex
 \section{Error Analysis}\label{sec:errana}
-We now define the two projection operators which are central to our error analysis. The least upper bound (LUB) projection operator $\Gamma \colon \R^n \ra\R^n$ is defined below, see \eqref{gamdef}.
+We now define two projection operators which are central to our error analysis:
+%The least upper bound (LUB) projection operator $\Gamma \colon \R^n \ra\R^n$ is defined below, see \eqref{gamdef}.
 \begin{definition}\label{lubpop}
 Given $J\in \R^n$ and the nonnegative valued vector $c\in \R^n_+$, define $r_{c,J}$ to be the solution to 
 \begin{align}
@@ -11,7 +12,7 @@ Given $J\in \R^n$ and the nonnegative valued vector $c\in \R^n_+$, define $r_{c,
  \end{split}
 \end{align}
 Then, for $J\in \R^n$, $\Gamma J$,
-the least upper bound projection of $J$ is defined as 
+the \emph{ least upper bound projection} of $J$ is defined as 
 \begin{align}\label{gamdef}
 (\Gamma J)(i)\eqdef(\Phi r_{e_i,J})(i),\quad i=1,\ldots,n\,.
 \end{align}
@@ -21,18 +22,22 @@ To understand the meaning of $\Gamma$ (and $\hg$) define
 \begin{align}\label{ubclass}
 \F_J\eqdef\{\,\Phi r\,:\,\Phi r\geq TJ, r\in \N\,\},
 \end{align}
-where $J\in \R^n$. Thus $\F_J$ contains vectors in the span of $\Phi$ that upper bound $TJ$. Further, since $(\Gamma J)(i) = \min\{ V(i) \,:\, V\in \F_J \}$, it also follows that $ V\ge \Gamma J $ holds for any $V\in \F_J$.
+where $J\in \R^n$. 
+Disregarding the constraint $r\in \N$, 
+$\F_J$ contains vectors in the span of $\Phi$ that upper bound $TJ$. Further, since $(\Gamma J)(i) = \min\{ V(i) \,:\, V\in \F_J \}$, it also follows that $ V\ge \Gamma J $ holds for any $V\in \F_J$.
 \end{remark}
-The approximate least upper bound (ALUB) projection operator $\hg \colon \R^n \ra \R^n$ is defined as below:
+%The approximate least upper bound (ALUB) projection operator $\hg \colon \R^n \ra \R^n$ is defined as below:
+The definition of the second operator is as follows:
 \begin{definition}\label{alubpop}
 Given $J\in \R^n$ and the nonnegative valued vector $c\in \R^n_+$, define $r'_{c,J}$ to be the solution to 
 \begin{align}\label{alubplp}
  \underset{r\in \N'}{\min}& \,\mb c^\top \Phi r\,,\nn\\
  \text{s.t.}& \,\,\, W^\top E \Phi r\geq W^\top HJ.
 \end{align}
-Further, define $\hg J$  as 
+Then, the \emph{approximate least upper bound (ALUB) projection operator}
+$\hg \colon \R^n \ra \R^n$ is defined as 
 \begin{align}\label{tgamdef}
-(\hg J)(i)\eqdef(\Phi r'_{e_i,J})(i), \mb i=1,\ldots,n\,.
+(\hg J)(i)\eqdef(\Phi r'_{e_i,J})(i), \mb i=1,\ldots,n\,, J\in \R^n\,.
 \end{align}
 \end{definition}
 \begin{lemma}\label{lpsol}
@@ -126,13 +131,13 @@ with modifications similar to those introduced in the proof of \cref{gshiftmn}.
 Then, \cref{gmaxcontramn} gives the desired result.
 \end{comment}
 \end{proof}
-In what follows we denote by $\hv$ the unique fixed point of $\hg$ i.e., $\hv = \hg \hv\,$. 
+In what follows we denote by $\hv$ the unique fixed point of $\hg$, i.e., $\hv = \hg \hv\,$. 
 We now show that the vector $\hj$ dominates the vector $\hv$:
 \begin{lemma}\label{relation1}
 The vectors $\hv,\hj$ obey $\hj\geq\hv$.
 \end{lemma}
 \begin{proof}
-Let $ r_1,  r_2,\ldots, r_n$ be solutions to the GRLP in \eqref{grlp} for $c=e_1, e_2,\ldots,e_n$, respectively,
+For $i\in \{1,\dots,n\}$, $c=e_i$ let $r_i$ be a solution to the GRLP in \eqref{grlp}
 and define $V_0\in \R^n$ by $V_0(i)=\underset{j=1,\ldots,n}{\min}(\Phi r_j)(i)$, $1\le i \le n$.
 
 It suffices to show that $V_1\eqdef \hg V_0 \le V_0 \le \hj$ since then the desired result follows
@@ -186,31 +191,38 @@ $\tr \in \R^k$ is a solution to ALP \eqref{alp} iff it solves the following prog
 \end{align}
 \end{lemma}
 \begin{proof}
-We know from Lemma~\ref{relation2} that $\tj = \Phi \tr \geq\hv$, and the rest of the arguments follow in the same manner as proof for \cref{srw}.
+We know from Lemma~\ref{relation2} that $\tj = \Phi \tr \geq\hv$.
+The rest of the argument follows in the same manner as the proof for \cref{srw}.
 \end{proof}
 \begin{lemma}\label{cmt1mn}
 We have
 \begin{align}
-||J^*-\hv||_{\mn}&\leq \frac{1}{{1-\beta_{\psi}}}\big(2||J^*-\Phi r^*||_{\mn}&\nn\\+||\Gamma J^*-\hg J^*||_{\mn}\big).
+||J^*-\hv||_{\mn}
+& \leq \frac{1}{{1-\beta_{\psi}}}\big(2||J^*-\Phi r^*||_{\mn}
+\nn\\
+& {}\qquad \qquad+||\Gamma J^*-\hg J^*||_{\mn}\big).
 \end{align}
 \end{lemma}
 \begin{proof}
 Recall that $\hg \hv=\hv$. By the triangle inequality,
 \begin{align*}
-&||J^*-\hv||_\mn\\&\leq ||J^*-\hg J^*||_\mn+||\hg J^*-\hg \hv||_\mn\\&\leq ||J^*-\hg J^*||_\mn+\beta_\psi || J^*- \hv||_\mn,
+||J^*-\hv||_{\mn}
+& \leq ||J^*-\hg J^*||_{\mn}+||\hg J^*-\hg \hv||_{\mn}\\
+&\leq ||J^*-\hg J^*||_{\mn}+\beta_\psi || J^*- \hv||_{\mn},
 \end{align*}
 and so by reordering and with another triangle inequality,
 \begin{align}\label{jhv}
-&\norm{J^*-\hv}_{\mn} \nn\\&\le \frac{\norm{ J^*-\hg J^*}_{\mn}}{1-\beta_\psi}\nn\\
+\norm{J^*-\hv}_{\mn} \nn
+&\le \frac{\norm{ J^*-\hg J^*}_{\mn}}{1-\beta_\psi}\nn\\
 &\le \frac{\norm{ J^*-\Gamma J^*}_{\mn}+\norm{\Gamma J^* - \hg J^*}_{\mn}}{1-\beta_\psi}\,.
 \end{align}
 The proof follows by applying \cref{bestbndmn} on \eqref{jhv}.
 \end{proof}
 We now recall Lemma~$5$ from Section 4.2 of \cite{ALP}. 
-For this result, recall that $r_0 \in \R^k$ is the vector such that $\psi = \Phi r_0$ by assumption.
+For this result, recall that $r_0 \in \R^k$ is the vector such that $\psi = \Phi r_0$.
 \begin{lemma}\label{restate}
 %Let $\psi$ be a Lyapunov function that belongs to the column span of $\Phi$ ,
-For  $r \in \R^k$ arbitrary vector, let $r'$ be
+For  $r \in \R^k$ arbitrary, let $r'$ be
 \begin{align}
  r'= r+||J^*-\Phi r||_{\mn} \left(\frac{1+\beta_{\psi}}{1-\beta_{\psi}}\right)\, r_0.
 \end{align}
@@ -221,26 +233,30 @@ Recall that $\hv$ is the fixed point of $\hg$ and $\hj=\Phi \hr$ is the solution
 \begin{theorem}\label{mt2mn}
 We have
 \begin{align}
-||\hj-\hv||_{1,c}&\leq \frac{c^\top \psi}{1-\beta_\psi}(4||J^*-\Phi r^*||_{\mn}\nn\\
-&+||\Gamma J^*-\hg J^*||_{\mn}).
+||\hj-\hv||_{1,c}&\leq \frac{c^\top \psi}{1-\beta_\psi}(4||J^*-\Phi r^*||_{\mn}\nn
++||\Gamma J^*-\hg J^*||_{\mn}).
 \end{align}
 \end{theorem}
 \begin{proof}
 Let $\gamma=||J^*-\Phi r^*||_{\mn}$. 
 Then, by choosing $r'$ as in Lemma~\ref{restate} we have
-\begin{align}\label{part}
-&||\Phi r'-J^*||_{\mn}\nn\\&\leq ||\Phi r^*-J^*||_{\mn}+||\Phi r'-\Phi r^*||_{\mn}\nn\\
-&=\gamma+\frac{1+\beta_\psi}{1-\beta_\psi}\gamma\nn\\
-&=\frac{2}{1-\beta_\psi}\gamma.
+\begin{align}
+||\Phi r'-J^*||_{\mn}\nn
+&\leq ||\Phi r^*-J^*||_{\mn}+||\Phi r'-\Phi r^*||_{\mn}\nn\\
+&=\gamma+\frac{1+\beta_\psi}{1-\beta_\psi}\gamma
+	=\frac{2}{1-\beta_\psi}\gamma.
+\label{part}
 \end{align}
 %We know that $\tr \in \N$ by \cref{grlpassmp}-\eqref{nassmp} and 
-$r'$ is feasible for the ALP in \eqref{grlp} by \cref{restate}. Then from \cref{srwalp} it follows that
+Now, $r'$ is feasible for the ALP in \eqref{grlp} by \cref{restate}. 
+Then from \cref{srwalp} it follows that
 %As a result, from \cref{srw} it follows that
 \begin{align}
-&||\hj-\hv||_{1,c}\leq||\Phi \tr-\hv||_{1,c}\leq||\Phi r'-\hv||_{1,c}\nn\\
+||\hj-\hv||_{1,c}
+&\leq||\Phi \tr-\hv||_{1,c}\leq||\Phi r'-\hv||_{1,c}\nn\\
 &=\sum_{s\in S}c(s)\psi(s)\frac{|\Phi r'(s)-\hv(s)|}{\psi(s)}\nn\\
 &\leq c^\top \psi ||\Phi r'-\hv||_{\mn}\nn\\
-&\leq c^\top \psi (||\Phi r'-J^*||_{\mn}+||J^*-\hv||_{\mn}).
+&\leq c^\top \psi (||\Phi r'-J^*||_{\mn}+||J^*-\hv||_{\mn}).\nn
 \end{align}
 The result follows from \cref{cmt1mn} and \eqref{part}.
 %\textbf{Main Result~$1$: Prediction Error bound in weighted $L_\infty$-norm}
@@ -250,14 +266,17 @@ The result follows from \cref{cmt1mn} and \eqref{part}.
 %Let $\hj$, $\hv$, $r^*$ and $J^*$ be as in Theorem~\ref{mt2mn}, then
 It holds that
 \begin{align}\label{finalbndmn}
-||J^*-\hj||_{1,c}&\leq\frac{c^\top\psi}{1-\beta_\psi}(6 ||J^*-\Phi r^*||_{\mn}\nn\\
+\begin{split}
+||J^*-\hj||_{1,c}
+&\leq\frac{c^\top\psi}{1-\beta_\psi}(6 ||J^*-\Phi r^*||_{\mn}\\
 &+2||\Gamma J^*-\hg J^*||_{\mn}).
+\end{split}
 \end{align}
 \end{theorem}
 \begin{proof}
 We have
 \begin{align}
-&||J^*-\hj||_{1,c}\nn\\
+||J^*-\hj||_{1,c}\nn
 &\leq||J^*-\hv||_{1,c}+||\hv-\hj||_{1,c}\nn\\
 &\leq c^\top \psi ||J^*-\hv||_{\mn}+||\hv-\hj||_{1,c}.\nn
 \end{align}
@@ -289,9 +308,10 @@ Hence, $J_{\hu} - \hj = T_{\hu} J_{\hu} - T_{\hu} \hj + T \hj - \hj
 =\alpha P_{\hu} (J_{\hu}- \hj) + T\hj - \hj$.
 Hence,
 \begin{align}\label{polderv}
-&||J_{\hu}-\hj||_{1,c}\nn\\&=||(I-\alpha P_{\hu})^{-1}(T\hj-\hj)||_{1,c}\nn\\
+||J_{\hu}-\hj||_{1,c}\nn
+&=||(I-\alpha P_{\hu})^{-1}(T\hj-\hj)||_{1,c}\nn\\
 &\leq c^\top(I-\alpha P_{\hu})^{-1}|T\hj-\hj|\nn\\
-&\leq c^\top (I-\alpha P_{\hu})^{-1} \psi ||T\hj-\hj||_{\mn}\nn\\
+&\leq c^\top (I-\alpha P_{\hu})^{-1} \,\psi\, ||T\hj-\hj||_{\mn}\nn\\
 &\leq \frac{c^\top \psi}{1-\beta_{\psi}}||T\hj-\hj||_{\mn}\nn\\
 %&\leq \frac{c^\top \psi}{1-\beta_{\psi}}||T\hj-TJ^* +J^*- \hj||_{\mn}\nn\\
 &\leq \frac{c^\top \psi}{1-\beta_{\psi}}(||T\hj-TJ^*||_{\mn} +||J^*- \hj||_{\mn})\nn\\

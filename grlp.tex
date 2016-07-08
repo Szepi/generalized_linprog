@@ -1,6 +1,6 @@
 %!TEX root =  autocontgrlp.tex
 \section{Generalized Reduced Linear Program}
-The approximate linear program (ALP) is obtained by making use of LFA in the LP, i.e., by adding the extra constraint $J=\Phi r$ in \eqref{mdplp} with $\Phi \in \R^{n\times k}$ and introducing the new variables $r\in \R^k$. By substitution, this leads to
+The approximate linear program (ALP) is obtained by making use of LFA in the LP, i.e., by ntroducing the new variables $r\in \R^k$ and adding the extra constraint $J=\Phi r$ in \eqref{mdplp} with $\Phi \in \R^{n\times k}$. By substitution, this leads to
 \begin{align}\label{alp}
 \begin{split}
 \min_{r\in \R^k}\, &c^\top \Phi r\\
@@ -15,7 +15,7 @@ The Generalized Reduced Linear Program is given as:
 \text{s.t.}\mb & \,W^\top E\Phi r\geq W^\top H \Phi r,
 \end{split}
 \end{align}
-where $W \in \R^{nd\times m}_+$ is a matrix with all positive entries and $\N$ is an additional (compact) constraint set to ensure the boundedness of the solution.
+where $W \in \R^{nd\times m}_+$ is a matrix with all positive entries and $\N$ is an additional (compact) constraint set to ensure the boundedness of the solution. \todoc{So what is our advice on how to select $\N$?}
 In what follows, we denote the solution to the GRLP by $\hr$, the approximate value function by $\hj=\Phi \hr$ and use $\hu$ to denote the greedy policy with respect to $\hj$.
 
 For brevity, we introduce our assumptions, whose meaning will be explained later.
