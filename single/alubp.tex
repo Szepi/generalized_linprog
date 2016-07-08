@@ -1,0 +1,115 @@
+%!TEX root =  autocontgrlp.tex
+\section{Approximate Least Upper Bound Projection}\label{sec:alubp}
+We define an approximate least upper bound (ALUB) projection operator which has a structure similar to the GRLP and is an approximation to the LUB operator.
+Recall that $W\in \R^{nd\times m}$ is the matrix in \eqref{grlp} which is assumed to satisfy Assumption~\ref{wassump}.
+\begin{definition}\label{alubpop}
+Given $J\in \R^n$ and the nonnegative valued vector $c\in \R^n_+$, define $r_{c,J}'$ to be the solution to 
+\begin{align}\label{alubplp}
+ \underset{r\in \R^k}{\min}& \,\mb c^\top \Phi r\,,\nn\\
+ \text{s.t.}& \,\,\, W^\top E \Phi r\geq W^\top HJ\,,\qquad r \in \N\,.
+\end{align}
+Then, for $J\in \R^n$, $\hg J$, the approximate least upper bound (ALUB) projection of $J$ is defined as 
+\begin{align}\label{tgamdef}
+(\hg J)(i)\eqdef(\Phi \har_{e_i,J})(i), \mb i=1,\ldots,n\,.
+\end{align}
+\end{definition}
+\noindent 
+Note that under our assumptions on $\N$, $\hg$ is well-defined.
+We now show that $\hg$ satisfies the monotone property and is linear along $[\one]$-rays with a factor smaller than one and hence it will follow that it is a contraction.
+\begin{lemma}\label{tgmonotone}
+For $J_1, J_2\in \R^n$ such that $J_1\leq J_2$, we have $\hg J_1\leq \hg J_2$.
+\end{lemma}
+\begin{proof}
+By \cref{wassump}, $W^\top H: \R^n \to \R^m$ is monotone.
+The proof then follows along the lines of Lemma~\ref{gmonotone}.
+\end{proof}
+\begin{lemma}\label{tgshift}
+Let $J\in \R^n$ and $t\in \R$ be a constant. Then $\hg (J+t\one)=\hg J+\alpha t\one$.
+\end{lemma}
+\begin{proof}
+The statement follows from Assumptions \ref{one}, \ref{wassump} and \ref{ass:n}, 
+as well as Lemma~\ref{lpsol} using arguments along the lines of Lemma~\ref{gshift}. 
+In particular, consider the $i^{th}$ linear program corresponding to $\hg J$ and $\hg (J+t\one)$. 
+Now, the result follows by letting $A=W^\top E \Phi$, $b=W^\top H J$, 
+$c=e_i$, $b_0=\alpha t \mathbf{1}$, 
+$x_0=\alpha t e_1$,
+noting that thanks to
+\cref{one} and \ref{wassump}, $A x_0 = b_0$ and that thanks to
+\cref{ass:n} \eqref{ass:n1}, $\N = \N + \alpha t e_1$.
+\end{proof}
+From these results, by~\cref{maxnorm} it immediately follows that $\hg$ is an $\alpha$-contraction with respect to the $\max$-norm:
+\begin{theorem}\label{tgmaxcontra}
+The operator $\hg \colon \R^n\ra \R^n$ obeys the $\max$-norm contraction property with factor $\alpha$.
+\if0
+ and the following iterative scheme based on the ALUB projection operator $\hg$, see \eqref{apvi}, converges to a unique fixed point $\hv$.
+\begin{align}\label{apvi}
+V_{n+1}&=\hg V_n,\mb n\geq 0.
+\end{align}
+\fi
+\end{theorem}
+\begin{proof}
+As noted, this is immediate from \cref{tgmonotone,tgshift} and \cref{maxnorm}.
+%Follows along similar lines as the proof of Theorem~\ref{gmaxcontra}.
+\end{proof}
+In what follows we denote by $\hv$ the unique fixed point of $\hg$:
+\begin{align*}
+\hv = \hg \hv\,.
+\end{align*}
+Recall that $\hj$ denotes the solution $\hj$ of the GRLP \eqref{grlp}. 
+The vector $\hj$ dominates the vector $\hv$:
+\begin{lemma}\label{relation2}
+The vectors $\hv,\hj$ obey $\hj\geq\hv$.
+\end{lemma}
+\begin{proof}
+The proof follows in a similar manner as the proof of Lemma~\ref{relation1}. To elaborate, let $ r_1,  r_2,\ldots, r_n$ be solutions to the GRLP in \eqref{grlp} for $c=e_1, e_2,\ldots,e_n$, respectively,
+and define $V_0\in \R^n$ by $V_0(i)=\underset{j=1,\ldots,n}{\min}(\Phi r_j)(i)$, $1\le i \le n$.
+
+It suffices to show $V_1\eqdef \hg V_0 \le V_0 \le \hj$ since then the desired result follows
+by defining $V_{n+1} = \hg V_n$, $n\ge 1$, noting that by \cref{tgmonotone}, $V_{n+1}\le V_{n}$ and by  \cref{tgmaxcontra}, $V_n \to \hv$.
+
+Since $(\Phi r_j)(i) \ge (\Phi r_i)(i)$ also holds for any $1\leq i,j\leq n$ we have $V_0(i)  = (\Phi r_i)(i)$. Also, since $\hj(i) \ge (\Phi r_i)(i),1\leq i \leq n$ it follows that $\hj\geq V_0$. 
+Now,  fix any $i$. 
+We need to show that $V_1(i)=(\hg V_0)(i) = (\Phi \har_{e_i,V_0})(i) \leq V_0(i)$. 
+By the definition of $\har_{e_i,V_0}$ we know that $(\Phi \har_{e_i,V_0})(i) \le (\Phi r)(i)$
+holds for any $r\in \N$ such that $W^\top E \Phi r \ge W^\top H V_0$. 
+Since by \cref{ass:n} \eqref{ass:n4}, $r_i \in \N$, 
+ it suffices to show that $r_i$ satisfies $W^\top E \Phi r_i \ge W^\top H V_0$. 
+ By definition, $r_i$ satisfies $W^\top E \Phi r_i \ge W^\top H \Phi r_i$.
+ Hence, by the monotone property of $H$ and thanks to
+  \cref{wassump} it is sufficient if $\Phi r_i \ge V_0$.
+This however directly follows from the definition of $V_0$.
+\end{proof}
+The next result bounds the distance between $J^*$ and $\hv$ in terms of the distance of $\Gamma J^*$ and $J^*$, and that between $\Gamma J^*$ and $\hg J^*$.
+\begin{theorem}\label{mt1}
+We have
+\begin{align}
+||J^*-\hv||_\infty\leq \frac{||J^*-\Gamma J^*||_\infty+||\Gamma J^*-\hg J^*||_\infty}{1-\alpha}.
+\end{align}
+\end{theorem}
+\begin{proof}
+By the triangle inequality,
+\begin{align}
+||J^*-\hv||\leq ||J^*-\hg J^*||+||\hg J^*-\hg \hv||\leq ||J^*-\hg J^*||+\alpha || J^*- \hv||
+%||J^*-\hv||_\infty&\leq ||J^*-V_0+V_0-V_1+V_1\ldots-\hv||_\infty\nn\\
+%&\leq ||J^*-V_0||_\infty+||V_0-V_1||_\infty+||V_1-V_2||_\infty+\ldots\nn\\
+%&=||J^*-V_0||_\infty+||\hg J^*-\hg V_0||_\infty+\ldots\nn\\
+%&\leq (\epsilon+\beta)+\alpha(\epsilon+\beta)+\ldots\nn\\
+%&=\frac{\epsilon+\beta}{1-\alpha}
+\end{align}
+and so by reordering and another triangle inequality,
+\begin{align*}
+\norm{J^*-\hv}_{\infty} \le \frac{\norm{ J^*-\hg J^*}_{\infty}}{1-\alpha}
+\le \frac{\norm{ J^*-\Gamma J^*}_{\infty}+\norm{\Gamma J^* - \hg J^*}_{\infty}}{1-\alpha}\,.
+\end{align*}
+\end{proof}
+\noindent Combining this result with \cref{bestbnd} gives the following corollary:
+\begin{corollary}\label{cmt1}
+%Let $\hv$, $\bj$ be as in Theorem~\ref{mt1} and let $r^*\eqdef\argmin_{r\in \R^k}||J^*-\Phi r||_\infty$, then
+We have
+\begin{align}
+||J^*-\hv||_\infty\leq \frac{2||J^*-\Phi r^*||_\infty+||\Gamma J^*-\hg J^*||_\infty}{1-\alpha}.
+\end{align}
+\end{corollary}
+%\begin{proof}
+%The result is obtained by using Lemma~\ref{bestbnd} to replace the term $||J^*-\bj||_\infty$ in Theorem~\ref{mt1}.
+%\end{proof}
