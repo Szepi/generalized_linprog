@@ -1,0 +1,43 @@
+%!TEX root =  autocontgrlp.tex
+\section{Generalized Reduced Linear Program}
+The Generalized Reduced Linear Program is given as:
+\begin{align}\label{grlp}
+\begin{split}
+\underset{r\in \N}{\min}\, &\, c^\top \Phi r,\\
+\text{s.t.}\mb & \,W^\top E\Phi r\geq W^\top H \Phi r,
+\end{split}
+\end{align}
+where $\N$ is an additional constraint set (see \Cref{nassmp}) to ensure the boundedness of the solution. We denote the solution to the GRLP by $\hr$ and the approximate value functions are denoted by $\hj=\Phi \hr$. 
+\begin{assumption}\label{nassmp}
+$\N\subset \R^k$ is compact and $\tr \in \N\subset\R^k$.
+\end{assumption}
+In what follows, we build the analytical framework to characterize the performance of the GRLP and then discuss the implications of our results.
+\begin{comment}
+Further we assume the following to ensure the boundedness of the solution to the GRLP.
+\begin{assumption}\label{mainassmp}
+\begin{enumerate}[(i)]
+\item \label{probdist} $c=(c(i),i=1,\ldots,n)\in \R^n$ is a positive probability distribution, i.e., $c(i)>0$ and $\sum_{i=1}^n c(i)=1$.
+\item  \label{one} The first column of the feature matrix $\Phi$ (i.e., $\phi_1$) is $\one \in \R^n$. 
+\item \label{wassump} $W \in \R^{nd\times m}_+$ is a full rank $nd\times m$  matrix (where $m\ll nd$) and each of its column-sums equals one.
+\item \label{nassmp} $\tr \in \N\subset\R^k$.
+\item \label{lyap} $\psi\colon S \ra \R_+$ is a Lyapunov function for $P$
+and is present in the column span of the feature matrix $\Phi$: For some $r_0\in \R^k$, $\Phi r_0 = \psi$. 
+\end{enumerate}
+\end{assumption}
+
+Here \Cref{mainassmp} \eqref{probdist}-\eqref{one} are carry overs from \cite{ALP}. \Cref{mainassmp} \eqref{wassump} means that the constraints of the GRLP are obtained as positive linear combinations of the original constraints of the ALP. By setting $\N=\R^k$ (\Cref{mainassmp}-\eqref{nassmp} is trivially satified), $m=nd$ and $W=I_{nd\times nd}$ in \eqref{grlp} we recover the ALP as considered in \cite{ALP}. Similarly, RLP in \cite{CS} can be recovered from \eqref{grlp} by choosing an appropriate $W$ (whose $m$ column correspond to the $m$ sampled constraints and each column has a $1$ corresponding to constraint to be sampled with other entries as $0$). It is straightforward to check that the vector $\one$ when viewed as an $S \to \R_+$ function 
+is a Lyapunov function. Further, by \cref{one}, $\one$ is trivially present in the column span of $\Phi$, hence, \cref{lyap} is not limiting.
+\begin{lemma}
+When \cref{lyap} holds, it follows that for any $J\in \R^n$, $t>0$, $s\in S$, \begin{align}\label{eq:psilin}T(J+ t \psi ) \le TJ + \beta_{\psi}\,t\,  \psi\,\, \quad (J\in \R^n,\, t>0)\,.
+\end{align}
+\end{lemma}
+\begin{proof}
+\begin{align*}
+&(T(J+ t \psi))(s) = 
+\max_{a} g_a(s) + \alpha \sum_{s'} p_a(s,s') J(s') \\&+ t \alpha  \sum_{s'} p_a(s,s') \psi(s') \\
+& \le 
+\max_{a} g_a(s) + \alpha \sum_{s'} p_a(s,s') J(s') + t \beta_{\psi} \psi(s) \\
+& = (T J)(s) + \beta_{\psi}\,t\,  \psi(s).
+\end{align*}
+\end{proof}
+\end{comment}

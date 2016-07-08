@@ -1,0 +1,43 @@
+\begin{figure}[h!]
+\centering
+%\resizebox{columnwidth}{}{
+\begin{tikzpicture}[domain=0:7.7,scale=1.0,font=\small,axis/.style={very thick, ->, >=stealth'}]
+\draw [line,thick,-] (0,-1)--(0,4.7);
+\draw [line,thick,-] (0,4.7)--(12.5,4.7);
+\draw [line,thick,-] (12.5,4.7)--(12.5,-1);
+\draw [line,thick,-] (0,-1)--(12.5,-1);
+\node[](one) at (1.5,0.5) {$\tj$};
+\node[](four) at (2.5,0.5) {$\geq$};
+\node[](two) at (5,0.5) {$\tv$};
+\node[](three) at (10,0.5) {$J^*$};
+\node[](five) at (7.5,0.5) {$\geq$};
+\node[](six) at (10,3.7) {$\hj$};
+\node[](seven) at (5,3.7) {$\hv$};
+\node[](eight) at (7.5,3.7) {$\leq$};
+\node[](nine) at(1.5,0){\text{Solution }};
+\node[](twenty) at(1.5,-0.5	){\text{to ALP }};
+\node[](ten) at(5,0){\text{Fixed point of }$\Gamma$};
+\node[](eleven) at(10,0){\text{Optimal Value Function }};
+\node[](twelve)at (10,4.2){\text{Solution to GRLP}};
+\node[](thirteen)at (5,4.2){\text{Fixed point of }$\hg$};
+\draw [line,thick,<->] (5,3.2)--(9.8,0.9);
+\draw [line,thick,<->] (5,3.2)--(9.8,3.2);
+\draw [line,thick,<->] (9.8,3.2)--(9.8,0.9);
+\node[](fourteen)at (6,2.2){$d_1$};
+\node[](fifteen)at (6.5,2.9){$d_2$};
+\node[](sixteen)at (11.2,2.2){$d\leq d_1+d_2$};
+\node[](eighteen)at (11,1.6){\text{Corollary~\ref{cmt2}}};
+\node[](seventeen)at (8,2.9){\text{(Theorem~\ref{mt2}})};
+\node[](fourteen)at (6,1.8){\text{(Theorem~\ref{mt1})}};
+\node[](fourteen)at (6,1.3){\text{(\& Corollary~\ref{cmt1})}};
+%\node[rotate=-25](fourteen)at (7.5,1.5){\text{(Theorem~\ref{mt1})}};
+%\node[draw, circle](two) at (5.5,1) {$s_{n+1}=s'$};
+%\draw[->, =>latex](one) edge[bend left=42.5](two);
+%\node [above=1.1cm]at (2.8,1.2) {${p_{a_n}(s,s')}$};
+%\node [right] at(0,0){$g_{a_n}(s_n)$};
+\end{tikzpicture}
+%}
+\caption{A schematic of the error analysis. Here $d=||J^*-\hj||_{1,c}.$}
+\label{schematic}
+\end{figure}
+

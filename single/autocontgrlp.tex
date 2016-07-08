@@ -1,16 +1,12 @@
-%\documentclass[12pt,draftcls,onecolumn]{IEEEtran}
+\documentclass[12pt,draftcls,onecolumn]{IEEEtran}
 %\documentclass[12pt,twocolumn]{IEEEtran}
-\documentclass[twocolumn]{IEEEtran}
 \usepackage{times}
 \input{pack.tex}
 %\documentstyle[nips14submit_09,times,art10]{article} % For LaTeX 2.09
 \title{A Generalized Reduced Linear Program for Markov Decision Processes}
-\author{Chandrashekar Lakshminarayanan$^\star$, Shalabh Bhatnagar$^\star$,
- and Csaba Szepesvari$^\dagger$\thanks{$^\star$Department of Computer
-Science and Automation, Indian Institute of Science, Bangalore 560012.
-E-mail: $\{$chandrul, shalabh$\}$@csa.iisc.ernet.in}
-\thanks{$^\dagger$Department of Computing Science, University of Alberta,
-Edmonton, Alberta, Canada T6G 2E8. E-mail: csaba.szepesvari@ualberta.ca}}
+\author{Chandrashekar Lakshminarayanan and Shalabh Bhatnagar\\Department of Computer Science and Automation\\ Indian Institute of Science\\ Bangalore-560012\\\{chandrul,shalabh\}@csa.iisc.ernet.in\\ and \\
+Csaba Szepesv\'{a}ri\\Department of Computing Science\\University of Alberta\\Edmonton, Alberta\\Canada T6G 2E8\\  csaba.szepesvari@ualberta.ca }
+
 % The \author macro works with any number of authors. There are two commands
 % used to separate the names and addresses of multiple authors: \And and \AND.
 %
@@ -24,10 +20,18 @@ Edmonton, Alberta, Canada T6G 2E8. E-mail: csaba.szepesvari@ualberta.ca}}
 \begin{document}
 \maketitle
 \input{abstract}
-\input{intro} 
-\input{mdp}
+%\input{intro}
+\input{introshort}
+\input{mdpshort}
+\input{lp}
+%\input{constsamp}
 \input{grlp}
 \input{errana}
+%\input{lubp}
+%\input{alubp}
+%\input{strel}
+\input{improv}
+\input{polbnd}
 \input{resdisc}
 \input{num}
 \input{concl}

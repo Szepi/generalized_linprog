@@ -1,0 +1,332 @@
+%!TEX root =  autocontgrlp.tex
+\section{Error Analysis}\label{sec:errana}
+We now define the two projection operators which are central to our error analysis. The least upper bound (LUB) projection operator $\Gamma \colon \R^n \ra\R^n$ is defined below, see \eqref{gamdef}.
+\begin{definition}\label{lubpop}
+Given $J\in \R^n$ and the nonnegative valued vector $c\in \R^n_+$, define $r_{c,J}$ to be the solution to 
+\begin{align}
+\label{lubplp}
+\begin{split}
+ \underset{r\in \N'}{\min} &\,\, c^\top \Phi r\,,\\
+ \text{s.t.}& \mb \Phi r\geq  TJ.
+ \end{split}
+\end{align}
+Then, for $J\in \R^n$, $\Gamma J$,
+the least upper bound projection of $J$ is defined as 
+\begin{align}\label{gamdef}
+(\Gamma J)(i)\eqdef(\Phi r_{e_i,J})(i),\quad i=1,\ldots,n\,.
+\end{align}
+\end{definition}
+\begin{remark}\label{ubrem}
+To understand the meaning of $\Gamma$ (and $\hg$) define 
+\begin{align}\label{ubclass}
+\F_J\eqdef\{\,\Phi r\,:\,\Phi r\geq TJ, r\in \N\,\},
+\end{align}
+where $J\in \R^n$. Thus $\F_J$ contains vectors in the span of $\Phi$ that upper bound $TJ$. Further, since $(\Gamma J)(i) = \min\{ V(i) \,:\, V\in \F_J \}$, it also follows that $ V\ge \Gamma J $ holds for any $V\in \F_J$.
+\end{remark}
+The approximate least upper bound (ALUB) projection operator $\hg \colon \R^n \ra \R^n$ is defined as below:
+\begin{definition}\label{alubpop}
+Given $J\in \R^n$ and the nonnegative valued vector $c\in \R^n_+$, define $r'_{c,J}$ to be the solution to 
+\begin{align}\label{alubplp}
+ \underset{r\in \N'}{\min}& \,\mb c^\top \Phi r\,,\nn\\
+ \text{s.t.}& \,\,\, W^\top E \Phi r\geq W^\top HJ.
+\end{align}
+Further, define $\hg J$  as 
+\begin{align}\label{tgamdef}
+(\hg J)(i)\eqdef(\Phi r'_{e_i,J})(i), \mb i=1,\ldots,n\,.
+\end{align}
+\end{definition}
+\begin{lemma}\label{lpsol}
+Let $A\in \R^{u\times v}$, $b,c\in \R^u$ and $b_0=Ax_0$ for 
+some $x_0 \in \R^v$, $\N' \subset \R^v$ such that $\N' =x_0+ \N'$. Then
+\begin{align}
+&\min\{c^\top Ax:Ax\geq b+b_0, x\in \N'\} \nn\\
+&=\min\{c^\top A y:Ay \geq b, y \in \N' \}+c^\top b_0.
+\end{align}
+\end{lemma}
+\begin{proof}
+The claim follows by the change of variables $y := x-x_0$.
+\end{proof}
+\noindent 
+%Note that under our assumptions on $\N$, $\hg$ is well-defined.
+%\begin{align*}
+%r^*\eqdef\argmin_{r\in R^k}||J^*-\Phi r||_{\mn}\,.
+%\end{align*}
+%where $\psi$ is a Lyapunov function as in \cref{lyap}.
+\begin{lemma}\label{bestbndmn}
+We have
+\begin{align}
+||J^*-\Gamma J^*||_{\mn}\leq 2||J^*-\Phi r^*||_{\mn}.
+\end{align}
+\end{lemma}
+\begin{proof}
+Define $\eps = \norm{J^* - \Phi r^*}_{\mn}$ so that
+$ J^*-\Phi r^* \le \eps \psi$ and $\Phi r^* - J^*\le \eps \psi$. Then from \cref{grlpassmp}-\eqref{ass:n4} it follows that $\Phi( r^* + \eps r_0 ) = \Phi r^* + \eps \psi \ge J^* = T J^*$. From the definition of $\Gamma$ in \eqref{gamdef} and \cref{ubrem}, we know that $\Phi r^*+\eps \psi \geq \Gamma J^*\geq J^*$. The result follows by noting that $2\eps\psi\geq \Phi r^*+\eps\psi -J^*\geq \Gamma J^*-J^*\geq 0$.
+\end{proof}
+\begin{lemma}\label{tgmonotone}
+For $J_1, J_2\in \R^n$ such that $J_1\leq J_2$, we have $\hg J_1\leq \hg J_2$.
+\end{lemma}
+\begin{proof}
+Given $J\in \R^n$, let $\F_J\eqdef\{\,\Phi r\,: W^\top E \Phi r\geq W^\top HJ, r\in \N'\,\}\,$. Choose any $i\in \{1, \ldots, n\}$. Since $J_1\leq J_2$, from \cref{monotone} and \cref{grlpassmp}-\eqref{wassump} it follows that $W^\top H J_1\leq W^\top H J_2$. Hence, $\F_{J_2} \subset \F_{J_1}$ and thus $(\hg J_1)(i) \le (\hg J_2)(i)$.  Since $i$ was arbitrary, the result follows. 
+\end{proof}
+\begin{lemma}\label{maxnormmn}
+Assume that $\hg: \R^n \to \R^n$ is monotone and 
+that there exists some $\beta\in [0,1)$ such that for any $J\in \R^n$ and $t>0$,
+\begin{align}
+\label{eq:shiftmn}
+\hg( J + t \psi) \le \hg J + \beta t \psi,
+\end{align} 
+for any $J\in \R^n$ and $t\ge 0$.
+Then $\hg$ is a $\norm{\cdot}_{\mn}$ contraction with factor $\beta$.
+\end{lemma}
+\begin{proof}
+First, we show that for any $t\ge 0$,  $J\in \R^n$,
+$\hg( J - t \psi) \ge \hg J - \beta t \psi$ also holds.
+To see this define $J' = J-t\psi$. Then, $J = J'+t\psi$, hence $\hg J \le \hg J' + \beta t \psi$. Reordering this inequality gives the result.
+Let $\eps = \norm{J_1 - J_2}_{\mn}$, where $J_1,J_2\in \R^n$ are arbitrary.
+Then $J_2 - \eps \psi \le J_1 \le J_2 + \eps \psi$. 
+By the monotonicity of $\hg$,
+$\hg(J_2 - \eps \psi) \le \hg J_1 \le \hg(J_2 + \eps \psi)$. 
+Using~\eqref{eq:shiftmn}, we get 
+$\hg J_2 - \beta \eps \psi \le \hg J_1 \le \hg J_2 + \beta \eps \psi$, i.e., $-\beta \eps \psi \le \hg J_1 - \hg J_2 \le \beta \eps \psi$, from which the result follows.
+\end{proof}
+\begin{corollary}\label{tmaxnormmn}
+$T$ is a $\norm{\cdot}_{\mn}$-contraction with factor $\beta_{\psi}$.
+\end{corollary}
+%Returning to $\hg$, since we already now that $\hg$ is monotone (cf. \cref{gmonotone}), it remains to see that it satisfies \eqref{eq:shiftmn}:
+\begin{lemma}\label{gshiftmn}
+The operator $\hg$ satisfies \eqref{eq:shiftmn} with $\beta = \beta_\psi$.
+%For any $J\in \R^n$, $t\in \R_+$, $\Gamma (J+ t \psi ) \le \Gamma J + \beta_{\psi} t \psi$.
+\end{lemma}
+\begin{proof}
+By definition, for $1\le i \le n$, $(\hg (J+t\psi) )(i) = \min\{ e_i^\top \Phi r \,:\, W^\top E\Phi r \ge W^\top H(J+t\psi), r\in \N' \}$.
+By \eqref{eq:psilin}, as $t>0$, $H(J+t\psi) \le HJ + t \beta_\psi \psi$ and hence $W^\top H(J+t\psi) \le W^\top (HJ + t \beta_\psi \psi)$. Thus,
+$(\hg (J+t\psi) )(i) \le 
+ \min\{ e_i^\top \Phi r \,:\, W^\top E\Phi r \ge W^\top HJ+t\beta_\psi \psi), r\in \N' \}$.
+Now, using Lemma~\ref{lpsol} with $A=W^\top E \Phi$, $b=W^\top HJ$, $c=e_i$, $b_0=t\beta_\psi \psi$ 
+and $x_0=t \beta_\psi r_0$, the statement follows since $A x_0 = b_0$ (from \cref{grlpassmp}-\eqref{lyap}) and $\N' = \N' + \alpha t r_0$ (from \cref{grlpassmp}-\eqref{ass:n4}).
+%The result follows in a similar manner as the proofs for Lemmas~\ref{gshift} and ~\ref{tgshift} by using the result in Lemma~\ref{lpsol}.
+\end{proof}
+%From this result and \cref{maxnormmn}, we immediately get that $\Gamma$ is a contraction in $\norm{\cdot}_{\mn}$:
+\begin{comment}
+\begin{theorem}\label{gmaxcontramn}
+The operator $\Gamma  \colon \R^n\ra \R^n$ is a contraction operator in $\norm{\cdot}_{\mn}$ with factor $\beta_{\psi}$.
+\end{theorem}
+\end{comment}
+%In a similar way, one can also show that $\hg$ is also a contraction:
+\begin{theorem}\label{hgmaxcontramn}
+The operator $\hg:\R^n\to\R^n$  is a contraction operator in $\norm{\cdot}_{\mn}$ with factor $\beta_{\psi}$.
+%$\hg$ is also a contraction map in the weighted $L_\infty$ norm.
+\end{theorem}
+\begin{proof}
+Follows from \cref{maxnormmn} and \cref{gshiftmn}.
+\begin{comment}
+We already know that $\hg$ is monotone. That $\hg$ satisfies~\cref{eq:shiftmn}
+with $\beta = \beta_{\psi}$ follows similarly to the argument used in  \cref{tgshift}
+with modifications similar to those introduced in the proof of \cref{gshiftmn}.
+Then, \cref{gmaxcontramn} gives the desired result.
+\end{comment}
+\end{proof}
+In what follows we denote by $\hv$ the unique fixed point of $\hg$ i.e., $\hv = \hg \hv\,$. 
+We now show that the vector $\hj$ dominates the vector $\hv$:
+\begin{lemma}\label{relation1}
+The vectors $\hv,\hj$ obey $\hj\geq\hv$.
+\end{lemma}
+\begin{proof}
+Let $ r_1,  r_2,\ldots, r_n$ be solutions to the GRLP in \eqref{grlp} for $c=e_1, e_2,\ldots,e_n$, respectively,
+and define $V_0\in \R^n$ by $V_0(i)=\underset{j=1,\ldots,n}{\min}(\Phi r_j)(i)$, $1\le i \le n$.
+
+It suffices to show that $V_1\eqdef \hg V_0 \le V_0 \le \hj$ since then the desired result follows
+by defining $V_{n+1} = \hg V_n$, $n\ge 1$, noting that by \cref{tgmonotone}, $V_{n+1}\le V_{n}$ and by  \cref{tmaxnormmn}, $V_n \to \hv$.
+
+Since $(\Phi r_j)(i) \ge (\Phi r_i)(i)$ also holds for any $1\leq i,j\leq n$ we have $V_0(i)  = (\Phi r_i)(i)$. Also, since $\hj(i) \ge (\Phi r_i)(i),1\leq i \leq n$ it follows that $\hj\geq V_0$. 
+Now,  fix any $i$. 
+We need to show that $V_1(i)=(\hg V_0)(i) = (\Phi r'_{e_i,V_0})(i) \leq V_0(i)$. 
+By the definition of $r'_{e_i,V_0}$ we know that $(\Phi r'_{e_i,V_0})(i) \le (\Phi r)(i)$
+holds for any $r\in \N$ such that $W^\top E \Phi r \ge W^\top H V_0$. 
+Now it suffices to show that $r_i$ satisfies $W^\top E \Phi r_i \ge W^\top H V_0$. 
+By definition, $r_i$ satisfies $W^\top E \Phi r_i \ge W^\top H \Phi r_i$.
+Hence, by the monotone property of $H$ and \cref{grlpassmp}-\eqref{wassump} it is sufficient if $\Phi r_i \ge V_0$.
+This however directly follows from the definition of $V_0$.
+\end{proof}
+\begin{lemma}\label{relation2}
+The vectors $\hv,\tj$ obey $\tj\geq\hv$.
+\end{lemma}
+\begin{proof}
+%The proof follows in a similar manner as the proof of \Cref{relation1}. To elaborate, 
+Let $ r_1,  r_2,\ldots, r_n$ be solutions to the ALP in \eqref{alp} (with an additional constraint that the solution be restricted to $\N$) for $c=e_1, e_2,\ldots,e_n$, respectively,
+and define $V_0\in \R^n$ by $V_0(i)=\underset{j=1,\ldots,n}{\min}(\Phi r_j)(i)$, $1\le i \le n$. The rest of the proof 
+follows in the same manner as the proof of \cref{relation1}.
+\end{proof}
+\begin{lemma}\label{srw}
+A vector
+$\hat{r} \in \R^k$ is a solution to GRLP \eqref{grlp} iff it solves the following program:
+\begin{align}\label{grlpeqprog}
+\begin{split}
+\min_{r\in \N}\, &||\Phi r-\hv||_{1,c}\\
+\text{s.t.}\mb &\, W^\top E \Phi r\geq W^\top H \Phi r.
+\end{split}
+\end{align}
+\end{lemma}
+\begin{proof}
+We know from Lemma~\ref{relation2} that $\hj = \Phi \hr \geq\hv$, and thus
+the solutions to \eqref{grlp} do not change if we add the constraint $\Phi r \ge \hv$.
+Now, under this constraint, minimizing $c^\top \Phi r$ is the same as minimizing 
+\begin{align*}
+||\Phi r-\hv||_{1,c}=\sum_{i=1}^n c(i) |(\Phi r)(i)-\hv(i)|=c^\top \Phi r-c^\top \hv\,.
+\end{align*} 
+\end{proof}
+\begin{lemma}\label{srwalp}
+A vector
+$\tr \in \R^k$ is a solution to ALP \eqref{alp} iff it solves the following program:
+\begin{align}\label{grlpeqprog}
+\begin{split}
+\min_{r\in \R^k}\, &||\Phi r-\hv||_{1,c}\\
+\text{s.t.}\mb &\, \Phi r\geq  T \Phi r.
+\end{split}
+\end{align}
+\end{lemma}
+\begin{proof}
+We know from Lemma~\ref{relation2} that $\tj = \Phi \tr \geq\hv$, and the rest of the arguments follow in the same manner as proof for \cref{srw}.
+\end{proof}
+\begin{lemma}\label{cmt1mn}
+We have
+\begin{align}
+||J^*-\hv||_{\mn}&\leq \frac{1}{{1-\beta_{\psi}}}\big(2||J^*-\Phi r^*||_{\mn}&\nn\\+||\Gamma J^*-\hg J^*||_{\mn}\big).
+\end{align}
+\end{lemma}
+\begin{proof}
+Recall that $\hg \hv=\hv$. By the triangle inequality,
+\begin{align*}
+&||J^*-\hv||_\mn\\&\leq ||J^*-\hg J^*||_\mn+||\hg J^*-\hg \hv||_\mn\\&\leq ||J^*-\hg J^*||_\mn+\beta_\psi || J^*- \hv||_\mn,
+\end{align*}
+and so by reordering and with another triangle inequality,
+\begin{align}\label{jhv}
+&\norm{J^*-\hv}_{\mn} \nn\\&\le \frac{\norm{ J^*-\hg J^*}_{\mn}}{1-\beta_\psi}\nn\\
+&\le \frac{\norm{ J^*-\Gamma J^*}_{\mn}+\norm{\Gamma J^* - \hg J^*}_{\mn}}{1-\beta_\psi}\,.
+\end{align}
+The proof follows by applying \cref{bestbndmn} on \eqref{jhv}.
+\end{proof}
+We now recall Lemma~$5$ from Section 4.2 of \cite{ALP}. 
+For this result, recall that $r_0 \in \R^k$ is the vector such that $\psi = \Phi r_0$ by assumption.
+\begin{lemma}\label{restate}
+%Let $\psi$ be a Lyapunov function that belongs to the column span of $\Phi$ ,
+For  $r \in \R^k$ arbitrary vector, let $r'$ be
+\begin{align}
+ r'= r+||J^*-\Phi r||_{\mn} \left(\frac{1+\beta_{\psi}}{1-\beta_{\psi}}\right)\, r_0.
+\end{align}
+Then $r'$ is feasible for the ALP in \eqref{alp}.
+\end{lemma}
+Recall that $\hv$ is the fixed point of $\hg$ and $\hj=\Phi \hr$ is the solution to the GRLP
+\eqref{grlp}. 
+\begin{theorem}\label{mt2mn}
+We have
+\begin{align}
+||\hj-\hv||_{1,c}&\leq \frac{c^\top \psi}{1-\beta_\psi}(4||J^*-\Phi r^*||_{\mn}\nn\\
+&+||\Gamma J^*-\hg J^*||_{\mn}).
+\end{align}
+\end{theorem}
+\begin{proof}
+Let $\gamma=||J^*-\Phi r^*||_{\mn}$. 
+Then, by choosing $r'$ as in Lemma~\ref{restate} we have
+\begin{align}\label{part}
+&||\Phi r'-J^*||_{\mn}\nn\\&\leq ||\Phi r^*-J^*||_{\mn}+||\Phi r'-\Phi r^*||_{\mn}\nn\\
+&=\gamma+\frac{1+\beta_\psi}{1-\beta_\psi}\gamma\nn\\
+&=\frac{2}{1-\beta_\psi}\gamma.
+\end{align}
+%We know that $\tr \in \N$ by \cref{grlpassmp}-\eqref{nassmp} and 
+$r'$ is feasible for the ALP in \eqref{grlp} by \cref{restate}. Then from \cref{srwalp} it follows that
+%As a result, from \cref{srw} it follows that
+\begin{align}
+&||\hj-\hv||_{1,c}\leq||\Phi \tr-\hv||_{1,c}\leq||\Phi r'-\hv||_{1,c}\nn\\
+&=\sum_{s\in S}c(s)\psi(s)\frac{|\Phi r'(s)-\hv(s)|}{\psi(s)}\nn\\
+&\leq c^\top \psi ||\Phi r'-\hv||_{\mn}\nn\\
+&\leq c^\top \psi (||\Phi r'-J^*||_{\mn}+||J^*-\hv||_{\mn}).
+\end{align}
+The result follows from \cref{cmt1mn} and \eqref{part}.
+%\textbf{Main Result~$1$: Prediction Error bound in weighted $L_\infty$-norm}
+\end{proof}
+\begin{theorem}[Prediction error bound in $\norm{\cdot}_{\mn}$]
+\label{cmt2mn}
+%Let $\hj$, $\hv$, $r^*$ and $J^*$ be as in Theorem~\ref{mt2mn}, then
+It holds that
+\begin{align}\label{finalbndmn}
+||J^*-\hj||_{1,c}&\leq\frac{c^\top\psi}{1-\beta_\psi}(6 ||J^*-\Phi r^*||_{\mn}\nn\\
+&+2||\Gamma J^*-\hg J^*||_{\mn}).
+\end{align}
+\end{theorem}
+\begin{proof}
+We have
+\begin{align}
+&||J^*-\hj||_{1,c}\nn\\
+&\leq||J^*-\hv||_{1,c}+||\hv-\hj||_{1,c}\nn\\
+&\leq c^\top \psi ||J^*-\hv||_{\mn}+||\hv-\hj||_{1,c}.\nn
+\end{align}
+The result now follows from Lemma~\ref{cmt1mn} and Theorem~\ref{mt2mn}.
+\end{proof}
+We now bound the performance of the greedy policy $\hu$.
+\begin{theorem}[Control Error Bound in $\norm{\cdot}_{\mn}$]
+\label{polthe}
+Let $\hu$ be the greedy policy with respect to the solution $\hj$ of the GRLP and $J_{\hu}$ be its value function.
+% Let $r^*$ be as in Theorem~\ref{mt2mn}, then
+Then,
+\begin{align}\label{polthebnd}
+%||J_{\hu}-\hj||_{1,c}
+\norm{J^* - J_{\hu}}_{1,c}
+&\leq 2\left(\frac{c^\top \psi}{1-\beta_{\psi}}\right)^2\, \big(6 ||J^*-\Phi r^*||_{\mn}
+\nn\\&
++2||\Gamma J^*-\hg J^*||_{\mn}\big).
+\end{align}
+\end{theorem}
+\begin{proof}
+By the triangle inequality,
+\begin{align*}
+||J^*-J_{\hu}||_{1,c}&\leq ||J^*-\hj||_{1,c}+||J_{\hu}-\hj||_{1,c}\,.
+\end{align*}
+Let us now bound the second term on the right-hand side.
+Since $\hu$ is greedy w.r.t. $\hj$, it holds that $T_{\hu} \hj = T \hj$.
+Also, $T_{\hu} J_{\hu} = J_{\hu}$.
+Hence, $J_{\hu} - \hj = T_{\hu} J_{\hu} - T_{\hu} \hj + T \hj - \hj
+=\alpha P_{\hu} (J_{\hu}- \hj) + T\hj - \hj$.
+Hence,
+\begin{align}\label{polderv}
+&||J_{\hu}-\hj||_{1,c}\nn\\&=||(I-\alpha P_{\hu})^{-1}(T\hj-\hj)||_{1,c}\nn\\
+&\leq c^\top(I-\alpha P_{\hu})^{-1}|T\hj-\hj|\nn\\
+&\leq c^\top (I-\alpha P_{\hu})^{-1} \psi ||T\hj-\hj||_{\mn}\nn\\
+&\leq \frac{c^\top \psi}{1-\beta_{\psi}}||T\hj-\hj||_{\mn}\nn\\
+%&\leq \frac{c^\top \psi}{1-\beta_{\psi}}||T\hj-TJ^* +J^*- \hj||_{\mn}\nn\\
+&\leq \frac{c^\top \psi}{1-\beta_{\psi}}(||T\hj-TJ^*||_{\mn} +||J^*- \hj||_{\mn})\nn\\
+&\leq \frac{c^\top \psi}{1-\beta_{\psi}}(1+\beta_{\psi})||J^*- \hj||_{\mn},
+\end{align}
+where in the second inequality, we use Jensen's inequality and $|T\hj - \hj|$ stands for the 
+vector whose $i$th component is $|(T\hj)(i) - \hj(i)|$. Further, the last inequality follows
+since $T$ is a $\norm{\cdot}_{\mn}$ contraction with factor $\beta_{\psi}$ as noted earlier.
+%componentwise  $(I-\alpha P_{\hu})^{-1}$ is a positive operator for $x=(x_1,\ldots,x_n)^\top\in \R^n$, $|x|=(|x_1|,\ldots,|x_n|)^\top\in \R^n$. 
+Hence,
+\begin{align}
+&||J^*-J_{\hu}||_{1,c}\nn\\
+%&\leq ||J^*-\hj||_{1,c}+||J_{\hu}-\hj||_{1,c}\nn\\
+&\leq c^\top \psi ||J^*-\hj||_{\mn}+c^\top \psi\frac{1+\beta_\psi}{1-\beta_\psi}||J^*- \hj||_{\mn}\nn\\
+&=\frac{2c^\top \psi}{1-\beta_{\psi}}||J^*- \hj||_{\mn}.
+\end{align}
+The result now follows by substituting the bound on $||J^*- \hj||_{\mn}$ from \cref{cmt2mn}.
+\end{proof}
+\begin{comment}
+\begin{note}
+By bounding $\etmn=||\Gamma J^*-J^*+J^*-\hg J^*||_{\mn}\leq 2||J^*-\Phi r^*||_{\mn}+||J^*-\hg J^*||_{\mn}$ 
+(the inequality follows from \cref{bestbndmn}), 
+we can loosen the bounds in \cref{cmt2mn} and \cref{polthe} to
+\begin{align}
+\label{loose1}
+||J^*-\hj||_{1,c}&\leq\frac{c^\top\psi}{1-\beta_\psi}(10 ||J^*-\Phi r^*||_{\mn}
+\nn\\&
++2||J^*-\hg J^*||_{\mn}).\\
+\label{loose2}
+||J^* - J_{\hu}||_{1,c}&\leq 2\left(\frac{c^\top \psi}{1-\beta_{\psi}}\right)^2 \,\big(10 ||J^*-\Phi r^*||_{\mn}
+\nn\\&
++2||J^*-\hg J^*||_{\mn}\big).
+\end{align}
+Here the term $||J^*-\hg J^*||$ in \eqref{loose1} and \eqref{loose2} captures the error due to the use of both $\Phi$ and $W$. Though, \eqref{loose1} and \eqref{loose2} might be loser bounds than \eqref{finalbndmn} and \eqref{polthebnd} respectively, the advantage of this bound is that it captures the error due to function approximation as well as constraint reduction in a direct manner.
+\end{note}
+\end{comment}
+
+

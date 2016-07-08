@@ -1,20 +1,21 @@
-\begin{comment}
+%\begin{comment}
 \begin{abstract}
 The term Approximate Dynamic Programming (ADP) refers to a gamut of approximate solution methods for MDPs with large number of states. Though various ADP algorithms are known till date, very few of them successfully address both the prediction and the control problems. Approximate Linear Programming (ALP) is an ADP method that offers sound theoretical guarantees and solves both the prediction and the control problems. Nevertheless, ALP has a serious limitation in that it has large number of constraints, and in practice, a reduced linear program (RLP) is solved instead. Though the RLP has been shown to perform well empirically, error bounds are available only for a specific RLP obtained under idealized assumptions.\\
 In this paper, we generalize the RLP to define a generalized reduced linear program (GRLP) which has a tractable number of constraints that are obtained as positive linear combinations of the original constraints of the ALP. The main contribution of this paper is the novel theoretical framework developed to obtain error bounds for any given GRLP. Central to our framework are two $\max$-norm contraction operators. Our result also theoretically justifies linear approximation of constraints. We discuss the implication of our results in the contexts of ADP and reinforcement learning.
 \end{abstract}
-\end{comment}
+%\end{comment}
 \begin{comment}
 \begin{abstract}
 The approximate linear programming (ALP) method and its variants have been widely applied to various Markov Decision Processes (MDPs) with large number of states. An attractive feature of the ALP is that it has fewer number of variables compared to the number of states of the MDP and it offers sound theoretical guarantees. Nevertheless, ALP has a serious limitation in that it has large number of constraints, and in practice, a reduced linear program (RLP) is solved instead. Though the RLP has been shown to perform well empirically, error bounds are available only for a specific RLP obtained under idealized assumptions.
 \end{abstract}
 \end{comment}
-%\begin{comment}
+\begin{comment}
 \begin{abstract}
-The approximate linear program (ALP) and its variants have been widely applied to Markov Decision Processes (MDPs) with large number of states. A serious limitation of the ALP is that it has intractable number of constraints, as a result of which constraint approximation is of interest. In this paper, we define a generalized reduced linear program (GRLP) that has a tractable number of constraints obtained as positive linear combinations of the original constraints of the ALP. The main contribution of this paper is a novel theoretical framework developed to obtain error bounds for any given GRLP. By providing a detailed error analysis for the GRLP, we justify linear approximation of the dual varaibles. Unlike prior results on constraint sampling which hold only with high probability, our analysis holds with probability one and is based on a novel contraction operator.
+The approximate linear programming (ALP) method and its variants have been widely applied to various Markov Decision Processes (MDPs) with large number of states. A serious limitation of the ALP is that it has intractable number of constraints. A practical solution is to sample a tractable number constraints of the ALP to formulate a reduced linear program (ALP). In this paper, we generalize the RLP to define a generalized reduced linear program (GRLP) which has a tractable number of constraints that are obtained as positive linear combinations of the original constraints of the ALP. The main contribution of this paper is the novel theoretical framework developed to obtain error bounds for any given GRLP. Unlike prior results on constraint sampling which hold only with high probability, our analysis holds with probability one and is based on a novel contraction operator. 
+%In addition to handling linear approximation of the constraints
 %We discuss the implication of our results in the contexts of ADP and reinforcement learning.
 \end{abstract}
-%\end{comment}
+\end{comment}
 \begin{keywords}{
 Approximate Dynamic Programming (ADP), Markov Decision Processes (MDPs), Approximate Linear Programming (ALP), Generalized Reduced Linear Program (GRLP), Constraint Sampling, Reinforcement Learning.}
 \end{keywords}

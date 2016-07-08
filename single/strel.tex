@@ -1,0 +1,90 @@
+%!TEX root =  autocontgrlp.tex
+\section{A worst-case bound}
+The following lemmas relate the fixed point $\hv$ of $\hg$ to the solution $\hj$ of the GRLP in \eqref{grlp}.
+\begin{lemma}\label{srw}
+A vector
+$\hat{r} \in \R^k$ is a solution to GRLP \eqref{grlp} iff it solves the following program:
+\begin{align}\label{grlpeqprog}
+\begin{split}
+\min_{r\in \R^k}\, &||\Phi r-\hv||_{1,c}\\
+\text{s.t.}\mb &\, W^\top E \Phi r\geq W^\top H \Phi r\,, \qquad r\in \N\,.
+\end{split}
+\end{align}
+\end{lemma}
+\begin{proof}
+We know from Lemma~\ref{relation2} that $\hj = \Phi \hr \geq\hv$, and thus
+the solutions to \eqref{grlp} do not change if we add the constraint $\Phi r \ge \hv$.
+Now, under this constraint, minimizing $c^\top \Phi r$ is the same as
+ minimizing 
+\begin{align*}
+||\Phi r-\hv||_{1,c}=\sum_{i=1}^n c(i) |(\Phi r)(i)-\hv(i)|=c^\top \Phi r-c^\top \hv\,.
+\end{align*} 
+\end{proof}
+\begin{theorem}\label{mt2}
+%Let $\hv$ be the solution to the iterative scheme in \eqref{apvi} and let $\hj=\Phi \hr$ be the solution to the GRLP. Let $\bj$ be the best possible approximation to $J^*$ as in Definition~\ref{bestproj}, and $||\Gamma J^* -\hg J^*||_\infty$ be the error due to ALUB projection and let $r^*\eqdef\underset{r\in \R^k}{\arg\min}||J^*-\Phi r||_\infty$, then
+It holds that
+\begin{align}
+||\hj-\hv||_{1,c}\leq\frac{4||J^*-\Phi r^*||_\infty+||\Gamma J^*-\hg J^*||_\infty}{1-\alpha}.
+\end{align}
+\end{theorem}
+\begin{proof}
+Let $\gamma=||J^*-\Phi r^*||_\infty$. Then, since $T$ is an $\alpha$-contraction in the $\max$-norm,
+$||J^*-T\Phi r^*||_\infty=||TJ^*-T\Phi r^*||_\infty\leq\alpha\gamma$ and hence by the triangle inequality,
+\begin{align}\label{eq:tphir}
+||T\Phi r^*-\Phi r^*||_\infty&\leq(1+\alpha)\gamma\,.
+\end{align}
+Let $r'= r^*+t e_1$ with $t>0$ to be chosen later.
+Then, from \cref{one},
+$T\Phi r' = T(\Phi r^* + t \one) = T \Phi r^* + \alpha t \one \le \Phi r^* + (\alpha t+ (1+\alpha) \gamma) \one$,
+ where the inequality follows from~\eqref{eq:tphir}.
+ Choosing $t$ so that $t = \alpha t+ (1+\alpha) \gamma$, or $t = \frac{(1+\alpha)\gamma}{1-\alpha}$, we get
+ that $T\Phi r' \le \Phi r'$. Hence, $r'$ is feasible to the ALP \eqref{alp} and 
+since, thanks to \cref{wassump}, 
+any feasible solution to \eqref{alp} is also a feasible solution to the GRLP  \eqref{grlp},
+$r'$ is also feasible to \eqref{grlp}. Thus, 
+\begin{align}
+||\hj-\hv||_{1,c}&\leq||\Phi r'-\hv||_{1,c}\nn &(\text{thanks to Lemma~\ref{srw}}) \\ %\vspace{10pt}
+&\leq||\Phi r'-\hv||_\infty\mb & (\text{since $c$ is a distribution})\nn\\
+&\leq||\Phi r'-J^*||_\infty+||J^*-\hv||_\infty\,. & (\text{triangle inequality}) \label{mt2eq0}
+\end{align}
+Now, by another triangle inequality,
+\begin{align}
+||\Phi r'-J^*||_\infty&\leq ||\Phi r^* -J^*||_\infty+||\Phi r'-\Phi r^*||_\infty
+\leq \gamma+\frac{(1+\alpha)\gamma}{1-\alpha}=\frac{2\gamma}{1-\alpha}.
+\label{mt2eq1}
+\end{align}
+The result follows by combining this bound with \eqref{mt2eq0} and \cref{cmt1}.
+\end{proof}
+
+\begin{corollary}[Prediction error bound]
+\label{cmt2}
+%Let $\hj$, $\hv$, $r^*$ and $J^*$ be as in Theorem~\ref{mt2}, then \todoc{Where is the effect of $\chi$?}
+We have
+\begin{align}\label{finalbnd}
+||J^*-\hj||_{1,c}\leq\frac{6 ||J^*-\Phi r^*||_\infty+2||\Gamma J^*-\hg J^*||_\infty}{1-\alpha}\,.
+\end{align}
+\end{corollary}
+\begin{proof}
+We have
+$
+||J^*-\hj||_{1,c}\leq||J^*-\hv||_{1,c}+||\hv-\hj||_{1,c}
+\leq||J^*-\hv||_\infty+||\hv-\hj||_{1,c}
+$.
+The result now follows from \cref{cmt1} and \cref{mt2}.
+\end{proof}
+When no constraints are removed, $\Gamma = \hg$. In this case, \eqref{finalbnd} can be compared to the bound in \cref{restateval} instantiated with $\psi = \one$, in which case the right-hand side of \eqref{finalbnd}
+becomes $\frac{2\norm{J^* - \Phi r^*}_{\infty}}{1-\alpha}$, i.e., the bound  \eqref{finalbnd} is a off by a factor three 
+only from that in \cref{restateval}.
+We view this as a small price paid to be paid for the increased generality of \eqref{finalbnd}.
+In terms of the price of removing constraints,
+the result shows that there is effectively no price to be paid for removing constraints as long as
+those constraints that are binding in the definition of $\Gamma J^*(i)$, $1\le i \le n$ are kept: 
+a rather intuitive result.
+\todoc{I am still trying to understand whether it is good or bad that the result is independent of $\N$.
+}
+
+Just like in the case of RLPs, it is possible to tighten the bounds by using weighted $\max$-norms. 
+This is the subject of the next section.
+
+
+

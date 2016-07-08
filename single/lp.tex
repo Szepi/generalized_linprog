@@ -7,31 +7,25 @@ The approximate linear program (ALP) is obtained by making use of LFA in the LP,
 \text{s.t.}\mb &\Phi r\geq T \Phi r,
 \end{split}
 \end{align}
-where $J\geq TJ$ is a shorthand for the $nd$ constraints in \eqref{mdplp}. Unless specified otherwise we use $\tr$ to denote any solution to the ALP, $\tj=\Phi \tr$ to denote the corresponding approximate value function and $\tu$ to denote the greedy policy with respect to $\tj$. Before we recall the important results on the ALP from \cite{ALP} we first present some more definitions and assumptions that are to be used throughout the rest of the paper.
-\begin{definition}
-Let $c,\rho,\chi:S \to \R_+$ be positive valued functions, where $\R_+$ denotes the set of strictly positive reals. Then for $J\in \R^n$, $a\in A$ and $s\in S$, 
-define
-\begin{enumerate}[(i)]
-\item The weighted $L_1$-norms $\norm{\cdot}_{1,c}$ and the weighted $L_\infty$-norms  $\norm{\cdot}_{\infty,\rho}$ as $
-||J||_{1,c}=\sum_{s \in S} c(s)|J(s)|, ||J||_{\infty,\rho}=\max_{s \in S} \frac{|J(s)|}{\rho(s)}$.
-\item The discounted maximal inflation of $\chi$ due to $P = (p_a)_{a\in A}$ as $\beta_{\chi}=\max_{s \in S} \frac{\underset{a \in A}{\max}\big(\alpha\sum_{s'}p_a(s,s')\chi(s')\big)}{\chi(s)}$.
-\item Function $\chi:S\to\R_+$ to be a \emph{Lyapunov} function for $P = (p_a)_{a\in A}$ if $\beta_{\chi}<1$.
-\item $E$ to be the $nd\times n$ matrix given by $E=[I,\ldots,I]^\top$, i.e., $E$ is obtained by stacking $d$ identical $n\times n$ identity matrices one over the other.
-\end{enumerate}
-\end{definition}
+where $J\geq TJ$ is a shorthand for the $nd$ constraints in \eqref{mdplp}. Unless specified otherwise we use $\tr$ to denote any solution to the ALP and $\tj=\Phi \tr$ to denote the corresponding approximate value function. 
+Further we assume the following to ensure the boundedness of the various linear programs (\cref{mdplp,alp,grlp} ) presented in this paper.
 \begin{assumption}\label{mainassmp}
 \begin{enumerate}[(i)]
 \item \label{probdist} $c=(c(i),i=1,\ldots,n)\in \R^n$ is a positive probability distribution, i.e., $c(i)>0$ and $\sum_{i=1}^n c(i)=1$.
 \item  \label{one} The first column of the feature matrix $\Phi$ (i.e., $\phi_1$) is $\one \in \R^n$. 
+\item \label{wassump} $W \in \R^{nd\times m}_+$ is a full rank $nd\times m$  matrix (where $m\ll nd$) and each of its column-sums equals one.
 \item \label{lyap} $\psi\colon S \ra \R_+$ is a Lyapunov function for $P$
 and is present in the column span of the feature matrix $\Phi$: For some $r_0\in \R^k$, $\Phi r_0 = \psi$. 
 %\item \label{nassmp} $\tr \in \N\subset\R^k$.
 \end{enumerate}
 \end{assumption}
+
 It is straightforward to check that the vector $\one$ when viewed as an $S \to \R_+$ function 
 is a Lyapunov function. 
-Further, by \cref{mainassmp}-\ref{one}, $\one$ is trivially present in the column span of $\Phi$, 
-hence, \cref{mainassmp}-\ref{lyap} is not limiting. When \cref{mainassmp}-\ref{lyap} holds, it follows that for any $J\in \R^n$, $t>0$, $s\in S$,
+Further, by \cref{one}, $\one$ is trivially present in the column span of $\Phi$, 
+hence, \cref{lyap} is not limiting.
+In what follows we will always assume that Assumptions \ref{probdist}--\ref{lyap} hold. 
+When \cref{lyap} holds, it follows that for any $J\in \R^n$, $t>0$, $s\in S$,
 \begin{align*}
 (T(J+ t \psi))(s) &= 
 \max_{a} g_a(s) + \alpha \sum_{s'} p_a(s,s') J(s') \\&+ t \alpha  \sum_{s'} p_a(s,s') \psi(s') \\
@@ -44,11 +38,12 @@ or, in short,
 \label{eq:psilin}
 T(J+ t \psi ) \le TJ + \beta_{\psi}\,t\,  \psi\,\, \quad (J\in \R^n,\, t>0)\,.
 \end{align}
-\begin{comment}
 We will now recall two results due to de Farias and Van Roy that bound the error due to the introduction of the extra constraint in the ALP.
 \begin{theorem}[Theorem~$4.2$ of \cite{ALP}]
 \label{restateval}
 Let $\tr$ be the solution to the ALP in \eqref{alp}, $\tilde{J}_c=\Phi \tilde{r}_c$.
+% $\psi$ be as in \cref{lyap} 
+%and $c$ be a distribution as in \eqref{probdist}. 
 Then, it holds that
 \begin{align*}
 ||J^*-\tj||_{1,c}\leq \frac{2c^\top \psi}{1-\beta_{\psi}}\min_{r}||J^*-\Phi r||_{\mn}\,.
@@ -63,7 +58,10 @@ Let $\tilde{u}$ be the greedy policy with respect to the solution $\tj$ of the A
 \end{align*}
 where $c'=(1-\alpha)c^\top(I-\alpha P_{\tu})^{-1}$.
 \end{theorem}
-Here \cref{restateval} characterizes the prediction error $||J^*-\tj||_{1,c}$ and \cref{restatepol} characterizes the loss in perfromance given by $||J^*-J_{\tu}||_{1,c}$. Please refer to \cite{ALP} for a more detailed treatment of the ALP.\\
+Theorems~\ref{restateval} and ~\ref{restatepol} together imply that the ALP addresses both the control and prediction problems. Please refer to \cite{ALP} for a more detailed treatment of the ALP.\\
 Note that the ALP is a linear program in $k$ ($\ll n$) variables as opposed to the LP in \eqref{mdplp} which has $n$ variables. Nevertheless, the ALP has $nd$ constraints (same as the LP) which is an issue when $n$ is large and calls for constraint approximation/reduction techniques.
 \todoc{Column generation, Dantzig-Wolf decomposition?}
-\end{comment}
+One proposal in the literature to overcome this hurdle is to employ a procedure known as constraint sampling, wherein a subset of the original constraints of the ALP are sampled to formulate a \emph{reduced linear program} (RLP). The perfromance analysis of the RLP can be found in \cite{CS}. The RLP has been shown to perform well in experiments \cite{ALP,CS,CST} 
+in various domains such as Tetris and in network of queues. 
+%However, theoretical results are available only for a specific RLP 	formulated under idealized conditions \cite{CS}. 
+An alternative approach to handle the constraints is employ function approximation in the dual variables of the ALP \cite{ALP-Bor}. However, \cite{ALP-Bor} does not provide theoretical guarntees for the loss in performance due to such an approximation.\par 

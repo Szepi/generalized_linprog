@@ -1,0 +1,79 @@
+%!TEX root =  autocontgrlp.tex
+%\textbf{Main Result $2$: Control Error bound in modified $L_\infty$-norm}\\
+We now bound the performance of the greedy policy $\hu$.
+\begin{theorem}[Control Error Bound in $\norm{\cdot}_{\mn}$]
+\label{polthe}
+Let $\hu$ be the greedy policy with respect to the solution $\hj$ of the GRLP and $J_{\hu}$ be its value function.
+% Let $r^*$ be as in Theorem~\ref{mt2mn}, then
+Then,
+\begin{align}\label{polthebnd}
+%||J_{\hu}-\hj||_{1,c}
+\norm{J^* - J_{\hu}}_{1,c}
+&\leq 2\left(\frac{c^\top \psi}{1-\beta_{\psi}}\right)^2\, \big(6 ||J^*-\Phi r^*||_{\mn}
+\nn\\&
++2||\Gamma J^*-\hg J^*||_{\mn}\big).
+\end{align}
+\end{theorem}
+\begin{proof}
+By the triangle inequality,
+\begin{align*}
+||J^*-J_{\hu}||_{1,c}&\leq ||J^*-\hj||_{1,c}+||J_{\hu}-\hj||_{1,c}\,.
+\end{align*}
+Let us now bound the second term on the right-hand side.
+Since $\hu$ is greedy w.r.t. $\hj$, it holds that $T_{\hu} \hj = T \hj$.
+Also, $T_{\hu} J_{\hu} = J_{\hu}$.
+Hence, $J_{\hu} - \hj = T_{\hu} J_{\hu} - T_{\hu} \hj + T \hj - \hj
+=\alpha P_{\hu} (J_{\hu}- \hj) + T\hj - \hj$.
+Hence,
+\begin{align}\label{polderv}
+||J_{\hu}-\hj||_{1,c}&=||(I-\alpha P_{\hu})^{-1}(T\hj-\hj)||_{1,c}\nn\\
+&\leq c^\top(I-\alpha P_{\hu})^{-1}|T\hj-\hj|\nn\\
+&\leq c^\top (I-\alpha P_{\hu})^{-1} \psi ||T\hj-\hj||_{\mn}\nn\\
+&\leq \frac{c^\top \psi}{1-\beta_{\psi}}||T\hj-\hj||_{\mn}\nn\\
+%&\leq \frac{c^\top \psi}{1-\beta_{\psi}}||T\hj-TJ^* +J^*- \hj||_{\mn}\nn\\
+&\leq \frac{c^\top \psi}{1-\beta_{\psi}}(||T\hj-TJ^*||_{\mn} +||J^*- \hj||_{\mn})\nn\\
+&\leq \frac{c^\top \psi}{1-\beta_{\psi}}(1+\beta_{\psi})||J^*- \hj||_{\mn},
+\end{align}
+where in the second inequality, we use Jensen's inequality and $|T\hj - \hj|$ stands for the 
+vector whose $i$th component is $|(T\hj)(i) - \hj(i)|$ and the last inequality follows
+since $T$ is a $\norm{\cdot}_{\mn}$ contraction with factor $\beta_{\psi}$, as we noted it earlier.
+%componentwise  $(I-\alpha P_{\hu})^{-1}$ is a positive operator for $x=(x_1,\ldots,x_n)^\top\in \R^n$, $|x|=(|x_1|,\ldots,|x_n|)^\top\in \R^n$. 
+Hence,
+\begin{align}
+&||J^*-J_{\hu}||_{1,c}\nn\\
+%&\leq ||J^*-\hj||_{1,c}+||J_{\hu}-\hj||_{1,c}\nn\\
+&\leq c^\top \psi ||J^*-\hj||_{\mn}+c^\top \psi\frac{1+\beta_\psi}{1-\beta_\psi}||J^*- \hj||_{\mn}\nn\\
+&=\frac{2c^\top \psi}{1-\beta_{\psi}}||J^*- \hj||_{\mn}.
+\end{align}
+The result now follows by substituting the bound on $||J^*- \hj||_{\mn}$ from \cref{cmt2mn}.
+\end{proof}
+%\begin{comment}
+\begin{note}
+By bounding $\etmn=||\Gamma J^*-J^*+J^*-\hg J^*||_{\mn}\leq 2||J^*-\Phi r^*||_{\mn}+||J^*-\hg J^*||_{\mn}$ 
+(the inequality follows from \cref{bestbndmn}), 
+we can loosen the bounds in \cref{cmt2mn} and \cref{polthe} to
+\begin{align}
+\label{loose1}
+||J^*-\hj||_{1,c}&\leq\frac{c^\top\psi}{1-\beta_\psi}(10 ||J^*-\Phi r^*||_{\mn}
+\nn\\&
++2||J^*-\hg J^*||_{\mn}).\\
+\label{loose2}
+||J^* - J_{\hu}||_{1,c}&\leq 2\left(\frac{c^\top \psi}{1-\beta_{\psi}}\right)^2 \,\big(10 ||J^*-\Phi r^*||_{\mn}
+\nn\\&
++2||J^*-\hg J^*||_{\mn}\big).
+\end{align}
+Here the term $||J^*-\hg J^*||$ in \eqref{loose1} and \eqref{loose2} captures the error due to the use of both $\Phi$ and $W$. Though, \eqref{loose1} and \eqref{loose2} might be loser bounds than \eqref{finalbndmn} and \eqref{polthebnd} respectively, the advantage of this bound is that it captures the error due to function approximation as well as constraint reduction in a direct manner.
+\end{note}
+%\end{comment}
+%The following result (Theorem~\ref{st}) supports Claim~$1$ in the above.\\
+The error term $\etmn$ gives new insights into constraint sampling. 
+\begin{theorem}[ On Constraint Sampling]\label{st}
+Let $s\in S$ be a state whose constraint was sampled. Then
+\begin{align}\label{sampexp}
+|\Gamma J^*(s)-\hg J^*(s)|<|\Gamma J^*(s)-J^*(s)|.
+\end{align}
+\end{theorem}
+\begin{proof}
+Let $r_{e_s}$ and $\hat{r}_{e_s}$ be solutions to the linear programs in \eqref{lubplp} and \eqref{alubplp} respectively for $c=e_s$ and $J=J^*$. It is easy to note that $r_{e_s}$ is feasible for the linear program in \eqref{alubplp} for $c=e_s$ and $J^*$, and hence it follows that $(\Phi r_{e_s})(s)\geq (\Phi \hat{r}_{e_s})(s)$. However, since all the constraints with respect to state $s$ have been sampled we know that $(\Phi \hat{r}_{e_s})(s)\geq J^*$. The proof follows from noting that $(\Gamma J^*)(s)=(\Phi r_{e_s})(s)$ and $\hg J^*(s)=(\Phi \hat{r}_{e_s})(s)$.
+\end{proof}
+

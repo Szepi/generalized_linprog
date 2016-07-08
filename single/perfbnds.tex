@@ -1,0 +1,30 @@
+%!TEX root =  autocontgrlp.tex
+%Recall that $\bj = \Gamma J^*$.
+\begin{theorem}\label{fxpres}
+%Let $\tv$ be the fixed point of the iterative scheme in \eqref{pvi} and let $\bj$ be the best possible LUB projection of $J^*$ as in Definition~\ref{bestproj}. Then,
+We have 
+\begin{align}
+||J^*-\tv||_\infty\leq \frac{1}{1-\alpha}||J^*-\Gamma J^*||_\infty\,.
+\end{align}
+\end{theorem}
+\begin{proof}
+%Recall that $\bj = \Gamma J^*$.
+By the triangle inequality and since $\Gamma$ is an $\alpha$-contraction,
+\begin{align*}
+\inorm{J^* - \tv } \le \inorm{ J^* - \Gamma J^* } + \inorm{\Gamma J^* - \Gamma \tv }
+\le  \inorm{ J^* - \Gamma J^* } + \alpha \inorm{J^* - \tv}\,.
+\end{align*}
+Solving the inequality gives the result.
+\if0
+Let $\epsilon=||J^*-\bj||_\infty$, and $\{V_n\},n\geq 0$ be the iterates of the scheme in \eqref{pvi} with $V_0=\bj$, then
+\begin{align}
+||J^*-\tv||_\infty&\leq ||J^*-V_0+V_0-V_1+V_1\ldots-\tv||_\infty\nn\\
+&\leq ||J^*-V_0||_\infty+||V_0-V_1||_\infty+\ldots\nn
+\end{align}
+Since $||V_1-V_0||_\infty=||\Gamma \bj-\Gamma J^*||_\infty\leq\alpha||\bj-J^*||_\infty$, from Theorem~\ref{gmaxcontra},
+\begin{align}
+||J^*-\tv||_\infty&\leq \epsilon+\alpha\epsilon+\alpha^2\epsilon+\ldots\nn\\
+&=\frac{\epsilon}{1-\alpha}.
+\end{align}
+\fi
+\end{proof}

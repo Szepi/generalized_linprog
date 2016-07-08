@@ -1,0 +1,36 @@
+%!TEX root =  autocontgrlp.tex
+\section{Constraint sampling}
+One way to reduce the number of constraints is to randomly choose a subset of them \cite{CS},
+leading to the so-called reduced linear program (RLP). \todoc{How about the results of Calafiore and Campi (2005, Math. Prog.) and others reviewed in \cite{CS}? Any follow-up we missed?}
+While the objective function of the RLP is the same as that of the ALP, 
+the RLP has only $m \ll nd$ constraints sampled from the original ALP according to a given probability distribution:
+\begin{align}\label{rlp}
+\min_{r\in \N}\, &c^\top \Phi r\nn\\
+\text{s.t.}\mb &(\Phi r)(s)\geq g_a(s)+\alpha\sum_{s'}p_a(s,s')(\Phi r)(s'), \nn\\
+&\forall (s,a) \in \I.
+\end{align}
+where $\I$ is the index set containing $m$ sampled state-action pairs and the extra constraint set $\N$ is introduced to guarantee a bounded solution. Note that apart from $r\in \N$ the feasible set of the RLP is a superset of the feasible set of the ALP. 
+\begin{comment}
+The index set $\I$ in \eqref{rlp} naturally gives rise to the definition of an $nd\times m$ constraint sampling matrix $\M$:
+\begin{definition}\label{csampmat}
+Let $\I=\{(s_1,a_1),\ldots,(s_m,a_m)\}$ be the sampled state-action pairs and let $q_i \eqdef s_i+(a_i-1)\times n$, $i=1,\ldots,m$. Define the constraint sampling matrix $\M \in \R^{nd\times m}$ associated with the index set $\I$ by
+\begin{align}
+\M(i,j)
+=
+\begin{cases}
+1, & \text{ if } q_i = j\,;\\
+0, & \text{ otherwise}.
+\end{cases}
+\end{align}
+\end{definition}
+The RLP can then be represented in short as
+\begin{align}\label{rlpshort}
+\begin{split}
+\min_{r\in \N}\, &c^\top \Phi r\\
+\text{s.t.}\mb & \M^\top E \Phi r \geq \M^\top H \Phi r\,.
+\end{split}
+\end{align}
+The error bounds for the RLP can be found in \cite{CS} and the RLP has been shown to perform well in experiments \cite{ALP,CS,CST} in various domains such as Tetris and in network of queues. An alternative to constraint sampling is to introduce function approximation in the dual variables of the ALP \cite{ALP-Bor,dolgov}. While such an approach has been applied in practice, there are no known theoretical guarantess for function approximation of the dual variables.\par
+In the next section, we present the generalized reduced linear program (GRLP) which is the main object of study in this paper.
+\end{comment}
+

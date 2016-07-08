@@ -1,0 +1,117 @@
+%!TEX root =  autocontgrlp.tex
+\section{Approximate Linear Programming}
+\begin{comment}
+The approximate linear program (ALP) is obtained by making use of LFA in the LP, i.e., by adding the extra constraint $J=\Phi r$ in \eqref{mdplpshort} with $\Phi \in \R^{n\times k}$ and introducing 
+the new variables $r\in \R^k$. 
+By substitution, this leads to
+\begin{align}\label{alp}
+\begin{split}
+\min_{r\in \R^k}\, &c^\top \Phi r\\
+\text{s.t.}\mb &\Phi r\geq T \Phi r.
+\end{split}
+\end{align}
+Unless specified otherwise we use $\tr$ to denote any solution 
+to the ALP and $\tj=\Phi \tr$ to denote the corresponding approximate value function. 
+\end{comment}
+For any function $\chi\colon S\ra \R_+$, define the discounted maximal inflation of $\chi$ due to $P = (p_a)_{a\in A}$ as
+\begin{align*}
+\beta_{\chi}=\max_{s \in S} \frac{\underset{a \in A}{\max}\big(\alpha\sum_{s'}p_a(s,s')\chi(s')\big)}{\chi(s)}\,.
+\end{align*}
+\begin{definition}
+A function $\chi:S\to\R_+$ is said to be a \emph{Lyapunov} function for $P = (p_a)_{a\in A}$ 
+	if $\beta_{\chi}<1$.
+\end{definition}
+The error bound will be given in terms of a Lyapunov function $\psi$ for $P$ that is in the column span of $\Phi$:
+\begin{assumption}\label{lyap}
+$\psi\colon S \ra \R_+$ is a Lyapunov function for $P$
+and is present in the column span of the feature matrix $\Phi$: For some $r_0\in \R^k$, $\Phi r_0 = \psi$.
+\end{assumption}
+It is straightforward to check that the vector $\one$ when viewed as an $S \to \R_+$ function 
+is a Lyapunov function. Further, by \cref{one}, $\one$ is trivially present in the column span of $\Phi$, 
+hence, \cref{lyap} is not limiting.
+In what follows we will always assume that Assumptions \ref{probdist}--\ref{lyap} hold. 
+When \cref{lyap} holds, it follows that for any $J\in \R^n$, $t>0$, $s\in S$,
+\begin{align*}
+(T(J+ t \psi))(s) &= 
+\max_{a} g_a(s) + \alpha \sum_{s'} p_a(s,s') J(s') + t \alpha  \sum_{s'} p_a(s,s') \psi(s') \\
+& \le 
+\max_{a} g_a(s) + \alpha \sum_{s'} p_a(s,s') J(s') + t \beta_{\psi} \psi(s) \\
+& = (T J)(s) + \beta_{\psi}\,t\,  \psi(s),
+\end{align*}
+or, in short,
+\begin{align}
+\label{eq:psilin}
+T(J+ t \psi ) \le TJ + \beta_{\psi}\,t\,  \psi\,\, \quad (J\in \R^n,\, t>0)\,.
+\end{align}
+%Under this assumption \eqref{alp} is thus feasible and since \eqref{alp} is obtained by adding an extra constraint to the LP \eqref{mdplpshort}, the solutions to  \eqref{alp} are bounded and $\tj$ is uniquely defined.
+\begin{comment}
+We will now recall two results due to de Farias and Van Roy 
+	that bound the error due to the introduction of the extra constraint in the ALP.
+For this, we will need the definition of weighted $L_1$ and $L_\infty$ norms.
+For any $c,\rho:S \to \R$ positive valued functions
+the weighted $L_1$-norms $\norm{\cdot}_{1,c}$ 
+and 
+the weighted $L_\infty$-norms  $\norm{\cdot}_{\infty,\rho}$ are defined as
+\begin{align*}
+||J||_{1,c}=\sum_{s \in S} c(s)|J(s)|\,, \qquad
+||J||_{\infty,\rho}=\max_{s \in S} \frac{|J(s)|}{\rho(s)}\,, \qquad J:S\to \R\,.
+\end{align*}
+
+We let $\R_+$ denote the set of nonnegative reals. \todoc{Move up?}
+For any function $\chi\colon S\ra \R_+$, define the discounted maximal inflation of $\chi$ due to $P = (p_a)_{a\in A}$ as
+\begin{align*}
+\beta_{\chi}=\max_{s \in S} \frac{\underset{a \in A}{\max}\big(\alpha\sum_{s'}p_a(s,s')\chi(s')\big)}{\chi(s)}\,.
+\end{align*}
+\begin{definition}
+A function $\chi:S\to\R_+$ is said to be a \emph{Lyapunov} function for $P = (p_a)_{a\in A}$ 
+	if $\beta_{\chi}<1$.
+\end{definition}
+The error bound will be given in terms of a Lyapunov function $\psi$ for $P$ that is in the column span of $\Phi$:
+\begin{assumption}\label{lyap}
+$\psi\colon S \ra \R_+$ is a Lyapunov function for $P$
+and is present in the column span of the feature matrix $\Phi$: For some $r_0\in \R^k$, $\Phi r_0 = \psi$.
+\end{assumption}
+It is straightforward to check that the vector $\one$ when viewed as an $S \to \R_+$ function 
+is a Lyapunov function. 
+Further, by \cref{one}, $\one$ is trivially present in the column span of $\Phi$, 
+hence, \cref{lyap} is not limiting.
+In what follows we will always assume that Assumptions \ref{probdist}--\ref{lyap} hold. 
+When \cref{lyap} holds, it follows that for any $J\in \R^n$, $t>0$, $s\in S$,
+\begin{align*}
+(T(J+ t \psi))(s) &= 
+\max_{a} g_a(s) + \alpha \sum_{s'} p_a(s,s') J(s') + t \alpha  \sum_{s'} p_a(s,s') \psi(s') \\
+& \le 
+\max_{a} g_a(s) + \alpha \sum_{s'} p_a(s,s') J(s') + t \beta_{\psi} \psi(s) \\
+& = (T J)(s) + \beta_{\psi}\,t\,  \psi(s),
+\end{align*}
+or, in short,
+\begin{align}
+\label{eq:psilin}
+T(J+ t \psi ) \le TJ + \beta_{\psi}\,t\,  \psi\,\, \quad (J\in \R^n,\, t>0)\,.
+\end{align}
+
+%In Definition~\ref{modnorm}, the use of the weighting function $\rho$ allows us to measure the error taking into account the relative importance of the various states. A higher value of $\rho(s)$ means that the state $s$ is less important and vice-versa.\\
+With this, we can recall the said result.  %below  which bounds the error in the approximate value function.
+\begin{theorem}[Theorem~$4.2$ of \cite{ALP}]
+\label{restateval}
+Let $\tr$ be the solution to the ALP in \eqref{alp}, $\tilde{J}_c=\Phi \tilde{r}_c$.
+% $\psi$ be as in \cref{lyap} 
+%and $c$ be a distribution as in \eqref{probdist}. 
+Then, it holds that
+\begin{align*}
+||J^*-\tj||_{1,c}\leq \frac{2c^\top \psi}{1-\beta_{\psi}}\min_{r}||J^*-\Phi r||_{\mn}\,.
+\end{align*}
+\end{theorem}
+The next result  the loss in performance of a policy that is greedy w.r.t. $J_{\tu}$:
+\begin{theorem}[Theorem~$3.1$ of \cite{ALP}]
+\label{restatepol}
+Let $\tilde{u}$ be the greedy policy with respect to the solution $\tj$ of the ALP. Then,
+\begin{align*}
+||J^*-J_{\tu}||_{1,c}\leq \frac{1}{1-\alpha}||J^*-\tj||_{1,c'}\,,
+\end{align*}
+where $c'=(1-\alpha)c^\top(I-\alpha P_{\tu})^{-1}$.
+\end{theorem}
+Theorems~\ref{restateval} and ~\ref{restatepol} together imply that the ALP addresses both the control and prediction problems. Please refer to \cite{ALP} for a more detailed treatment of the ALP.\\
+Note that the ALP is a linear program in $k$ ($\ll n$) variables as opposed to the LP in \eqref{mdplpshort} which has $n$ variables. Nevertheless, the ALP has $nd$ constraints (same as the LP) which is an issue when $n$ is large and calls for constraint approximation/reduction techniques.
+\todoc{Column generation, Dantzig-Wolf decomposition?}
+\end{comment}

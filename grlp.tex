@@ -1,35 +1,36 @@
 %!TEX root =  autocontgrlp.tex
 \section{Generalized Reduced Linear Program}
-In this section we present the generalized reduced linear program (GRLP) which is obtained by replacing the set of sampled constraints in the RLP by a set of constraints which are obtained as linear combinations of the original constraints of the ALP. Formally, we define the generalized reduced linear program (GRLP) as follows:
-\begin{align}\label{grlp}
+\begin{assumption}\label{grlpassmp}
+\begin{enumerate}[(i)]
+\item \label{probdist} $c=(c(i),i=1,\ldots,n)\in \R^n$ is a positive probability distribution, i.e., $c(i)>0 \mb \forall i$ and $\sum_{i=1}^n c(i)=1$.
+\item  \label{one} The first column of the feature matrix $\Phi$ (i.e., $\phi_1$) is $\one \in \R^n$. 
+\item \label{lyap} $\psi\colon S \ra \R_+$ is a Lyapunov function for $P$
+and is present in the column span of the feature matrix $\Phi$: For some $r_0\in \R^k$, $\Phi r_0 = \psi$. 
+\item \label{nassmp} $\N\subset \R^k$ is compact and $\tr \in \N\subset\R^k$.
+\item \label{wassump} $W \in \R^{nd\times m}_+$ is a full rank $nd\times m$ matrix (where $m\ll nd$), with all non-negative entries such that each of its column-sums equals one.
+\item \label{ass:n4} The set $\N'$ is such that $\N' = \N + t r_0$ for any $t\in \R$, where $r_0\in \R^k$ such that $\Phi r_0 = \psi$.
+\end{enumerate}
+\end{assumption}
+When \cref{grlpassmp}-\eqref{lyap} holds, it follows that for any $J\in \R^n$, $t>0$, $s\in S$,
+\begin{align}
+\label{eq:psilin}
+T(J+ t \psi ) \le TJ + \beta_{\psi}\,t\,  \psi\,\, \quad (J\in \R^n,\, t>0)\,.
+\end{align}
+The approximate linear program (ALP) is obtained by making use of LFA in the LP, i.e., by adding the extra constraint $J=\Phi r$ in \eqref{mdplp} with $\Phi \in \R^{n\times k}$ and introducing the new variables $r\in \R^k$. By substitution, this leads to
+\begin{align}\label{alp}
 \begin{split}
-\underset{r\in \R^k}{\min}\, &\, c^\top \Phi r,\\
-\text{s.t.}\mb & \,W^\top E\Phi r\geq W^\top H \Phi r, \qquad r\in \N\,,
+\min_{r\in \R^k}\, &c^\top \Phi r\\
+\text{s.t.}\mb &\Phi r\geq T \Phi r,
 \end{split}
 \end{align}
-where $W \in \R_+^{nd\times m}$ is an $nd\times m$ matrix with all nonnegative entries and 
-$\N \subset \R^k$ is a set such that $\tilde{r}_c \in \N$. 
-\todoc{Changed the definition and using $\N$ that was used in the definition of RLP.}
-The role of $\N$, as in the case of RLPs, is to guarantee
-the existence of bounded solutions. \todoc{We'll be trouble with $\N$ if we start assume that it is a bounded set. See below.}
+where $J\geq TJ$ is a shorthand for the $nd$ constraints in \eqref{mdplp}. Unless specified otherwise we use $\tr$ to denote any solution to the ALP, $\tj=\Phi \tr$ to denote the corresponding approximate value function and $\tu$ to denote the greedy policy with respect to $\tj$.
+The Generalized Reduced Linear Program is given as:
+\begin{align}\label{grlp}
+\begin{split}
+\underset{r\in \N}{\min}\, &\, c^\top \Phi r,\\
+\text{s.t.}\mb & \,W^\top E\Phi r\geq W^\top H \Phi r,
+\end{split}
+\end{align}
+where $W \in \R^{nd\times m}_+$ is a matrix with all positive entries and $\N$ is an additional constraint set to ensure the boundedness of the solution.
+In what follows, we denote the solution to the GRLP by $\hr$, the approximate value function by $\hj=\Phi \hr$ and use $\hu$ to denote the greedy policy with respect to $\hj$.
 
-The $i^{th}$ ($1\leq i\leq m$) constraint of the GRLP is a positive linear combination of the original constraints of the ALP. Constraint reduction is achieved by choosing $m\ll nd$. The key difference between the RLP in \eqref{rlpshort} and the GRLP in \eqref{grlp} despite their similar structure is that while $\M$ is a matrix of only zeros and ones, $W$ is a matrix of positive entries alone. Also note that an RLP is trivially a GRLP as well with a random matrix $W$. Unless specified otherwise, we use $\hr$ to denote any solution to the GRLP in \eqref{grlp}, $\hj=\Phi \hr$, to denote the corresponding approximate value function and $\hu$ to denote the greedy policy with respect to $\hj$.\par
-Note that we want to avoid certain uninteresting and trivial cases of $W$ matrix such as $W=0$ or an entire column of $W$ being zero (which means no constraint is generated with respect to that column). Thus it is intuitive to demand that every column of $W$ should be non-negative and have at least one entry which is strictly positive. Then, normalizing the columns of $W$ so that they sum to $1$ does not make any difference to the constraints of the RLP. Keeping these in mind we also assume the following throughout the rest of the paper:
-\begin{assumption}\label{wassump}
-$W \in \R^{nd\times m}_+$ is a full rank $nd\times m$  matrix (where $m\ll nd$) and each of its column-sums equals one.
-\end{assumption}
-\begin{comment}
-The above assumption is just a technical condition that eliminates uninteresting choices such as $W=0$ or cases when certain columns of $W$ have all zeros, which implies that the corresponding column generates no constraint.
-\end{comment}
-\input{cartoon}
-\todoc{The picture needs to be perfected.}
-The rest of the paper develops analytically various performance bounds and our main results provide the following:
-\begin{enumerate}
-\item A bound for $||J^*-\hj||$, the error between the approximate value function $\hj$ as computed by the GRLP and the optimal value function $J^*$;
-\item a bound for $||J^*-J_{\hu}||$, the loss in performance due to the greedy policy $\hu$ measured with respect to the optimal policy; and
-\item an important result on constraint sampling. \todoc{we should be more specific}
-\end{enumerate}
-We achieve the above via two novel $\max$-norm contraction operators namely the least upper bound (LUB) projection operator (denoted by $\Gamma$) and the approximate least upper bound (ALUB) projection operator (denoted by $\hat{\Gamma}$). We bound the error due to constraint approximation by analyzing the fixed points of the operators $\Gamma$ and $\hg$. We first establish our results in the $L_\infty$-norm and then in a weighted $L_\infty$-norm. The schematic in Fig.~\ref{schematic} provides a pictorial representation of what shall follow in the next three sections.
-\FloatBarrier
-\input{schematic}
-\todoc{$d_1$ and $d_2$ use different norms?}

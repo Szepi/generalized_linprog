@@ -1,0 +1,54 @@
+\section{Numerical Illustration}
+In this section, we show via an example in the domain of controlled queues \cite{ALP}  that the error term $||J^*-\Gamma J^* ||_\infty$ indicates the quality of the constraint approximation. The queuing model used here is similar to the one in Section~$5.2$ of \cite{ALP}. We consider a single queue with arrivals and departures. The state of the system is the queue length with the state space given by $S=\{0,\ldots,n-1\}$, where $n-1$ is the buffer size of the queue. The action set $A=\{1,\ldots,d\}$ is related to the service rates. We let $s_t$ denote the state at time $t$. The state at time $t+1$ when action $a_t \in A $ is chosen is given by $s_{t+1}= s_{t}+1$ with probability $p$, $s_{t+1}= s_{t}-1$ with probability $q(a_t)$ and $s_{t+1}= s_t$, with probability $(1-p-q(a_t))$. For states $s_t=0$ and $s_t=n-1$, the system dynamics is given by 	$s_{t+1}= s_{t}+1$ with probability $p$ when $s_t=0$ and $s_{t+1}=s_t-1$ with probability $q(a_t)$ when $s_t=n-1$. The service rates satisfy $0<q(1)\leq \ldots\leq q(d)<1$ with $q(d)>p$ so as to ensure `stabilizability' of the queue. The reward associated with the action $a \in A$ in state $s\in S$ is given by $g_a(s)=-(s+60q(a)^3)$. We made use of polynomial features in $\Phi$ (i.e., $1,s,\ldots,s^{k-1}$) since they are known to work well for this domain \cite{ALP}.
+For our experiments, we choose two contenders for the $W$-matrix and compare them with random positive matrix $W_r$. Our choices of the $W$ matrix are as below.{$\mathbf{(i)}$} $W_c$- matrix that corresponds to sampling according to $c$. This is justified by the insights obtained from Theorem~\ref{st} on the error term $\et$, i.e., the idea of selecting the important states. {$\mathbf{(ii)}$} $W_a$ state-aggregation matrix, a heuristic derived using the fact that $\lambda^*$ is a linear combination of $\{P_{u^*},P^2_{u^*},\ldots\}$. Our choice of the $W_a$ matrix to correspond to aggregation of near by states is motivated by the observation that $P^n$ captures $n^{th}$ hop connectivity/neighborhood information. 
+The aggregation matrix $W_a$ is defined as below: for all $ i=1,\ldots,m$,
+\begin{align}\label{wdes}
+W_a(i,j)&=1, \mb\text{for all } j\mb\text{s.t.}\mb j=(i-1)\times\frac{n}{m}+k+(l-1)\times n, \nn\\&\mb\quad\quad k=1,\ldots,\frac{n}{m}, l=1,\ldots,d,\nn\\
+&=0,\mb\text{otherwise}.
+\end{align}
+We ran our experiments on a moderately large queuing system denoted by $Q_L$ with $n=10^4$ and $d=4$ with $q(1)=0.2$, $q(2)=0.4$, $q(3)=0.6$, $q(4)=0.8$, $p=0.4$ and $\alpha=0.98$. We chose $k=4$ (i.e., we used $1, s,s^2$ and $s^3$ as basis vectors) and we chose $W_a$ \eqref{wdes}, $W_c$, $W_i$ and $W_r$ with $m=50$. We set $c(s)=(1-\zeta) \zeta^s$, where $s=1,\ldots,9999$, with $\zeta=0.9$ and $\zeta=0.999$ respectively. The results in Table~\ref{pref} show that the performance exhibited by $W_a$ and $W_c$ is better by several orders of magnitude over `random' in the case of the large system $Q_L$ and is closer to the ideal sampler $W_i$.
+\FloatBarrier
+\begin{table}[H]
+\begin{center}
+%\resizebox{\columnwidth}{!}{
+\begin{tabular}{|c|c|c|c|c|}\hline
+Error Terms&	$W_i$&	$W_c$& $W_a$& $W_r$ \\\hline
+$||J^*-\hj||_{1,c}$ for $\zeta=0.9$& $32$&	$32$& $220$& $5.04\times 10^4$ \\\hline
+$||J^*-\hj||_{1,c}$ for $\zeta=0.999$& $110$&	$180.5608$& $82$& $1.25\times 10^7$ \\\hline
+$||\Gamma J^*-\hg J^*||_\infty$ & $0$&	$39$& $24$& $214$ \\\hline
+\end{tabular}
+\end{center}
+%}
+\caption{Shows values of Error Terms for $Q_L$.}
+\label{pref}
+\end{table}
+\subsection{Computational Complexity}
+It is known that the complexity of the linear program is polynomial in the length of its entries, i.e., the number of constraints times the number of variables \cite{karmarkar,adler}. 
+In the case of exact LP, both the number of variable as well as the number of constraints are of the order of the number of states. Thus, the complexity of obtaining the exact solution grows at a rate which is at least quadratic in the number of states. The entries of the GRLP on the other hand are of the order of $m\times k$, \todoc{$\times d$?} where the constants $m$ and $k$ are chosen to be much smaller than the number of states. We made use of the \textbf{SoPlex} solver \href{http://soplex.zib.de/} and observed that solving the GRLPs (for $m=50$, $k=4$, $d=4$) took a time of only about $0.03$ seconds or lesser, the ALP with took about $0.7$ seconds, while computing the exact solution took about $20$ minutes.
+\todoc{Sorry for the many questions, but did you also run ALP ($k=4$) with no constraint aggregation?}
+ Also, it is important to note the sparsity of the $W$ matrix in the case of state aggregation helps in formulating the constraints of the GRLP from the original constraints of the ALP without additional computational overhead.
+
+\begin{comment}
+\FloatBarrier
+\begin{table}[H]
+%\resizebox{\columnwidth}{!}{
+\begin{center}
+\begin{tabular}{|c|c|c|c|}\hline
+Performance Metric&	$W_i$&	$W_c$& $W_a$ \\\hline
+$||J_{\hu}||_{1,c}$ for $\zeta=0.9$& $-441.25$&	$-450.59$& $-446.49$ \\\hline
+$||J_{\hu}||_{1,c}$ for $\zeta=0.999$& $-2.0611e+04$&	$-2.0611e+04$& $-2.0612e+04$ \\\hline
+\end{tabular}
+\end{center}
+%}
+\caption{Shows performance metrics for $Q_L$. Here $||J^*||_{1,c}=-439.26$ for $\zeta=0.9$ and $||J^*||_{1,c}=-2.0603e+04$ for $\zeta=0.999$   and a random policy yields a total reward of $-1.2661e+03
+$.}
+\label{pref}
+\end{table}
+\end{comment}
+
+%Empirical evidence for the performance of RLP with various sampling distributions can also be found in \cite{CST,CS}.
+\begin{comment}
+\subsection{Reinforcement Learning}
+Reinforcement Learning (RL) algorithms are useful in scenarios where the system is available in the form of a simulator or only samples can be obtained via direct interaction. In particular, in the RL setting, the model parameters $g$ and $P$ are not known explicitly and the underlying MDP needs to be solved by using sample trajectories. In short, RL algorithms are sample trajectory based solution schemes for solving MDPs whose model information is not known. RL methods learn by filtering out the noisy sample via stochastic approximation and they also employ function approximation in order to handle MDPs with large number of states. Most RL algorithms are sample trajectory based extensions of ADP methods.\\
+The RL extension of the ALP formulation has been applied to the optimal stopping problem in \cite{ALP-Bor}. Function approximation is employed to approximate the square root of the Lagrange multipliers. However, since the approximation is not linear, convergence of the resulting RL algorithm cannot be guaranteed. Our results theoretically justify linear function approximation of the Lagrange multipliers, an immediate implication of which is that the RL extension of the ALP can be guaranteed to converge if the updates in \cite{ALP-Bor} use LFA for the Lagrange multipliers instead of a non-linear approximator.
+\end{comment}

@@ -1,0 +1,48 @@
+%!TEX root =  autocontgrlp.tex
+\section{Discussion}
+In this section we discuss the implications and insights provided by the results presented in Theorems~\ref{cmt2mn} and ~\ref{polthe}.
+\subsection{On Error Terms}
+\begin{itemize}
+\item The error bounds in the main results (Theorems~\ref{cmt2mn} and \ref{polthe}) contain two factors namely
+\begin{enumerate}
+\item $\min_{r\in \R^k} ||J^*-\Phi r||_{\mn}$,
+\item $||\Gamma J^*-\hg J^*||_{\mn}$.
+\end{enumerate}
+The first factor is related to the best possible approximation that can be achieved with the chosen feature matrix $\Phi$. This term is inherent to the ALP formulation and it appears in the bounds provided by \cite{ALP}.\\
+The second factor is related to constraint approximation and is completely defined in terms of $\Phi$, $W$ and $T$, and does not require knowledge of stationary distribution of the optimal policy. It makes intuitive sense since given that $\Phi$ approximates $J^*$, it is enough for $W$ to depend on $\Phi$ and $T$ without any additional requirements.
+\item Unlike the result in \cite{CS} which holds only for a specific RLP formulated under ideal assumptions, our bounds hold for any GRLP and as a result for any given RLP. Another interesting feature of our result is that it holds with probability $1$. 
+\item A salient feature of the ALP formulation is the use of Lyapunov functions to control/shape the error across the states based on their relative importance. Since the error bounds are in a modified $L_\infty$-norm, the GRLP framework retains this salient feature of the ALP.
+\end{itemize}
+The fact that both the prediction and control problems can be addressed by the GRLP makes it a complete ADP method, and by addressing the constraint approximation, the GRLP framework is an important addition to the theory of ALP.
+\subsection{On Constraint Reduction and Approximation}
+We claim the following based on the error bounds that we derived for the GRLP.\\
+{Claim $1$)} It is not always necessary to sample constraints according to the stationary distribution of the optimal policy.\\
+{Claim $2$)} Constraint approximation is not only restricted to constraint sampling but also can be extended to include linear approximation of the constraints.\\
+The following result (Theorem~\ref{st}) supports Claim~$1$ in the above.\\
+\textbf{Main Result~$3$: On Constraint Sampling}\\
+The error term $\etmn$ gives new insights into constraint sampling. 
+\begin{theorem}\label{st}
+Let $s\in S$ be a state whose constraint was sampled. Then
+\begin{align}\label{sampexp}
+|\Gamma J^*(s)-\hg J^*(s)|<|\Gamma J^*(s)-J^*(s)|.
+\end{align}
+\end{theorem}
+\begin{proof}
+Let $r_{e_s}$ and $\hat{r}_{e_s}$ be solutions to the linear programs in \eqref{lubplp} and \eqref{alubplp} respectively for $c=e_s$ and $J=J^*$. It is easy to note that $r_{e_s}$ is feasible for the linear program in \eqref{alubplp} for $c=e_s$ and $J^*$, and hence it follows that $(\Phi r_{e_s})(s)\geq (\Phi \hat{r}_{e_s})(s)$. However, since all the constraints with respect to state $s$ have been sampled we know that $(\Phi \hat{r}_{e_s})(s)\geq J^*$. The proof follows from noting that $(\Gamma J^*)(s)=(\Phi r_{e_s})(s)$ and $\hg J^*(s)=(\Phi \hat{r}_{e_s})(s)$.
+\end{proof}
+The expression in \eqref{sampexp} in Theorem~\ref{st} says that the additional error $|\Gamma J^*(s) -\hg J^*(s)|$ due to constraint sampling is less than the original projection error $|\Gamma J^*(s)-J^*(s)|$ due to function approximation. This means that for the RLP to perform well it is enough to retain those states for which the linear function approximation via $\Phi$ is known to perform well. The modified $L_\infty$ norm in \eqref{finalbndmn} comes to our rescue to control the error due to those states that are not sampled. Thus the sampling distribution need not be the stationary distribution of the optimal policy as long as it samples the \emph{important} states, an observation that might theoretically explain the empirical successes of the RLP \cite{ALP,CST,SALP}.
+
+To understand the implication of Claim~$2$ we need to look at the Lagrangian of the ALP and GRLP in \eqref{lag} and \eqref{lag2} respectively, i.e., 
+\begin{align}\label{lag}
+\tilde{L}(r,\lambda)=c^\top \Phi r+\lambda^\top (T\Phi r-\Phi r), \\ \label{lag2}\hat{L}(r,q)=c^\top \Phi r+q^\top W^\top (T\Phi r-\Phi r).
+\end{align}
+The insight that the GRLP is a linear function approximation of the constraints (i.e., the Lagrangian multipliers) can be obtained by noting that $ Wq\approx \lambda$ in \eqref{lag2}. Note that while the ALP employs LFA in its objective function (i.e., use of $\Phi r$), the GRLP employs linear approximation both in the objective function ($\Phi r$) as well as the constraints (use of $W$). Further, $W$ can be interpreted as the feature matrix that approximates the Lagrange multipliers as $\lambda\approx Wq$, where $\lambda \in \R^{nd}, r\in \R^m$. One can show \cite{dolgov} that the optimal Lagrange multipliers are the discounted number of visits to the ``state-action pairs'' under the optimal policy $u^*$, i.e., 
+\begin{align}
+\lambda^*(s,u^*(s))&=\big(c^\top(I-\alpha P_{u^*})^{-1}\big)(s)\nn\\
+				&= \big(c^\top(I+\alpha P_{u^*}+\alpha^2 P_{u^*}^2+\ldots)\big)(s),\nn\\
+			\lambda^*(s,a)&=0, \qquad \text{for all } a \neq u^*(s),\nn
+\end{align}
+where $P_{u^*}$ is the probability transition matrix with respect to the optimal policy. Even though we might not have the optimal policy $u^*$ in practice, the fact that $\lambda^*$ is a probability distribution and that it is a linear combination of $\{P_{u^*},P^2_{u^*},\ldots\}$ hints at the kind of features that might be useful for the $W$ matrix.\\
+\subsection{Reinforcement Learning}
+Reinforcement Learning (RL) algorithms are useful in scenarios where the system is available in the form of a simulator or only samples can be obtained via direct interaction. In particular, in the RL setting, the model parameters $g$ and $P$ are not known explicitly and the underlying MDP needs to be solved by using sample trajectories. In short, RL algorithms are sample trajectory based solution schemes for solving MDPs whose model information is not known. RL methods learn by filtering out the noisy sample via stochastic approximation and they also employ function approximation in order to handle MDPs with large number of states. Most RL algorithms are sample trajectory based extensions of ADP methods.\\
+The RL extension of the ALP formulation has been applied to the optimal stopping problem in \cite{ALP-Bor}. Function approximation is employed to approximate the square root of the Lagrange multipliers. However, since the approximation is not linear, convergence of the resulting RL algorithm cannot be guaranteed. Our results theoretically justify linear function approximation of the Lagrange multipliers, an immediate implication of which is that the RL extension of the ALP can be guaranteed to converge if the updates in \cite{ALP-Bor} use LFA for the Lagrange multipliers instead of a non-linear approximator.
