@@ -1,11 +1,18 @@
 %!TEX root =  autocontgrlp.tex
 \section{Markov Decision Processes (MDPs)}
-We consider MDPs with large but finite number of states. Thus $S=\{1,2,\ldots,n\}$ for some large $n$ is the state space, and the action set is given by $A=\{1,2,\ldots,d\}$. For simplicity, we assume that all actions are feasible in all states. The probability transition kernel $P$ specifies the probability $p_a(s,s')$ of transitioning from state $s$ to state $s'$ under the action $a$. We denote the reward obtained for performing action $a\in A$ in state $s\in S$ by $g_a(s)$.\par
-A stationary deterministic policy\footnote{For the scope of this paper, it suffices to restrict our attention to stationary deterministic policies.}(SDP) or simply a policy is a map $u\colon S\ra A$ which specifies the action selection mechanism. Given an SDP $u$, the infinite horizon discounted reward corresponding to state $s$ under $u$ is denoted by $J_u(s)$ and is defined by
+We consider MDPs with a finite state space $S=\{1,2,\ldots,n\}$ and finite action space $A=\{1,2,\ldots,d\}$, where the sentiment is that $n$ is large. For simplicity, we assume that all actions are feasible in all states. The probability transition kernel $P$ collects the probabilities $p_a(s,s')$ of transitioning from state $s$ to state $s'$ under the action $a$ for all possible $s,s'\in S$ and $a\in A$. We denote the reward (or gain) obtained for performing action $a\in A$ in state $s\in S$ by $g_a(s)$.
+
+A stationary deterministic policy\footnote{For the scope of this paper, it suffices to restrict our attention to stationary deterministic policies.} (SDP) or simply a policy is a map $u\colon S\ra A$ that specifies for each state what action to select in that state.
+Given an SDP $u$, the expected total discounted reward corresponding to starting at state $s$ and then choosing actions as dictated by $u$ for the states encountered is denoted by $J_u(s)$ and is defined by
 \begin{align}
 J_u(s)\stackrel{\Delta}{=}\E[\sum_{n=0}^\infty \alpha^n g_{a_n}(s_n)|s_0=s,a_n=u(s_n)\mbox{ }\forall n\geq 0],\nn
 \end{align}
-where $\alpha \in (0,1)$ is a given discount factor. Here $J_u(s)$ is known as the value of the state $s$ under SDP $u$, and the vector quantity $J_u\eqdef(J_u(s), \forall s\in S)\in R^n$ is called the value function corresponding to the SDP $u$. The \emph{optimal policy} $u^*$ is obtained as $u^*(s)\eqdef\arg\max_{u\in U}J_u(s)$\footnote{An optimal (SDP) $u^*$ exists and is well defined in the case of infinite horizon discounted reward MDP, for more details see \cite{BertB}.}, where $U$ is the class of all SDPs. The \emph{optimal value function} $J^*$ is the one obtained under the optimal policy, i.e., $J^*=J_{u^*}$.\par
+where $\alpha \in (0,1)$ is the so-called discount factor and $s_{n+1} \sim p_{a_n}(s_n,\cdot)$, $n\ge 0$. 
+Here $J_u(s)$ is known as the value of the state $s$ under SDP $u$, and $J_u$ (as a map from $S$ to the reals)
+is known as the value function corresponding to the SDP $u$.
+The \emph{optimal policy} $u^*$ is one that in each state $s\in S$ achieves the best possible total expected discounted reward from that state. That is, $J^{u^*})(s) = J^*(s) \eqdef \max_{u\in U} J_u(s)$.\footnote{In our case an optimal (SDP) $u^*$ exists and is well defined \cite{BertB}.}, where $U$ is the set of all SDPs and $J^*$ is coined the \emph{optimal value function}. 
+
+
 Any optimal policy $u^*$ and value function $J^*$ obey the Bellman equation (BE): for all $ s \in S$, 
 \begin{subequations}\label{bell}
 \begin{align}
@@ -13,9 +20,10 @@ Any optimal policy $u^*$ and value function $J^*$ obey the Bellman equation (BE)
 \label{bellpol}u^*(s)&= \underset{a\in A}{\argmax}\big(g_a(s)+\alpha \sum_{s'}p_a(s,s')J^*(s')\big)\,.
 \end{align}
 \end{subequations}
-Once $J^*$ is computed, $u^*$ can be obtained via \eqref{bellpol}. Thus computing the value function is at the heart of most solution methods to MDP.\par
-For convenience, in what follows we allow any vector $J\in \R^n$ to be viewed as a real-valued function over $S$ via $J(s) = J_s$ and vice versa.
-We now define some operators acting on $\R^n$ (equivalently on $\R^S$) that will be useful later.
+Once $J^*$ is computed, $u^*$ can be obtained via \eqref{bellpol}. Thus computing the value function is at the heart of most solution methods to MDP.
+
+For convenience, in what follows we identify elements of $\R^n$ with $\R^S$ in the natural way. In particular, we can thus treat $J_u$ and $J^*$ as vectors in $\R^n$. Similarly we identify $\R^{nd}$ with $\R^{S\times A}$.
+We now give some definitions that will be useful later.
 %The Bellman operator $T$ is defined using the model parameters of the MDP as follows:
 \begin{definition}
 Let $c,\rho,\chi:S \to \R_+$ be positive valued functions, where $\R_+$ denotes the set of strictly positive reals. Then for $J\in \R^n$, $a\in A$ and $s\in S$, 
@@ -32,7 +40,7 @@ the weighted $L_\infty$-norms  $\norm{\cdot}_{\infty,\rho}$ as $
 \item The discounted maximal inflation of $\chi$ due to $P = (p_a)_{a\in A}$ as $\beta_{\chi}=\max_{s \in S} \frac{\underset{a \in A}{\max}\big(\alpha\sum_{s'}p_a(s,s')\chi(s')\big)}{\chi(s)}$.
 \item The function $\chi:S\to\R_+$ above to be a \emph{Lyapunov} function for $P = (p_a)_{a\in A}$ if $\beta_{\chi}<1$.
 \item $E$ to be the $nd\times n$ matrix given by $E=[I,\ldots,I]^\top$, i.e., $E$ is obtained by stacking $d$ identical $n\times n$ identity matrices one over the other.
-\item The greedy policy with respect to the value function $\tj$ as \begin{align*}\tu\eqdef\underset{a\in A}{\argmax}\big(g_a(s)+\alpha \sum_{s'}p_a(s,s')\tj(s')\big).\end{align*}
+\item A policy $\tu$ is said to be greedy with respect to some function $\tj:S \to \R$ if \begin{align*}\tu\eqdef\underset{a\in A}{\argmax}\big(g_a(s)+\alpha \sum_{s'}p_a(s,s')\tj(s')\big).\end{align*}
 \end{enumerate}
 \end{definition}
 We now state without proof the most important properties of the Bellman operator.
@@ -63,13 +71,15 @@ $J^*$ is a unique fixed point of $T$, i.e., $J^*=TJ^*$.
 \begin{corollary}
 If $J\in \R^n$ is such that $J\geq TJ$ then $J\geq TJ^2\geq \ldots \geq J^*$.
 \end{corollary}
-Though in \cref{monotone,shift,maxnorm}, we make use of the Bellman operator $T$, the results also hold for $H$ as well.
-\subsection{Linear Programming Formulation}
-The optimal value function $J^*$ can be obtained by solving the following linear program:
+Though  \cref{monotone,shift,maxnorm} are stated for the Bellman operator $T$, the results also hold for $H$ as well.
+
+\subsection{The Linear Programming Formulation}
+As it is well known, the optimal value function $J^*$ can be obtained by solving the following linear program:
 \begin{align}\label{mdplp}
 \min_{J\in \R^n}\, &c^\top J\\
 \text{s.t.}\mb &J(s)\geq g_a(s)+\alpha\sum_{s'}p_a(s,s')J(s'),\nn\\
 &\forall s \in S, a \in A,
 \end{align}
-where $c$ is a probability distribution such that $c(s)>0, \forall s \in S$ and $\sum_{s\in S}c(s)=1$.\par
+where $c$ is \emph{any} function such that $c(s)>0, \forall s \in S$. Without loss of generality, we may and will assume in what follows that $\sum_{s\in S}c(s)=1$, i.e., $c$ is a probability distribution over $S$.
+
 When the MDP has a large number of states, it is difficult to solve for $J^*$ using either the linear program \eqref{mdplp} or other full state representation methods such as value iteration or policy iteration \cite{BertB}. A practical solution is to resort to function approximation. The most widely used is the linear function approximation wherein the exact value function is approximated by a function that is obtained as a linear combination of a set of pre-selected basis functions.

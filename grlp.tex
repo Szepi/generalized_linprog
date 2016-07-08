@@ -1,5 +1,24 @@
 %!TEX root =  autocontgrlp.tex
 \section{Generalized Reduced Linear Program}
+The approximate linear program (ALP) is obtained by making use of LFA in the LP, i.e., by adding the extra constraint $J=\Phi r$ in \eqref{mdplp} with $\Phi \in \R^{n\times k}$ and introducing the new variables $r\in \R^k$. By substitution, this leads to
+\begin{align}\label{alp}
+\begin{split}
+\min_{r\in \R^k}\, &c^\top \Phi r\\
+\text{s.t.}\mb &\Phi r\geq T \Phi r,
+\end{split}
+\end{align}
+where $J\geq TJ$ is a shorthand for the $nd$ constraints in \eqref{mdplp}. Unless specified otherwise we use $\tr$ to denote an arbitrary solution to the ALP, and we let $\tj=\Phi \tr$ to denote the corresponding approximate value function and $\tu$ to denote the greedy policy with respect to $\tj$.
+The Generalized Reduced Linear Program is given as:
+\begin{align}\label{grlp}
+\begin{split}
+\underset{r\in \N}{\min}\, &\, c^\top \Phi r,\\
+\text{s.t.}\mb & \,W^\top E\Phi r\geq W^\top H \Phi r,
+\end{split}
+\end{align}
+where $W \in \R^{nd\times m}_+$ is a matrix with all positive entries and $\N$ is an additional (compact) constraint set to ensure the boundedness of the solution.
+In what follows, we denote the solution to the GRLP by $\hr$, the approximate value function by $\hj=\Phi \hr$ and use $\hu$ to denote the greedy policy with respect to $\hj$.
+
+For brevity, we introduce our assumptions, whose meaning will be explained later.
 \begin{assumption}\label{grlpassmp}
 \begin{enumerate}[(i)]
 \item \label{probdist} $c=(c(i),i=1,\ldots,n)\in \R^n$ is a positive probability distribution, i.e., $c(i)>0 \mb \forall i$ and $\sum_{i=1}^n c(i)=1$.
@@ -11,26 +30,21 @@ and is present in the column span of the feature matrix $\Phi$: For some $r_0\in
 \item \label{ass:n4} The set $\N'$ is such that $\N' = \N + t r_0$ for any $t\in \R$, where $r_0\in \R^k$ such that $\Phi r_0 = \psi$.
 \end{enumerate}
 \end{assumption}
-When \cref{grlpassmp}-\eqref{lyap} holds, it follows that for any $J\in \R^n$, $t>0$, $s\in S$,
+We note in passing that if \cref{grlpassmp}-\eqref{lyap} holds, it follows that for any $J\in \R^n$ and $t>0$,
 \begin{align}
 \label{eq:psilin}
-T(J+ t \psi ) \le TJ + \beta_{\psi}\,t\,  \psi\,\, \quad (J\in \R^n,\, t>0)\,.
+T(J+ t \psi ) \le TJ + \beta_{\psi}\,t\,  \psi\,. %\,\, \quad (J\in \R^n,\, t>0)\,.
 \end{align}
-The approximate linear program (ALP) is obtained by making use of LFA in the LP, i.e., by adding the extra constraint $J=\Phi r$ in \eqref{mdplp} with $\Phi \in \R^{n\times k}$ and introducing the new variables $r\in \R^k$. By substitution, this leads to
-\begin{align}\label{alp}
-\begin{split}
-\min_{r\in \R^k}\, &c^\top \Phi r\\
-\text{s.t.}\mb &\Phi r\geq T \Phi r,
-\end{split}
-\end{align}
-where $J\geq TJ$ is a shorthand for the $nd$ constraints in \eqref{mdplp}. Unless specified otherwise we use $\tr$ to denote any solution to the ALP, $\tj=\Phi \tr$ to denote the corresponding approximate value function and $\tu$ to denote the greedy policy with respect to $\tj$.
-The Generalized Reduced Linear Program is given as:
-\begin{align}\label{grlp}
-\begin{split}
-\underset{r\in \N}{\min}\, &\, c^\top \Phi r,\\
-\text{s.t.}\mb & \,W^\top E\Phi r\geq W^\top H \Phi r,
-\end{split}
-\end{align}
-where $W \in \R^{nd\times m}_+$ is a matrix with all positive entries and $\N$ is an additional constraint set to ensure the boundedness of the solution.
-In what follows, we denote the solution to the GRLP by $\hr$, the approximate value function by $\hj=\Phi \hr$ and use $\hu$ to denote the greedy policy with respect to $\hj$.
 
+The GRLP introduces linear function approximation in both the primal and dual variables of the LP formulation. 
+To understand this, we need to look at the Lagrangian of the ALP and GRLP in \eqref{lag} and \eqref{lag2} respectively, i.e., 
+\begin{align}\label{lag}
+\tilde{L}(r,\lambda)=c^\top \Phi r+\lambda^\top (T\Phi r-\Phi r), \\ \label{lag2}\hat{L}(r,q)=c^\top \Phi r+q^\top W^\top (T\Phi r-\Phi r).
+\end{align}
+Note that $ Wq\approx \lambda$ in \eqref{lag2} is linear function approximation of the Lagrange multipliers. Note that while the ALP employs LFA in its objective function (i.e., use of $\Phi r$), the GRLP employs linear approximation both in the objective function ($\Phi r$) as well as the constraints (use of $W$). Further, $W$ can be interpreted as the feature matrix that approximates the Lagrange multipliers as $\lambda\approx Wq$, where $\lambda \in \R^{nd}, r\in \R^m$. One can show \cite{dolgov} that the optimal Lagrange multipliers are the discounted number of visits to the ``state-action pairs'' under an optimal policy $u^*$, i.e., 
+\begin{align}
+\lambda^*(s,u^*(s))&=\big(c^\top(I-\alpha P_{u^*})^{-1}\big)(s)\nn\\
+				&= \big(c^\top(I+\alpha P_{u^*}+\alpha^2 P_{u^*}^2+\ldots)\big)(s),\nn\\
+			\lambda^*(s,a)&=0, \qquad \text{for all } a \neq u^*(s),\nn
+\end{align}
+where $P_{u^*}$ is the probability transition matrix under $u^*$ ($P_{u^*}(s,s') = P_{u^*(s)}(s,s')$, $s,s'\in S$). Even though we might not have the optimal policy $u^*$ in practice, the fact that $\lambda^*$ is a probability distribution and that it is a linear combination of $\{P_{u^*},P^2_{u^*},\ldots\}$ hints at the kind of features that might be useful for the $W$ matrix.
