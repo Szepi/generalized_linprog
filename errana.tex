@@ -291,9 +291,9 @@ Then,
 \begin{align}\label{polthebnd}
 %||J_{\hu}-\hj||_{1,c}
 \norm{J^* - J_{\hu}}_{1,c}
-&\leq 2\left(\frac{c^\top \psi}{1-\beta_{\psi}}\right)^2\, \big(6 ||J^*-\Phi r^*||_{\mn}
+&\leq 2\left(\frac{c^\top \psi}{(1-\beta_{\psi})^2}\right)\, \big( 2||J^*-\Phi r^*||_{\mn}
 \nn\\&
-+2||\Gamma J^*-\hg J^*||_{\mn}\big).
++||\Gamma J^*-\hg J^*||_{\mn}+||\hj-\hg\hj||_{\mn}\big).
 \end{align}
 \end{theorem}
 \begin{proof}
@@ -328,7 +328,11 @@ Hence,
 &\leq c^\top \psi ||J^*-\hj||_{\mn}+c^\top \psi\frac{1+\beta_\psi}{1-\beta_\psi}||J^*- \hj||_{\mn}\nn\\
 &=\frac{2c^\top \psi}{1-\beta_{\psi}}||J^*- \hj||_{\mn}.
 \end{align}
-The result now follows by substituting the bound on $||J^*- \hj||_{\mn}$ from \cref{cmt2mn}.
+Now in a manner similar to \cref{cmt2mn} we have
+\begin{align}
+||J^*- \hj||_{\mn}&\leq ||J^*- \hv||_{\mn}+||\hv -\hj||_{\mn}\nn
+\end{align}
+The result now follows by substituting the bound on $||J^*- \hv||_{\mn}$ from \cref{cmt1mn} and the fact that $||\hv-\hj||_{\mn}\leq \frac{1}{1-\beta_{\psi}}||\hj-\hg\hj||$.
 \end{proof}
 \begin{comment}
 \begin{note}
