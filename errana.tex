@@ -7,8 +7,8 @@ Given $J\in \R^n$ and the nonnegative valued vector $c\in \R^n_+$, define $r_{c,
 \begin{align}
 \label{lubplp}
 \begin{split}
- \underset{r\in \N'}{\min} &\,\, c^\top \Phi r\,,\\
- \text{s.t.}& \mb \Phi r\geq  TJ.
+ \underset{r\in \N'}{\min} &\,\, c^\top \Phi r\,\mb
+ \text{s.t.} \mb \Phi r\geq  TJ.
  \end{split}
 \end{align}
 Then, for $J\in \R^n$, $\Gamma J$,
@@ -31,8 +31,8 @@ The definition of the second operator is as follows:
 \begin{definition}\label{alubpop}
 Given $J\in \R^n$ and the nonnegative valued vector $c\in \R^n_+$, define $r'_{c,J}$ to be the solution to 
 \begin{align}\label{alubplp}
- \underset{r\in \N'}{\min}& \,\mb c^\top \Phi r\,,\nn\\
- \text{s.t.}& \,\,\, W^\top E \Phi r\geq W^\top HJ.
+ \underset{r\in \N'}{\min}& \,\mb c^\top \Phi r\,\mb
+ \text{s.t.} \,\,\, W^\top E \Phi r\geq W^\top HJ.
 \end{align}
 Then, the \emph{approximate least upper bound (ALUB) projection operator}
 $\hg \colon \R^n \ra \R^n$ is defined as 
@@ -40,6 +40,7 @@ $\hg \colon \R^n \ra \R^n$ is defined as
 (\hg J)(i)\eqdef(\Phi r'_{e_i,J})(i), \mb i=1,\ldots,n\,, J\in \R^n\,.
 \end{align}
 \end{definition}
+The next lemma is elementary, but will prove to be useful:
 \begin{lemma}\label{lpsol}
 Let $A\in \R^{u\times v}$, $b,c\in \R^u$ and $b_0=Ax_0$ for 
 some $x_0 \in \R^v$, $\N' \subset \R^v$ such that $\N' =x_0+ \N'$. Then
@@ -123,7 +124,7 @@ The operator $\hg:\R^n\to\R^n$  is a contraction operator in $\norm{\cdot}_{\mn}
 %$\hg$ is also a contraction map in the weighted $L_\infty$ norm.
 \end{theorem}
 \begin{proof}
-Follows from \cref{maxnormmn} and \cref{gshiftmn}.
+Follows from \cref{maxnormmn,gshiftmn}.
 \begin{comment}
 We already know that $\hg$ is monotone. That $\hg$ satisfies~\cref{eq:shiftmn}
 with $\beta = \beta_{\psi}$ follows similarly to the argument used in  \cref{tgshift}
@@ -132,7 +133,7 @@ Then, \cref{gmaxcontramn} gives the desired result.
 \end{comment}
 \end{proof}
 In what follows we denote by $\hv$ the unique fixed point of $\hg$, i.e., $\hv = \hg \hv\,$. 
-We now show that the vector $\hj$ dominates the vector $\hv$:
+We now show that vector $\hj$ dominates $\hv$:
 \begin{lemma}\label{relation1}
 The vectors $\hv,\hj$ obey $\hj\geq\hv$.
 \end{lemma}
@@ -151,7 +152,7 @@ holds for any $r\in \N$ such that $W^\top E \Phi r \ge W^\top H V_0$.
 Now it suffices to show that $r_i$ satisfies $W^\top E \Phi r_i \ge W^\top H V_0$. 
 By definition, $r_i$ satisfies $W^\top E \Phi r_i \ge W^\top H \Phi r_i$.
 Hence, by the monotone property of $H$ and \cref{grlpassmp}-\eqref{wassump} it is sufficient if $\Phi r_i \ge V_0$.
-This however directly follows from the definition of $V_0$.
+This however follows from the definition of $V_0$.
 \end{proof}
 \begin{lemma}\label{relation2}
 The vectors $\hv,\tj$ obey $\tj\geq\hv$.
@@ -167,8 +168,8 @@ A vector
 $\hat{r} \in \R^k$ is a solution to GRLP \eqref{grlp} iff it solves the following program:
 \begin{align}\label{grlpeqprog}
 \begin{split}
-\min_{r\in \N}\, &||\Phi r-\hv||_{1,c}\\
-\text{s.t.}\mb &\, W^\top E \Phi r\geq W^\top H \Phi r.
+\min_{r\in \N}\, &||\Phi r-\hv||_{1,c}\,\mb
+\text{s.t.}\mb \, W^\top E \Phi r\geq W^\top H \Phi r.
 \end{split}
 \end{align}
 \end{lemma}
@@ -185,8 +186,8 @@ A vector
 $\tr \in \R^k$ is a solution to ALP \eqref{alp} iff it solves the following program:
 \begin{align}\label{grlpeqprog}
 \begin{split}
-\min_{r\in \R^k}\, &||\Phi r-\hv||_{1,c}\\
-\text{s.t.}\mb &\, \Phi r\geq  T \Phi r.
+\min_{r\in \R^k}\, &||\Phi r-\hv||_{1,c}\,\mb
+\text{s.t.}\mb \, \Phi r\geq  T \Phi r.
 \end{split}
 \end{align}
 \end{lemma}

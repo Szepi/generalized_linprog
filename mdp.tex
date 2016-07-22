@@ -2,15 +2,17 @@
 \section{Markov Decision Processes (MDPs)}
 We consider MDPs with a finite state space $S=\{1,2,\ldots,n\}$ and finite action space $A=\{1,2,\ldots,d\}$, where the sentiment is that $n$ is large. For simplicity, we assume that all actions are feasible in all states. The probability transition kernel $P$ collects the probabilities $p_a(s,s')$ of transitioning from state $s$ to state $s'$ under the action $a$ for all possible $s,s'\in S$ and $a\in A$. We denote the reward (or gain) obtained for performing action $a\in A$ in state $s\in S$ by $g_a(s)$.
 
-A stationary deterministic policy\footnote{For the scope of this paper, it suffices to restrict our attention to stationary deterministic policies.} (SDP) or simply a policy is a map $u\colon S\ra A$ that specifies for each state what action to select in that state.
-Given an SDP $u$, the expected total discounted reward corresponding to starting at state $s$ and then choosing actions as dictated by $u$ for the states encountered is denoted by $J_u(s)$ and is defined by
+A stationary deterministic policy\footnote{For the scope of this paper, it suffices to restrict our attention to stationary deterministic policies.} (SDP), or simply a policy, is a map $u\colon S\ra A$ that specifies for each state what action to select in that state.
+Given an SDP $u$, the expected total discounted reward corresponding to starting at state $s$, while choosing actions as dictated by $u$ for the states encountered, is
 \begin{align}
 J_u(s)\stackrel{\Delta}{=}\E[\sum_{n=0}^\infty \alpha^n g_{a_n}(s_n)|s_0=s,a_n=u(s_n)\mbox{ }\forall n\geq 0],\nn
 \end{align}
 where $\alpha \in (0,1)$ is the so-called discount factor and $s_{n+1} \sim p_{a_n}(s_n,\cdot)$, $n\ge 0$. 
-Here $J_u(s)$ is known as the value of the state $s$ under SDP $u$, and $J_u$ (as a map from $S$ to the reals)
-is known as the value function corresponding to the SDP $u$.
-The \emph{optimal policy} $u^*$ is one that in each state $s\in S$ achieves the best possible total expected discounted reward from that state. That is, $J^{u^*})(s) = J^*(s) \eqdef \max_{u\in U} J_u(s)$.\footnote{In our case an optimal (SDP) $u^*$ exists and is well defined \cite{BertB}.}, where $U$ is the set of all SDPs and $J^*$ is coined the \emph{optimal value function}. 
+We call $J_u(s)$ the value of state $s$ under SDP $u$, while $J_u$ (as a map from $S$ to the reals)
+is called the value function underlying policy $u$.
+The \emph{optimal policy} $u^*$ is one that in each state $s\in S$ achieves the best possible total expected discounted reward from that state. That is, $J^{u^*}(s) = J^*(s) \eqdef \max_{u\in U} J_u(s)$
+where $U$ is the set of all SDPs and $J^*$ is coined the \emph{optimal value function}.%
+\footnote{In our case an optimal (SDP) $u^*$ exists and is well defined \cite{BertB}.}, 
 
 
 Any optimal policy $u^*$ and value function $J^*$ obey the Bellman equation (BE): for all $ s \in S$, 
@@ -20,10 +22,14 @@ Any optimal policy $u^*$ and value function $J^*$ obey the Bellman equation (BE)
 \label{bellpol}u^*(s)&= \underset{a\in A}{\argmax}\big(g_a(s)+\alpha \sum_{s'}p_a(s,s')J^*(s')\big)\,.
 \end{align}
 \end{subequations}
-Once $J^*$ is computed, $u^*$ can be obtained via \eqref{bellpol}. Thus computing the value function is at the heart of most solution methods to MDP.
+Once $J^*$ is computed, $u^*$ can be obtained via \eqref{bellpol}
+for each state relatively cheaply (e.g., having the ability to sample from the next-state distribution at
+a given state-action pair).
+Thus computing the value function is at the heart of most solution methods to MDP.
 
-For convenience, in what follows we identify elements of $\R^n$ with $\R^S$ in the natural way. In particular, we can thus treat $J_u$ and $J^*$ as vectors in $\R^n$. Similarly we identify $\R^{nd}$ with $\R^{S\times A}$.
-We now give some definitions that will be useful later.
+The value functions $J^u$ or $J^*$ are elements of $\R^S$.
+In what follows it will be useful for us to treat these as $n$-dimensional vectors, i.e., elements of $\R^n$, effectively identifying $\R^S$ with $\R^S$ in the natural way. Similarly we identify $\R^{nd}$ with $\R^{S\times A}$.
+The following definitions will be useful later:
 %The Bellman operator $T$ is defined using the model parameters of the MDP as follows:
 \begin{definition}
 Let $c,\rho,\chi:S \to \R_+$ be positive valued functions, where $\R_+$ denotes the set of strictly positive reals. Then for $J\in \R^n$, $a\in A$ and $s\in S$, 
@@ -40,10 +46,12 @@ the weighted $L_\infty$-norms  $\norm{\cdot}_{\infty,\rho}$ as $
 \item The discounted maximal inflation of $\chi$ due to $P = (p_a)_{a\in A}$ as $\beta_{\chi}=\max_{s \in S} \frac{\underset{a \in A}{\max}\big(\alpha\sum_{s'}p_a(s,s')\chi(s')\big)}{\chi(s)}$.
 \item The function $\chi:S\to\R_+$ above to be a \emph{Lyapunov} function for $P = (p_a)_{a\in A}$ if $\beta_{\chi}<1$.
 \item $E$ to be the $nd\times n$ matrix given by $E=[I,\ldots,I]^\top$, i.e., $E$ is obtained by stacking $d$ identical $n\times n$ identity matrices one over the other.
-\item A policy $\tu$ is said to be greedy with respect to some function $\tj:S \to \R$ if \begin{align*}\tu\eqdef\underset{a\in A}{\argmax}\big(g_a(s)+\alpha \sum_{s'}p_a(s,s')\tj(s')\big).\end{align*}
+\item A policy $\tu$ is said to be greedy with respect to (w.r.t.) $\tj\in \R^n$ if for any $s\in S$,
+%some function $\tj:S \to \R$ 
+\begin{align*}\tu(s)\eqdef\underset{a\in A}{\argmax}\big(g_a(s)+\alpha \sum_{s'}p_a(s,s')\tj(s')\big).\end{align*}
 \end{enumerate}
 \end{definition}
-We now state without proof the most important properties of the Bellman operator.
+We now state without proof the most important properties of the Bellman operator(s).
 The proofs are immediate from the definitions, but can also be found in \cite{BertB}.
 First, we introduce some extra notation:
 For $J_1,J_2\in \R^n$, we write $J_1\le J_2$ if $J_1(s)\le J_2(s)$ holds for all $s\in S$.
@@ -60,7 +68,7 @@ T(J+t\one)=TJ+\alpha t\one.
 \end{lemma}
 \begin{lemma}\label{maxnorm}
 If $T: \R^n \to \R^n$ is any operator that is monotonous and satisfies~\eqref{eq:shift} then 
-$T$ is a $\max$-norm contraction operator with contraction factor $\alpha \in (0,1)$, i.e., given $J_1, J_2 \in \mathbf{R}^n$,
+$T$ is a $\max$-norm contraction operator with contraction factor $\alpha \in (0,1)$, i.e., given $J_1, J_2 \in \R^n$,
 \begin{align}
 ||TJ_1-TJ_2||_\infty\leq \alpha ||J_1-J_2||_\infty.
 \end{align}
@@ -76,10 +84,11 @@ Though  \cref{monotone,shift,maxnorm} are stated for the Bellman operator $T$, t
 \subsection{The Linear Programming Formulation}
 As it is well known, the optimal value function $J^*$ can be obtained by solving the following linear program:
 \begin{align}\label{mdplp}
-\min_{J\in \R^n}\, &c^\top J\\
-\text{s.t.}\mb &J(s)\geq g_a(s)+\alpha\sum_{s'}p_a(s,s')J(s'),\nn\\
-&\forall s \in S, a \in A,
+\min_{J\in \R^n}\, &c^\top J\,\,\text{s.t.}\\
+%\mb
+ J(s)&\geq g_a(s)+\alpha\sum_{s'}p_a(s,s')J(s'),\,\,
+\forall (s,a)\in S\times A,
 \end{align}
-where $c$ is \emph{any} function such that $c(s)>0, \forall s \in S$. Without loss of generality, we may and will assume in what follows that $\sum_{s\in S}c(s)=1$, i.e., $c$ is a probability distribution over $S$.
+where $c$ is \emph{any} vector of $\R^n$ such that $c(s)>0, \forall s \in S$. Without loss of generality, we may and will assume in what follows that $\sum_{s\in S}c(s)=1$, i.e., $c$ is a probability distribution over $S$.
 
-When the MDP has a large number of states, it is difficult to solve for $J^*$ using either the linear program \eqref{mdplp} or other full state representation methods such as value iteration or policy iteration \cite{BertB}. A practical solution is to resort to function approximation. The most widely used is the linear function approximation wherein the exact value function is approximated by a function that is obtained as a linear combination of a set of pre-selected basis functions.
+When the MDP has a large number of states, it is difficult to solve for $J^*$ using either the linear program \eqref{mdplp} or other full state representation methods such as value iteration or policy iteration \cite{BertB}. A practical solution is to resort to function approximation. Linear function approximation, wherein the solution is searched in the subspace spanned by a set of pre-selected basis functions, is an attractive choice.
