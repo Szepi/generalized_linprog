@@ -1,0 +1,56 @@
+\begin{thebibliography}{1}
+
+\bibitem{BertB}
+D.~P. Bertsekas.
+\newblock {\em Dynamic Programming and Optimal Control}, volume~II.
+\newblock Athena Scientific, Belmont, MA, 4th edition, 2013.
+
+\bibitem{ALP-Bor}
+V.~S. Borkar, J.~Pinto, and T.~Prabhu.
+\newblock A new learning algorithm for optimal stopping.
+\newblock {\em Discrete Event Dynamic Systems}, 19(1):91--113, 2009.
+
+\bibitem{ALP}
+D.~P. de~Farias and B.~{Van Roy}.
+\newblock The linear programming approach to approximate dynamic programming.
+\newblock {\em Operations Research}, 51(6):850--865, 2003.
+
+\bibitem{CS}
+D.~P. de~Farias and B.~{Van Roy}.
+\newblock On constraint sampling in the linear programming approach to
+  approximate dynamic programming.
+\newblock {\em Mathematics of Operations Research}, 29(3):462--478, 2004.
+
+\bibitem{SALP}
+V.~V. Desai, V.~F. Farias, and C.~C. Moallemi.
+\newblock A smoothed approximate linear program.
+\newblock In {\em NIPS}, pages 459--467, 2009.
+
+\bibitem{dolgov}
+D.~A. Dolgov and E.~H. Durfee.
+\newblock Symmetric approximate linear programming for factored {MDP}s with
+  application to constrained problems.
+\newblock {\em Annals of Mathematics and Artificial Intelligence},
+  47(3-4):273--293, August 2006.
+
+\bibitem{CST}
+V.~F. Farias and B.~{Van Roy}.
+\newblock Tetris: A study of randomized constraint sampling.
+\newblock In {\em Probabilistic and Randomized Methods for Design Under
+  Uncertainty}, pages 189--201. Springer, 2006.
+
+\bibitem{aaaipaper}
+C.~Lakshminarayanan and S.~Bhatnagar.
+\newblock A generalized reduced linear program for {M}arkov {D}ecision
+  {P}rocesses.
+\newblock {\em Proceedings of Association for the Advancement of Artificial
+  Intelligence (AAAI) Austin, Texas}, 2015.
+
+\bibitem{SchSei85}
+P.~J. Schweitzer and A.~Seidmann.
+\newblock Generalized polynomial approximations in {M}arkovian decision
+  processes.
+\newblock {\em Journal of Mathematical Analysis and Applications},
+  110:568--582, 1985.
+
+\end{thebibliography}
