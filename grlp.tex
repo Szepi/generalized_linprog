@@ -1,6 +1,7 @@
 %!TEX root =  autocontgrlp.tex
-\section{Generalized Reduced Linear Program}
-The approximate linear program (ALP) is obtained by making use of LFA in the LP, i.e., by introducing the new variables $r\in \R^k$ and adding the extra constraint $J=\Phi r$ in \eqref{mdplp} with $\Phi \in \R^{n\times k}$ \citep{SchSei85}. 
+\section{Approximate Linear Programming: Successes and Challanges}
+When the MDP has a large number of states, it is difficult to solve for $J^*$ using either the linear program \eqref{mdplp} or other full state representation methods such as value iteration or policy iteration \cite{BertB}. A practical solution is to resort to function approximation. Linear function approximation, wherein the solution is searched in the subspace spanned by the column vectors of a given feature matrix $\Phi$.
+The approximate linear program (ALP) is obtained by making use of LFA in the LP, i.e., by introducing the new variables $r\in \R^k$ and adding the extra constraint $J=\Phi r$ in \eqref{mdplp} with $\Phi \in \R^{n\times k}$ \citep{SchSei85}.
 By substitution, this leads to
 \begin{align}\label{alp}
 \begin{split}
@@ -8,36 +9,40 @@ By substitution, this leads to
 \text{s.t.}\mb \Phi r\geq T \Phi r,
 \end{split}
 \end{align}
-where $J\geq TJ$ is a shorthand for the $nd$ constraints in \eqref{mdplp}. Unless specified otherwise we use $\tr$ to denote an arbitrary solution to the ALP, and we let $\tj=\Phi \tr$ to denote the corresponding approximate value function and $\tu$ to denote the greedy policy w.r.t. $\tj$.
+where $J\geq TJ$ is a shorthand for the $nd$ constraints in \eqref{mdplp} and $\Phi$ is a feature matrix whose first column is $\one$. Unless specified otherwise we use $\tr$ to denote an arbitrary solution to the ALP, and we let $\tj=\Phi \tr$ to denote the corresponding approximate value function and $\tu$ to denote the greedy policy w.r.t. $\tj$.
+The following is a preliminary error bound for the ALP from \cite{ALP}:
+\begin{theorem}[Error Bound for ALP]
+\begin{align*}
+||J^*-\tj||_{1,c}\leq \frac{2}{1-\alpha}\min_{r}||J^*-\Phi r||_\infty
+\end{align*}
+\end{theorem}
+%For a more detailed treatment of the ALP and sophisticated bounds, the reader is referred to \cite{ALP}.
+%\subsection{Approximating the Constraints}
+The ALP is a linear program in $k$ ($<<n$) variables as opposed to the LP in \eqref{mdplp} which has $n$ variables. Nevertheless, the ALP has $nd$ constraints (same as the LP) which is an issue when $n$ is large and calls for constraint approximation/reduction techniques. Most works in literature make use of the underlying structure of the problem to cleverly reduce the number of constraints of the ALP. A good example is \cite{gkp}, wherein the structure in factored linear functions is exploited. The use of basis function also helps constraint reduction in \cite{Mor-Kum}. In \cite{ALP-Bor}, the constraints are approximated indirectly by approximating the square of the Lagrange multipliers. In \cite{petrik} the transitional error is reduced ignoring the representational and sampling errors.\par
+The most important work in the direction of constraint reduction is constraint sampling \cite{CS} wherein a reduced linear program (RLP) is solved instead of the ALP. While the objective of the RLP is same as that of the ALP, the RLP has only $m<<nd$ constraints \emph{sampled} from the original $nd$ constraints of the ALP.  The following is a preliminary error bound for the RLP from \cite{CS} holds for a special sampling distribution which is dependent on the optimal policy $u^*$ (see \cite{CS} for a detailed presentation):
+\begin{theorem}[Error Bound for RLP]
+If $\tilde{r}_{RLP}$ is a solution to the RLP, then
+\begin{align*}
+||J^*-\Phi\tilde{r}_{RLP}||_{1,c}\leq ||J^*-\Phi\tilde{r}||_{1,c}+\epsilon ||J^*||_{1,c}
+\end{align*}
+\end{theorem}
+%A major gap in the theoretical analysis is that the error bounds are known for only a specific RLP formulated using idealized assumptions, i.e., under knowledge of $u^*$. However, the RLP has be found to do well empirically in domains such as Tetris \cite{CST} and controlled queues \cite{CS}.
+\subsection{Open Questions}
+Interestingly, the RLP has nevertheless been found to do well empirically in domain such as Tetris \cite{CST} and controlled queues \cite{CS} even when the constraints were sampled using distribution other than the ideal distribution. This fact indicates a gap in the theoretical analysis and points to the need for a more elaborate theory that addresses the issue of constraint approximation. In this paper, we answer the following questions related to constraint reduction in ALP that have so far remained open. \\
+$\bullet$ As a natural generalization of the RLP, what happens if we define a generalized reduced linear program (GRLP) whose constraints are positive linear combinations of the original constraints of the ALP?\\
+$\bullet$ Unlike \cite{CS} which provides error bounds for a specific RLP formulated using an idealized sampling distribution, is it possible to provide error bounds for any GRLP (and hence any RLP)?
+In this paper, we address both of the questions above.
+\section{Generalized Reduced Linear Program}
 The Generalized Reduced Linear Program is given as:
 \begin{align}\label{grlp}
 \begin{split}
-\underset{r\in \N}{\min}\, &\, c^\top \Phi r\,\,\,\,
-\text{s.t.}\mb  \,W^\top E\Phi r\geq W^\top H \Phi r,
+&\underset{r\in \N\subset R^k}{\min}\, \, c^\top \Phi r\,\,\,\,\\
+&\text{s.t.}\mb  \,W^\top E\Phi r\geq W^\top H \Phi r,
 \end{split}
 \end{align}
-where $W \in \R^{nd\times m}_+$ is a matrix with all positive entries and $\N$ is an additional (compact) constraint set to ensure the boundedness of the solution.%
+where we assume that $W \in \R^{nd\times m}_+$ is a matrix with all positive entries, $\N$ is an additional (compact) constraint set to ensure the boundedness of the solution and $\tr \in \N$.
 \footnote{The appendix explains how $\N$ can be chosen.}
-In what follows, we denote the solution to the GRLP by $\hr$, the approximate value function by $\hj=\Phi \hr$ and use $\hu$ to denote the greedy policy w.r.t. $\hj$.
-
-We assume that the following hold in the rest of the paper:
-\begin{assumption}\label{grlpassmp}
-\begin{enumerate}[(i)]
-\item \label{probdist} $c=(c(i),i=1,\ldots,n)\in \R^n$ is a positive probability distribution, i.e., $c(i)>0 \mb \forall i$ and $\sum_{i=1}^n c(i)=1$.
-\item  \label{one} The first column of the feature matrix $\Phi$ (i.e., $\phi_1$) is $\one \in \R^n$. 
-\item \label{lyap} $\psi\colon S \ra \R_+$ is a Lyapunov function for $P$
-and is present in the column span of the feature matrix $\Phi$: For some $r_0\in \R^k$, $\Phi r_0 = \psi$. 
-\item \label{nassmp} $\N\subset \R^k$ is compact and $\tr \in \N\subset\R^k$.
-\item \label{wassump} $W \in \R^{nd\times m}_+$ is a full rank $nd\times m$ matrix (where $m\ll nd$), with all non-negative entries such that each of its column-sums equals one.
-\item \label{ass:n4} The set $\N'$ is such that $\N' = \N + t r_0$ for any $t\in \R$, where $r_0\in \R^k$ such that $\Phi r_0 = \psi$.
-\end{enumerate}
-\end{assumption}
-We note in passing that if \cref{grlpassmp}-\eqref{lyap} holds, it follows that for any $J\in \R^n$ and $t>0$,
-\begin{align}
-\label{eq:psilin}
-T(J+ t \psi ) \le TJ + \beta_{\psi}\,t\,  \psi\,. %\,\, \quad (J\in \R^n,\, t>0)\,.
-\end{align}
-
+In what follows, we denote the solution to the GRLP by $\hr$, the approximate value function by $\hj=\Phi \hr$ and use $\hu$ to denote the greedy policy w.r.t. $\hj$.\par
 The GRLP introduces linear function approximation in both the primal and dual variables of the LP formulation. 
 To understand this, we need to look at the Lagrangian of the ALP and GRLP in 
 \eqref{lag} and \eqref{lag2} respectively, i.e., 
@@ -58,3 +63,105 @@ the optimal Lagrange multipliers are the discounted number of visits to the ``st
 			\lambda^*(s,a)&=0, \qquad \text{for all } a \neq u^*(s),\nn
 \end{align}
 where $P_{u^*}$ is the probability transition matrix under $u^*$ ($P_{u^*}(s,s') = P_{u^*(s)}(s,s')$, $s,s'\in S$) \cite{dolgov}. Even though we might not have the optimal policy $u^*$ in practice, the fact that $\lambda^*$ is a probability distribution and that it is a linear combination of $\{P_{u^*},P^2_{u^*},\ldots\}$ hints at the kind of features that might be useful for the $W$ matrix.
+\subsection{Novel Projection Operators}
+We now define two projection operators which are central to our error analysis and in them we assume that the set $\N'\subset \R^k$ is such that $\N' = \N + t \one$ for any $t\in \R$.
+%The least upper bound (LUB) projection operator $\Gamma \colon \R^n \ra\R^n$ is defined below, see \eqref{gamdef}.
+\begin{definition}\label{lubpop}
+Given $J\in \R^n$ and the nonnegative valued vector $c\in \R^n_+$, define $r_{c,J}$ to be the solution to
+\begin{align}
+\label{lubplp}
+\begin{split}
+\underset{r\in \N'}{\min} &\,\, c^\top \Phi r\,\mb
+\text{s.t.} \mb \Phi r\geq  TJ.
+\end{split}
+\end{align}
+Then, for $J\in \R^n$, $\Gamma J$,
+the \emph{ least upper bound projection} of $J$ is defined as
+\begin{align}\label{gamdef}
+(\Gamma J)(i)\eqdef(\Phi r_{e_i,J})(i),\quad i=1,\ldots,n\,.
+\end{align}
+\end{definition}
+
+%The approximate least upper bound (ALUB) projection operator $\hg \colon \R^n \ra \R^n$ is defined as below:
+The definition of the second operator is as follows:
+\begin{definition}\label{alubpop}
+Given $J\in \R^n$ and the nonnegative valued vector $c\in \R^n_+$, define $r'_{c,J}$ to be the solution to
+\begin{align}\label{alubplp}
+\underset{r\in \N'}{\min}& \,\mb c^\top \Phi r\,\mb
+\text{s.t.} \,\,\, W^\top E \Phi r\geq W^\top HJ.
+\end{align}
+Then, the \emph{approximate least upper bound (ALUB) projection operator}
+$\hg \colon \R^n \ra \R^n$ is defined as
+\begin{align}\label{tgamdef}
+(\hg J)(i)\eqdef(\Phi r'_{e_i,J})(i), \mb i=1,\ldots,n\,, J\in \R^n\,.
+\end{align}
+\end{definition}
+\begin{remark}\label{ubrem}
+To understand the meaning of $\Gamma$ (and $\hg$) define
+\begin{align}\label{ubclass}
+\F_J\eqdef\{\,\Phi r\,:\,\Phi r\geq TJ, r\in \N\,\},
+\end{align}
+where $J\in \R^n$.
+Disregarding the constraint $r\in \N$,
+$\F_J$ contains vectors in the span of $\Phi$ that upper bound $TJ$. Further, since $(\Gamma J)(i) = \min\{ V(i) \,:\, V\in \F_J \}$, it also follows that $ V\ge \Gamma J $ holds for any $V\in \F_J$.
+\end{remark}
+
+%\input{cartoon}
+\subsection{Error Bounds}
+\begin{theorem}[Error Bound for GRLP]
+\label{cmt2mn}
+%Let $\hj$, $\hv$, $r^*$ and $J^*$ be as in Theorem~\ref{mt2mn}, then
+It holds that
+\begin{align*}%\label{finalbndmn}
+\begin{split}
+||J^*-\hj||_{1,c}
+\leq\frac{1}{1-\alpha}(6 ||J^*-\Phi r^*||_{\infty}
++2||\Gamma J^*-\hg J^*||_{\infty}).
+\end{split}
+\end{align*}
+\end{theorem}
+\begin{comment}
+\begin{theorem}[Control Error Bound in $\norm{\cdot}_{\infty}$]
+\label{polthe}
+Let $\hu$ be the greedy policy with respect to the solution $\hj$ of the GRLP and $J_{\hu}$ be its value function.
+% Let $r^*$ be as in Theorem~\ref{mt2mn}, then
+Then,
+\begin{align}\label{polthebnd}
+%||J_{\hu}-\hj||_{1,c}
+\norm{J^* - J_{\hu}}_{1,c}
+&\leq 2\left(\frac{c^\top \psi}{(1-\beta_{\psi})^2}\right)\, \big( 2||J^*-\Phi r^*||_{\infty}
+\nn\\&
++||\Gamma J^*-\hg J^*||_{\infty}+||\hj-\hg\hj||_{\infty}\big).
+\end{align}
+\end{theorem}
+\end{comment}
+\begin{theorem}[Constraint Sampling]\label{st}
+Let $s\in S$ be a state whose constraint is selected by $W$ (i.e., for some $i$ and all $(s',a)\in S\times A$,
+$W_{s'a,i}=\delta_{s=s'}$.
+Then
+\begin{align*}%\label{sampexp}
+|\Gamma J^*(s)-\hg J^*(s)|<|\Gamma J^*(s)-J^*(s)|.
+\end{align*}
+\end{theorem}
+The first factor is related to the best possible approximation that can be achieved with the chosen feature matrix $\Phi$. This term is inherent to the ALP formulation and it appears in the bounds provided by \cite{ALP}.\par
+The second factor is related to constraint approximation and is completely defined in terms of $\Phi$, $W$ and $T$, and does not require knowledge of stationary distribution of the optimal policy. It makes intuitive sense since given that $\Phi$ approximates $J^*$, it is enough for $W$ to depend on $\Phi$ and $T$ without any additional requirements.\par An interesting feature is that unlike prior work on constraint sampling based on concentration inequalities (e.g.,  \cite{CS}), our analysis is based on contraction operators and is completely deterministic.
+In particular, the error term $\parallel\Gamma J^*-\tg J^* \parallel$ gives new insights into constraint selection. 
+The result of Theorem~\ref{st} is that the additional error $|\Gamma J^*(s) -\hg J^*(s)|$ due to constraint approximation is less than the original projection error $|\Gamma J^*(s)-J^*(s)|$ due to function approximation. This means that for the RLP to perform well it is enough to retain those states for which the linear function approximation via $\Phi$ is known to perform well. The modified $L_\infty$ norm in \eqref{finalbndmn} comes to our rescue to control the error due to those states that are not chosen.
+\begin{comment}
+\subsection{Comparison with ADP methods}
+A host of the ADP methods such as \cite{lspi,lspe,lstd,Tsit} are based on solving the projected Bellman equation (PBE). The PBE based methods have been empirically successful and also have theoretical guarantees for the approximate value function. However, a significant shortcoming is that they suffer from the issue of \emph{policy-chattering} (see section~$6.4.3$ of \cite{BertB}), i.e., the sequence of policies might oscillate within a set of bad policies. A salient feature of the ALP based methods is that they find only one approximate value function $\tj$ and one sub-optimal policy derived as a greedy policy with respect to $\tj$. As a result there is no such issue of policy-chattering for the ALP based methods. By providing the error bounds for the GRLP, our paper provides the much required theoretical support for the RLP. Our GRLP framework closes the long-standing gap in the literature of providing a theoretical framework to bound the error due to constraint reduction in ALP based schemes.\\
+
+\FloatBarrier
+\begin{table}[H]
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{|c|c|c|}\hline
+ADP Method	&Empirical	&Theoretical\\\hline
+Projected Bellman &\ding{51}    &\ding{53}-Policy Chattering\\
+Equation	&	&\\\hline
+ALP		&\ding{53}-Large number of Constraints &\ding{51}\\\hline
+RLP		&\ding{51} &\ding{53}-  Only under\\
+&&ideal assumptions\\\hline
+\end{tabular}
+}
+\end{table}
+\end{comment}

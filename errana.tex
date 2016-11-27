@@ -1,52 +1,64 @@
 %!TEX root =  autocontgrlp.tex
 \section{Error Analysis}\label{sec:errana}
-We now define two projection operators which are central to our error analysis:
-%The least upper bound (LUB) projection operator $\Gamma \colon \R^n \ra\R^n$ is defined below, see \eqref{gamdef}.
-\begin{definition}\label{lubpop}
-Given $J\in \R^n$ and the nonnegative valued vector $c\in \R^n_+$, define $r_{c,J}$ to be the solution to 
+\subsection{Premilinary results from MDP}
+We now state without proof the most important properties of the Bellman operator(s).
+The proofs are immediate from the definitions, but can also be found in \cite{BertB}.
+\begin{comment}
+First, we introduce some extra notation:
+For $J_1,J_2\in \R^n$, we write $J_1\le J_2$ if $J_1(s)\le J_2(s)$ holds for all $s\in S$.
+We use $\one \in \R^n$ to denote a vector with all entries $1$.
+The maximum norm $\norm{\cdot}_{\infty}$ is defined by $ \norm{v}_{\infty} = \max_{s\in S} |v(s)|$.
+\end{comment}
+\begin{lemma}\label{tprop}
+\begin{enumerate}[(i)]
+\item \label{monotone}$T$ is a monotone map, i.e., given $J_1,J_2 \in \R^n$ such that $J_1\leq J_2$, we have $T J_1\leq T J_2$.
+\item \label{shift}
+Given $J\in \R^n$ and $t \in \R$, we have $T(J+t\one)=TJ+\alpha t\one$.
+\item \label{maxnorm}
+If $T: \R^n \to \R^n$ is any operator that is monotonous and satisfies~\eqref{shift} then
+$T$ is a $\max$-norm contraction operator with contraction factor $\alpha \in (0,1)$, i.e., given $J_1, J_2 \in \R^n$,
+$
+||TJ_1-TJ_2||_\infty\leq \alpha ||J_1-J_2||_\infty.
+$
+\item \label{uniquesol}
+$J^*$ is a unique fixed point of $T$, i.e., $J^*=TJ^*$.
+\end{enumerate}
+\end{lemma}
+\begin{corollary}
+If $J\in \R^n$ is such that $J\geq TJ$ then $J\geq TJ^2\geq \ldots \geq J^*$.
+\end{corollary}
+Though \cref{tprop} are stated for the Bellman operator $T$, the results also hold for $H$ as well.
+\subsection{Analysis using Lyapunov Functions}
+\begin{definition}
+Let $c,\rho,\chi:S \to \R_+$ be positive valued functions, where $\R_+$ denotes the set of strictly positive reals. Then for $J\in \R^n$, $a\in A$ and $s\in S$, define
+\begin{enumerate}[(i)]
+\item The discounted maximal inflation of $\chi$ due to $P = (p_a)_{a\in A}$ as $\beta_{\chi}=\max_{s \in S} \frac{\underset{a \in A}{\max}\big(\alpha\sum_{s'}p_a(s,s')\chi(s')\big)}{\chi(s)}$.
+\item The function $\chi:S\to\R_+$ above to be a \emph{Lyapunov} function for $P = (p_a)_{a\in A}$ if $\beta_{\chi}<1$.
+\end{enumerate}
+\end{definition}
+\begin{assumption}\label{grlpassmp}
+\begin{enumerate}[(i)]
+%\item \label{one} The first column of the feature matrix $\Phi$ (i.e., $\phi_1$) is $\one \in \R^n$.
+\item \label{lyap} $\psi\colon S \ra \R_+$ is a Lyapunov function for $P$
+and is present in the column span of the feature matrix $\Phi$: For some $r_0\in \R^k$, $\Phi r_0 = \psi$.
+\item \label{ass:n4} The set $\N'$ is such that $\N' = \N + t r_0$ for any $t\in \R$, where $r_0\in \R^k$ such that $\Phi r_0 = \psi$.
+\end{enumerate}
+\end{assumption}
+The error bounds for the ALP in \cite{ALP} are expressed in terms of $\frac{1}{1-\beta_{\psi}}$.  A smaller $\beta_{\psi}$ loosely implies `stability' of the the underlying MDP,  with smaller values representative of higher stability. Prior works in ALP literature \cite{ALP,SALP,CS} make use of Lyapunov function based analysis to obtain error bounds that exploit the structure of the underlying MDP. In particular, the prior bounds suggests that the ALP is likely to generate good approximations when the underlying MDP is stable. We also adopt a similar approach by stating our results using Lyapunov function based arguments.
+
+We note in passing that if \cref{grlpassmp}-\eqref{lyap} holds, it follows that for any $J\in \R^n$ and $t>0$,
 \begin{align}
-\label{lubplp}
-\begin{split}
- \underset{r\in \N'}{\min} &\,\, c^\top \Phi r\,\mb
- \text{s.t.} \mb \Phi r\geq  TJ.
- \end{split}
+\label{eq:psilin}
+T(J+ t \psi ) \le TJ + \beta_{\psi}\,t\,  \psi\,. %\,\, \quad (J\in \R^n,\, t>0)\,.
 \end{align}
-Then, for $J\in \R^n$, $\Gamma J$,
-the \emph{ least upper bound projection} of $J$ is defined as 
-\begin{align}\label{gamdef}
-(\Gamma J)(i)\eqdef(\Phi r_{e_i,J})(i),\quad i=1,\ldots,n\,.
-\end{align}
-\end{definition}
-\begin{remark}\label{ubrem}
-To understand the meaning of $\Gamma$ (and $\hg$) define 
-\begin{align}\label{ubclass}
-\F_J\eqdef\{\,\Phi r\,:\,\Phi r\geq TJ, r\in \N\,\},
-\end{align}
-where $J\in \R^n$. 
-Disregarding the constraint $r\in \N$, 
-$\F_J$ contains vectors in the span of $\Phi$ that upper bound $TJ$. Further, since $(\Gamma J)(i) = \min\{ V(i) \,:\, V\in \F_J \}$, it also follows that $ V\ge \Gamma J $ holds for any $V\in \F_J$.
-\end{remark}
-%The approximate least upper bound (ALUB) projection operator $\hg \colon \R^n \ra \R^n$ is defined as below:
-The definition of the second operator is as follows:
-\begin{definition}\label{alubpop}
-Given $J\in \R^n$ and the nonnegative valued vector $c\in \R^n_+$, define $r'_{c,J}$ to be the solution to 
-\begin{align}\label{alubplp}
- \underset{r\in \N'}{\min}& \,\mb c^\top \Phi r\,\mb
- \text{s.t.} \,\,\, W^\top E \Phi r\geq W^\top HJ.
-\end{align}
-Then, the \emph{approximate least upper bound (ALUB) projection operator}
-$\hg \colon \R^n \ra \R^n$ is defined as 
-\begin{align}\label{tgamdef}
-(\hg J)(i)\eqdef(\Phi r'_{e_i,J})(i), \mb i=1,\ldots,n\,, J\in \R^n\,.
-\end{align}
-\end{definition}
+%\input{schematic}
 The next lemma is elementary, but will prove to be useful:
 \begin{lemma}\label{lpsol}
-Let $A\in \R^{u\times v}$, $b,c\in \R^u$ and $b_0=Ax_0$ for 
+Let $A\in \R^{u\times v}$, $b\in \R^u,d\in \R^v$ and $b_0=Ax_0$ for
 some $x_0 \in \R^v$, $\N' \subset \R^v$ such that $\N' =x_0+ \N'$. Then
 \begin{align}
-&\min\{c^\top Ax:Ax\geq b+b_0, x\in \N'\} \nn\\
-&=\min\{c^\top A y:Ay \geq b, y \in \N' \}+c^\top b_0.
+&\min\{d^\top x:Ax\geq b+b_0, x\in \N'\} \nn\\
+&=\min\{d^\top y:Ay \geq b, y \in \N' \}+d^\top x_0.
 \end{align}
 \end{lemma}
 \begin{proof}
@@ -59,7 +71,7 @@ The claim follows by the change of variables $y := x-x_0$.
 %\end{align*}
 %where $\psi$ is a Lyapunov function as in \cref{lyap}.
 \begin{lemma}\label{bestbndmn}
-We have
+Let $r^*\eqdef\underset{r\in \R^k}{\min}\parallel J^*-\Phi r\parallel_{\mn}$, then
 \begin{align}
 ||J^*-\Gamma J^*||_{\mn}\leq 2||J^*-\Phi r^*||_{\mn}.
 \end{align}
@@ -108,7 +120,7 @@ By definition, for $1\le i \le n$, $(\hg (J+t\psi) )(i) = \min\{ e_i^\top \Phi r
 By \eqref{eq:psilin}, as $t>0$, $H(J+t\psi) \le HJ + t \beta_\psi \psi$ and hence $W^\top H(J+t\psi) \le W^\top (HJ + t \beta_\psi \psi)$. Thus,
 $(\hg (J+t\psi) )(i) \le 
  \min\{ e_i^\top \Phi r \,:\, W^\top E\Phi r \ge W^\top HJ+t\beta_\psi \psi), r\in \N' \}$.
-Now, using Lemma~\ref{lpsol} with $A=W^\top E \Phi$, $b=W^\top HJ$, $c=e_i$, $b_0=t\beta_\psi \psi$ 
+Now, using Lemma~\ref{lpsol} with $A=W^\top E \Phi$, $b=W^\top HJ$, $d=e_i\Phi$, $b_0=t\beta_\psi \psi$
 and $x_0=t \beta_\psi r_0$, the statement follows since $A x_0 = b_0$ (from \cref{grlpassmp}-\eqref{lyap}) and $\N' = \N' + \alpha t r_0$ (from \cref{grlpassmp}-\eqref{ass:n4}).
 %The result follows in a similar manner as the proofs for Lemmas~\ref{gshift} and ~\ref{tgshift} by using the result in Lemma~\ref{lpsol}.
 \end{proof}
@@ -333,7 +345,7 @@ Now in a manner similar to \cref{cmt2mn} we have
 \begin{align}
 ||J^*- \hj||_{\mn}&\leq ||J^*- \hv||_{\mn}+||\hv -\hj||_{\mn}\nn
 \end{align}
-The result now follows by substituting the bound on $||J^*- \hv||_{\mn}$ from \cref{cmt1mn} and the fact that $||\hv-\hj||_{\mn}\leq \frac{1}{1-\beta_{\psi}}||\hj-\hg\hj||$.
+The result now follows by substituting the bound on $||J^*- \hv||_{\mn}$ from \cref{cmt1mn} and the fact that $||\hv-\hj||_{\mn}\leq \frac{1}{1-\beta_{\psi}}||\hj-\hg\hj||_{\mn}$.
 \end{proof}
 \begin{comment}
 \begin{note}

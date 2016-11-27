@@ -1,5 +1,6 @@
 %!TEX root =  autocontgrlp.tex
-\section{Discussion}
+\subsection{Discussion}
+\begin{comment}
 The error bounds in the main results (Theorems~\ref{cmt2mn} and \ref{polthe}) contain two factors, namely
 \begin{enumerate}
 \item $\min_{r\in \R^k} ||J^*-\Phi r||_{\mn}$, and
@@ -16,7 +17,10 @@ Then
 |\Gamma J^*(s)-\hg J^*(s)|<|\Gamma J^*(s)-J^*(s)|.
 \end{align}
 \end{theorem}
+\end{comment}
 \begin{proof}
 Let $r_{e_s,J^*}$ and ${r}'_{e_s,J^*}$ be solutions to the linear programs in \eqref{lubplp} and \eqref{alubplp} respectively for $c=e_s$ and $J=J^*$. It is easy to note that $r_{e_s,J^*}$ is feasible for the linear program in \eqref{alubplp} for $c=e_s$ and $J^*$, and hence it follows that $(\Phi r_{e_s,J^*})(s)\geq (\Phi {r}'_{e_s,J^*})(s)$. However, since the constraints with respect to state $s$ have been chosen we know that $(\Phi {r}'_{e_s,J^*})(s)\geq J^*(s)$. The proof follows from noting that $(\Gamma J^*)(s)=(\Phi r_{e_s,J^*})(s)$ and $\hg J^*(s)=(\Phi {r}_{e_s,J^*})(s)$.
 \end{proof}
+\begin{comment}
 The expression in \eqref{sampexp} in Theorem~\ref{st} says that the additional error $|\Gamma J^*(s) -\hg J^*(s)|$ due to constraint approximation is less than the original projection error $|\Gamma J^*(s)-J^*(s)|$ due to function approximation. This means that for the RLP to perform well it is enough to retain those states for which the linear function approximation via $\Phi$ is known to perform well. The modified $L_\infty$ norm in \eqref{finalbndmn} comes to our rescue to control the error due to those states that are not chosen.
+\end{comment}
