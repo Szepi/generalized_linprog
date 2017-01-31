@@ -1,4 +1,5 @@
 %!TEX root =  autocontgrlp.tex
+\begin{comment}
 \section{Approximate Linear Programming: Successes and Challanges}
 When the MDP has a large number of states, it is difficult to solve for $J^*$ using either the linear program \eqref{mdplp} or other full state representation methods such as value iteration or policy iteration \cite{BertB}. A practical solution is to resort to function approximation. Linear function approximation, wherein the solution is searched in the subspace spanned by the column vectors of a given feature matrix $\Phi$.
 The approximate linear program (ALP) is obtained by making use of LFA in the LP, i.e., by introducing the new variables $r\in \R^k$ and adding the extra constraint $J=\Phi r$ in \eqref{mdplp} with $\Phi \in \R^{n\times k}$ \citep{SchSei85}.
@@ -32,7 +33,9 @@ Interestingly, the RLP has nevertheless been found to do well empirically in dom
 $\bullet$ As a natural generalization of the RLP, what happens if we define a generalized reduced linear program (GRLP) whose constraints are positive linear combinations of the original constraints of the ALP?\\
 $\bullet$ Unlike \cite{CS} which provides error bounds for a specific RLP formulated using an idealized sampling distribution, is it possible to provide error bounds for any GRLP (and hence any RLP)?
 In this paper, we address both of the questions above.
-\section{Generalized Reduced Linear Program}
+\end{comment}
+\section{Main Results}
+\begin{comment}
 The Generalized Reduced Linear Program is given as:
 \begin{align}\label{grlp}
 \begin{split}
@@ -43,27 +46,8 @@ The Generalized Reduced Linear Program is given as:
 where we assume that $W \in \R^{nd\times m}_+$ is a matrix with all positive entries, $\N$ is an additional (compact) constraint set to ensure the boundedness of the solution and $\tr \in \N$.
 \footnote{The appendix explains how $\N$ can be chosen.}
 In what follows, we denote the solution to the GRLP by $\hr$, the approximate value function by $\hj=\Phi \hr$ and use $\hu$ to denote the greedy policy w.r.t. $\hj$.\par
-The GRLP introduces linear function approximation in both the primal and dual variables of the LP formulation. 
-To understand this, we need to look at the Lagrangian of the ALP and GRLP in 
-\eqref{lag} and \eqref{lag2} respectively, i.e., 
-\begin{align}\label{lag}
-\tilde{L}(r,\lambda)=c^\top \Phi r+\lambda^\top (T\Phi r-\Phi r), \\ \label{lag2}\hat{L}(r,q)=c^\top \Phi r+q^\top W^\top (T\Phi r-\Phi r).
-\end{align}
-Thus, when $Wq = \lambda$, i.e., when $W$ is a set of basis functions that allow
-a low dimensional linear representation of the dual variables $\lambda$,
-the two problems are the same.
-%Note that $ Wq\approx \lambda$ in \eqref{lag2} is linear function approximation of the Lagrange multipliers. 
-Hence, while the ALP employs LFA in its objective function (i.e., use of $\Phi r$), the GRLP employs linear approximation both in the objective function ($\Phi r$) as well as the constraints (use of $W$). 
-%Further, $W$ can be interpreted as the feature matrix that approximates the Lagrange multipliers as $\lambda\approx Wq$, where $\lambda \in \R^{nd}, r\in \R^m$. 
-To get a sense of how $W$ should be chosen, recall that
-the optimal Lagrange multipliers are the discounted number of visits to the ``state-action pairs'' under an optimal policy $u^*$, i.e., 
-\begin{align}
-\lambda^*(s,u^*(s))&=\big(c^\top(I-\alpha P_{u^*})^{-1}\big)(s)\nn\\
-				&= \big(c^\top(I+\alpha P_{u^*}+\alpha^2 P_{u^*}^2+\ldots)\big)(s),\nn\\
-			\lambda^*(s,a)&=0, \qquad \text{for all } a \neq u^*(s),\nn
-\end{align}
-where $P_{u^*}$ is the probability transition matrix under $u^*$ ($P_{u^*}(s,s') = P_{u^*(s)}(s,s')$, $s,s'\in S$) \cite{dolgov}. Even though we might not have the optimal policy $u^*$ in practice, the fact that $\lambda^*$ is a probability distribution and that it is a linear combination of $\{P_{u^*},P^2_{u^*},\ldots\}$ hints at the kind of features that might be useful for the $W$ matrix.
-\subsection{Novel Projection Operators}
+\end{comment}
+%\subsection{Novel Projection Operators}
 We now define two projection operators which are central to our error analysis and in them we assume that the set $\N'\subset \R^k$ is such that $\N' = \N + t \one$ for any $t\in \R$.
 %The least upper bound (LUB) projection operator $\Gamma \colon \R^n \ra\R^n$ is defined below, see \eqref{gamdef}.
 \begin{definition}\label{lubpop}
@@ -120,6 +104,8 @@ It holds that
 \end{split}
 \end{align*}
 \end{theorem}
+The first factor is related to the best possible approximation that can be achieved with the chosen feature matrix $\Phi$. This term is inherent to the ALP formulation and it appears in the bounds provided by \cite{ALP}.
+The second factor is related to constraint approximation and is completely defined in terms of $\Phi$, $W$ and $T$, and does not require knowledge of stationary distribution of the optimal policy. It makes intuitive sense since given that $\Phi$ approximates $J^*$, it is enough for $W$ to depend on $\Phi$ and $T$ without any additional requirements.\par
 \begin{comment}
 \begin{theorem}[Control Error Bound in $\norm{\cdot}_{\infty}$]
 \label{polthe}
@@ -143,25 +129,10 @@ Then
 |\Gamma J^*(s)-\hg J^*(s)|<|\Gamma J^*(s)-J^*(s)|.
 \end{align*}
 \end{theorem}
-The first factor is related to the best possible approximation that can be achieved with the chosen feature matrix $\Phi$. This term is inherent to the ALP formulation and it appears in the bounds provided by \cite{ALP}.\par
-The second factor is related to constraint approximation and is completely defined in terms of $\Phi$, $W$ and $T$, and does not require knowledge of stationary distribution of the optimal policy. It makes intuitive sense since given that $\Phi$ approximates $J^*$, it is enough for $W$ to depend on $\Phi$ and $T$ without any additional requirements.\par An interesting feature is that unlike prior work on constraint sampling based on concentration inequalities (e.g.,  \cite{CS}), our analysis is based on contraction operators and is completely deterministic.
-In particular, the error term $\parallel\Gamma J^*-\tg J^* \parallel$ gives new insights into constraint selection. 
-The result of Theorem~\ref{st} is that the additional error $|\Gamma J^*(s) -\hg J^*(s)|$ due to constraint approximation is less than the original projection error $|\Gamma J^*(s)-J^*(s)|$ due to function approximation. This means that for the RLP to perform well it is enough to retain those states for which the linear function approximation via $\Phi$ is known to perform well. The modified $L_\infty$ norm in \eqref{finalbndmn} comes to our rescue to control the error due to those states that are not chosen.
 \begin{comment}
-\subsection{Comparison with ADP methods}
-A host of the ADP methods such as \cite{lspi,lspe,lstd,Tsit} are based on solving the projected Bellman equation (PBE). The PBE based methods have been empirically successful and also have theoretical guarantees for the approximate value function. However, a significant shortcoming is that they suffer from the issue of \emph{policy-chattering} (see section~$6.4.3$ of \cite{BertB}), i.e., the sequence of policies might oscillate within a set of bad policies. A salient feature of the ALP based methods is that they find only one approximate value function $\tj$ and one sub-optimal policy derived as a greedy policy with respect to $\tj$. As a result there is no such issue of policy-chattering for the ALP based methods. By providing the error bounds for the GRLP, our paper provides the much required theoretical support for the RLP. Our GRLP framework closes the long-standing gap in the literature of providing a theoretical framework to bound the error due to constraint reduction in ALP based schemes.\\
-
-\FloatBarrier
-\begin{table}[H]
-\resizebox{\columnwidth}{!}{
-\begin{tabular}{|c|c|c|}\hline
-ADP Method	&Empirical	&Theoretical\\\hline
-Projected Bellman &\ding{51}    &\ding{53}-Policy Chattering\\
-Equation	&	&\\\hline
-ALP		&\ding{53}-Large number of Constraints &\ding{51}\\\hline
-RLP		&\ding{51} &\ding{53}-  Only under\\
-&&ideal assumptions\\\hline
-\end{tabular}
-}
-\end{table}
+An interesting feature is that unlike prior work on constraint sampling based on concentration inequalities (e.g.,  \cite{CS}), our analysis is based on contraction operators and is completely deterministic.
+In particular, the error term $\etmn$ gives new insights into constraint selection:
+The result of Theorem~\ref{st} is that
 \end{comment}
+The additional error $|\Gamma J^*(s) -\hg J^*(s)|$ due to constraint approximation is less than the original projection error $|\Gamma J^*(s)-J^*(s)|$ due to function approximation. This means that for the RLP to perform well it is enough to retain those states for which the linear function approximation via $\Phi$ is known to perform well.
+%The modified $L_\infty$ norm in \eqref{finalbndmn} comes to our rescue to control the error due to those states that are not chosen.

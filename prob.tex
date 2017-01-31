@@ -1,0 +1,46 @@
+\section{Problem Setup}
+We now present the linear programming (LP), approximate linear programming (ALP) and the generalized reduced approximate linear programming (GRLP) respectively. In what follows, $c>0\in \R^n$ is a probability distribution.
+It is well known, the optimal value function $J^*$ can be obtained by solving the following linear program:
+\begin{align}\label{mdplp}
+\begin{split}
+\min_{J\in \R^n}\, &c^\top J\,\,\text{s.t.}\\
+%\mb
+J(s)&\geq g_a(s)+\alpha\sum_{s'}p_a(s,s')J(s'),\,\,
+\forall (s,a)\in S\times A,
+\end{split}
+\end{align}
+\begin{comment}
+When the MDP has a large number of states, it is difficult to solve for $J^*$ using either the linear program \eqref{mdplp} or other full state representation methods such as value iteration or policy ite
+ration \cite{BertB}. A practical solution is to resort to function approximation. Linear function approximation, wherein the solution is searched in the subspace spanned by the column vectors of a given feature matrix $\Phi$.\par
+\end{comment}
+The approximate linear program (ALP) is obtained by making use of LFA in the LP, i.e., by introducing the new variables $r\in \R^k$ and adding the extra constraint $J=\Phi r$ in \eqref{mdplp} with $\Phi \in \R^{n\times k}$ \citep{SchSei85}.
+By substitution, this leads to
+\begin{align}\label{alp}
+\begin{split}
+\min_{r\in \R^k}\, &c^\top \Phi r\,\,\,
+\text{s.t.}\mb \Phi r\geq T \Phi r,
+\end{split}
+\end{align}
+where $J\geq TJ$ is a shorthand for the $nd$ constraints in \eqref{mdplp} and $\Phi$ is a feature matrix whose first column is $\one$.
+The Generalized Reduced Linear Program is given as:
+\begin{align}\label{grlp}
+\begin{split}
+&\underset{r\in \N\subset R^k}{\min}\, \, c^\top \Phi r\,\,\,\,\\
+&\text{s.t.}\mb  \,W^\top E\Phi r\geq W^\top H \Phi r,
+\end{split}
+\end{align}
+Unless specified otherwise we use $\hr$/$\tr$ to denote an arbitrary solution to the GRLP/ALP. In similar spirit, and we let $\hj=\Phi \hr$/$\tj=\Phi \tr$ to denote the corresponding value functions and $\hu$/$\tu$ to denote the greedy policy w.r.t. $\hj$/$\tj$.\par
+\textbf{Remarks:}
+\begin{enumerate}
+\item When the MDP has a large number of states, it is difficult to solve for $J^*$ using either the linear program \eqref{mdplp} or other full state representation methods such as value iteration or policy iteration \cite{BertB}. A practical solution is to resort to function approximation. Linear function approximation, wherein the solution is searched in the subspace spanned by the column vectors of a given feature matrix $\Phi$. For $k=n$ and $\Phi=I_{n\times n}$, the ALP is same as the LP.
+\item $W \in \R^{nd\times m}_+$ is a matrix with all positive entries which specifies the linear combination of constraints. $\N$ is a compact set such that $\tr \in \N$. This additional constraint set ensures the boundedness of the solution. For $m=nd$ and $W=I_{nd\times nd}$, the GRLP is same as the ALP.
+\end{enumerate}
+\FloatBarrier
+\input{cartoon}
+\Cref{cartoon} which shows the solutions to the LP, ALP and GRLP respectively. The erorr in the ALP solution has already been studied in \cite{ALP}. Our objective is to study the extra source of error due to constriant approximation.
+\begin{comment}
+In addition, we answer the following questions related to constraint reduction in ALP that have so far remained open. \\
+$\bullet$ As a natural generalization of the RLP, what happens if we define a generalized reduced linear program (GRLP) whose constraints are positive linear combinations of the original constraints of the ALP?\\
+$\bullet$ Unlike \cite{CS} which provides error bounds for a specific RLP formulated using an idealized sampling distribution, is it possible to provide error bounds for any GRLP (and hence any RLP)?
+In this paper, we address both of the questions above.
+\end{comment}
