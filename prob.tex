@@ -1,43 +1,76 @@
-\section{Problem Setup}
-We now present the linear programming (LP), approximate linear programming (ALP) and the generalized reduced approximate linear programming (GRLP) respectively. In what follows, $c>0\in \R^n$ is a probability distribution.
-It is well known, the optimal value function $J^*$ can be obtained by solving the following linear program:
-\begin{align}\label{mdplp}
-\begin{split}
-\min_{J\in \R^n}\, &c^\top J\,\,\text{s.t.}\\
-%\mb
-J(s)&\geq g_a(s)+\alpha\sum_{s'}p_a(s,s')J(s'),\,\,
-\forall (s,a)\in S\times A,
-\end{split}
-\end{align}
+\section{Linear Programming for MDP}
+In this section, we review relevant results \cite{BertB,ALP,CS} in the linear programming approach to MDPs. Throughout the rest of the paper, we let $c>0\in \R^n$ to denote a probability distribution over the state space S.\par
 \begin{comment}
-When the MDP has a large number of states, it is difficult to solve for $J^*$ using either the linear program \eqref{mdplp} or other full state representation methods such as value iteration or policy ite
-ration \cite{BertB}. A practical solution is to resort to function approximation. Linear function approximation, wherein the solution is searched in the subspace spanned by the column vectors of a given feature matrix $\Phi$.\par
+%first present linear programming (LP), approximate linear programming (ALP) and reduced linear programming (RLP) respectively. The LP is an exact method in that it computes $J^*$ and the other two methods (ALP and RLP) are approximate methods that are based on introducing LFA in LP. We then discuss prior literature that have analyzed the approximation errors in ALP and RLP. Finally, we present the open question that we wish to understand in this paper.
 \end{comment}
-The approximate linear program (ALP) is obtained by making use of LFA in the LP, i.e., by introducing the new variables $r\in \R^k$ and adding the extra constraint $J=\Phi r$ in \eqref{mdplp} with $\Phi \in \R^{n\times k}$ \citep{SchSei85}.
-By substitution, this leads to
-\begin{align}\label{alp}
+\textbf{Linear Programming (LP)}: It is well known, the optimal value function $J^*$ can be obtained by solving the following linear program:
+\begin{align}\label{mdplp}
+&\text{LP:~}\min_{J\in \R^n}\,c^\top J\,\,\\
+%\mb
+&J(s)\geq g_a(s)+\alpha\sum_{s'}p_a(s,s')J(s'),\,\,
+\forall (s,a)\in S\times A,\nn
+\end{align}
+\textbf{Approximate Linear Programming (ALP)} is obtained by making use of LFA in the LP, i.e., by introducing the new variables $r\in \R^k$ and adding the extra constraint $J=\Phi r$ in \eqref{mdplp} with $\Phi \in \R^{n\times k}$ \citep{SchSei85}. By substitution, this leads to
+\begin{flalign}\label{alp}
 \begin{split}
-\min_{r\in \R^k}\, &c^\top \Phi r\,\,\,
-\text{s.t.}\mb \Phi r\geq T \Phi r,
+\text{ALP:}& \min_{r\in \R^k}\, c^\top \Phi r\\
+& \Phi r\geq T \Phi r,
+\end{split}
+\end{flalign}
+where $J\geq TJ$ is a shorthand for the $nd$ constraints in \eqref{mdplp}. Note that, for $k=n$ and $\Phi=I_{n\times n}$, the ALP is same as the LP. In what follows, we use the notation $\tj=\Phi \tr$ and $\tu=u_{\tj}$ where $\tr\in\R^k$ denotes an arbitrary solution to ALP in \eqref{alp}.\par
+A detailed theoretical analysis of ALP can be found in \cite{ALP}. However, we restate (from \cite{ALP}) a useful preliminary\footnote{The improved error bounds in \cite{ALP} as well as in \Cref{sec:improv} of this paper are in a weighted $L_\infty$ norm (see \Cref{notations}-\eqref{norms}).} performance bound for ALP as follows:
+\begin{theorem}[Error Bound for ALP]\label{alpvanilla}
+Let $\one\in \R^k$ belong to the column span of $\Phi$ and let $\mu_u\eqdef (1-\alpha)c^\top\top(I-\alpha P_u)^{-1}$ be a probability distribution over $S$ induced by a policy $u$. Then it follows that
+\begin{enumerate}
+\item\label{alppe} The prediction error is bounded as $||J^*-\tj||_{1,c}\leq \frac{2}{1-\alpha}\min_{r}||J^*-\Phi r||_\infty$.
+\item\label{alpce} The control error is bounded as $||J^*-J_{\tu}||_{1,c}\leq \frac{2}{1-\alpha}||J^*-\tj||_{1,\mu_{\tu}}$.
+\end{enumerate}
+\end{theorem}
+The gist of \Cref{alpvanilla}-\eqref{alppe} is that the prediction error $||J^*-\tj||_{1,c}$ of ALP is worse utmost by a constant factor than the best possible error that can be achieved using the span of $\Phi$. Further from \Cref{alpvanilla}-\eqref{alpce} the control error is worse utmost by a constant factor than the prediction error.\par
+\textbf{Reduced Linear Programming (RLP)} is formulated by retaining only $m$ out of the $nd$ ($m<<nd$) constraints of ALP. RLP is easier to solve compared to ALP due to the reduced number of constraints.
+\begin{align}\label{rlp}
+\begin{split}
+&\text{RLP:~}\underset{r\in \N\subset R^k}{\min}\, c^\top \Phi r\,\,\\
+%\mb
+&\Phi r (s)\geq g_a(s)+\alpha\sum_{s'}p_a(s,s')\Phi r(s'),\,\,
+\forall (s,a)\in \I,
 \end{split}
 \end{align}
-where $J\geq TJ$ is a shorthand for the $nd$ constraints in \eqref{mdplp} and $\Phi$ is a feature matrix whose first column is $\one$.
+where $\I\subset S \times A$ is the index set of sampled constraints, i.e., $|\I|=m$ and $\N$\footnote{The appendix explains how $\N$ can be chosen analytically.} is a compact set such that $\tr \in \N$, and it ensures boundedness of the RLP \eqref{alp}. We denote an arbitrary solution to the RLP by $\tr_{RLP}$.\par
+We now state a useful result from \cite{CS} that characterizes the performance analysis RLP as follows:
+\begin{theorem}[Error Bound for RLP]\label{rlpt}
+Let $\mu_{u^*}\eqdef(1-\alpha)c^\top (I-\alpha P_{u^*})^{-1}$ be a probability distribution (of discounted number of visits) over the states $S$. Define $\psi_{u^*}$ to be the distribution over the state-action pairs such that $\psi(s,a)\eqdef \frac{\mu_{u^*}}{d}$ and define $\theta\eqdef\frac{1+\alpha}{2 c^\top J^*}\underset{r\in \N}{\sup}\parallel J^*-\Phi r \parallel_\infty$. Then for a given $\epsilon>0$ and $\delta>0$ it holds with probability greater than $1-\delta$ that
+\begin{align*}
+||J^*-\Phi\tilde{r}_{RLP}||_{1,c}\leq ||J^*-\Phi\tilde{r}||_{1,c}+\epsilon ||J^*||_{1,c}
+\end{align*}
+for all $m\geq \frac{16d\theta}{(1-\alpha)\epsilon}\big(k\ln\frac{48d\theta}{(1-\alpha)\epsilon}+\ln \frac{2}{\delta}\big)$.
+\end{theorem}
+The gist of \Cref{rlpt} is that when `sufficient' number of samples are retained using a specialized distribution ($\psi_{u^*}$), then with high probability, the prediction error of RLP and ALP differ only by a small factor (i.e., $\epsilon\norm{J^*}_{1,c}$).\par
+A major weakness of \Cref{rlpt} is that it holds only for RLP formulated using $\psi_{u^*}$ which is impractical since $u^*$ is unknown in general. However, empirical studies \cite{ALP,CS,CST} have shown that RLP formulated with other sampling distributions do perform well in experiments. In this context, another interesting approach is linear approximation of the dual variables \cite{dolgov}, which also is known to work in experiments but without any theoretical guarantees. These fact hint to the fact that the theoretical understanding of RLP and constraint sampling/approximation needs to be improved. Further, such theoretical understanding will justify that ALP with constraint reduction is a fully dimensionality free method in that the problem variables as well as constraints are independent of the number of states of the MDP.
+\begin{comment}
 The Generalized Reduced Linear Program is given as:
 \begin{align}\label{grlp}
 \begin{split}
-&\underset{r\in \N\subset R^k}{\min}\, \, c^\top \Phi r\,\,\,\,\\
-&\text{s.t.}\mb  \,W^\top E\Phi r\geq W^\top H \Phi r,
+&\text{GRLP:~}\underset{r\in \N\subset R^k}{\min}\, \, c^\top \Phi r\,\,\,\,\\
+&  \,W^\top E\Phi r\geq W^\top H \Phi r.
 \end{split}
 \end{align}
-Unless specified otherwise we use $\hr$/$\tr$ to denote an arbitrary solution to the GRLP/ALP. In similar spirit, and we let $\hj=\Phi \hr$/$\tj=\Phi \tr$ to denote the corresponding value functions and $\hu$/$\tu$ to denote the greedy policy w.r.t. $\hj$/$\tj$.\par
-\textbf{Remarks:}
+\end{comment}
+\begin{comment}
 \begin{enumerate}
-\item When the MDP has a large number of states, it is difficult to solve for $J^*$ using either the linear program \eqref{mdplp} or other full state representation methods such as value iteration or policy iteration \cite{BertB}. A practical solution is to resort to function approximation. Linear function approximation, wherein the solution is searched in the subspace spanned by the column vectors of a given feature matrix $\Phi$. For $k=n$ and $\Phi=I_{n\times n}$, the ALP is same as the LP.
-\item $W \in \R^{nd\times m}_+$ is a matrix with all positive entries which specifies the linear combination of constraints. $\N$ is a compact set such that $\tr \in \N$. This additional constraint set ensures the boundedness of the solution. For $m=nd$ and $W=I_{nd\times nd}$, the GRLP is same as the ALP.
+
+\item In \eqref{mdplp}, \eqref{alp}, \eqref{rlp} and \eqref{grlp} $c>0 \in \R^n$ is a probability distribution.
+\item The ALP \eqref{alp} is obtained by making use of LFA in the LP, i.e., by introducing the new variables $r\in \R^k$ and adding the extra constraint $J=\Phi r$ in \eqref{mdplp} with $\Phi \in \R^{n\times k}$ \citep{SchSei85}. Note that in \eqref{alp}, $Phi r\geq T\Phi r$ is a shortcut to denote the $S\times A$ constraints. Also, for $k=n$ and $\Phi=I_{n\times n}$, the ALP is same as the LP. We denote an arbitrary solution to the ALP by $\tr\in \R^k$.\par
+\item The RLP \eqref{rlp} was first introduced in \cite{CS}. The RLP \eqref{rlp} has the same objective function as the ALP \eqref{rlp}. The construction of the RLP needs three parameters to be specified namely, the number of samples $m$, the sampling distribution $\psi$ and the constraint set $\N$. In particular, $\psi=\psi(u^*)$ i.e., the sampling distribution
+In the RLP in \eqref{rlp}, $\I\subset S \times A$ is the index set of sampled constraints, i.e., $|\I|=m$. The samples are generated using a distribution $\psi$ (see a restatement of the results in \cite{CS} summarized in \Cref{}).
+$\N$ is a compact set such that $\tr \in \N$, and it ensures boundedness of the RLP \eqref{alp}. We denote an arbitrary solution to the RLP by $\tr_{RLP}$. It is important to note that the RLP \eqref{rlp} is a random linear program, in the sense that it depends on the $m$ samples obtained from $\psi$.
+\item In the GRLP in \eqref{grlp}, $W \in \R^{nd\times m}_+$ is a matrix with all positive entries which specifies the linear combination of constraints. The RLP \eqref{rlp} can be recovered as a special case of the GRLP \cite{grlp} by setting $W$ to the matrix with the $i^{th}$ column having $1$ corresponding to the constraint that was sampled (implicitly assuming that there is a natural ordering of the $nd$ constraints) and all the other entries as $0$. The $\N$ in the RLP \eqref{rlp} is retained in the GRLP \eqref{grlp} as well. For $m=nd$ and $W=I_{nd\times nd}$, the GRLP is same as the ALP. We denote an arbitrary solution to the GRLP by $\hr$.
 \end{enumerate}
+In what follows, unless specified otherwise we use let $\hj=\Phi \hr$/$\tj=\Phi \tr$ to denote the corresponding value functions and $\hu$/$\tu$ to denote the greedy policy w.r.t. $\hj$/$\tj$.\par
 \FloatBarrier
 \input{cartoon}
-\Cref{cartoon} which shows the solutions to the LP, ALP and GRLP respectively. The erorr in the ALP solution has already been studied in \cite{ALP}. Our objective is to study the extra source of error due to constriant approximation.
+\Cref{cartoon} which shows the solutions to the LP, ALP and GRLP respectively. The error in the ALP solution has already been studied in \cite{ALP}. Our objective is to study the extra source of error due to constraint approximation.
+\end{comment}
 \begin{comment}
 In addition, we answer the following questions related to constraint reduction in ALP that have so far remained open. \\
 $\bullet$ As a natural generalization of the RLP, what happens if we define a generalized reduced linear program (GRLP) whose constraints are positive linear combinations of the original constraints of the ALP?\\

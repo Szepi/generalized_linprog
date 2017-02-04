@@ -1,29 +1,25 @@
-\subsection{Comparison With Related Work}
-In order to interpret the resutls in \Cref{cmt2} and \Cref{st}, we now dicuss relevant prior work. We begin by re-stating a preliminary\footnote{The improved error bounds in \cite{ALP} as well as in \Cref{sec:improv} of this paper are in a weighted $L_\infty$ norm and are based on Lyapunov analysis.} error bounds for the ALP from \cite{ALP}:
+\begin{comment}
+In order to interpret the results in \Cref{cmt2} and \Cref{st}, we now discuss relevant prior work. We begin by re-stating a preliminary\footnote{The improved error bounds in \cite{ALP} as well as in \Cref{sec:improv} of this paper are in a weighted $L_\infty$ norm and are based on Lyapunov analysis.} error bounds for the ALP from \cite{ALP}:
 \begin{theorem}[Error Bound for ALP]\label{alpvanilla}
 \begin{align*}
 ||J^*-\tj||_{1,c}\leq \frac{2}{1-\alpha}\min_{r}||J^*-\Phi r||_\infty
 \end{align*}
 \end{theorem}
-\begin{comment}
-
 The ALP is a linear program in $k$ ($<<n$) variables as opposed to the LP in \eqref{mdplp} which has $n$ variables.
 Nevertheless, the ALP has $nd$ constraints (same as the LP) which is an issue when $n$ is large and calls for constraint approximation/reduction techniques.
 
 Most works in literature make use of the underlying structure of the problem to cleverly reduce the number of constraints of the ALP. A good example is \cite{gkp}, wherein the structure in factored linear functions is exploited. The use of basis function also helps constraint reduction in \cite{Mor-Kum}. In \cite{ALP-Bor}, the constraints are approximated indirectly by approximating the square of the Lagrange multipliers. In \cite{petrik} the transitional error is reduced ignoring the representational and sampling errors.\par
-\end{comment}
+
 %The most important work in the direction of constraint reduction is constraint sampling \cite{CS} wherein a reduced linear program (RLP) is solved instead of the ALP. While the objective of the RLP is same as that of the ALP, the RLP has only $m<<nd$ constraints \emph{sampled} from the original $nd$ constraints of the ALP.
 %The following is a preliminary error bound for the RLP from \cite{CS} holds for a special sampling distribution which is dependent on the optimal policy $u^*$ (see \cite{CS} for a detailed presentation):
 \begin{theorem}[Error Bound for RLP]\label{rlpt}
-If $\tilde{r}_{RLP}$ is a solution to the RLP, then
+Let $\mu_{u^*}\eqdef(1-\alpha)c^\top (I-\alpha P_{u^*})^{-1}$ be a probability distribution (of discounted number of visits) over the states $S$. Define $\psi_{u^*}$ to be the distribution over the state-action pairs such that $\psi(s,a)\eqdef \frac{\mu_{u^*}}{d}$ and define $\theta\eqdef\frac{1+\alpha}{2 c^\top J^*}\underset{r\in \N}{\sup}\parallel J^*-\Phi r \parallel_\infty$. Then for a given $\epsilon>0$ and $\delta>0$ it holds with probability greater than $1-\delta$ that
 \begin{align*}
 ||J^*-\Phi\tilde{r}_{RLP}||_{1,c}\leq ||J^*-\Phi\tilde{r}||_{1,c}+\epsilon ||J^*||_{1,c}
 \end{align*}
+for all $m\geq \frac{16d\theta}{(1-\alpha)\epsilon}\big(k\ln\frac{48d\theta}{(1-\alpha)\epsilon}+\ln \frac{2}{\delta}\big)$.
 \end{theorem}
-\textbf{Remarks:}
-The first factor in the right hand side of \eqref{finalbnd} in \Cref{cmt2} is related to the best possible approximation that can be achieved with the chosen feature matrix $\Phi$. This term is inherent to the ALP formulation as shown in \Cref{alpvanilla}. The second factor in the right hand sie of \eqref{finalbnd} is related to constraint approximation and is completely defined in terms of $\Phi$, $W$ and $T$, and does not require knowledge of stationary distribution of the optimal policy. It makes intuitive sense since given that $\Phi$ approximates $J^*$, it is enough for $W$ to depend on $\Phi$ and $T$ without any additional requirements.\par
-It is important to note that \Cref{rlpt} holds only in high probability and is valid only under idealized assumption of knowing the optimal policy $u^*$ and \Cref{cmt2} does not have these limitations.
-In addition, from \Cref{st}, we know that the additional error $|\Gamma J^*(s) -\hg J^*(s)|$ due to constraint approximation is less than the original projection error $|\Gamma J^*(s)-J^*(s)|$ due to function approximation. This means that for the RLP to perform well it is enough to retain those states for which the linear function approximation via $\Phi$ is known to perform well.
+\end{comment}
 \begin{comment}
 \subsection{Open Questions}
 Interestingly, the RLP has nevertheless been found to do well empirically in domain such as Tetris \cite{CST} and controlled queues \cite{CS} even when the constraints were sampled using distribution other than the ideal distribution. This fact indicates a gap in the theoretical analysis and points to the need for a more elaborate theory that addresses the issue of constraint approximation. In this paper, we answer the following questions related to constraint reduction in ALP that have so far remained open. \\
@@ -31,28 +27,6 @@ $\bullet$ As a natural generalization of the RLP, what happens if we define a ge
 $\bullet$ Unlike \cite{CS} which provides error bounds for a specific RLP formulated using an idealized sampling distribution, is it possible to provide error bounds for any GRLP (and hence any RLP)?
 In this paper, we address both of the questions above.
 \end{comment}
-\subsection{Primal-Dual Approximation}
-The GRLP introduces linear function approximation in both the primal and dual variables of the LP formulation.
-To understand this, we need to look at the Lagrangian of the ALP and GRLP in
-\eqref{lag} and \eqref{lag2} respectively, i.e.,
-\begin{align}\label{lag}
-\tilde{L}(r,\lambda)=c^\top \Phi r+\lambda^\top (T\Phi r-\Phi r), \\ \label{lag2}\hat{L}(r,q)=c^\top \Phi r+q^\top W^\top (T\Phi r-\Phi r).
-\end{align}
-Thus, when $Wq = \lambda$, i.e., when $W$ is a set of basis functions that allow
-a low dimensional linear representation of the dual variables $\lambda$,
-the two problems are the same.
-%Note that $ Wq\approx \lambda$ in \eqref{lag2} is linear function approximation of the Lagrange multipliers.
-Hence, while the ALP employs LFA in its objective function (i.e., use of $\Phi r$), the GRLP employs linear approximation both in the objective function ($\Phi r$) as well as the constraints (use of $W$).
-%Further, $W$ can be interpreted as the feature matrix that approximates the Lagrange multipliers as $\lambda\approx Wq$, where $\lambda \in \R^{nd}, r\in \R^m$.
-To get a sense of how $W$ should be chosen, recall that
-the optimal Lagrange multipliers are the discounted number of visits to the ``state-action pairs'' under an optimal policy $u^*$, i.e.,
-\begin{align}
-\lambda^*(s,u^*(s))&=\big(c^\top(I-\alpha P_{u^*})^{-1}\big)(s)\nn\\
-&= \big(c^\top(I+\alpha P_{u^*}+\alpha^2 P_{u^*}^2+\ldots)\big)(s),\nn\\
-\lambda^*(s,a)&=0, \qquad \text{for all } a \neq u^*(s),\nn
-\end{align}
-where $P_{u^*}$ is the probability transition matrix under $u^*$ ($P_{u^*}(s,s') = P_{u^*(s)}(s,s')$, $s,s'\in S$) \cite{dolgov}. Even though we might not have the optimal policy $u^*$ in practice, the fact that $\lambda^*$ is a probability distribution and that it is a linear combination of $\{P_{u^*},P^2_{u^*},\ldots\}$ hints at the kind of features that might be useful for the $W$ matrix.
-
 \begin{comment}
 \subsection{Comparison with ADP methods}
 A host of the ADP methods such as \cite{lspi,lspe,lstd,Tsit} are based on solving the projected Bellman equation (PBE). The PBE based methods have been empirically successful and also have theoretical guarantees for the approximate value function. However, a significant shortcoming is that they suffer from the issue of \emph{policy-chattering} (see section~$6.4.3$ of \cite{BertB}), i.e., the sequence of policies might oscillate within a set of bad policies. A salient feature of the ALP based methods is that they find only one approximate value function $\tj$ and one sub-optimal policy derived as a greedy policy with respect to $\tj$. As a result there is no such issue of policy-chattering for the ALP based methods. By providing the error bounds for the GRLP, our paper provides the much required theoretical support for the RLP. Our GRLP framework closes the long-standing gap in the literature of providing a theoretical framework to bound the error due to constraint reduction in ALP based schemes.\\

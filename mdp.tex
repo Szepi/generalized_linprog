@@ -1,68 +1,52 @@
 %!TEX root =  autocontgrlp.tex
-\section{Markov Decision Processes (MDPs) and Linear Programming}
-We consider MDPs with a finite state space $S=\{1,2,\ldots,n\}$ and finite action space $A=\{1,2,\ldots,d\}$, where the sentiment is that $n$ is large. For simplicity, we assume that all actions are feasible in all states. The probability transition kernel $P$ collects the probabilities $p_a(s,s')$ of transitioning from state $s$ to state $s'$ under the action $a$ for all possible $s,s'\in S$ and $a\in A$. We denote the reward (or gain) obtained for performing action $a\in A$ in state $s\in S$ by $g_a(s)$.
-A stationary deterministic policy\footnote{For the scope of this paper, it suffices to restrict our attention to stationary deterministic policies.} (SDP), or simply a policy, is a map $u\colon S\ra A$ that specifies for each state what action to select in that state.
-Given an SDP $u$, the expected total discounted reward corresponding to starting at state $s$, while choosing actions as dictated by $u$ for the states encountered, is
+\section{Background: Markov Decision Processes (MDPs)}
+The framework of Markov decision processes (MDPs) is useful to mathematically cast optimal sequential decision making problems in stochastic environments. In this section, we present a brief overview of the MDP framework, introducing the notions of policy, value function and optimality (please refer to \cite{BertB} for a detailed presentation on MDP).\par
+\textbf{Model:} We consider an MDP with a finite state space given by $S=\{1,2,\ldots,n\}$ and a finite action space given by $A=\{1,2,\ldots,d\}$ (where the sentiment is that $n$ is large). For simplicity, we assume that all actions are feasible in all states. The probability transition kernel $P$ collects the probabilities $p_a(s,s')$ of transitioning from state $s$ to state $s'$ under the action $a$ for all possible $s,s'\in S$ and $a\in A$. We denote the reward (or gain) obtained for performing action $a\in A$ in state $s\in S$ by $g_a(s)$.\par
+\textbf{Policy:} A stationary deterministic policy\footnote{For the scope of this paper, it suffices to restrict our attention to stationary deterministic policies.} (SDP), or simply a policy, is a map $u\colon S\ra A$ that specifies for each state what action to select in that state. Under an SDP, an MDP is a Markov chain whose probability transition matrix is denoted by $P_u$.\par
+\textbf{Value Function:} Given an SDP $u$, the expected total discounted reward corresponding to starting at a state $s\in S$ at $t=0$, while choosing actions as dictated by $u$ for the states encountered in the future (i.e., $t>0$), is
 \begin{align}
-J_u(s)\stackrel{\Delta}{=}\E[\sum_{n=0}^\infty \alpha^n g_{a_n}(s_n)|s_0=s,a_n=u(s_n)\mbox{ }\forall n\geq 0],\nn
+J_u(s)\stackrel{\Delta}{=}\E[\sum_{t=0}^\infty \alpha^t g_{a_t}(s_t)|s_0=s,a_t=u(s_t)\mbox{ }\forall t\geq 0],\nn
 \end{align}
-where $\alpha \in (0,1)$ is the so-called discount factor and $s_{n+1} \sim p_{a_n}(s_n,\cdot)$, $n\ge 0$. 
+where $\alpha \in (0,1)$ is the so-called discount factor and $s_{t+1} \sim p_{a_t}(s_t,\cdot)$, $t\ge 0$.
 We call $J_u(s)$ the value of state $s$ under SDP $u$, while $J_u$ (as a map from $S$ to the reals)
-is called the value function underlying policy $u$.
-The \emph{optimal policy} $u^*$ is one that in each state $s\in S$ achieves the best possible total expected discounted reward from that state. That is, $J^{u^*}(s) = J^*(s) \eqdef \max_{u\in U} J_u(s)$
-where $U$ is the set of all SDPs and $J^*$ is coined the \emph{optimal value function}.%
-\footnote{In our case an optimal (SDP) $u^*$ exists and is well defined \cite{BertB}.}, 
-Any optimal policy $u^*$ and value function $J^*$ obey the Bellman equation (BE): for all $ s \in S$,
+is called the value function underlying policy $u$. The value functions $J_u$ is an elements of $\R^S$. In what follows it will be useful for us to treat it as an $n$-dimensional vector, i.e., an element of $\R^n$, effectively identifying $\R^S$ with $\R^n$ in the natural way. Similarly we identify $\R^{nd}$ with $\R^{S\times A}$, where $d=|A|$.\par
+\textbf{Optimality and the Bellman Equation:} The \emph{optimal policy} $u^*$ is one that in each state $s\in S$ achieves the best possible total expected discounted reward from that state. That is, $J_{u^*}(s) = J^*(s) \eqdef \us{\max}{u\in U} J_u(s)$
+where $U$ is the set of all SDPs and $J^*$ is coined the \emph{optimal value function}.
+\footnote{In our case an optimal (SDP) $u^*$ exists and is well defined \cite{BertB}.}
+Any optimal policy $u^*$ and value function $J^*$ obey the Bellman equation (BE) which states that for all $ s \in S$,
 \begin{subequations}\label{bell}
 \begin{align}
-\label{bellval}J^*(s)&=\max_{ a\in A}\big(g_a(s)+\alpha \sum_{s'}p_a(s,s')J^*(s')\big),\\
-\label{bellpol}u^*(s)&= \underset{a\in A}{\argmax}\big(g_a(s)+\alpha \sum_{s'}p_a(s,s')J^*(s')\big)\,.
+\label{bellval}J^*(s)&=\max_{ a\in A}\big(g_a(s)+\alpha \us{\sum}{s'\in S}p_a(s,s')J^*(s')\big),~\text{and}\\
+\label{bellpol}u^*(s)&= \underset{a\in A}{\argmax}\big(g_a(s)+\alpha \us{\sum}{s'\in S}p_a(s,s')J^*(s')\big),\,.
 \end{align}
 \end{subequations}
-Once $J^*$ is computed, $u^*$ can be obtained via \eqref{bellpol}
-for each state relatively cheaply (e.g., having the ability to sample from the next-state distribution at
-a given state-action pair).
-Thus computing the value function is at the heart of most solution methods to MDP.\par
-%\subsection{Linear Programming}
-As it is well known, the optimal value function $J^*$ can be obtained by solving the following linear program:
-\begin{align}\label{mdplp}
-\begin{split}
-\min_{J\in \R^n}\, &c^\top J\,\,\text{s.t.}\\
-%\mb
-J(s)&\geq g_a(s)+\alpha\sum_{s'}p_a(s,s')J(s'),\,\,
-\forall (s,a)\in S\times A,
-\end{split}
-\end{align}
-where $c$ is \emph{any} vector of $\R^n$ such that $c(s)>0, \forall s \in S$. Without loss of generality, we may and will assume in what follows that $\sum_{s\in S}c(s)=1$, i.e., $c$ is a probability distribution over $S$.\par
-%\subsection{Notation}
-The value functions $J^u$ or $J^*$ are elements of $\R^S$.
-In what follows it will be useful for us to treat these as $n$-dimensional vectors, i.e., elements of $\R^n$, effectively identifying $\R^S$ with $\R^S$ in the natural way. Similarly we identify $\R^{nd}$ with $\R^{S\times A}$.
-The following definitions will be useful later:
-%The Bellman operator $T$ is defined using the model parameters of the MDP as follows:
-\begin{definition}Define
+where ties in \eqref{bellpol} are resolved arbitrarily.\par
+We now present some definition which will be useful later:
+\begin{definition}\label{notations}
 \begin{comment}
 Let $c,\rho,\chi:S \to \R_+$ be positive valued functions, where $\R_+$ denotes the set of strictly positive reals. Then for $J\in \R^n$, $a\in A$ and $s\in S$,
 define
 \end{comment}
 \begin{enumerate}[(i)]
-\item The Bellman operator $T\colon \R^n \ra \R^n$ as $(TJ)(s)=\max_{a \in A}\big(g_a(s)+\alpha \sum_{s'} p_a(s,s')J(s')\big).
+\item The Bellman operator $T\colon \R^n \ra \R^n$ is given by $(TJ)(s)=\max_{a \in A}\big(g_a(s)+\alpha \sum_{s'} p_a(s,s')J(s')\big).
 $
-\item \label{bellactval} The Bellman operator (of action values) $H: \R^n \to \R^{nd}$ for state-action values as $HJ=[ H_1 J,\cdots,H_d J]^\top\in \R^{nd},$ where $(H_a J)(s)= g_a(s)+\alpha \sum_{s'}p_a(s,s') J(s')$.
-\begin{comment}
-\item
-||J||_{\infty,\rho}=\max_{s \in S} \frac{|J(s)|}{\rho(s)}$.
-\item The discounted maximal inflation of $\chi$ due to $P = (p_a)_{a\in A}$ as $\beta_{\chi}=\max_{s \in S} \frac{\underset{a \in A}{\max}\big(\alpha\sum_{s'}p_a(s,s')\chi(s')\big)}{\chi(s)}$.
-\item The function $\chi:S\to\R_+$ above to be a \emph{Lyapunov} function for $P = (p_a)_{a\in A}$ if $\beta_{\chi}<1$.
-\end{comment}
-\item $E$ to be the $nd\times n$ matrix given by $E=[I,\ldots,I]^\top$, i.e., $E$ is obtained by stacking $d$ identical $n\times n$ identity matrices one over the other.
-\item A policy $u_J$ is said to be greedy with respect to (w.r.t.) $J\in \R^n$ if for any $s\in S$,
+\item \label{bellactval} The Bellman operator (of action values) $H: \R^n \to \R^{nd}$ for state-action values is given by $HJ=[ H_1 J,\cdots,H_d J]^\top\in \R^{nd},$ where $(H_a J)(s)= g_a(s)+\alpha \sum_{s'}p_a(s,s') J(s')$.
+\item\label{emat} The $nd\times n$ matrix $E$ is given by $E=[I,\ldots,I]^\top$, i.e., $E$ is obtained by stacking $d$ identical $n\times n$ identity matrices one over the other.
+\item\label{greedy} A policy $u_J$ is said to be greedy with respect to (w.r.t.) $J\in \R^n$ if for any $s\in S$,
 %some function $\tj:S \to \R$
-\begin{align*}u_J(s)\eqdef\underset{a\in A}{\argmax}\big(g_a(s)+\alpha \sum_{s'}p_a(s,s')J(s')\big).\end{align*}
-\item The weighted $L_1$-norms $\norm{\cdot}_{1,c}$ with respect to a probability distribution $c$ as $
+\begin{align*} u_J(s)\eqdef\underset{a\in A}{\argmax}\big(g_a(s)+\alpha \us{\sum}{s'\in S} p_a(s,s')J(s')\big).\end{align*}
+\item\label{norms} The weighted $L_1$-norms $\norm{\cdot}_{1,c}$ with respect to a probability distribution $c$ is given by $
 ||J||_{1,c}=\sum_{s \in S} c(s)|J(s)|$.
 \item The (un)weighted $L_\infty$-norms $\norm{\cdot}_{1,\infty}$
 and $\norm{\cdot}_{\infty,\rho}$, $\parallel J\parallel_{\infty}=\max_{s\in S}|J(s)|$ and $||J||_{\infty,\rho}=\max_{s \in S} \frac{|J(s)|}{\rho(s)}$.
-\item $J_1\leq J_2$, when $J_1(s)\leq J_2(s),~\forall s\in S$.
-\item $\one\in \R^n$ to be the vector whose all coordinates are $1$.
+\item For $J_1, J_2\in \R^n$ we write $J_1\leq J_2$ when $J_1(s)\leq J_2(s),~\forall s\in S$.
+\item We define $\one\in \R^n$ to be the vector whose coordinates are all equal to $1$.
 \end{enumerate}
 \end{definition}
+We would like to point out that from \Cref{notations}, it follows that for any $J\in \R^n$ the condition $J\geq TJ$ can be rephrased as $EJ\geq HJ$.
+\subsection{Dynamic Programming: Objective and Methods}
+Once a given sequential decision making is cast in the MDP framework, it remains for us to still compute the optimal policy $u^*$. The idea behind Dynamic Programming (DP) methods is to use the BE \eqref{bellval} to first compute $J^*$, and then a near-optimal action $u^*$ can be obtained via \eqref{bellpol}
+for each state relatively cheaply even for large state-spaces (e.g., having the ability to sample from the next-state distribution at
+a given state-action pair). Thus computing $J^*$ is at the heart DP methods \cite{BertB} such as value-, or policy-iteration and linear programming (LP) \eqref{mdplp} which can be used in practice when the MDP has a tractable number of states. However, when the MDP has a large number of states, using DP methods to obtain $J^*$ is tedious, since they involve computations in variables that are of the order of the number of states.\par
+Approximate dynamic programming (ADP) methods are based on DP methods, but employ (value) function approximation to ease the computational overhead encountered in MDPs with a large number of states. In particular, linear function approximation (LFA) has been used widely, wherein, $J^*$ is approximated by $J^*\approx\tj =\Phi \tr$, where $\Phi$ is an $n\times k$ feature matrix and $\tr\in \R^n$ is a weight vector (to be computed). Thus the solution is searched in the subspace spanned by the column vectors of $\Phi$. The linear representation helps in two ways. Firstly, given any state $s$, its approximate value can be recovered as $\tj(s)=\phi(s) \tr$ (where $\phi(s)$ is the $s^{th}$ row of $\Phi$). Secondly, a greedy policy $\tilde{u}=u_{\tj}$ (see \Cref{notations}-\eqref{greedy}) can be found using the approximate value function. Note that all computations are $O(k)$ which is independent of the number of states.\par
+It is natural to expect that approximations lead to errors and it is important to quantify the errors. For a given ADP method, theoretical performance analysis involves  bounding the error terms $||J^*-\tilde{J}||$  and $\norm{J^*-J_{\tu}}$ which denote the error in approximating the value function, and performance loss due to following policy $\tu$ respectively (where $\norm{\cdot}$ is an appropriate norm). Further, in most cases the error terms reveal some structure that can offer insights and act as guide to the designer of the ADP method (for example the choice of $\Phi$). The focus of this paper is to present the error analysis for generalized reduced linear programming (GRLP), a new ADP formulation which we introduce in \Cref{sec:grlp}.

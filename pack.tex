@@ -7,7 +7,8 @@
 \newcommand{\todoc}[2][]{\todo[color=red!20!white,#1]{Cs: #2}}
 \newcommand{\todoch}[2][]{\todo[color=blue!20!white,#1]{C: #2}}
 \newcommand{\todos}[2][]{\todo[inline,color=blue!20!white,#1]{S: #2}}
-
+%\usepackage{enumitem}
+\usepackage[fleqn]{amsmath}
 \usepackage{mathtools}
 \usepackage{graphicx}
 \usepackage{times}
@@ -158,7 +159,7 @@
 \def\A{\mathcal{A}}
 
 \newcommand{\ith}[2][th]{$#2^{\text{#1}}$}
-
+\newcommand{\us}[2]{\underset{#2}{#1}~}
 \newcounter{subequation}[equation]
 \newcommand{\thesubequationonly}{\alph{subequation}}
 \renewcommand{\thesubequation}{\text{\theequation(\thesubequationonly)}}

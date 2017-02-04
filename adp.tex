@@ -1,5 +1,20 @@
 %!TEX root =  autocontgrlp.tex
-\section{Approximate Dynamic Programming}
+\section{Approximate Dynamic Programming: Objectives and Methods}
+\FloatBarrier
+\begin{table}[H]
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{|c|c|c|}\hline
+ADP Method	&Empirical	&Theoretical\\\hline
+Projected Bellman &\ding{51}    &\ding{53}-Policy Chattering\\
+Equation	&	&\\\hline
+ALP		&\ding{53}-Large number of Constraints &\ding{51}\\\hline
+RLP		&\ding{51} &\ding{53}-  Only under\\
+&&ideal assumptions\\\hline
+\end{tabular}
+}
+\end{table}
+
+\begin{comment}
 In practical problems, often the states are best described as multi-dimensional tuples.
 In this context, the term \emph{curse-of-dimensionality} refers to the fact that the number of states
 	grows exponentially as a function of the number of dimensions
@@ -100,3 +115,4 @@ Bertsimas and Caramanis' ``adaptability via sampling'',
 Guestrin and Hauskrecht's ``Solving factored MDPs with continuous and discrete variables'' amongst others.}
 
 In the next section, we discuss the approximate linear programming (ALP) formulation, the basic results and present prior results in literature as well as motivate the problem that we address in this paper. 
+\end{comment}
