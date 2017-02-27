@@ -17,7 +17,7 @@ Any optimal policy $u^*$ and value function $J^*$ obey the Bellman equation (BE)
 \begin{subequations}\label{bell}
 \begin{align}
 \label{bellval}J^*(s)&=\max_{ a\in A}\big(g_a(s)+\alpha \us{\sum}{s'\in S}p_a(s,s')J^*(s')\big),~\text{and}\\
-\label{bellpol}u^*(s)&= \underset{a\in A}{\argmax}\big(g_a(s)+\alpha \us{\sum}{s'\in S}p_a(s,s')J^*(s')\big),\,.
+\label{bellpol}u^*(s)&\in \underset{a\in A}{\argmax}\big(g_a(s)+\alpha \us{\sum}{s'\in S}p_a(s,s')J^*(s')\big),\,.
 \end{align}
 \end{subequations}
 where ties in \eqref{bellpol} are resolved arbitrarily.\par
@@ -28,17 +28,17 @@ Let $c,\rho,\chi:S \to \R_+$ be positive valued functions, where $\R_+$ denotes 
 define
 \end{comment}
 \begin{enumerate}[(i)]
-\item The Bellman operator $T\colon \R^n \ra \R^n$ is given by $(TJ)(s)=\max_{a \in A}\big(g_a(s)+\alpha \sum_{s'} p_a(s,s')J(s')\big).
+\item\label{bellopval} The Bellman operator $T\colon \R^n \ra \R^n$ is given by $(TJ)(s)=\max_{a \in A}\big(g_a(s)+\alpha \sum_{s'} p_a(s,s')J(s')\big).
 $
 \item \label{bellactval} The Bellman operator (of action values) $H: \R^n \to \R^{nd}$ for state-action values is given by $HJ=[ H_1 J,\cdots,H_d J]^\top\in \R^{nd},$ where $(H_a J)(s)= g_a(s)+\alpha \sum_{s'}p_a(s,s') J(s')$.
 \item\label{emat} The $nd\times n$ matrix $E$ is given by $E=[I,\ldots,I]^\top$, i.e., $E$ is obtained by stacking $d$ identical $n\times n$ identity matrices one over the other.
 \item\label{greedy} A policy $u_J$ is said to be greedy with respect to (w.r.t.) $J\in \R^n$ if for any $s\in S$,
 %some function $\tj:S \to \R$
-\begin{align*} u_J(s)\eqdef\underset{a\in A}{\argmax}\big(g_a(s)+\alpha \us{\sum}{s'\in S} p_a(s,s')J(s')\big).\end{align*}
+\begin{align*} u_J(s)\in\underset{a\in A}{\argmax}\big(g_a(s)+\alpha \us{\sum}{s'\in S} p_a(s,s')J(s')\big).\end{align*}
 \item\label{norms} The weighted $L_1$-norms $\norm{\cdot}_{1,c}$ with respect to a probability distribution $c$ is given by $
 ||J||_{1,c}=\sum_{s \in S} c(s)|J(s)|$.
 \item The (un)weighted $L_\infty$-norms $\norm{\cdot}_{1,\infty}$
-and $\norm{\cdot}_{\infty,\rho}$, $\parallel J\parallel_{\infty}=\max_{s\in S}|J(s)|$ and $||J||_{\infty,\rho}=\max_{s \in S} \frac{|J(s)|}{\rho(s)}$.
+and $\norm{\cdot}_{\infty,\rho}$, $\norm{J}_{\infty}=\max_{s\in S}|J(s)|$ and $\norm{J}_{\infty,\rho}=\max_{s \in S} \frac{|J(s)|}{\rho(s)}$.
 \item For $J_1, J_2\in \R^n$ we write $J_1\leq J_2$ when $J_1(s)\leq J_2(s),~\forall s\in S$.
 \item We define $\one\in \R^n$ to be the vector whose coordinates are all equal to $1$.
 \end{enumerate}

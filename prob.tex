@@ -1,32 +1,32 @@
 \section{Linear Programming for MDP}
-In this section, we review relevant results \cite{BertB,ALP,CS} in the linear programming approach to MDPs. Throughout the rest of the paper, we let $c>0\in \R^n$ to denote a probability distribution over the state space S.\par
+In this section, we review relevant results \cite{BertB,ALP,CS} in the linear programming approach to MDPs. Throughout the rest of the paper, we let $c\in (0,1)^n$ to denote a probability distribution with strictly positive components.
 \begin{comment}
 %first present linear programming (LP), approximate linear programming (ALP) and reduced linear programming (RLP) respectively. The LP is an exact method in that it computes $J^*$ and the other two methods (ALP and RLP) are approximate methods that are based on introducing LFA in LP. We then discuss prior literature that have analyzed the approximation errors in ALP and RLP. Finally, we present the open question that we wish to understand in this paper.
 \end{comment}
-\textbf{Linear Programming (LP)}: It is well known, the optimal value function $J^*$ can be obtained by solving the following linear program:
+\textbf{Linear Programming (LP)}: As it is well known \cite{manne}, the optimal value function $J^*$ can be obtained by solving the following linear program:
 \begin{align}\label{mdplp}
 &\text{LP:~}\min_{J\in \R^n}\,c^\top J\,\,\\
 %\mb
 &J(s)\geq g_a(s)+\alpha\sum_{s'}p_a(s,s')J(s'),\,\,
-\forall (s,a)\in S\times A,\nn
+\forall (s,a)\in S\times A.\nn
 \end{align}
 \textbf{Approximate Linear Programming (ALP)} is obtained by making use of LFA in the LP, i.e., by introducing the new variables $r\in \R^k$ and adding the extra constraint $J=\Phi r$ in \eqref{mdplp} with $\Phi \in \R^{n\times k}$ \citep{SchSei85}. By substitution, this leads to
 \begin{flalign}\label{alp}
 \begin{split}
 \text{ALP:}& \min_{r\in \R^k}\, c^\top \Phi r\\
-& \Phi r\geq T \Phi r,
+& E\Phi r\geq H \Phi r,
 \end{split}
 \end{flalign}
-where $J\geq TJ$ is a shorthand for the $nd$ constraints in \eqref{mdplp}. Note that, for $k=n$ and $\Phi=I_{n\times n}$, the ALP is same as the LP. In what follows, we use the notation $\tj=\Phi \tr$ and $\tu=u_{\tj}$ where $\tr\in\R^k$ denotes an arbitrary solution to ALP in \eqref{alp}.\par
+where $E\Phi r\geq H \Phi r$ is a shorthand for the $nd$ constraints in \eqref{mdplp} which uses the definition of $H$ from \Cref{notations}-\eqref{bellactval}. Alternatively, we also use the notation $\Phi r \geq T\Phi r$, instead of $E\Phi r\geq H \Phi r$ using the definition of $T$ from \Cref{notations}-\eqref{bellopval}. Note that, for $k=n$ and $\Phi=I_{n\times n}$, the ALP is same as the LP. In what follows, we use the notation $\tj=\Phi \tr$ and $\tu=u_{\tj}$ where $\tr\in\R^k$ denotes an arbitrary solution to ALP in \eqref{alp}.\par
 A detailed theoretical analysis of ALP can be found in \cite{ALP}. However, we restate (from \cite{ALP}) a useful preliminary\footnote{The improved error bounds in \cite{ALP} as well as in \Cref{sec:improv} of this paper are in a weighted $L_\infty$ norm (see \Cref{notations}-\eqref{norms}).} performance bound for ALP as follows:
 \begin{theorem}[Error Bound for ALP]\label{alpvanilla}
 Let $\one\in \R^k$ belong to the column span of $\Phi$ and let $\mu_u\eqdef (1-\alpha)c^\top\top(I-\alpha P_u)^{-1}$ be a probability distribution over $S$ induced by a policy $u$. Then it follows that
 \begin{enumerate}
-\item\label{alppe} The prediction error is bounded as $||J^*-\tj||_{1,c}\leq \frac{2}{1-\alpha}\min_{r}||J^*-\Phi r||_\infty$.
-\item\label{alpce} The control error is bounded as $||J^*-J_{\tu}||_{1,c}\leq \frac{2}{1-\alpha}||J^*-\tj||_{1,\mu_{\tu}}$.
+\item\label{alppe} The prediction error is bounded as $\norm{J^*-\tj}_{1,c}\leq \frac{2}{1-\alpha}\min_{r}\norm{J^*-\Phi r}_\infty$.
+\item\label{alpce} The control error is bounded as $\norm{J^*-J_{\tu}}_{1,c}\leq \frac{2}{1-\alpha}\norm{J^*-\tj}_{1,\mu_{\tu}}$.
 \end{enumerate}
 \end{theorem}
-The gist of \Cref{alpvanilla}-\eqref{alppe} is that the prediction error $||J^*-\tj||_{1,c}$ of ALP is worse utmost by a constant factor than the best possible error that can be achieved using the span of $\Phi$. Further from \Cref{alpvanilla}-\eqref{alpce} the control error is worse utmost by a constant factor than the prediction error.\par
+The gist of \Cref{alpvanilla}-\eqref{alppe} is that the prediction error $\norm{J^*-\tj}_{1,c}$ of ALP is worse utmost by a constant factor than the best possible error that can be achieved using the span of $\Phi$. Further from \Cref{alpvanilla}-\eqref{alpce} the control error is worse utmost by a constant factor than the prediction error.\par
 \textbf{Reduced Linear Programming (RLP)} is formulated by retaining only $m$ out of the $nd$ ($m<<nd$) constraints of ALP. RLP is easier to solve compared to ALP due to the reduced number of constraints.
 \begin{align}\label{rlp}
 \begin{split}
@@ -41,7 +41,7 @@ We now state a useful result from \cite{CS} that characterizes the performance a
 \begin{theorem}[Error Bound for RLP]\label{rlpt}
 Let $\mu_{u^*}\eqdef(1-\alpha)c^\top (I-\alpha P_{u^*})^{-1}$ be a probability distribution (of discounted number of visits) over the states $S$. Define $\psi_{u^*}$ to be the distribution over the state-action pairs such that $\psi(s,a)\eqdef \frac{\mu_{u^*}}{d}$ and define $\theta\eqdef\frac{1+\alpha}{2 c^\top J^*}\underset{r\in \N}{\sup}\parallel J^*-\Phi r \parallel_\infty$. Then for a given $\epsilon>0$ and $\delta>0$ it holds with probability greater than $1-\delta$ that
 \begin{align*}
-||J^*-\Phi\tilde{r}_{RLP}||_{1,c}\leq ||J^*-\Phi\tilde{r}||_{1,c}+\epsilon ||J^*||_{1,c}
+\norm{J^*-\Phi\tilde{r}_{RLP}}_{1,c}\leq \norm{J^*-\Phi\tilde{r}}_{1,c}+\epsilon \norm{J^*}_{1,c}
 \end{align*}
 for all $m\geq \frac{16d\theta}{(1-\alpha)\epsilon}\big(k\ln\frac{48d\theta}{(1-\alpha)\epsilon}+\ln \frac{2}{\delta}\big)$.
 \end{theorem}

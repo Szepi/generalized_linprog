@@ -14,8 +14,9 @@ where $J\geq TJ$ is a shorthand for the $nd$ constraints in \eqref{mdplp} and $\
 The following is a preliminary error bound for the ALP from \cite{ALP}:
 \begin{theorem}[Error Bound for ALP]
 \begin{align*}
-\norm{J^*-\tj}_{1,c}\leq \frac{2}{1-\alpha}\min_{r}\norm{J^*-\Phi r}_\infty
+||J^*-\tj||_{1,c}\leq \frac{2}{1-\alpha}\min_{r}||J^*-\Phi r||_\infty
 \end{align*}
+
 \end{theorem}
 %For a more detailed treatment of the ALP and sophisticated bounds, the reader is referred to \cite{ALP}.
 %\subsection{Approximating the Constraints}
@@ -24,7 +25,7 @@ The most important work in the direction of constraint reduction is constraint s
 \begin{theorem}[Error Bound for RLP]
 Let $\mu_{u^*}\eqdef(1-\alpha)c^\top (I-\alpha P_{u^*})^{-1}$ be a probability distribution (of discounted number of visits) over the states $S$. Define $\psi_{u^*}$ to be the distribution amongst state-action pairs such that $\psi(s,a)\eqdef \frac{\mu_{u^*}}{d}$ and define $\theta\eqdef=\frac{1+\alpha}{2 c^\top J^*}\underset_{r\in \N}{\sup}\parallelJ^*-\Phi r \parallel_\infty$. Then for a given $\epsilon>0$ and $\delta>0$ it holds that
 \begin{align*}
-\norm{J^*-\Phi\tilde{r}_{RLP}}_{1,c}\leq \norm{J^*-\Phi\tilde{r}}_{1,c}+\epsilon \norm{J^*}_{1,c}
+||J^*-\Phi\tilde{r}_{RLP}||_{1,c}\leq ||J^*-\Phi\tilde{r}||_{1,c}+\epsilon ||J^*||_{1,c}
 \end{align*}
 for all $m\geq \frac{16d\theta}{(1-\alpha)\epsilon}\big(k\ln\frac{48d\theta}{(1-\alpha)\epsilon}+\ln \frac{2}{\delta}\big)$.
 \end{theorem}
@@ -63,10 +64,10 @@ the optimal Lagrange multipliers are the discounted number of visits to the ``st
 &= \big(c^\top(I+\alpha P_{u^*}+\alpha^2 P_{u^*}^2+\ldots)\big)(s),\nn\\
 \lambda^*(s,a)&=0, \qquad \text{for all } a \neq u^*(s),\nn
 \end{align}
-where $P_{u^*}$ is the probability transition matrix under $u^*$ ($P_{u^*}(s,s') = P_{u^*(s)}(s,s')$, $s,s'\in S$) \cite{dolgov}. Even though we might not have the optimal policy $u^*$ in practice, the fact that $\lambda^*$ is a probability distribution and that it is a linear combination of $\{P_{u^*},P^2_{u^*},\ldots\}$ hints at the kind of features that might be useful for constructing the $W$ matrix.
+where $P_{u^*}$ is the probability transition matrix under $u^*$ ($P_{u^*}(s,s') = P_{u^*(s)}(s,s')$, $s,s'\in S$) \cite{dolgov}. Even though we might not have the optimal policy $u^*$ in practice, the fact that $\lambda^*$ is a probability distribution and that it is a linear combination of $\{P_{u^*},P^2_{u^*},\ldots\}$ hints at the kind of features that might be useful for the $W$ matrix.
 \FloatBarrier
 \input{cartoon}
-\Cref{cartoon} which shows the solutions to the LP, ALP and GRLP respectively. The error in the ALP solution has already been studied in \cite{ALP}. Our objective is to study the extra source of error due to constraint approximation. We now define two projection operators that are central to our error analysis and in them we assume that the set $\N'\subset \R^k$ is such that $\N' = \N + t \one$ for any $t\in \R$.
+\Cref{cartoon} which shows the solutions to the LP, ALP and GRLP respectively. The error in the ALP solution has already been studied in \cite{ALP}. Our objective is to study the extra source of error due to constraint approximation. We now define two projection operators which are central to our error analysis and in them we assume that the set $\N'\subset \R^k$ is such that $\N' = \N + t \one$ for any $t\in \R$.
 \section{Main Results}
 In this section we present the main results of this paper in \Cref{cmt2} (we state improved bounds in \Cref{sec:improv}). Our bounds are expressed in terms of two novel contractions operators which we define in \Cref{lubpop,alubpop}.
 %The least upper bound (LUB) projection operator $\Gamma \colon \R^n \ra\R^n$ is defined below, see \eqref{gamdef}.
@@ -79,7 +80,8 @@ Given $J\in \R^n$ and the nonnegative valued vector $c\in \R^n_+$, define $r_{c,
 \text{s.t.} \mb \Phi r\geq  TJ.
 \end{split}
 \end{align}
-For $J\in \R^n$, $\Gamma J$, the \emph{least upper} (LU) projection of $J$ is defined as
+Then, for $J\in \R^n$, $\Gamma J$,
+the \emph{ least upper bound projection} of $J$ is defined as
 \begin{align}\label{gamdef}
 (\Gamma J)(i)\eqdef(\Phi r_{e_i,J})(i),\quad i=1,\ldots,n\,.
 \end{align}
@@ -91,7 +93,7 @@ Given $J\in \R^n$ and the nonnegative valued vector $c\in \R^n_+$, define $r'_{c
 \underset{r\in \N'}{\min}& \,\mb c^\top \Phi r\,\mb
 \text{s.t.} \,\,\, W^\top E \Phi r\geq W^\top HJ.
 \end{align}
-The \emph{approximate least upper} (ALU) projection operator
+Then, the \emph{approximate least upper bound (ALUB) projection operator}
 $\hg \colon \R^n \ra \R^n$ is defined as
 \begin{align}\label{tgamdef}
 (\hg J)(i)\eqdef(\Phi r'_{e_i,J})(i), \mb i=1,\ldots,n\,, J\in \R^n\,.
@@ -104,7 +106,7 @@ To understand the meaning of $\Gamma$ (and $\hg$) define
 \end{align}
 where $J\in \R^n$.
 Disregarding the constraint $r\in \N$,
-$\F_J$ contains all vectors in the span of $\Phi$ that upper bound $TJ$. Further, since $(\Gamma J)(i) = \min\{ V(i) \,:\, V\in \F_J \}$, it also follows that $ V\ge \Gamma J $ holds for any $V\in \F_J$. Also $\Gamma J\geq T J$.
+$\F_J$ contains vectors in the span of $\Phi$ that upper bound $TJ$. Further, since $(\Gamma J)(i) = \min\{ V(i) \,:\, V\in \F_J \}$, it also follows that $ V\ge \Gamma J $ holds for any $V\in \F_J$.
 \end{remark}
 \subsection{Error Bounds}
 \begin{theorem}[Error Bound for GRLP]
@@ -112,16 +114,16 @@ $\F_J$ contains all vectors in the span of $\Phi$ that upper bound $TJ$. Further
 Let $\one\in\R^k$ be in the column span of $\Phi$, then it holds that
 \begin{enumerate}
 \item The prediction error is bound as\\
-$\norm{J^*-\hj}_{1,c}
-\leq\frac{1}{1-\alpha}(6~\us{\min}{r\in \R^k}\norm{J^*-\Phi r}_{\infty}
-+2\norm{\Gamma J^*-\hg J^*}_{\infty})$.
+$||J^*-\hj||_{1,c}
+\leq\frac{1}{1-\alpha}(6~\us{\min}{r\in \R^k}||J^*-\Phi r||_{\infty}
++2||\Gamma J^*-\hg J^*||_{\infty})$.
 \item The control error is bound as\\
 $\norm{J^* - J_{\hu}}_{1,c}
-\leq 2\left(\frac{1}{(1-\alpha)^2}\right)\, \big( 2~\us{\min}{r\in \R^k} \norm{J^*-\Phi r}_{\infty}
-+\norm{\Gamma J^*-\hg J^*}_{\infty}+\norm{\hj-\hg\hj}_{\infty}\big)$.
+\leq 2\left(\frac{1}{(1-\alpha)^2}\right)\, \big( 2~\us{\min}{r\in \R^k} ||J^*-\Phi r||_{\infty}
++||\Gamma J^*-\hg J^*||_{\infty}+||\hj-\hg\hj||_{\infty}\big)$.
 \end{enumerate}
 \end{theorem}
-\textbf{On Prediction Error:} The first factor in the right hand side of the prediction error in \Cref{cmt2} is related to the best possible approximation that can be achieved with the chosen feature matrix $\Phi$. This term is an carry over of the upper bound in ALP formulation as shown in \Cref{alpvanilla}. The second factor in the right hand side of the prediction error is related to constraint approximation and is completely defined in terms of $\Phi$, $W$ and $T$, and does not require knowledge of stationary distribution of the optimal policy.\par
+\textbf{On Prediction Error:}The first factor in the right hand side of the prediction error in \Cref{cmt2} is related to the best possible approximation that can be achieved with the chosen feature matrix $\Phi$. This term is inherent to the ALP formulation as shown in \Cref{alpvanilla}. The second factor in the right hand side of the prediction error is related to constraint approximation and is completely defined in terms of $\Phi$, $W$ and $T$, and does not require knowledge of stationary distribution of the optimal policy. It makes intuitive sense since given that $\Phi$ approximates $J^*$, it is enough for $W$ to depend on $\Phi$ and $T$ without any additional requirements.\par
 \textbf{On Control Error:} The first two terms are quite similar to those in the bound for prediction error. The third term occurs due to the fact that $\Phi \geq T\Phi r$ that holds in the case of ALP does not hold in the case of GRLP.\par
 \begin{comment}
 \begin{theorem}[Control Error Bound in $\norm{\cdot}_{\infty}$]
@@ -130,20 +132,21 @@ Let $\hu$ be the greedy policy with respect to the solution $\hj$ of the GRLP an
 % Let $r^*$ be as in Theorem~\ref{mt2mn}, then
 Then,
 \begin{align}\label{polthebnd}
+%||J_{\hu}-\hj||_{1,c}
 \norm{J^* - J_{\hu}}_{1,c}
-&\leq 2\left(\frac{c^\top \psi}{(1-\beta_{\psi})^2}\right)\, \big( 2\norm{J^*-\Phi r^*}_{\infty}
+&\leq 2\left(\frac{c^\top \psi}{(1-\beta_{\psi})^2}\right)\, \big( 2||J^*-\Phi r^*||_{\infty}
 \nn\\&
-+norm{\Gamma J^*-\hg J^*}_{\infty}+\norm{\hj-\hg\hj}_{\infty}\big).
++||\Gamma J^*-\hg J^*||_{\infty}+||\hj-\hg\hj||_{\infty}\big).
 \end{align}
 \end{theorem}
 \end{comment}
-\begin{corollary}[Constraint Sampling]\label{st}
-$W\in \{0,1\}^{nd\times m}$Let $s\in S$ be a state whose constraint is selected by $W$ (i.e., for some $i$ and all $(s',a)\in S\times A$,
+\begin{theorem}[Constraint Sampling]\label{st}
+Let $s\in S$ be a state whose constraint is selected by $W$ (i.e., for some $i$ and all $(s',a)\in S\times A$,
 $W_{s'a,i}=\delta_{s=s'}$.
 Then
 \begin{align*}%\label{sampexp}
 |\Gamma J^*(s)-\hg J^*(s)|<|\Gamma J^*(s)-J^*(s)|.
 \end{align*}
-\end{corollary}
-It is important to note that \Cref{rlpt} holds only in high probability and is valid only under idealized assumption of knowing the optimal policy $u^*$, while \Cref{cmt2} does not have these limitations.
-In addition, the error $|\Gamma J^*(s) -\hg J^*(s)|$ (in \Cref{st} ) due to constraint approximation is less than the original projection error $|\Gamma J^*(s)-J^*(s)|$ due to function approximation. This means that for the RLP to perform well it is important to retain the constraints corresponding to those states for which the linear function approximation via $\Phi$ is known to perform well.
+\end{theorem}
+It is important to note that \Cref{rlpt} holds only in high probability and is valid only under idealized assumption of knowing the optimal policy $u^*$ and \Cref{cmt2} does not have these limitations.
+In addition, from \Cref{st}, we know that the additional error $|\Gamma J^*(s) -\hg J^*(s)|$ due to constraint approximation is less than the original projection error $|\Gamma J^*(s)-J^*(s)|$ due to function approximation. This means that for the RLP to perform well it is enough to retain those states for which the linear function approximation via $\Phi$ is known to perform well.

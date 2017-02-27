@@ -9,7 +9,7 @@ For $J_1,J_2\in \R^n$, we write $J_1\le J_2$ if $J_1(s)\le J_2(s)$ holds for all
 We use $\one \in \R^n$ to denote a vector with all entries $1$.
 The maximum norm $\norm{\cdot}_{\infty}$ is defined by $ \norm{v}_{\infty} = \max_{s\in S} |v(s)|$.
 \end{comment}
-\begin{lemma}\label{tprop}
+\begin{lemma}\label{tprop} The following hold:
 \begin{enumerate}[(i)]
 \item \label{monotone}$T$ is a monotone map, i.e., given $J_1,J_2 \in \R^n$ such that $J_1\leq J_2$, we have $T J_1\leq T J_2$.
 \item \label{shift}
@@ -18,7 +18,7 @@ Given $J\in \R^n$ and $t \in \R$, we have $T(J+t\one)=TJ+\alpha t\one$.
 If $T: \R^n \to \R^n$ is any operator that is monotonous and satisfies~\eqref{shift} then
 $T$ is a $\max$-norm contraction operator with contraction factor $\alpha \in (0,1)$, i.e., given $J_1, J_2 \in \R^n$,
 $
-||TJ_1-TJ_2||_\infty\leq \alpha ||J_1-J_2||_\infty.
+\norm{TJ_1-TJ_2}_\infty\leq \alpha \norm{J_1-J_2}_\infty.
 $
 \item \label{uniquesol}
 $J^*$ is a unique fixed point of $T$, i.e., $J^*=TJ^*$.
@@ -31,11 +31,9 @@ Though \cref{tprop} are stated for the Bellman operator $T$, the results also ho
 We now present the analysis to derive the improved bounds where the idea is to show that the novel projection operators ($\Gamma/\hg$) are contraction maps. To this end, we go through steps similar to \Cref{tprop}-\eqref{monotone},~\eqref{shift} and ~\eqref{maxnorm}. Much the results that ensue are based on `Lyapunov' analysis where the idea is to replace the constant function $\one$ by a certain Lyapunov function (see \Cref{def:lyap}) and the $\norm{\cdot}_{\infty}$ by a weighted max-norm (see \Cref{notations}-\eqref{norms}).
 \subsection{Analysis using Lyapunov Functions}
 \begin{definition}\label{def:lyap}
-Let $c,\rho,\chi:S \to \R_+$ be positive valued functions, where $\R_+$ denotes the set of strictly positive reals. Then for $J\in \R^n$, $a\in A$ and $s\in S$, define
-\begin{enumerate}[(i)]
-\item The discounted maximal inflation of $\chi$ due to $P = (p_a)_{a\in A}$ as $\beta_{\chi}=\max_{s \in S} \frac{\underset{a \in A}{\max}\big(\alpha\sum_{s'}p_a(s,s')\chi(s')\big)}{\chi(s)}$.
-\item The function $\chi:S\to\R_+$ above to be a \emph{Lyapunov} function for $P = (p_a)_{a\in A}$ if $\beta_{\chi}<1$.
-\end{enumerate}
+Let $c,\rho,\chi:S \to \R_+$ be positive-valued functions. Then for $J\in \R^n$, $a\in A$ and $s\in S$, define
+the discounted maximal inflation of $\chi$ due to $P = (p_a)_{a\in A}$ as $\beta_{\chi}=\max_{s \in S} \frac{\underset{a \in A}{\max}\big(\alpha\sum_{s'}p_a(s,s')\chi(s')\big)}{\chi(s)}$.
+The function $\chi:S\to\R_+$ is a \emph{Lyapunov} function for $P = (p_a)_{a\in A}$ if $\beta_{\chi}<1$.
 \end{definition}
 \begin{assumption}\label{grlpassmp}
 \begin{enumerate}[(i)]
@@ -46,7 +44,7 @@ and is present in the column span of the feature matrix $\Phi$: For some $r_0\in
 \item \label{wassmp} $W \in \R^{nd\times m}_+$ is a matrix with all positive entries.
 \end{enumerate}
 \end{assumption}
-The error bounds for the ALP in \cite{ALP} are expressed in terms of $\frac{1}{1-\beta_{\psi}}$.  A smaller $\beta_{\psi}$ loosely implies `stability' of the the underlying MDP,  with smaller values representative of higher stability. Prior works in ALP literature \cite{ALP,SALP,CS} make use of Lyapunov function based analysis to obtain error bounds that exploit the structure of the underlying MDP. In particular, the prior bounds suggests that the ALP is likely to generate good approximations when the underlying MDP is stable. We also adopt a similar approach by stating our results using Lyapunov function based arguments.
+The authors of \cite{ALP} express the error bounds in terms of $\frac{1}{1-\beta_{\psi}}$.  A smaller $\beta_{\psi}$ loosely implies `stability' of the the underlying MDP,  with smaller values representative of higher stability. Prior works in ALP literature \cite{ALP,SALP,CS} make use of Lyapunov functions based analysis to obtain error bounds that exploit the structure of the underlying MDP. In particular, the prior bounds suggests that the ALP is likely to generate good approximations when the underlying MDP is stable. We also adopt a similar approach by stating our results using Lyapunov function based arguments.
 
 We note in passing that if \cref{grlpassmp}-\eqref{lyap} holds, it follows that for any $J\in \R^n$ and $t>0$,
 \begin{align}\label{eq:psilin}
@@ -71,18 +69,18 @@ The claim follows by the change of variables $y := x-x_0$.
 \noindent 
 %Note that under our assumptions on $\N$, $\hg$ is well-defined.
 %\begin{align*}
-%r^*\eqdef\argmin_{r\in R^k}||J^*-\Phi r||_{\mn}\,.
+%r^*\eqdef\argmin_{r\in R^k}\norm{J^*-\Phi r}_{\mn}\,.
 %\end{align*}
 %where $\psi$ is a Lyapunov function as in \cref{lyap}.
 \begin{lemma}\label{bestbndmn}
-Let $r^*\eqdef\underset{r\in \R^k}{\min}\parallel J^*-\Phi r\parallel_{\mn}$, then
+Let $r^*\eqdef\underset{r\in \R^k}{\min}\parallel J^*-\Phi r\parallel_{\mn}$. Then,
 \begin{align}
-||J^*-\Gamma J^*||_{\mn}\leq 2||J^*-\Phi r^*||_{\mn}.
+\norm{J^*-\Gamma J^*}_{\mn}\leq 2 \norm{J^*-\Phi r^*}_{\mn}.
 \end{align}
 \end{lemma}
 \begin{proof}
 Define $\eps = \norm{J^* - \Phi r^*}_{\mn}$ so that
-$ J^*-\Phi r^* \le \eps \psi$ and $\Phi r^* - J^*\le \eps \psi$. Then from \cref{grlpassmp}-\eqref{ass:n4} it follows that $\Phi( r^* + \eps r_0 ) = \Phi r^* + \eps \psi \ge J^* = T J^*$. From the definition of $\Gamma$ in \eqref{gamdef} and \cref{ubrem}, we know that $\Phi r^*+\eps \psi \geq \Gamma J^*\geq J^*$. The result follows by noting that $2\eps\psi\geq \Phi r^*+\eps\psi -J^*\geq \Gamma J^*-J^*\geq 0$.
+$ J^*-\Phi r^* \le \eps \psi$ and $\Phi r^* - J^*\le \eps \psi$. Then, from \cref{grlpassmp}-\eqref{ass:n4} it follows that $\Phi( r^* + \eps r_0 ) = \Phi r^* + \eps \psi \ge J^* = T J^*$. From the definition of $\Gamma$ in \eqref{gamdef} and \cref{ubrem}, we know that $\Phi r^*+\eps \psi \geq \Gamma J^*\geq J^*$. The result follows by noting that $2\eps\psi\geq \Phi r^*+\eps\psi -J^*\geq \Gamma J^*-J^*\geq 0$.
 \end{proof}
 \begin{lemma}\label{tgmonotone}
 For $J_1, J_2\in \R^n$ such that $J_1\leq J_2$, we have $\hg J_1\leq \hg J_2$.
@@ -182,7 +180,7 @@ A vector
 $\hat{r} \in \R^k$ is a solution to GRLP \eqref{grlp} iff it solves the following program:
 \begin{align}\label{grlpeqprog}
 \begin{split}
-\min_{r\in \N}\, &||\Phi r-\hv||_{1,c}\,\mb
+\min_{r\in \N}\, &\norm{\Phi r-\hv}_{1,c}\,\mb
 \text{s.t.}\mb \, W^\top E \Phi r\geq W^\top H \Phi r.
 \end{split}
 \end{align}
@@ -192,7 +190,7 @@ We know from \Cref{relation1} that $\hj = \Phi \hr \geq\hv$, and thus
 the solutions to \eqref{grlp} do not change if we add the constraint $\Phi r \ge \hv$.
 Now, under this constraint, minimizing $c^\top \Phi r$ is the same as minimizing 
 \begin{align*}
-||\Phi r-\hv||_{1,c}=\sum_{i=1}^n c(i) |(\Phi r)(i)-\hv(i)|=c^\top \Phi r-c^\top \hv\,.
+\norm{\Phi r-\hv}_{1,c}=\sum_{i=1}^n c(i) |(\Phi r)(i)-\hv(i)|=c^\top \Phi r-c^\top \hv\,.
 \end{align*} 
 \end{proof}
 \begin{lemma}\label{srwalp}
@@ -200,7 +198,7 @@ A vector
 $\tr \in \R^k$ is a solution to ALP \eqref{alp} iff it solves the following program:
 \begin{align}\label{grlpeqprog}
 \begin{split}
-\min_{r\in \R^k}\, &||\Phi r-\hv||_{1,c}\,\mb
+\min_{r\in \R^k}\, &\norm{\Phi r-\hv}_{1,c}\,\mb
 \text{s.t.}\mb \, \Phi r\geq  T \Phi r.
 \end{split}
 \end{align}
@@ -212,18 +210,18 @@ The rest of the argument follows in the same manner as the proof for \cref{srw}.
 \begin{lemma}\label{cmt1mn}
 We have
 \begin{align}
-||J^*-\hv||_{\mn}
-& \leq \frac{1}{{1-\beta_{\psi}}}\big(2||J^*-\Phi r^*||_{\mn}
+\norm{J^*-\hv}_{\mn}
+& \leq \frac{1}{{1-\beta_{\psi}}}\big(2\norm{J^*-\Phi r^*}_{\mn}
 \nn\\
-& {}\qquad \qquad+||\Gamma J^*-\hg J^*||_{\mn}\big).
+& {}\qquad \qquad+\norm{\Gamma J^*-\hg J^*}_{\mn}\big).
 \end{align}
 \end{lemma}
 \begin{proof}
 Recall that $\hg \hv=\hv$. By the triangle inequality,
 \begin{align*}
-||J^*-\hv||_{\mn}
-& \leq ||J^*-\hg J^*||_{\mn}+||\hg J^*-\hg \hv||_{\mn}\\
-&\leq ||J^*-\hg J^*||_{\mn}+\beta_\psi || J^*- \hv||_{\mn},
+\norm{J^*-\hv}_{\mn}
+& \leq \norm{J^*-\hg J^*}_{\mn}+\norm{\hg J^*-\hg \hv}_{\mn}\\
+&\leq \norm{J^*-\hg J^*}_{\mn}+\beta_\psi \norm{ J^*- \hv}_{\mn},
 \end{align*}
 and so by reordering and with another triangle inequality,
 \begin{align}\label{jhv}
@@ -239,7 +237,7 @@ For this result, recall that $r_0 \in \R^k$ is the vector such that $\psi = \Phi
 %Let $\psi$ be a Lyapunov function that belongs to the column span of $\Phi$ ,
 For  $r \in \R^k$ arbitrary, let $r'$ be
 \begin{align}
- r'= r+||J^*-\Phi r||_{\mn} \left(\frac{1+\beta_{\psi}}{1-\beta_{\psi}}\right)\, r_0.
+r'= r+\norm{J^*-\Phi r}_{\mn} \left(\frac{1+\beta_{\psi}}{1-\beta_{\psi}}\right)\, r_0.
 \end{align}
 Then $r'$ is feasible for the ALP in \eqref{alp}.
 \end{lemma}
@@ -248,16 +246,16 @@ Recall that $\hv$ is the fixed point of $\hg$ and $\hj=\Phi \hr$ is the solution
 \begin{theorem}\label{mt2mn}
 We have
 \begin{align}
-||\hj-\hv||_{1,c}&\leq \frac{c^\top \psi}{1-\beta_\psi}(4||J^*-\Phi r^*||_{\mn}\nn
-+||\Gamma J^*-\hg J^*||_{\mn}).
+\norm{\hj-\hv}_{1,c}&\leq \frac{c^\top \psi}{1-\beta_\psi}(4\norm{J^*-\Phi r^*}_{\mn}\nn
++\norm{\Gamma J^*-\hg J^*}_{\mn}).
 \end{align}
 \end{theorem}
 \begin{proof}
-Let $\gamma=||J^*-\Phi r^*||_{\mn}$. 
+Let $\gamma=\norm{J^*-\Phi r^*}_{\mn}$.
 Then, by choosing $r'$ as in \Cref{restate} we have
 \begin{align}
-||\Phi r'-J^*||_{\mn}\nn
-&\leq ||\Phi r^*-J^*||_{\mn}+||\Phi r'-\Phi r^*||_{\mn}\nn\\
+\norm{\Phi r'-J^*}_{\mn}\nn
+&\leq \norm{\Phi r^*-J^*}_{\mn}+\norm{\Phi r'-\Phi r^*}_{\mn}\nn\\
 &=\gamma+\frac{1+\beta_\psi}{1-\beta_\psi}\gamma
 	=\frac{2}{1-\beta_\psi}\gamma.
 \label{part}
@@ -267,11 +265,11 @@ Now, $r'$ is feasible for the ALP in \eqref{alp} by \cref{restate}.
 Then from \cref{srwalp} it follows that
 %As a result, from \cref{srw} it follows that
 \begin{align}
-||\hj-\hv||_{1,c}
-&\leq||\Phi \tr-\hv||_{1,c}\leq||\Phi r'-\hv||_{1,c}\nn\\
+\norm{\hj-\hv}_{1,c}
+&\leq\norm{\Phi \tr-\hv}_{1,c}\leq\norm{\Phi r'-\hv}_{1,c}\nn\\
 &=\sum_{s\in S}c(s)\psi(s)\frac{|\Phi r'(s)-\hv(s)|}{\psi(s)}\nn\\
-&\leq c^\top \psi ||\Phi r'-\hv||_{\mn}\nn\\
-&\leq c^\top \psi (||\Phi r'-J^*||_{\mn}+||J^*-\hv||_{\mn}).\nn
+&\leq c^\top \psi \norm{\Phi r'-\hv}_{\mn}\nn\\
+&\leq c^\top \psi (\norm{\Phi r'-J^*}_{\mn}+\norm{J^*-\hv}_{\mn}).\nn
 \end{align}
 The result follows from \cref{cmt1mn} and \eqref{part}.
 %\textbf{Main Result~$1$: Prediction Error bound in weighted $L_\infty$-norm}
@@ -282,18 +280,18 @@ The result follows from \cref{cmt1mn} and \eqref{part}.
 It holds that
 \begin{align}\label{finalbndmn}
 \begin{split}
-||J^*-\hj||_{1,c}
-&\leq\frac{c^\top\psi}{1-\beta_\psi}(6 ||J^*-\Phi r^*||_{\mn}\\
-&+2||\Gamma J^*-\hg J^*||_{\mn}).
+\norm{J^*-\hj}_{1,c}
+&\leq\frac{c^\top\psi}{1-\beta_\psi}(6 \norm{J^*-\Phi r^*}_{\mn}\\
+&+2\norm{\Gamma J^*-\hg J^*}_{\mn}).
 \end{split}
 \end{align}
 \end{theorem}
 \begin{proof}
 We have
 \begin{align}
-||J^*-\hj||_{1,c}\nn
-&\leq||J^*-\hv||_{1,c}+||\hv-\hj||_{1,c}\nn\\
-&\leq c^\top \psi ||J^*-\hv||_{\mn}+||\hv-\hj||_{1,c}.\nn
+\norm{J^*-\hj}_{1,c}\nn
+&\leq\norm{J^*-\hv}_{1,c}+\norm{\hv-\hj}_{1,c}\nn\\
+&\leq c^\top \psi \norm{J^*-\hv}_{\mn}+\norm{\hv-\hj}_{1,c}.\nn
 \end{align}
 The result now follows from \Cref{cmt1mn} and \Cref{mt2mn}.
 \end{proof}
@@ -304,17 +302,16 @@ Let $\hu$ be the greedy policy with respect to the solution $\hj$ of the GRLP an
 % Let $r^*$ be as in Theorem~\ref{mt2mn}, then
 Then,
 \begin{align}\label{polthebnd}
-%||J_{\hu}-\hj||_{1,c}
 \norm{J^* - J_{\hu}}_{1,c}
-&\leq 2\left(\frac{c^\top \psi}{(1-\beta_{\psi})^2}\right)\, \big( 2||J^*-\Phi r^*||_{\mn}
+&\leq 2\left(\frac{c^\top \psi}{(1-\beta_{\psi})^2}\right)\, \big( 2\norm{J^*-\Phi r^*}_{\mn}
 \nn\\&
-+||\Gamma J^*-\hg J^*||_{\mn}+||\hj-\hg\hj||_{\mn}\big).
++\norm{\Gamma J^*-\hg J^*}_{\mn}+\norm{\hj-\hg\hj}_{\mn}\big).
 \end{align}
 \end{theorem}
 \begin{proof}
 By the triangle inequality,
 \begin{align*}
-||J^*-J_{\hu}||_{1,c}&\leq ||J^*-\hj||_{1,c}+||J_{\hu}-\hj||_{1,c}\,.
+\norm{J^*-J_{\hu}}_{1,c}&\leq \norm{J^*-\hj}_{1,c}+\norm{J_{\hu}-\hj}_{1,c}\,.
 \end{align*}
 Let us now bound the second term on the right-hand side.
 Since $\hu$ is greedy w.r.t. $\hj$, it holds that $T_{\hu} \hj = T \hj$.
@@ -326,11 +323,11 @@ Hence,
 ||J_{\hu}-\hj||_{1,c}\nn
 &=||(I-\alpha P_{\hu})^{-1}(T\hj-\hj)||_{1,c}\nn\\
 &\leq c^\top(I-\alpha P_{\hu})^{-1}|T\hj-\hj|\nn\\
-&\leq c^\top (I-\alpha P_{\hu})^{-1} \,\psi\, ||T\hj-\hj||_{\mn}\nn\\
-&\leq \frac{c^\top \psi}{1-\beta_{\psi}}||T\hj-\hj||_{\mn}\nn\\
-%&\leq \frac{c^\top \psi}{1-\beta_{\psi}}||T\hj-TJ^* +J^*- \hj||_{\mn}\nn\\
-&\leq \frac{c^\top \psi}{1-\beta_{\psi}}(||T\hj-TJ^*||_{\mn} +||J^*- \hj||_{\mn})\nn\\
-&\leq \frac{c^\top \psi}{1-\beta_{\psi}}(1+\beta_{\psi})||J^*- \hj||_{\mn},
+&\leq c^\top (I-\alpha P_{\hu})^{-1} \,\psi\, \norm{T\hj-\hj}_{\mn}\nn\\
+&\leq \frac{c^\top \psi}{1-\beta_{\psi}}\norm{T\hj-\hj}_{\mn}\nn\\
+%&\leq \frac{c^\top \psi}{1-\beta_{\psi}}\norm{T\hj-TJ^* +J^*- \hj}_{\mn}\nn\\
+&\leq \frac{c^\top \psi}{1-\beta_{\psi}}(\norm{T\hj-TJ^*}_{\mn} +\norm{J^*- \hj}_{\mn})\nn\\
+&\leq \frac{c^\top \psi}{1-\beta_{\psi}}(1+\beta_{\psi})\norm{J^*- \hj}_{\mn},
 \end{align}
 where in the second inequality, we use Jensen's inequality and $|T\hj - \hj|$ stands for the 
 vector whose $i$th component is $|(T\hj)(i) - \hj(i)|$. Further, the last inequality follows
@@ -338,31 +335,31 @@ since $T$ is a $\norm{\cdot}_{\mn}$ contraction with factor $\beta_{\psi}$ as no
 %componentwise  $(I-\alpha P_{\hu})^{-1}$ is a positive operator for $x=(x_1,\ldots,x_n)^\top\in \R^n$, $|x|=(|x_1|,\ldots,|x_n|)^\top\in \R^n$. 
 Hence,
 \begin{align}
-&||J^*-J_{\hu}||_{1,c}\nn\\
-%&\leq ||J^*-\hj||_{1,c}+||J_{\hu}-\hj||_{1,c}\nn\\
-&\leq c^\top \psi ||J^*-\hj||_{\mn}+c^\top \psi\frac{1+\beta_\psi}{1-\beta_\psi}||J^*- \hj||_{\mn}\nn\\
-&=\frac{2c^\top \psi}{1-\beta_{\psi}}||J^*- \hj||_{\mn}.
+&\norm{J^*-J_{\hu}}_{1,c}\nn\\
+%&\leq \norm{J^*-\hj}_{1,c}+\norm{J_{\hu}-\hj}_{1,c}\nn\\
+&\leq c^\top \psi \norm{J^*-\hj}_{\mn}+c^\top \psi\frac{1+\beta_\psi}{1-\beta_\psi}\norm{J^*- \hj}_{\mn}\nn\\
+&=\frac{2c^\top \psi}{1-\beta_{\psi}}\norm{J^*- \hj}_{\mn}.
 \end{align}
 Now in a manner similar to \cref{cmt2mn} we have
 \begin{align}
-||J^*- \hj||_{\mn}&\leq ||J^*- \hv||_{\mn}+||\hv -\hj||_{\mn}\nn
+\norm{J^*- \hj}_{\mn}&\leq \norm{J^*- \hv}_{\mn}+\norm{\hv -\hj}_{\mn}\nn
 \end{align}
-The result now follows by substituting the bound on $||J^*- \hv||_{\mn}$ from \cref{cmt1mn} and the fact that $||\hv-\hj||_{\mn}\leq \frac{1}{1-\beta_{\psi}}||\hj-\hg\hj||_{\mn}$.
+The result now follows by substituting the bound on $\norm{J^*- \hv}_{\mn}$ from \cref{cmt1mn} and the fact that $\norm{\hv-\hj}_{\mn}\leq \frac{1}{1-\beta_{\psi}}\norm{\hj-\hg\hj}_{\mn}$.
 \end{proof}
 \begin{comment}
 \begin{note}
-By bounding $\etmn=||\Gamma J^*-J^*+J^*-\hg J^*||_{\mn}\leq 2||J^*-\Phi r^*||_{\mn}+||J^*-\hg J^*||_{\mn}$ 
+By bounding $\etmn=\norm{\Gamma J^*-J^*+J^*-\hg J^*}_{\mn}\leq 2\norm{J^*-\Phi r^*}_{\mn}+\norm{J^*-\hg J^*}_{\mn}$
 (the inequality follows from \cref{bestbndmn}), 
 we can loosen the bounds in \cref{cmt2mn} and \cref{polthe} to
 \begin{align}
 \label{loose1}
-||J^*-\hj||_{1,c}&\leq\frac{c^\top\psi}{1-\beta_\psi}(10 ||J^*-\Phi r^*||_{\mn}
+\norm{J^*-\hj}_{1,c}&\leq\frac{c^\top\psi}{1-\beta_\psi}(10 \norm{J^*-\Phi r^*}_{\mn}
 \nn\\&
-+2||J^*-\hg J^*||_{\mn}).\\
++2\norm{J^*-\hg J^*}_{\mn}).\\
 \label{loose2}
-||J^* - J_{\hu}||_{1,c}&\leq 2\left(\frac{c^\top \psi}{1-\beta_{\psi}}\right)^2 \,\big(10 ||J^*-\Phi r^*||_{\mn}
+\norm{J^* - J_{\hu}}_{1,c}&\leq 2\left(\frac{c^\top \psi}{1-\beta_{\psi}}\right)^2 \,\big(10 \norm{J^*-\Phi r^*}_{\mn}
 \nn\\&
-+2||J^*-\hg J^*||_{\mn}\big).
++2\norm{J^*-\hg J^*}_{\mn}\big).
 \end{align}
 Here the term $||J^*-\hg J^*||$ in \eqref{loose1} and \eqref{loose2} captures the error due to the use of both $\Phi$ and $W$. Though, \eqref{loose1} and \eqref{loose2} might be loser bounds than \eqref{finalbndmn} and \eqref{polthebnd} respectively, the advantage of this bound is that it captures the error due to function approximation as well as constraint reduction in a direct manner.
 \end{note}
