@@ -21,7 +21,7 @@ Any optimal policy $u^*$ and value function $J^*$ obey the Bellman equation (BE)
 \end{align}
 \end{subequations}
 where ties in \eqref{bellpol} are resolved arbitrarily.\par
-We now present some definition which will be useful later:
+For the subsequent sections, the following definitions will be useful later:
 \begin{definition}\label{notations}
 \begin{comment}
 Let $c,\rho,\chi:S \to \R_+$ be positive valued functions, where $\R_+$ denotes the set of strictly positive reals. Then for $J\in \R^n$, $a\in A$ and $s\in S$,
@@ -36,7 +36,7 @@ $
 %some function $\tj:S \to \R$
 \begin{align*} u_J(s)\in\underset{a\in A}{\argmax}\big(g_a(s)+\alpha \us{\sum}{s'\in S} p_a(s,s')J(s')\big).\end{align*}
 \item\label{norms} The weighted $L_1$-norms $\norm{\cdot}_{1,c}$ with respect to a probability distribution $c$ is given by $
-||J||_{1,c}=\sum_{s \in S} c(s)|J(s)|$.
+\norm{J}_{1,c}=\sum_{s \in S} c(s)|J(s)|$.
 \item The (un)weighted $L_\infty$-norms $\norm{\cdot}_{1,\infty}$
 and $\norm{\cdot}_{\infty,\rho}$, $\norm{J}_{\infty}=\max_{s\in S}|J(s)|$ and $\norm{J}_{\infty,\rho}=\max_{s \in S} \frac{|J(s)|}{\rho(s)}$.
 \item For $J_1, J_2\in \R^n$ we write $J_1\leq J_2$ when $J_1(s)\leq J_2(s),~\forall s\in S$.
@@ -44,9 +44,11 @@ and $\norm{\cdot}_{\infty,\rho}$, $\norm{J}_{\infty}=\max_{s\in S}|J(s)|$ and $\
 \end{enumerate}
 \end{definition}
 We would like to point out that from \Cref{notations}, it follows that for any $J\in \R^n$ the condition $J\geq TJ$ can be rephrased as $EJ\geq HJ$.
+\begin{comment}
 \subsection{Dynamic Programming: Objective and Methods}
 Once a given sequential decision making is cast in the MDP framework, it remains for us to still compute the optimal policy $u^*$. The idea behind Dynamic Programming (DP) methods is to use the BE \eqref{bellval} to first compute $J^*$, and then a near-optimal action $u^*$ can be obtained via \eqref{bellpol}
 for each state relatively cheaply even for large state-spaces (e.g., having the ability to sample from the next-state distribution at
 a given state-action pair). Thus computing $J^*$ is at the heart DP methods \cite{BertB} such as value-, or policy-iteration and linear programming (LP) \eqref{mdplp} which can be used in practice when the MDP has a tractable number of states. However, when the MDP has a large number of states, using DP methods to obtain $J^*$ is tedious, since they involve computations in variables that are of the order of the number of states.\par
 Approximate dynamic programming (ADP) methods are based on DP methods, but employ (value) function approximation to ease the computational overhead encountered in MDPs with a large number of states. In particular, linear function approximation (LFA) has been used widely, wherein, $J^*$ is approximated by $J^*\approx\tj =\Phi \tr$, where $\Phi$ is an $n\times k$ feature matrix and $\tr\in \R^n$ is a weight vector (to be computed). Thus the solution is searched in the subspace spanned by the column vectors of $\Phi$. The linear representation helps in two ways. Firstly, given any state $s$, its approximate value can be recovered as $\tj(s)=\phi(s) \tr$ (where $\phi(s)$ is the $s^{th}$ row of $\Phi$). Secondly, a greedy policy $\tilde{u}=u_{\tj}$ (see \Cref{notations}-\eqref{greedy}) can be found using the approximate value function. Note that all computations are $O(k)$ which is independent of the number of states.\par
 It is natural to expect that approximations lead to errors and it is important to quantify the errors. For a given ADP method, theoretical performance analysis involves  bounding the error terms $||J^*-\tilde{J}||$  and $\norm{J^*-J_{\tu}}$ which denote the error in approximating the value function, and performance loss due to following policy $\tu$ respectively (where $\norm{\cdot}$ is an appropriate norm). Further, in most cases the error terms reveal some structure that can offer insights and act as guide to the designer of the ADP method (for example the choice of $\Phi$). The focus of this paper is to present the error analysis for generalized reduced linear programming (GRLP), a new ADP formulation which we introduce in \Cref{sec:grlp}.
+\end{comment}

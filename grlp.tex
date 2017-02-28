@@ -65,7 +65,10 @@ the optimal Lagrange multipliers are the discounted number of visits to the ``st
 \end{align}
 where $P_{u^*}$ is the probability transition matrix under $u^*$ ($P_{u^*}(s,s') = P_{u^*(s)}(s,s')$, $s,s'\in S$) \cite{dolgov}. Even though we might not have the optimal policy $u^*$ in practice, the fact that $\lambda^*$ is a probability distribution and that it is a linear combination of $\{P_{u^*},P^2_{u^*},\ldots\}$ hints at the kind of features that might be useful for constructing the $W$ matrix.
 \FloatBarrier
-\input{cartoon}
+%\input{cartoon}
+\begin{figure}
+\includegraphics[scale=0.7]{cartoon_grlp.pdf}
+\end{figure}
 \Cref{cartoon} which shows the solutions to the LP, ALP and GRLP respectively. The error in the ALP solution has already been studied in \cite{ALP}. Our objective is to study the extra source of error due to constraint approximation. We now define two projection operators that are central to our error analysis and in them we assume that the set $\N'\subset \R^k$ is such that $\N' = \N + t \one$ for any $t\in \R$.
 \section{Main Results}
 In this section we present the main results of this paper in \Cref{cmt2} (we state improved bounds in \Cref{sec:improv}). Our bounds are expressed in terms of two novel contractions operators which we define in \Cref{lubpop,alubpop}.
