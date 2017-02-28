@@ -1,25 +1,25 @@
 %!TEX root =  autocontgrlp.tex
 \section{Numerical Illustration}
 In this section, we show via an example in the domain of controlled queues that the error term $\et$ indeed correlates with
- the error induced by the constraint approximation. The queuing model used here is similar to the one in Section~$5.2$ of \cite{ALP}. We consider a single queue with arrivals and departures. The state of the system is the queue length with the state space given by $S=\{0,\ldots,n-1\}$, where $n-1$ is the buffer size of the queue. The action set $A=\{1,\ldots,d\}$ is related to the service rates. We let $s_t$ denote the state at time $t$. The state at time $t+1$ when action $a_t \in A $ is chosen is given by $s_{t+1}= s_{t}+1$ with probability $p$, $s_{t+1}= s_{t}-1$ with probability $q(a_t)$ and $s_{t+1}= s_t$, with probability $(1-p-q(a_t))$. For states $s_t=0$ and $s_t=n-1$, the system dynamics is given by 	$s_{t+1}= s_{t}+1$ with probability $p$ when $s_t=0$ and $s_{t+1}=s_t-1$ with probability $q(a_t)$ when $s_t=n-1$. The service rates satisfy $0<q(1)\leq \ldots\leq q(d)<1$ with $q(d)>p$ so as to ensure `stabilizability' of the queue. The reward associated with the action $a \in A$ in state $s\in S$ is given by $g_a(s)=-(s+60q(a)^3)$. We made use of polynomial features in $\Phi$ (i.e., $1,s,\ldots,s^{k-1}$) since they are known to work well for this domain \cite{ALP}.
+ the error induced by the constraint approximation. The queuing model used here is similar to the one in Section~$5.2$ of \cite{ALP}. We consider a single queue with arrivals and departures. The state of the system is the queue length with the state space given by $S=\{0,\ldots,n-1\}$, where $n-1$ is the buffer size of the queue. The action set $A=\{1,\ldots,d\}$ is related to the service rates. We let $s_t$ denote the state at time $t$. The state at time $t+1$ when action $a_t \in A $ is chosen is given by $s_{t+1}= s_{t}+1$ with probability $p$, $s_{t+1}= s_{t}-1$ with probability $q(a_t)$ and $s_{t+1}= s_t$, with probability $(1-p-q(a_t))$. For states $s_t=0$ and $s_t=n-1$, the system dynamics is given by 	$s_{t+1}= s_{t}+1$ with probability $p$ when $s_t=0$ and $s_{t+1}=s_t-1$ with probability $q(a_t)$ when $s_t=n-1$. The service rates satisfy $0<q(1)\leq \ldots\leq q(d)<1$ with $q(d)>p$ so as to ensure `stabilizability' of the queue. The reward associated with the action $a \in A$ in state $s\in S$ is given by $g_a(s)=-(s+60q(a)^3)$. We made use of polynomial features in $\Phi$ (i.e., $1,s,\ldots,s^{k-1}$) since they are known to work reasonably well for this domain \cite{ALP}.
 For our experiments, we chose two contenders for the $W$-matrix and compared them with random positive matrices $W_r$. Our choices of the $W$ matrix were: {$\mathbf{(i)}$} $W_c$- matrix that corresponds to sampling according to $c$. This is justified by the insights obtained from Theorem~\ref{st} on the error term $\et$, i.e., the idea of selecting the important states. {$\mathbf{(ii)}$} $W_a$ state-aggregation matrix, a heuristic derived using the fact that $\lambda^*$ is a linear combination of $\{P_{u^*},P^2_{u^*},\ldots\}$. Our choice of the $W_a$ matrix to correspond to aggregation of nearby states is motivated by the observation that $P^n$ captures $n^{th}$ hop connectivity/neighborhood information. 
-The aggregation matrix $W_a$ is defined as below: for all $ i=1,\ldots,m$,
+The aggregation matrix $W_a$ is defined as follows: for all $ i=1,\ldots,m$,
 \begin{align}\label{wdes}
 W_a(i,j)&=1, \mb\text{for all } j\mb\text{s.t.}\mb \nn\\&j=(i-1)\times\frac{n}{m}+k+(l-1)\times n, \nn\\&\mb\quad\quad k=1,\ldots,\frac{n}{m}, l=1,\ldots,d,\nn\\
 &=0,\mb\text{otherwise}.
 \end{align}
-We ran our experiments on a moderately large queuing system denoted by $Q_L$ with $n=10^4$ and $d=4$ with $q(1)=0.2$, $q(2)=0.4$, $q(3)=0.6$, $q(4)=0.8$, $p=0.4$ and $\alpha=0.98$. We chose $k=4$ (i.e., we used $1, s,s^2$ and $s^3$ as basis vectors) and we chose $W_a$ \eqref{wdes}, $W_c$, $W_i$ and $W_r$ with $m=50$, where $W_i$ is the ideal 
+We ran our experiments on a moderately large queuing system denoted by $Q_L$ with $n=10^4$ and $d=4$ with $q(1)=0.2$, $q(2)=0.4$, $q(3)=0.6$, $q(4)=0.8$, $p=0.4$ and $\alpha=0.98$. We chose $k=4$ (i.e., we used $1, s,s^2$ and $s^3$ as basis vectors) and we chose $W_a$ \eqref{wdes}, $W_c$, $W_i$ and $W_r$ with $m=50$, where $W_i$ is the ideal
 (and intractable) sampler of \citep{CS}.
-We set $c(s)=(1-\zeta) \zeta^s$, where $s=1,\ldots,9999$, with $\zeta=0.9$ and $\zeta=0.999$ respectively. The results in Table~\ref{pref} show that the performance exhibited by $W_a$ and $W_c$ is better by several orders of magnitude over `random' in the case of the large system $Q_L$ and is closer to the ideal sampler $W_i$. Note that computing $\et$ was hard in the case of large $n=10^4$ and since $\et$ is completely dependent on the structure of $\Phi$, $T$ and $W$ we instead computed the same for $n=10$ and used it as a surrogate. Accordingly, we chose a smaller system $Q_S$ with $n=10$, $d=2$, $k=2$, $m=5$, $q(1)=0.2$, $q(2)=0.4$, $p=0.2$ and $\alpha=0.98$. Note that a better performance of $W_a$ and $W_c$ is in agreement with a lower value of $\et$.
+We set $c(s)=(1-\zeta) \zeta^s$, where $s=1,\ldots,9999$, with $\zeta=0.9$ and $\zeta=0.999$ respectively. The results in Table~\ref{pref} show that the performance exhibited by $W_a$ and $W_c$ is better by several orders of magnitude over `random' in the case of the large system $Q_L$ and is close to that of the ideal sampler $W_i$. Note that computing $\et$ was hard in the case of large $n=10^4$ and since $\et$ is completely dependent on the structure of $\Phi$, $T$ and $W$ we instead computed the same for $n=10$ and used it as a surrogate. Accordingly, we chose a smaller system $Q_S$ with $n=10$, $d=2$, $k=2$, $m=5$, $q(1)=0.2$, $q(2)=0.4$, $p=0.2$ and $\alpha=0.98$. Note that a better performance of $W_a$ and $W_c$ is in agreement with a lower value of $\et$.
 \FloatBarrier
 \begin{table}[H]
 \begin{center}
 \resizebox{\columnwidth}{!}{
-\begin{tabular}{|c|c|c|c|c|}\hline
-Error Terms&	$W_i$&	$W_c$& $W_a$& $W_r$ \\\hline
-$||J^*-\hj||_{1,c}$ for $\zeta=0.9$& $32$&	$32$& $220$& $5.04\times 10^4$ \\\hline
-$||J^*-\hj||_{1,c}$ for $\zeta=0.999$& $110$&	$180.5608$& $82$& $1.25\times 10^7$ \\\hline
-$\et$ & $0$&	$39$& $24$& $214$ \\\hline
+\begin{tabular}{|c|c|c|c|c|c|}\hline
+Queuing System&Error Terms&	$W_i$&	$W_c$& $W_a$& $W_r$ \\\hline
+$Q_L$& $\norm{J^*-\hj}_{1,c}$ for $\zeta=0.9$& $32$&	$32$& $220$& $5.04\times 10^4$ \\\hline
+$Q_L$& $\norm{J^*-\hj}_{1,c}$ for $\zeta=0.999$& $110$&	$180.5608$& $82$& $1.25\times 10^7$ \\\hline
+$Q_s$& $\et$ & $0$&	$39$& $24$& $214$ \\\hline
 \end{tabular}
 }
 \end{center}
@@ -38,12 +38,12 @@ In the case of exact LP, both the number of variable as well as the number of co
 \begin{center}
 \begin{tabular}{|c|c|c|c|}\hline
 Performance Metric&	$W_i$&	$W_c$& $W_a$ \\\hline
-$||J_{\hu}||_{1,c}$ for $\zeta=0.9$& $-441.25$&	$-450.59$& $-446.49$ \\\hline
-$||J_{\hu}||_{1,c}$ for $\zeta=0.999$& $-2.0611e+04$&	$-2.0611e+04$& $-2.0612e+04$ \\\hline
+$\norm{J_{\hu}}_{1,c}$ for $\zeta=0.9$& $-441.25$&	$-450.59$& $-446.49$ \\\hline
+$\norm{J_{\hu}}_{1,c}$ for $\zeta=0.999$& $-2.0611e+04$&	$-2.0611e+04$& $-2.0612e+04$ \\\hline
 \end{tabular}
 \end{center}
 %}
-\caption{Shows performance metrics for $Q_L$. Here $||J^*||_{1,c}=-439.26$ for $\zeta=0.9$ and $||J^*||_{1,c}=-2.0603e+04$ for $\zeta=0.999$   and a random policy yields a total reward of $-1.2661e+03
+\caption{Shows performance metrics for $Q_L$. Here $\norm{J^*}_{1,c}=-439.26$ for $\zeta=0.9$ and $\norm{J^*}_{1,c}=-2.0603e+04$ for $\zeta=0.999$   and a random policy yields a total reward of $-1.2661e+03
 $.}
 \label{pref}
 \end{table}
