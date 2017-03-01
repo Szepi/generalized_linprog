@@ -44,7 +44,7 @@ and is present in the column span of the feature matrix $\Phi$: For some $r_0\in
 \item \label{wassmp} $W \in \R^{nd\times m}_+$ is a matrix with all positive entries.
 \end{enumerate}
 \end{assumption}
-The authors of \cite{ALP} express the error bounds in terms of $\frac{1}{1-\beta_{\psi}}$.  A smaller $\beta_{\psi}$ loosely implies `stability' of the the underlying MDP,  with smaller values representative of higher stability. Prior works in ALP literature \cite{ALP,SALP,CS} make use of Lyapunov functions based analysis to obtain error bounds that exploit the structure of the underlying MDP. In particular, the prior bounds suggests that the ALP is likely to generate good approximations when the underlying MDP is stable. We also adopt a similar approach by stating our results using Lyapunov function based arguments.
+The authors of \cite{ALP} express the error bounds in terms of $\frac{1}{1-\beta_{\psi}}$.  A smaller $\beta_{\psi}$ loosely implies `stability' of the the underlying MDP,  with smaller values representative of higher stability. Prior works in ALP literature \cite{ALP,SALP,CS} make use of Lyapunov functions based analysis to obtain error bounds that exploit the structure of the underlying MDP. In particular, the prior bounds suggests that ALP is likely to generate good approximations when the underlying MDP is stable. We also adopt a similar approach by stating our results using Lyapunov function based arguments.
 
 We note in passing that if \cref{grlpassmp}-\eqref{lyap} holds, it follows that for any $J\in \R^n$ and $t>0$,
 \begin{align}\label{eq:psilin}
@@ -150,7 +150,7 @@ We now show that vector $\hj$ dominates $\hv$:
 The vectors $\hv,\hj$ obey $\hj\geq\hv$.
 \end{lemma}
 \begin{proof}
-For $i\in \{1,\dots,n\}$, $c=e_i$ let $r_i$ be a solution to the GRLP in \eqref{grlp}
+For $i\in \{1,\dots,n\}$, $c=e_i$ let $r_i$ be a solution to GRLP in \eqref{grlp}
 and define $V_0\in \R^n$ by $V_0(i)=\underset{j=1,\ldots,n}{\min}(\Phi r_j)(i)$, $1\le i \le n$.
 
 It suffices to show that $V_1\eqdef \hg V_0 \le V_0 \le \hj$ since then the desired result follows
@@ -171,7 +171,7 @@ The vectors $\hv,\tj$ obey $\tj\geq\hv$.
 \end{lemma}
 \begin{proof}
 %The proof follows in a similar manner as the proof of \Cref{relation1}. To elaborate, 
-Let $ r_1,  r_2,\ldots, r_n$ be solutions to the ALP in \eqref{alp} (with an additional constraint that the solution be restricted to $\N$) for $c=e_1, e_2,\ldots,e_n$, respectively,
+Let $ r_1,  r_2,\ldots, r_n$ be solutions to ALP in \eqref{alp} (with an additional constraint that the solution be restricted to $\N$) for $c=e_1, e_2,\ldots,e_n$, respectively,
 and define $V_0\in \R^n$ by $V_0(i)=\underset{j=1,\ldots,n}{\min}(\Phi r_j)(i)$, $1\le i \le n$. The rest of the proof 
 follows in the same manner as the proof of \cref{relation1}.
 \end{proof}
@@ -239,9 +239,9 @@ For  $r \in \R^k$ arbitrary, let $r'$ be
 \begin{align}
 r'= r+\norm{J^*-\Phi r}_{\mn} \left(\frac{1+\beta_{\psi}}{1-\beta_{\psi}}\right)\, r_0.
 \end{align}
-Then $r'$ is feasible for the ALP in \eqref{alp}.
+Then $r'$ is feasible for ALP in \eqref{alp}.
 \end{lemma}
-Recall that $\hv$ is the fixed point of $\hg$ and $\hj=\Phi \hr$ is the solution to the GRLP
+Recall that $\hv$ is the fixed point of $\hg$ and $\hj=\Phi \hr$ is the solution to GRLP
 \eqref{grlp}. 
 \begin{theorem}\label{mt2mn}
 We have
@@ -261,7 +261,7 @@ Then, by choosing $r'$ as in \Cref{restate} we have
 \label{part}
 \end{align}
 %We know that $\tr \in \N$ by \cref{grlpassmp}-\eqref{nassmp} and 
-Now, $r'$ is feasible for the ALP in \eqref{alp} by \cref{restate}.
+Now, $r'$ is feasible for ALP in \eqref{alp} by \cref{restate}.
 Then from \cref{srwalp} it follows that
 %As a result, from \cref{srw} it follows that
 \begin{align}
@@ -298,7 +298,7 @@ The result now follows from \Cref{cmt1mn} and \Cref{mt2mn}.
 We now bound the performance of the greedy policy $\hu$.
 \begin{theorem}[Control Error Bound]
 \label{polthe}
-Let $\hu$ be the greedy policy with respect to the solution $\hj$ of the GRLP and $J_{\hu}$ be its value function.
+Let $\hu$ be the greedy policy with respect to the solution $\hj$ of GRLP and $J_{\hu}$ be its value function.
 % Let $r^*$ be as in Theorem~\ref{mt2mn}, then
 Then,
 \begin{align}\label{polthebnd}
