@@ -1,0 +1,49 @@
+\documentclass[12pt,draftcls,onecolumn]{IEEEtran}
+%\documentclass[12pt,twocolumn]{IEEEtran}
+%\documentclass[twocolumn]{IEEEtran}
+\usepackage{times}
+\input{pack}
+%\documentstyle[nips14submit_09,times,art10]{article} % For LaTeX 2.09
+\title{ Response to comments by Reviewer1}
+\author{Chandrashekar Lakshminarayanan$^\star$, Shalabh Bhatnagar$^\star$,
+ and Csaba Szepesvari$^\dagger$\thanks{$^\star$Department of Computer
+Science and Automation, Indian Institute of Science, Bangalore 560012.
+E-mail: $\{$chandrul, shalabh$\}$@csa.iisc.ernet.in}
+\thanks{$^\dagger$Department of Computing Science, University of Alberta,
+Edmonton, Alberta, Canada T6G 2E8. E-mail: csaba.szepesvari@ualberta.ca}}
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to \LaTeX{} to determine where to break
+% the lines. Using \AND forces a linebreak at that point. So, if \LaTeX{}
+% puts 3 of 4 authors names on the first line, and the last on the second
+% line, try using \AND instead of \And before the third author name.
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+\begin{document}
+\maketitle
+In what follows, we present the reviewer's comment in \emph{italized} fonts and our repsonse to them in normal fonts.
+\begin{enumerate}
+\item \emph{
+The authors have developed a deterministic way to handle LP for MDP and
+also new analytic tools for error analysis. Though this article
+introduces novel contributions to the field but the writing is a bit
+clumsy. Explanations of the lemmas and definitions are missing (as
+marked later). The authors don't provide intuition for most of the
+assumptions. Since the authors have additional space, more details
+should be provided.
+Some of the terms in the definitions like discounted maximal inflations
+are never used directly and no reasoning behind the use of Lyapunov
+stability (which is a good and important part of the technique here) is
+given anywhere. For a contribution of this kind such an explanation is
+at least expected. So it's better if the authors give some
+explanations, elongate it a bit and make it readable to someone who
+isn't expert of both control and MDP, otherwise it is a very good piece
+of work.
+Few detailed comments are attached.
+}
+\textbf{Response:} We have restructured our paper and added the explanations as suggested.
+\end{enumerate}
+
+%\input{appendix}
+\end{document}

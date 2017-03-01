@@ -1,0 +1,15 @@
+This paper proposes a generalized reduced linear program and developed
+a corresponding analytical machinery so that the error can be proven to
+be bounded.Some comments about this paper are as follows.
+
+1. From the very beggining, it is unclear that what is the motivation
+of this research and what does this research can be applied to. A
+related management or control motivation example is needed to enhance
+the motivation.
+
+2.No recent related works are cited and discussed in this paper.Thus,
+it is quite difficult to identify what the the innovation and
+improvement of this paper comparing with existing research.
+
+3.Some short explainations of the formulas can be helpful in
+understanding this paper.
