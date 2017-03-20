@@ -2,7 +2,24 @@
 %\documentclass[12pt,twocolumn]{IEEEtran}
 \documentclass[twocolumn]{IEEEtran}
 \usepackage{times}
+
+% Packages, commands --------------------------------------------------------------------
 \input{pack}
+
+% BIBLIOGRAHY -----------------------------------------------------------------------------
+% Option 1: bibtex natbib
+%\usepackage[numbers]{natbib}
+%\usepackage[colorlinks=true,linkcolor=blue,citecolor=purple,pagebackref=true]{hyperref}
+% Option 2: biblatex 
+\usepackage[backend=bibtex,style=ieee-alphabetic,natbib=true,backref=true]{biblatex}
+\addbibresource{ref.bib}
+% Adding back references to bib entries:
+\DefineBibliographyStrings{english}{%
+  backrefpage = {page},% originally "cited on page"
+  backrefpages = {pages},% originally "cited on pages"
+}
+% Title, authors, etc. -------------------------------------------------------------------------
+
 %\documentstyle[nips14submit_09,times,art10]{article} % For LaTeX 2.09
 \title{A Generalized Reduced Linear Program for Markov Decision Processes}
 \author{Chandrashekar Lakshminarayanan$^\star$, Shalabh Bhatnagar$^\star$,
@@ -20,6 +37,8 @@ Edmonton, Alberta, Canada T6G 2E8. E-mail: csaba.szepesvari@ualberta.ca}}
 % line, try using \AND instead of \And before the third author name.
 \newcommand{\fix}{\marginpar{FIX}}
 \newcommand{\new}{\marginpar{NEW}}
+
+% Doc start ------------------------------------------------------------------------------------
 \begin{document}
 \maketitle
 \input{abstract}
@@ -35,8 +54,14 @@ Edmonton, Alberta, Canada T6G 2E8. E-mail: csaba.szepesvari@ualberta.ca}}
 \input{appendix}
 %\input{example}
 %\input{discussion}
-\bibliographystyle{plain}
-\bibliography{ref.bib}
+% BIBLIOGRAHY
+% Option 0: bibtex plain
+%\bibliographystyle{plain}
+% Option 1: bibtex natbib
+%\bibliographystyle{plainnat}
+%\bibliography{ref.bib}
+% Option 2: biblatex
+\printbibliography
 \newpage
 \onecolumn
 %\input{appendix}

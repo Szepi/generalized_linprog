@@ -28,3 +28,7 @@ autocontgrlp.brf
 *.fdb_latexmk
 
 *.bak
+
+*.xml
+
+autocontgrlp-blx.bib
