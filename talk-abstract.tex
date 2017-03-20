@@ -1,0 +1,91 @@
+Title: Towards a rigorous approach to approximate computations in huge-scale Markovian decision processes
+Based on joint with Chandrashekar Lakshminarayanan and Shalabh Bhatnagar.
+
+In this talk, without assuming any background beyond familiarity with basic probability and 
+linear algebra, I will describe exciting new results on the computation of near-optimal policies in 
+huge-scale Markovian decision processes (MDPs) via the so-called approximate linear programming methodology.
+In a nutshell, the new results provide meaningful upper bounds on the quality of the computed policies
+as a function of the linear basis functions chosen by the algorithm designer, while avoiding unrealistic assumptions
+which have effectively become the norm in prior results. 
+As opposed to previous work that relied on worst-case reasoning over randomly sampled constraints,
+in this work the analysis is done using an operator-theoretic approach.
+I will finish by discussing the remaining main open problems, connections to alternative approaches,
+as well as potential extensions.
+Markov decision processes lie at the hear of many reinforcement learning algorithms and have found
+numerous applications across many engineering and scientific problems. 
+----
+Sequential decision making under uncertainty is a common element of numerous important scientific and engineering problems.
+These problems are often phrased as Markov decision processes
+Many important scientific and engineering problems involve sequential decision making under uncertainty.
+----
+MDPs are often used to model the dilemma of an agent who is trying to control its stochastic environment,
+has widespread applications in science and engineering and is at the heart of formulating reinforcement learning problems.
+Markovian decision processes merge Markov chains with elements of control:
+The controlling agent observe a state, chooses an action, which results in a stochastic Markov transition 
+to a next state while incurring some reward. The goal is to maximize the total expected discount reward.
+While many problems can be modeled as MDPs, the number of states in these MDPs is more often than not is
+at a scale so that only sublinear computations in the number of states are feasible. 
+A common methodology uses compact representations based on linear function approximation.
+The question then becomes how to interact with an oracle that gives a local, state-based access to the MDP
+to efficiently compute a near-optimal policy.
+----
+
+to
+
+Since Bellman it has been widely recognized that value-functions, mapping states of the process to reals, representing
+the "value" of being in a given state, lie at the heart 
+
+A common computation model assumes state-based oracle access to the MDP
+The algorithms that compute actions of a near-optimal "policy" can obtain averages of any selec
+
+tend to have a state  where the number of states is intractably large,
+A key problem is to compute given a large-scale model
+Without assuming background knowledge on MDPs and reinforcement learning,
+
+in this talk 
+describe exciting new results on using approximate linear programming
+
+
+building on linear programming
+
+A common element of numerous important scientific and engineering problems is that
+
+MDPs math model to capture seq. dec. making.
+A discounted MDP is composed of states, actions, next-state distributions for each state-action pair, a reward
+for each state-action pair and a discount factor in the (0,1) open interval.
+An agent in an MDP, knowing which state it is at,
+takes an action to arrive stochastically at some next state while incurring some reward.
+An optimal behavior is one that maximizes the total expected discounted reward from any state.
+The computational question is 
+
+The goal is to compute a policy, a map from states to actions, that maximizes from each state the total
+expected discounted reward over time.
+At a high level one is given finitely many Markov transition matrices, each matrix corresponding to one action.
+The matrices capture stochastic transitions under the effect of an action.
+
+If MDPs are the math model, how do we compute good
+Core 
+
+What is the problem?
+Computation of near-optimal policies in large scale MDPs.
+State-based oracle access to large scale MDP, features for capturing the optimal value function.
+
+Why should we care?
+
+What's left?
+Is this even asking the right question? Search in policy space vs. value space (direct vs. indirect).
+
+This is a non-adaptive method.
+Would adaptive methods work better?
+
+Linear vs. nonlinear.
+
+
+Applications of the LP approach to ADP range from scheduling in queueing networks (Morrison and Kumar., 1999; Veatch, 2005; Moallemi et al., 2008), revenue management (Adelman, 2007; Farias and Van Roy, 2007; Zhang and Adelman, 2008), portfolio management (Han, 2005), inventory problems (Adelman, 2004; Adelman and Klabjan, 2009), and algorithms for solving stochastic games (Farias et al., 2008) among others.
+
+
+Approximate linear programming (ALP) and its variants have been widely applied to Markov Decision Processes (MDPs) with a large number of states. A serious limitation of ALP is that it has an intractable number of constraints, as a result of which constraint approximations are of interest. In this paper, we define a generalized reduced linear program (GRLP) that has a tractable number of constraints, which are obtained as positive linear combinations of the original constraints of the ALP. The main contribution of this paper is a novel theoretical framework developed to obtain error bounds for any given GRLP. By providing a detailed error analysis for the GRLP, we justify usage of a linear architecture for approximating the dual variables. Unlike prior results on constraint sampling, our analysis is deterministic and is based on a novel contraction operator.
+\end{abstract}
+\begin{keywords}{
+Approximate Dynamic Programming (ADP), Markov Decision Processes (MDPs), Approximate Linear Programming (ALP), Generalized Reduced Linear Program (GRLP), Constraint Sampling, Reinforcement Learning.}
+\end{keywords}

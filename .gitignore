@@ -22,3 +22,7 @@ single/README.md
 autocontgrlp.brf
 
 *.gz
+
+*.fls
+
+*.fdb_latexmk
