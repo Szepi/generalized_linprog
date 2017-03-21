@@ -35,8 +35,44 @@ $\bullet$ As a natural generalization of RLP, what happens if we define a genera
 $\bullet$ Unlike \cite{CS} which provides error bounds for a specific RLP formulated using an idealized sampling distribution, is it possible to provide error bounds for any GRLP (and hence any RLP)?
 In this paper, we address both of the questions above.
 \end{comment}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Generalized Reduced Linear Programming}\label{sec:grlp}
-The Generalized Reduced Linear Program is given as:
+\todoc{How about the cleaner ``Linear projected approximate linear programming''}
+In this section we introduce the computational model used and the optimization problem
+that is the main object of our study.
+As discussed in the introduction, we are interested in methods that compute a good approximation to the optimal value function.
+As noted earlier, at the expense of a modest additional cost, knowing an $O(\epsilon)$ approximation to $J^*$ at a few states suffices to compute actions of an $O(\epsilon)$-optimal policy. We will take a more general view, and we will consider calculating good approximations to $J^*$ with respect to a weighted $1$-norm, where the weights $c$ form a probability distribution over $\S$. Recall that the weighted $1$-norm $\norm{J}_{1,c}$ of a vector $J\in \R^S$ is defined as $\norm{J}_{1,c}  = \sum_s c(s) |J(s)|$. Note that here and in what follows we identify elements of $\R^\S$ (functions, mapping $\S = \{1,\dots,S\}$ to the reals) with elements of $\R^S$ in the obvious way. This allows us to write e.g. $c^\top J$, which denotes $\sum_s c(s) J(s)$.
+
+To introduce the optimization problem we study first recall that 
+the optimal value function $J^*$ is the solution of the fixed point equation $TJ^* = J^*$. 
+It follows from the definition of $T$ that $J^* = \max_u T_u J^* \ge T_u J^*$ for any $u$, 
+where $\ge$ is the componentwise partial ordering of vectors. 
+With some abuse of notation, we also introduce $T_a$ to denote $T_u$ where $u(s) = a$ for any $s\in \S$. 
+It follows that $J^* \ge T_a J^*$ for any $a\in \A$ and also that $T = \max_a T_a$, where again the maximization is componentwise.
+We call a vector $J$ that satisfies $J \ge T_a J$ for any $a\in A$ \emph{superharmonic}. Note that this is a set of linear inequalities. 
+By our note on $T$ and $(T_a)_a$, these inequalities can also be written compactly as $J \ge T J$.
+\if0
+Since $T$ is monotone (i.e., for any $J_1\le J_2$ it holds that $TJ_1 \le T J_2$) and can be seen to be an $\alpha$-contraction with respect to the maximum norm, if $J$ is superharmonic then $J \ge T J \ge T^2 J \ge \dots \ge J^*$, where the last inequality follows since $T$ is an $\alpha$-contraction and hence $T^n J \to J^*$ in the maximum norm, and hence also componentwise.
+Thus, $J^*$ is the ``smallest'' superharmonic function. It follows than that 
+for any $c\in \R_+^S \doteq [0,\infty)^S$ and any superharmonic $J$, $c^\top J^*\le c^\top J$ and since $J^*$ is also superharmonic, $\min \{ c^\top J\,:\, J \ge T J \} = c^\top J^*$ and if $c$ is positive-valued then the minimizer of $c^\top J$ amongst all superharminoc functions is $J^*$.
+\fi
+It is not hard to show then that $J^*$ is the smallest superharminoc function (i.e., for any $J$ superharmonic, $J\ge J^*$). It also follows that for any  $c\in \R_{++}^S \doteq (0,\infty)^S$, the unique solution to the linear program $\min\{ c^\top J \,:\, J \ge T J \} =\min \{ c^\top J\,:\, J \ge T_a J, a\in \A \} $ is $J^*$. 
+
+Now, let $\phi_1,\ldots,\phi_k : \S \to \R$ be $k$ basis functions. 
+\todoc{I think we should use $d$ to denote the number of basis functions. Or at least $n$. Low priority.} 
+The \emph{Approximate Linear Program} (ALP) of \citet{SchSei85} 
+is obtained by adding the linear constraints $J = \sum_{i=1}^k r_i \phi_i$ to the above linear program. Eliminating $J$ then gives $\min\{ \sum_i r_i c^\top \phi_i \,:\, \sum_i r_i \phi_i \ge g_a + \alpha \sum_i r_i P_a \phi_i, a\in \A, r = (r_i)\in \R^k \}$.
+As noted by \citet{SchSei85}, the linear program is feasible as long as $\one$, defined as the vector with all components being identically equal to one, is in the span of $\{\phi_1,\dots,\phi_k\}$. 
+\emph{For the purpose of computations, it is assumed that the values $c^\top \phi_i$, $i=1,\dots, k$ and the values $(P_a \phi_i)(s)$ and $g_a(s)$ can be accessed in constant time.} 
+This assumption can be relaxed to assuming that one can access $g_a(s)$ and $\phi_i(s)$ for any $(s,a)$ in constant time, as well as to that one can efficiently sample from $c$, from $P_a(s,\cdot)$ for any $(s,a)$ pair, 
+but the details of this are the beyond the scope of the present work. As shown by \citet{ALP}, if $\ralp$ denotes the solution to the above ALP then for $\Jalp \doteq \sum_i \ralp(i) \phi_i \doteq \Phi r$ it holds that $\norm{\Jalp - J^*}_{1,c} \le \frac{2 \epsilon}{1-\alpha}$ where $\epsilon = \inf_r \norm{ J^* - \Phi r }_\infty$ is the error of approximating the optimal value with the span of the basis functions $\phi_1,\dots,\phi_k$ and $\norm{J}_\infty = \max_s |J(s)|$ is the maximum norm.
+
+While evaluating the objective and checking a single constraint for constraint violations can be done in constant time, 
+since the number of constraints in the ALP is equal to the number of state-action pairs, the ALP is still intractable in general.
+To reduce the number of constraints, we propose to relax the constraints by considering a linear projection of them with 
+positive linear coefficients. Since the resulting program may become unbounded, it is necessary to introduce an additional constraint $r\in \N$, where $\N$ will be chosen to be large enough so as not to exclude ``good solutions'', while constraining enough so as to prevent unbounded solutions. \todoc{I still don't get whether we need or not $\N$. Under the conic constraints, do we need it or not? I mean when $r$ hits the boundary of $\N$ I have the feeling that we get a very bad solution and it would not then matter much whether $\N$ is even there or not.}
+This leads to what we call the Generalized Reduced Linear Program: \todoc{Again, Linearly Projected ALP, or ALP with Linear Constraint Projection, or with Linear Constrain Relaxation?} \todoc{I stopped here, need to sleep. The idea in this section is to just explain how the computation is done. In the next section I would just give the main result. In the next section I would give the proof. Rather than the present lemma, lemma, lemma.. organization it is probably better to organize the proof in a top-down. Starting to do the proof, required results can be stated as claims/lemmas. But maybe some of the lemmas can be saved (I have a specific plan, just saying, if you want to do something with this).}
 \begin{align}\label{grlp}
 \begin{split}
 &\underset{r\in \N\subset R^k}{\min}\, \, c^\top \Phi r\,\,\,\,\\

@@ -50,13 +50,17 @@
 
 %\usepackage{style/ssltr}
 %\usepackage{style/macros}
+\if0
 \usetikzlibrary{intersections}
 \usetikzlibrary{arrows,calc,fit,patterns,plotmarks,shapes.geometric,shapes.misc,shapes.symbols,   shapes.arrows,   shapes.callouts,   shapes.multipart,   shapes.gates.logic.US,   shapes.gates.logic.IEC,   er,   automata,   backgrounds,   chains,   topaths,   trees,   petri,   mindmap,   matrix,   calendar,   folding, fadings,   through,   positioning,   scopes,   decorations.fractals,   decorations.shapes,   decorations.text,   decorations.pathmorphing,   decorations.pathreplacing,   decorations.footprints,   decorations.markings, shadows,circuits}
 \tikzstyle{decision}=[diamond,draw]
 \tikzstyle{line}=[draw]
 \tikzstyle{elli}=[draw,ellipse]
 \tikzstyle{arrow} = [thick]
+\fi
 %\usepackage{subfig}
+\newcommand{\ralp}{r_{\text{ALP}}}
+\newcommand{\Jalp}{J_{\text{ALP}}}
 \newcommand{\mb}{\mbox{ }}
 \newcommand{\one}{\mathbf{1}}
 \newcommand{\zero}{\mathbf{0}}
@@ -110,6 +114,7 @@
 %\newcommand{\eqdef}{\stackrel{\text{\footnotesize def}}{=}}
 %\newcommand{\eqdef}{\stackrel{\Delta}{=}}
 \newcommand{\eqdef}{\doteq}
+\newcommand{\defeq}{\doteq}
 
 \newcommand{\eps}{\varepsilon}
 \renewcommand{\epsilon}{\varepsilon}

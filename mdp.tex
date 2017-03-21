@@ -1,18 +1,35 @@
 %!TEX root =  autocontgrlp.tex
-\section{Background: Markov Decision Processes (MDPs)}
-The framework of Markov decision processes (MDPs) is useful to mathematically cast optimal sequential decision making problems in stochastic environments. In this section, we present a brief overview of the MDP framework, introducing the notions of policy, value function and optimality (please refer to \cite{BertB} for a detailed presentation on MDP).
+\section{Background} %: Markov Decision Processes (MDPs)}
+%The framework of Markov decision processes (MDPs) is useful to mathematically cast optimal sequential decision making problems in stochastic environments. In this section, we present a brief overview of the MDP framework, introducing the notions of policy, value function and optimality (please refer to \cite{BertB} for a detailed presentation on MDP).
+The purpose of this section is to introduce the necessary background before we can present the problem studied and the main results.
 
-\textbf{Model:} We consider an MDP with a finite state space given by $S=\{1,2,\ldots,n\}$ and a finite action space given by $A=\{1,2,\ldots,d\}$ (where the sentiment is that $n$ is large). For simplicity, we assume that all actions are feasible in all states. The probability transition kernel $P$ collects the probabilities $p_a(s,s')$ of transitioning from state $s$ to state $s'$ under the action $a$ for all possible $s,s'\in S$ and $a\in A$. We denote the reward (or gain) obtained for performing action $a\in A$ in state $s\in S$ by $g_a(s)$.
+We shall consider finite state-action space, discounted total expected reward MDPs.
+We note in passing that the assumption that number of states is finite is mainly made for convenience and at the expense of a more technical presentation could be lifted. We will comment later on the assumption concerning the number of actions.
+Let the set of states, or state space be $\S = \{1,2,\dots,S\}$ and let the set of actions be $\A = \{1,2,\dots,A\}$. \todoc{$\S$ is for state space, $S$ for number of states, $\A$, $A$, similarly. Thus, $S=n$, $A=d$.}
+For simplicity, we assume that all actions are admissible in all states. 
+Given a choice of an action $a\in \A$ in a state $s\in \S$, the controller incurs a reward (or gain) of $g_a(s)\in [0,1]$ 
+and the state moves to a next state $s'\in \S$ with probability $p_{a}(s,s')$. 
+A \emph{policy} $u$ is a mapping from states to actions.\footnote{For the scope of this paper, it suffices to restrict our attention to such policies as opposed to considering history dependent policies. See Chapter 3, and specifically Corollary 3.3 of \cite{Kall17}.}
+When a policy is followed, the state sequence evolves as a Markov chain with transition probabilities given by $P_u$ matrix whose $(s,s')$th entry is $P_{u(s)}(s,s')$. Along the way the rewards generated from $g_u$ defined by $g_u(s) \defeq g_{u(s)}(s)$.
+The \emph{value} of following a policy from a starting state $s$ is denoted by $J_u(s)$ and is defined as 
+the expected total reward discounted reward. Thus,
+%The probability transition kernel $P$ collects the probabilities $p_a(s,s')$ of transitioning from state $s$ to state $s'$ under the action $a$ for all possible $s,s'\in S$ and $a\in A$. We denote the reward (or gain) obtained for performing action $a\in A$ in state $s\in S$ by $g_a(s)$.
 
-\textbf{Policy:} A stationary deterministic policy\footnote{For the scope of this paper, it suffices to restrict our attention to stationary deterministic policies.} (SDP), or simply a policy, is a map $u\colon S\ra A$ that specifies for each state what action to select in that state. Under an SDP, an MDP is a Markov chain whose probability transition matrix is denoted by $P_u$.
+%\textbf{Policy:} A stationary deterministic policy(SDP), or simply a policy, is a map $u\colon S\ra A$ that specifies for each state what action to select in that state. Under an SDP, an MDP is a Markov chain whose probability transition matrix is denoted by $P_u$.
 
-\textbf{Value Function:} Given an SDP $u$, the expected total discounted reward corresponding to starting at a state $s\in S$ at $t=0$, while choosing actions as dictated by $u$ for the states encountered in the future (i.e., $t>0$), is
+%\textbf{Value Function:} Given an SDP $u$, the expected total discounted reward corresponding to starting at a state $s\in S$ at $t=0$, while choosing actions as dictated by $u$ for the states encountered in the future (i.e., $t>0$), is
 \begin{align}
-J_u(s)\stackrel{\Delta}{=}\E[\sum_{t=0}^\infty \alpha^t g_{a_t}(s_t)|s_0=s,a_t=u(s_t)\mbox{ }\forall t\geq 0],\nn
+%J_u(s)\stackrel{\Delta}{=}\E[\sum_{t=0}^\infty \alpha^t g_{a_t}(s_t)|s_0=s,a_t=u(s_t)\mbox{ }\forall t\geq 0],\nn
+J_u(s)\defeq \sum_{t=0}^\infty \alpha^t (P_u^t g_u)(s)\,,\nn
+%\E[\sum_{t=0}^\infty \alpha^t g_{a_t}(s_t)|s_0=s,a_t=u(s_t)\mbox{ }\forall t\geq 0],\nn
 \end{align}
-where $\alpha \in (0,1)$ is the so-called discount factor and $s_{t+1} \sim p_{a_t}(s_t,\cdot)$, $t\ge 0$.
-We call $J_u(s)$ the value of state $s$ under SDP $u$, while $J_u$ (as a map from $S$ to the reals)
-is called the value function underlying policy $u$. The value functions $J_u$ is an elements of $\R^S$. In what follows it will be useful for us to treat it as an $n$-dimensional vector, i.e., an element of $\R^n$, effectively identifying $\R^S$ with $\R^n$ in the natural way. Similarly we identify $\R^{nd}$ with $\R^{S\times A}$, where $d=|A|$.
+where  $\alpha \in (0,1)$ is the so-called discount factor. % and $s_{t+1} \sim p_{a_t}(s_t,\cdot)$, $t\ge 0$.
+We call $J_u$ the \emph{value function} of policy $u$. The value function of a policy satisfies the fixed-point equation $J_u = T_u J_u$ where the affine-linear operator $T_u$ is defined by $T_u J = g_u + \alpha P_u J$.
+An \emph{optimal policy}, is one that maximizes the value simultaneously for all initial states.
+The \emph{optimal value function} $J^*$ is defined by $J^*(s) = \max_u J_u(s)$ and is known to be the solution of the fixed-point equation $J^* = T J^*$ where the operator $T$ is defined by $(TJ)(s) = \max_u (T_u J)(s)$, $s\in \S$, i.e., the maximization is component-wise. Optimal policies exist and in fact any policy $u$ such that the equation $T_u J^* = T J^*$ holds is optimal (e.g., Corollary 3.3 of \cite{Kall17}). A policy $u$ is said to be \emph{greedy} with respect to (w.r.t.) $J$ if $T_u J = T J^*$. Thus, any policy that is greedy w.r.t. $J^*$ is optimal. 
+
+\if0
+The value functions $J_u$ is an elements of $\R^S$. In what follows it will be useful for us to treat it as an $n$-dimensional vector, i.e., an element of $\R^n$, effectively identifying $\R^S$ with $\R^n$ in the natural way. Similarly we identify $\R^{nd}$ with $\R^{S\times A}$, where $d=|A|$.
 
 \textbf{Optimality and the Bellman Equation:} The \emph{optimal policy} $u^*$ is one that in each state $s\in S$ achieves the best possible total expected discounted reward from that state. That is, $J_{u^*}(s) = J^*(s) \eqdef \us{\max}{u\in U} J_u(s)$
 where $U$ is the set of all SDPs and $J^*$ is coined the \emph{optimal value function}.
@@ -25,7 +42,6 @@ Any optimal policy $u^*$ and value function $J^*$ obey the Bellman equation (BE)
 \end{align}
 \end{subequations}
 where ties in \eqref{bellpol} are resolved arbitrarily.
-
 For the subsequent sections, the following definitions will be useful later:
 \begin{definition}\label{notations}
 \begin{comment}
@@ -59,3 +75,4 @@ Approximate dynamic programming (ADP) methods are based on DP methods, but emplo
 
 It is natural to expect that approximations lead to errors and it is important to quantify the errors. For a given ADP method, theoretical performance analysis involves  bounding the error terms $||J^*-\tilde{J}||$  and $\norm{J^*-J_{\tu}}$ which denote the error in approximating the value function, and performance loss due to following policy $\tu$ respectively (where $\norm{\cdot}$ is an appropriate norm). Further, in most cases the error terms reveal some structure that can offer insights and act as guide to the designer of the ADP method (for example the choice of $\Phi$). The focus of this paper is to present the error analysis for generalized reduced linear programming (GRLP), a new ADP formulation which we introduce in \Cref{sec:grlp}.
 \end{comment}
+\fi

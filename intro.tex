@@ -32,7 +32,8 @@ In fact, various hardness results show that computing actions of (near-) optimal
 and in various compactly represented MDPs \cite{BlonTsi:00Complexity}.
 Given these negative results, 
 it is customary to adopt the \emph{modest goal of efficiently computing actions of a policy that 
-is nearly as good as the best policy in a given restricted policy class}.
+is nearly as good as the best policy \todoc{This is too ambitious still. Need to tweak.}
+in a given restricted policy class}.
 Here, within some restrictions (see below), the policy class can be chosen by the user.
 The more flexibility the user is given in this choice, the stronger a planning method is.
 
@@ -73,14 +74,20 @@ The basic idea here is to combine a linear program whose solution is the optimal
 As shown by \citet{ALP}, the solution to the resulting LP is within a constant factor of the best approximation to the optimal value function within the span of the chosen bases. However, since the number of constraints in the LP is still proportional to the number of states, it is not obvious whether a solution to the resulting LP can be found in time independent of the number of states (other computations can be done in time independent of the number of states, e.g., using sampling, at the price of a controlled increase of the error, e.g., Theorem 6 of \citep{petrik}).
 
 Most of the literature is thus devoted to designing methods to select a tractable subset of the constraints while keeping the approximation guarantees, as well as keeping computations tractable. 
-For example, \citet{schuurmans} and \citet{gkp} propose constraint generation in a setting 
-where the MDP has additional structure (i.e., factorized transition structure) 
-that is then exploited in the constraint generation method.
-A more general approach due to \citet{CS} 
+Since a linear objective is optimized by a point on the boundary of the feasible region, 
+knowing the optimizer would be sufficient to eliminate all but 
+as many constraints as the number of optimization variables.
+The question is how to find a superset of these, or an approximating set, without incurring much computational overhead.
+\citet{schuurmans} and \citet{gkp} propose constraint generation in a setting 
+where the MDP has additional structure (i.e., factorized transition structure).
+This additional structure is then exploited in designing constraint generation methods which are able to efficiently generate
+violated constraints. A more general approach due to \citet{CS} 
 is to choose a random subset of the constraints 
 by choosing states to be included at random from a distribution that reflects the ``importance'' of states.
-While constraint generation is powerful when applicable,
-it is not known how solution quality degrades with the budget on the constraints generated.
+While constraint generation can be powerful,
+it is not known how solution quality degrades with the budget on the constraints generated
+(\citeauthor{gkp} note that the number of constraints generated can be at most exponential in a fundamental quantity,
+the induced width of a so-called cost-network, which may be large and is in general hard to control).
 For constraint sampling,  \citet{CS} prove a bound on the suboptimality, but this bound applies only 
 in the unrealistic scenario when the constraints are sampled from an \emph{idealized} distribution,
 which is related to the stationary distribution of an optimal policy. 
