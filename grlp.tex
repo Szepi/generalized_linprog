@@ -66,12 +66,47 @@ is obtained by adding the linear constraints $J = \sum_{i=1}^k r_i \phi_i$ to th
 As noted by \citet{SchSei85}, the linear program is feasible as long as $\one$, defined as the vector with all components being identically equal to one, is in the span of $\{\phi_1,\dots,\phi_k\}$. 
 \emph{For the purpose of computations, it is assumed that the values $c^\top \phi_i$, $i=1,\dots, k$ and the values $(P_a \phi_i)(s)$ and $g_a(s)$ can be accessed in constant time.} 
 This assumption can be relaxed to assuming that one can access $g_a(s)$ and $\phi_i(s)$ for any $(s,a)$ in constant time, as well as to that one can efficiently sample from $c$, from $P_a(s,\cdot)$ for any $(s,a)$ pair, 
-but the details of this are the beyond the scope of the present work. As shown by \citet{ALP}, if $\ralp$ denotes the solution to the above ALP then for $\Jalp \doteq \sum_i \ralp(i) \phi_i \doteq \Phi r$ it holds that $\norm{\Jalp - J^*}_{1,c} \le \frac{2 \epsilon}{1-\alpha}$ where $\epsilon = \inf_r \norm{ J^* - \Phi r }_\infty$ is the error of approximating the optimal value with the span of the basis functions $\phi_1,\dots,\phi_k$ and $\norm{J}_\infty = \max_s |J(s)|$ is the maximum norm and $\Phi \in \R^{S\times k}$ is the matrix formed by $(\phi_1,\dots,\phi_k)$.
+but the details of this are the beyond the scope of the present work. As shown by \citet{ALP}, if $\ralp$ denotes the solution to the above ALP then for $\Jalp \doteq \sum_i \ralp(i) \phi_i \doteq \Phi \ralp$ it holds that $\norm{\Jalp - J^*}_{1,c} \le \frac{2 \epsilon}{1-\alpha}$, where $\epsilon = \inf_r \norm{ J^* - \Phi r }_\infty$ is the error of approximating the optimal value with the span of the basis functions $\phi_1,\dots,\phi_k$ and $\norm{J}_\infty = \max_s |J(s)|$ is the maximum norm and $\Phi \in \R^{S\times k}$ is the matrix formed by $(\phi_1,\dots,\phi_k)$. That the error of approximating $J^*$ with $\Jalp$ is $O(\epsilon)$ is significant: The user can focus on finding a good basis, leaving the search for the ``right'' coefficients to a linear program solver.
 
-While evaluating the objective and checking a single constraint for constraint violations can be done in constant time, 
-since the number of constraints in the ALP is equal to the number of state-action pairs, the ALP is still intractable in general.
-To reduce the number of constraints, we propose to relax the constraints by considering a linear projection of them with 
-positive linear coefficients. Since the resulting program may become unbounded, it is necessary to introduce an additional constraint $r\in \N$, where $\N$ will be chosen to be large enough so as not to exclude ``good solutions'', while constraining enough so as to prevent unbounded solutions. \todoc{I still don't get whether we need or not $\N$. Under the conic constraints, do we need it or not? I mean when $r$ hits the boundary of $\N$ I have the feeling that we get a very bad solution and it would not then matter much whether $\N$ is even there or not.}
+While the solving the ALP can be significantly cheaper than solving the LP underlying the MDP
+and thus it can be advantageous for moderate-scale MDPs,
+ \todoc{Give the big-Oh costs!} the number of constraints in the ALP is $SA$, 
+ hence the ALP is still infeasible for huge-scale MDPs. 
+%While evaluating the objective and checking a single constraint for constraint violations can be done in constant time, 
+%since the number of constraints in the ALP is equal to the number of state-action pairs, 
+%the ALP is still intractable in general.
+To reduce the number of constraints, we consider a relaxation of ALP 
+where the constraints are replaced with positive linear 
+combinations of them. 
+Recalling that the constraints took the form $J \ge g_a + \alpha P_a J$ (with $J = \Phi r$),
+choosing $m$ to be target number of constraints, for $1\le i \le m$, the $i$th new constraint is given by
+$\sum_a w_{i,a}^\top J \ge \sum_a w_{i,a}^\top(g_a + \alpha P_a J)$, 
+where the choice of $m$ and that of the vectors $w_{i,a}\in [0,\infty)^S$ is left to the user.
+Note that this results in a linear program with $k$ variables and $m$ constraints, which can be written as
+\begin{align}\label{grlp}
+\begin{split}
+&\underset{r\in \R^k}{\min}\, \, c^\top \Phi r\\
+&\text{s.t.}\mb  \,\sum_a W_a^\top \Phi r\geq \sum_a W_a^\top (g_a + \alpha P_a) \Phi r\,,
+\end{split}
+\end{align}
+where $W_a = (w_{1,a},\dots,w_{m,a}) \in [0,\infty)^{S \times m}$. 
+\todoc{Do we need that $(w_{i,a}^\top)_i$ defines a probability distribution?}
+Note that the $(i,j)$th entry of the $m\times k$ constraint matrix of the resulting LP is
+$\sum_a  w_{i,a}^\top  \phi_j - \alpha \sum_a w_{i,a}^\top P_a \phi_j$ and assuming that $(w_{i,a})_{a}$ has $p$ nonzero
+elements, this can be calculated in $O( p )$ time, making the total cost of obtaining the constraint matrix to be $O(mkp)$ regardless the value of $S$ and $A$. \todoc{Somewhere discuss that the cost of obtaining a policy will depend on $A$. 
+We can also discuss how $A$ could be folded into states.}
+
+We will call the LP in \eqref{grlp} the \emph{linearly relaxed approximate linear program (LRALP)}. \todoc{Replace GRLP everywhere with LRALP.} Note that the LRALP may be unbounded. While unboundedness could be prevented by adding an extra constraint of the form $r\in \N$ for a ``sufficiently large'' and ``simple'' bounded polytope $\N \subset \R^k$ which can be chosen based on the knowledge of $\alpha$ alone. However, we see little value in this and thus stick to the above simple form.%
+\footnote{
+Note though that $\N$ would need to be chosen based on very little information,
+hence it would in general be chosen to provide an extremely loose constraint to avoid
+the accidental elimination of potentially good solutions. 
+Hence, on the occasion when the LP without the extra $r\in \N$ constraint is unbounded,
+the solution found when $r\in \N$ is added would lie on the boundary of $\N$, which
+makes one expect the error of the resulting solution to be rather large.
+}
+
+Since the resulting program may become unbounded,  it is necessary to introduce an additional constraint $r\in \N$, where $\N$ will be chosen to be large enough so as not to exclude ``good solutions'', while constraining enough so as to prevent unbounded solutions. 
 This leads to what we call the Generalized Reduced Linear Program: \todoc{Again, Linearly Projected ALP, or ALP with Linear Constraint Projection, or with Linear Constrain Relaxation?} \todoc{I stopped here, need to sleep. The idea in this section is to just explain how the computation is done. In the next section I would just give the main result. In the next section I would give the proof. Rather than the present lemma, lemma, lemma.. organization it is probably better to organize the proof in a top-down. Starting to do the proof, required results can be stated as claims/lemmas. But maybe some of the lemmas can be saved (I have a specific plan, just saying, if you want to do something with this).}
 \begin{align}\label{grlp}
 \begin{split}
