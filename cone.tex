@@ -1,16 +1,24 @@
+%!TEX root =  autocontgrlp.tex
 \begin{theorem}
-Let $\phi(s)$^\footnote{Here $\phi(s)$ is the $s^{th}$ row of the feature matrix $\Phi$} be the feature of the $s^{th}$ state. Let $i$ be a state whose constraints have not been retained and let $\{J}$ denote the set of states whose constraints have been retained. Further, let $\phi(i)\in \R^k$ lie in the linear span of vectors $\phi(j)\in \R^k,\forall j\in \J$, then
-\begin{align}
-(\Gamma J^*-\hg J^*)(i) \leq (\Gamma J^*-J^*)(i)+J^*(i)-\underset{j\in \J}{\sum} |\gamma_j| J^*(j)+ \underset{j\in \J}(|\gamma_j|-\gamma_j) B,
-\end{align}
+Let $\phi(s)$%
+\footnote{Here $\phi(s)$ is the $s^{th}$ row of the feature matrix $\Phi$} be the feature of the $s^{th}$ state. Let $i$ be a state whose constraints have not been retained and let $\{J\}$ denote the set of states whose constraints have been retained. Further, let $\phi(i)\in \R^k$ lie in the linear span of vectors $\phi(j)\in \R^k,\forall j\in \J$, then
+\begin{align*}
+\MoveEqLeft (\Gamma J^*-\hg J^*)(i)
+ \leq 
+(\Gamma J^*-J^*)(i) \\
+& {}+J^*(i)-\underset{j\in \J}{\sum} |\gamma_j| J^*(j)
++ \underset{j\in \J}(|\gamma_j|-\gamma_j) B,
+\end{align*}
 where $\gamma_j$ are the co-efficients of the linear span and $B\eqdef \underset{\underset{s\in S}{r\in \N}}{\max}(\Phi r) (s)$
 \end{theorem}
 \begin{proof}
 Let $r^s_{\Gamma}$ and $r^s_{\hg}$ be such that $(\Phi r^s_{\Gamma})(s)=(\Gamma J^*)(s)$ and $(\Phi r^s_{\hg})(s)=(\hg J^*)(s)$
-\begin{algin}
-(\Gamma J^*-\hg J^*)(i) &=\phi(i) r^s_{\Gamma}- \phi(i) r^s_{\Gamma}
-&=\phi(i) r^i_{\Gamma}- \underset{j\in \J}(|\gamma_j|+\gamma_j -|\gamma_j|)\phi(j) r^i_{\hg}
-\leq \phi(i) r^i_{\Gamma}- \underset{j\in \J}|\gamma_j| J^*(j) + \underset{j\in \J} (|\gamma_j|-\gamma_j)B
-= \phi(i) r^i_{\Gamma}- J^*(i)+ J^*(i) -\underset{j\in \J}|\gamma_j| J^*(j) + \underset{j\in \J} (|\gamma_j|-\gamma_j)B
-\end{align}
+\begin{align*}
+\MoveEqLeft (\Gamma J^*-\hg J^*)(i) 
+=\phi(i) r^s_{\Gamma}- \phi(i) r^s_{\Gamma}\\
+&=\phi(i) r^i_{\Gamma}- \underset{j\in \J}(|\gamma_j|+\gamma_j -|\gamma_j|)\phi(j) r^i_{\hg}\\
+&\leq \phi(i) r^i_{\Gamma}- \underset{j\in \J}|\gamma_j| J^*(j) + \underset{j\in \J} (|\gamma_j|-\gamma_j)B\\
+&= \phi(i) r^i_{\Gamma}- J^*(i)+ J^*(i) -\underset{j\in \J}|\gamma_j| J^*(j) \\
+& \quad + \underset{j\in \J} (|\gamma_j|-\gamma_j)B\,.
+\end{align*}
 \end{proof}
