@@ -77,7 +77,7 @@ be the error of approximation $J^*$ using the basis functions in $\Phi$.
 Then,
 \begin{align*}
 \norm{J^*-\hj}_{1,c} \leq 
- \frac{2}{1-\beta_\psi} \left(
+ \frac{2 c^\top \psi}{1-\beta_\psi} \left(
 	3 \eps
      +\norm{\Jalpo-\Jlro}_{\infty,\psi}\right)\,.
 \end{align*}
@@ -97,7 +97,6 @@ As noted earlier, \citet{ALP} prove a similar error bound for $\Jalp$, the solut
 In particular, their Theorem 3 states that  under identical assumptions as in our result,
 $\norm{J^* - \Jalp}_{1,c} \le \frac{2 c^\top \psi \epsilon}{1-\beta_\psi}$ for $\epsilon$ defined as above
  (the result we cited previously is a simplified form of this bound).
-\todoc{Strange that we don't have $c^\top \psi$!?}
 The larger coefficient of $\epsilon$ is probably an artifact of our analysis. 
 Note that when $W$ does not reduce the constraints, 
 our bound is only a constant factor larger than this previous result.
