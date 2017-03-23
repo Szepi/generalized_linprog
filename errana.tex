@@ -1,5 +1,50 @@
 %!TEX root =  autocontgrlp.tex
-\section{Error Analysis}\label{sec:improv}
+\section{Proofs}\label{sec:improv}
+
+
+In this section we present the main results of this paper in \Cref{cmt2} (we state improved bounds in \Cref{sec:improv}). Our bounds are expressed in terms of two novel contractions operators which we define in \Cref{lubpop,alubpop}. We now define two projection operators that are central to our error analysis and in them we assume that the set $\N'\subset \Re^k$ is such that $\N' = \N + t \one$ for any $t\in \Re$.
+%The least upper bound (LUB) projection operator $\Gamma \colon \Re^n \ra\Re^n$ is defined below, see \eqref{gamdef}.
+\begin{definition}\label{lubpop}
+Given $J\in \Re^n$ and the nonnegative valued vector $c\in \Re^n_+$, define $r_{c,J}$ to be the solution to
+\begin{align}
+\label{lubplp}
+\begin{split}
+\underset{r\in \N'}{\min} &\,\, c^\top \Phi r\,\mb
+\text{s.t.} \mb \Phi r\geq  TJ.
+\end{split}
+\end{align}
+For $J\in \Re^n$, $\Gamma J$, the \emph{least upper} (LU) projection of $J$ is defined as
+\begin{align}\label{gamdef}
+(\Gamma J)(i)\eqdef(\Phi r_{e_i,J})(i),\quad i=1,\ldots,n\,.
+\end{align}
+\end{definition}
+The definition of the second operator is as follows:
+\begin{definition}\label{alubpop}
+Given $J\in \Re^n$ and the nonnegative valued vector $c\in \Re^n_+$, define $r'_{c,J}$ to be the solution to
+\begin{align}\label{alubplp}
+\underset{r\in \N'}{\min}& \,\mb c^\top \Phi r\,\mb
+\text{s.t.} \,\,\, W^\top E \Phi r\geq W^\top HJ.
+\end{align}
+The \emph{approximate least upper} (ALU) projection operator
+$\hg \colon \Re^n \ra \Re^n$ is defined as
+\begin{align}\label{tgamdef}
+(\hg J)(i)\eqdef(\Phi r'_{e_i,J})(i), \mb i=1,\ldots,n\,, J\in \Re^n\,.
+\end{align}
+\end{definition}
+\begin{remark}\label{ubrem}
+To understand the meaning of $\Gamma$ (and $\hg$) define
+\begin{align}\label{ubclass}
+\F_J\eqdef\{\,\Phi r\,:\,\Phi r\geq TJ, r\in \N'\,\},
+\end{align}
+where $J\in \Re^n$.
+Disregarding the constraint $r\in \N'$,
+$\F_J$ contains all vectors in the span of $\Phi$ that upper bound $TJ$. Further, since $(\Gamma J)(i) = \min\{ V(i) \,:\, V\in \F_J \}$, it also follows that $ V\ge \Gamma J $ holds for any $V\in \F_J$. Also $\Gamma J\geq T J$.\par
+The operators $\Gamma$ and $\hg$ are closely related to ALP \eqref{alp} and GRLP \eqref{grlp} respectively and are only analytical tools that we will need to express our bounds and need not be computed in practice. It turns out that the novel operators ($\Gamma$ and $\hg$) are contraction maps (see \Cref{hgmaxcontramn}), a fact that is a key to our results (\Cref{cmt2mn,polthe}). At the outset we are interested in the candidate value functions in the constraint set $\N$ and want to study them using $\Gamma$ and $\hg$. However since the basis $\Phi$ contains $\one$ we make it helps our analysis to define the set $\N'$ in \Cref{lubplp,alubplp} to be `$\N$ plus its translations by $\one$'.
+\end{remark}
+
+
+
+
 \subsection{Properties of the Bellman Operator}
 We now state without proof the most important properties of the Bellman operator(s).
 The proofs are immediate from the definitions, but can also be found in \cite{BertB}.
@@ -29,6 +74,7 @@ If $J\in \Re^n$ is such that $J\geq TJ$ then $J\geq TJ^2\geq \ldots \geq J^*$.
 \end{corollary}
 Though \cref{tprop} are stated for the Bellman operator $T$, the results also hold for $H$ as well.\par
 We now present the analysis to derive the improved bounds where the idea is to show that the novel projection operators ($\Gamma/\hg$) are contraction maps. To this end, we go through steps similar to \Cref{tprop}-\eqref{monotone},~\eqref{shift} and ~\eqref{maxnorm}. Much the results that ensue are based on `Lyapunov' analysis where the idea is to replace the constant function $\one$ by a certain Lyapunov function (see \Cref{def:lyap}) and the $\norm{\cdot}_{\infty}$ by a weighted max-norm (see \Cref{notations}-\eqref{norms}).
+
 \subsection{Analysis using Lyapunov Functions}
 \begin{definition}\label{def:lyap}
 Let $c,\rho,\chi:S \to \Re_+$ be positive-valued functions. Then for $J\in \Re^n$, $a\in A$ and $s\in S$, define
