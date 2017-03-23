@@ -2,11 +2,11 @@
 \begin{comment}
 \section{Approximate Linear Programming: Successes and Challenges}
 When the MDP has a large number of states, it is difficult to solve for $J^*$ using either the linear program \eqref{mdplp} or other full state representation methods such as value iteration or policy iteration \cite{BertB}. A practical solution is to resort to function approximation. Linear function approximation, wherein the solution is searched in the subspace spanned by the column vectors of a given feature matrix $\Phi$.
-The approximate linear program (ALP) is obtained by making use of LFA in the LP, i.e., by introducing the new variables $r\in \R^k$ and adding the extra constraint $J=\Phi r$ in \eqref{mdplp} with $\Phi \in \R^{n\times k}$ \citep{SchSei85}.
+The approximate linear program (ALP) is obtained by making use of LFA in the LP, i.e., by introducing the new variables $r\in \Re^k$ and adding the extra constraint $J=\Phi r$ in \eqref{mdplp} with $\Phi \in \Re^{n\times k}$ \citep{SchSei85}.
 By substitution, this leads to
 \begin{align}\label{alp}
 \begin{split}
-\min_{r\in \R^k}\, &c^\top \Phi r\,\,\,
+\min_{r\in \Re^k}\, &c^\top \Phi r\,\,\,
 \text{s.t.}\mb \Phi r\geq T \Phi r,
 \end{split}
 \end{align}
@@ -37,12 +37,12 @@ In this paper, we address both of the questions above.
 \end{comment}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Generalized Reduced Linear Programming}\label{sec:grlp}
-\todoc{How about the cleaner ``Linear projected approximate linear programming''}
-In this section we introduce the computational model used and the optimization problem
-that is the main object of our study.
+\section{The Linearly Relaxed ALP}\label{sec:grlp}
+In this section we introduce the computational model used and the ``Linearly Relaxed Approximate Linear Program''
+a relaxation of the ALP.
+
 As discussed in the introduction, we are interested in methods that compute a good approximation to the optimal value function.
-As noted earlier, at the expense of a modest additional cost, knowing an $O(\epsilon)$ approximation to $J^*$ at a few states suffices to compute actions of an $O(\epsilon)$-optimal policy. We will take a more general view, and we will consider calculating good approximations to $J^*$ with respect to a weighted $1$-norm, where the weights $c$ form a probability distribution over $\S$. Recall that the weighted $1$-norm $\norm{J}_{1,c}$ of a vector $J\in \R^S$ is defined as $\norm{J}_{1,c}  = \sum_s c(s) |J(s)|$. Note that here and in what follows we identify elements of $\R^\S$ (functions, mapping $\S = \{1,\dots,S\}$ to the reals) with elements of $\R^S$ in the obvious way. This allows us to write e.g. $c^\top J$, which denotes $\sum_s c(s) J(s)$.
+As noted earlier, at the expense of a modest additional cost, knowing an $O(\epsilon)$ approximation to $J^*$ at a few states suffices to compute actions of an $O(\epsilon)$-optimal policy. We will take a more general view, and we will consider calculating good approximations to $J^*$ with respect to a weighted $1$-norm, where the weights $c$ form a probability distribution over $\S$. Recall that the weighted $1$-norm $\norm{J}_{1,c}$ of a vector $J\in \Re^S$ is defined as $\norm{J}_{1,c}  = \sum_s c(s) |J(s)|$. Note that here and in what follows we identify elements of $\Re^\S$ (functions, mapping $\S = \{1,\dots,S\}$ to the reals) with elements of $\Re^S$ in the obvious way. This allows us to write e.g. $c^\top J$, which denotes $\sum_s c(s) J(s)$.
 
 To introduce the optimization problem we study first recall that 
 the optimal value function $J^*$ is the solution of the fixed point equation $TJ^* = J^*$. 
@@ -55,18 +55,18 @@ By our note on $T$ and $(T_a)_a$, these inequalities can also be written compact
 \if0
 Since $T$ is monotone (i.e., for any $J_1\le J_2$ it holds that $TJ_1 \le T J_2$) and can be seen to be an $\alpha$-contraction with respect to the maximum norm, if $J$ is superharmonic then $J \ge T J \ge T^2 J \ge \dots \ge J^*$, where the last inequality follows since $T$ is an $\alpha$-contraction and hence $T^n J \to J^*$ in the maximum norm, and hence also componentwise.
 Thus, $J^*$ is the ``smallest'' superharmonic function. It follows than that 
-for any $c\in \R_+^S \doteq [0,\infty)^S$ and any superharmonic $J$, $c^\top J^*\le c^\top J$ and since $J^*$ is also superharmonic, $\min \{ c^\top J\,:\, J \ge T J \} = c^\top J^*$ and if $c$ is positive-valued then the minimizer of $c^\top J$ amongst all superharminoc functions is $J^*$.
+for any $c\in \Re_+^S \doteq [0,\infty)^S$ and any superharmonic $J$, $c^\top J^*\le c^\top J$ and since $J^*$ is also superharmonic, $\min \{ c^\top J\,:\, J \ge T J \} = c^\top J^*$ and if $c$ is positive-valued then the minimizer of $c^\top J$ amongst all superharminoc functions is $J^*$.
 \fi
-It is not hard to show then that $J^*$ is the smallest superharminoc function (i.e., for any $J$ superharmonic, $J\ge J^*$). It also follows that for any  $c\in \R_{++}^S \doteq (0,\infty)^S$, the unique solution to the linear program $\min\{ c^\top J \,:\, J \ge T J \} =\min \{ c^\top J\,:\, J \ge T_a J, a\in \A \} $ is $J^*$. 
+It is not hard to show then that $J^*$ is the smallest superharminoc function (i.e., for any $J$ superharmonic, $J\ge J^*$). It also follows that for any  $c\in \Re_{++}^S \doteq (0,\infty)^S$, the unique solution to the linear program $\min\{ c^\top J \,:\, J \ge T J \} =\min \{ c^\top J\,:\, J \ge T_a J, a\in \A \} $ is $J^*$. 
 
-Now, let $\phi_1,\ldots,\phi_k : \S \to \R$ be $k$ basis functions. 
+Now, let $\phi_1,\ldots,\phi_k : \S \to \Re$ be $k$ basis functions. 
 \todoc{I think we should use $d$ to denote the number of basis functions. Or at least $n$. Low priority.} 
 The \emph{Approximate Linear Program} (ALP) of \citet{SchSei85} 
-is obtained by adding the linear constraints $J = \sum_{i=1}^k r_i \phi_i$ to the above linear program. Eliminating $J$ then gives $\min\{ \sum_i r_i c^\top \phi_i \,:\, \sum_i r_i \phi_i \ge g_a + \alpha \sum_i r_i P_a \phi_i, a\in \A, r = (r_i)\in \R^k \}$.
+is obtained by adding the linear constraints $J = \sum_{i=1}^k r_i \phi_i$ to the above linear program. Eliminating $J$ then gives $\min\{ \sum_i r_i c^\top \phi_i \,:\, \sum_i r_i \phi_i \ge g_a + \alpha \sum_i r_i P_a \phi_i, a\in \A, r = (r_i)\in \Re^k \}$.
 As noted by \citet{SchSei85}, the linear program is feasible as long as $\one$, defined as the vector with all components being identically equal to one, is in the span of $\{\phi_1,\dots,\phi_k\}$. 
 \emph{For the purpose of computations, it is assumed that the values $c^\top \phi_i$, $i=1,\dots, k$ and the values $(P_a \phi_i)(s)$ and $g_a(s)$ can be accessed in constant time.} 
 This assumption can be relaxed to assuming that one can access $g_a(s)$ and $\phi_i(s)$ for any $(s,a)$ in constant time, as well as to that one can efficiently sample from $c$, from $P_a(s,\cdot)$ for any $(s,a)$ pair, 
-but the details of this are the beyond the scope of the present work. As shown by \citet{ALP}, if $\ralp$ denotes the solution to the above ALP then for $\Jalp \doteq \sum_i \ralp(i) \phi_i \doteq \Phi \ralp$ it holds that $\norm{\Jalp - J^*}_{1,c} \le \frac{2 \epsilon}{1-\alpha}$, where $\epsilon = \inf_r \norm{ J^* - \Phi r }_\infty$ is the error of approximating the optimal value with the span of the basis functions $\phi_1,\dots,\phi_k$ and $\norm{J}_\infty = \max_s |J(s)|$ is the maximum norm and $\Phi \in \R^{S\times k}$ is the matrix formed by $(\phi_1,\dots,\phi_k)$. That the error of approximating $J^*$ with $\Jalp$ is $O(\epsilon)$ is significant: The user can focus on finding a good basis, leaving the search for the ``right'' coefficients to a linear program solver.
+but the details of this are the beyond the scope of the present work. As shown by \citet{ALP}, if $\ralp$ denotes the solution to the above ALP then for $\Jalp \doteq \sum_i \ralp(i) \phi_i \doteq \Phi \ralp$ it holds that $\norm{\Jalp - J^*}_{1,c} \le \frac{2 \epsilon}{1-\alpha}$, where $\epsilon = \inf_r \norm{ J^* - \Phi r }_\infty$ is the error of approximating the optimal value with the span of the basis functions $\phi_1,\dots,\phi_k$ and $\norm{J}_\infty = \max_s |J(s)|$ is the maximum norm and $\Phi \in \Re^{S\times k}$ is the matrix formed by $(\phi_1,\dots,\phi_k)$. That the error of approximating $J^*$ with $\Jalp$ is $O(\epsilon)$ is significant: The user can focus on finding a good basis, leaving the search for the ``right'' coefficients to a linear program solver.
 
 While the solving the ALP can be significantly cheaper than solving the LP underlying the MDP
 and thus it can be advantageous for moderate-scale MDPs,
@@ -81,15 +81,15 @@ combinations of them.
 Recalling that the constraints took the form $J \ge g_a + \alpha P_a J$ (with $J = \Phi r$),
 choosing $m$ to be target number of constraints, for $1\le i \le m$, the $i$th new constraint is given by
 $\sum_a w_{i,a}^\top J \ge \sum_a w_{i,a}^\top(g_a + \alpha P_a J)$, 
-where the choice of $m$ and that of the vectors $w_{i,a}\in \R_+^S$ is left to the user.
+where the choice of $m$ and that of the vectors $w_{i,a}\in \Re_+^S$ is left to the user.
 Note that this results in a linear program with $k$ variables and $m$ constraints, which can be written as
 \begin{align}\label{grlp}
 \begin{split}
-&\underset{r\in \R^k}{\min}\, \, c^\top \Phi r\\
+&\underset{r\in \Re^k}{\min}\, \, c^\top \Phi r\\
 &\text{s.t.}\mb  \,\sum_a W_a^\top \Phi r\geq \sum_a W_a^\top (g_a + \alpha P_a) \Phi r\,,
 \end{split}
 \end{align}
-where $W_a = (w_{1,a},\dots,w_{m,a}) \in \R_+^{S \times m}$. 
+where $W_a = (w_{1,a},\dots,w_{m,a}) \in \Re_+^{S \times m}$. 
 \todoc{Do we need that $(w_{i,a}^\top)_i$ defines a probability distribution?}
 Note that the $(i,j)$th entry of the $m\times k$ constraint matrix of the resulting LP is
 $\sum_a  w_{i,a}^\top  \phi_j - \alpha \sum_a w_{i,a}^\top P_a \phi_j$ and assuming that $(w_{i,a})_{a}$ has $p$ nonzero
@@ -98,12 +98,12 @@ We can also discuss how $A$ could be folded into states.}
 
 We will call the LP in \eqref{grlp} the \emph{linearly relaxed approximate linear program (LRALP)}. \todoc{Replace GRLP everywhere with LRALP.} Any LP obtained using 
 any constraint selection/generation process can be represented by choosing an appropriate binary-valued matrix
-$W^\top = (W_1^\top,\dots,W_A^\top)\in \R_+^{m\times SA}$. In particular, when the constraints are selected
+$W^\top = (W_1^\top,\dots,W_A^\top)\in \Re_+^{m\times SA}$. In particular, when the constraints are selected
 in a random process as suggested by \citet{CS}, the matrix $W$ would be a random, binary-valued matrix.
 
 Note that the LRALP may be unbounded. 
 Unboundedness could be avoided by adding an extra constraint of the form $r\in \N$ to the LRALP,
-for a properly chosen polyhedron $\N \subset \R^k$.%
+for a properly chosen polyhedron $\N \subset \Re^k$.%
 \footnote{
 In particular, to obtain their theoretical result, \citet{CS} need the assumption that the set $\N$ 
 is bounded and that it contains $\ralp$. In fact, 
@@ -129,15 +129,15 @@ makes one expect the error of the resulting solution to be rather large.
 }
 
 Further insight into the choice of $W$ can be gained by
-considering the Langrangians of the ALP and LRALP. To write both LP's in a similar form let us introduce $E = (I_{S\times S},\dots,I_{S\times S})^\top$, where $I_{S\times S}$ is the $S\times S$ identity matrix. Further, let $H:\R^S \times \R^{SA}$ be the operator defined by $(HJ)^\top = ( (T_1 J)^\top, \dots, (T_A J)^\top )$. Note that $H$ is a linear operator. Then, the ALP can be written as $\min\{ c^\top \Phi r \,|\, E \Phi r \ge H \Phi r \}$, while LRALP takes the form  
+considering the Langrangians of the ALP and LRALP. To write both LP's in a similar form let us introduce $E = (I_{S\times S},\dots,I_{S\times S})^\top$, where $I_{S\times S}$ is the $S\times S$ identity matrix. Further, let $H:\Re^S \to \Re^{SA}$ be the operator defined by $(HJ)^\top = ( (T_1 J)^\top, \dots, (T_A J)^\top )$. Note that $H$ is a linear operator, which we call the \emph{linear Bellman operator}. 
+Then, the ALP can be written as $\min\{ c^\top \Phi r \,|\, E \Phi r \ge H \Phi r \}$, while LRALP takes the form  
 $\min\{ c^\top \Phi r \,|\, W^\top E \Phi r \ge W^\top H \Phi r \}$. 
 Hence, their Langrangians are $\mathcal{L}_{\alp}(r,\lambda) = c^\top \Phi r+\lambda^\top (H\Phi r-E\Phi r)$
 $\mathcal{L}_{\lralp}(r,q) = c^\top \Phi r+q^\top W^\top (H\Phi r-E\Phi r)$. Thus, we can view $W q$ as a ``linear approximation''
-to the dual variable $\lambda \in \R_+^{SA}$. 
+to the dual variable $\lambda \in \Re_+^{SA}$. 
 This suggests that perhaps $W$ should be chosen such that it approximates well the optimal dual variable.
-If $\Phi$ spans $\R^{S}$, the optimal dual variable $\lambda^*$ is known to be the discounted occupancy measure underlying the optimal policy (Theorem 3.18, \cite{Kall}), suggesting that the role of $W$ is very similar to the role of $\Phi$ excepts that the subspace spanned by the columns of $W$ should ideally be close to $\lambda^*$.
+If $\Phi$ spans $\Re^{S}$, the optimal dual variable $\lambda^*$ is known to be the discounted occupancy measure underlying the optimal policy (Theorem 3.18, \cite{Kall17}), suggesting that the role of $W$ is very similar to the role of $\Phi$ excepts that the subspace spanned by the columns of $W$ should ideally be close to $\lambda^*$.
 
-We denote an arbitrary solution to GRLP by $\hr$, and the approximate value function by $\hj=\Phi \hr$ and use $\hu$ to denote the greedy policy w.r.t. $\hj$.\\
 \if0
 \textbf{Linear function approximation in Primal and Dual Variables:} Let us look at the Lagrangian of ALP and GRLP in
 \eqref{lag} and \eqref{lag2} respectively, i.e.,
@@ -149,7 +149,7 @@ a low dimensional linear representation of the dual variables $\lambda$,
 the two problems are the same.
 %Note that $ Wq\approx \lambda$ in \eqref{lag2} is linear function approximation of the Lagrange multipliers.
 Hence, while ALP employs LFA in its objective function (i.e., use of $\Phi r$), GRLP employs linear approximation both in the objective function ($\Phi r$) as well as the constraints (use of $W$).
-%Further, $W$ can be interpreted as the feature matrix that approximates the Lagrange multipliers as $\lambda\approx Wq$, where $\lambda \in \R^{nd}, r\in \R^m$.
+%Further, $W$ can be interpreted as the feature matrix that approximates the Lagrange multipliers as $\lambda\approx Wq$, where $\lambda \in \Re^{nd}, r\in \Re^m$.
 To get a sense of how $W$ should be chosen, recall that
 the optimal Lagrange multipliers are the discounted number of visits to the ``state-action pairs'' under an optimal policy $u^*$, i.e.,
 \begin{align}

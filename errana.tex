@@ -5,18 +5,18 @@ We now state without proof the most important properties of the Bellman operator
 The proofs are immediate from the definitions, but can also be found in \cite{BertB}.
 \begin{comment}
 First, we introduce some extra notation:
-For $J_1,J_2\in \R^n$, we write $J_1\le J_2$ if $J_1(s)\le J_2(s)$ holds for all $s\in S$.
-We use $\one \in \R^n$ to denote a vector with all entries $1$.
+For $J_1,J_2\in \Re^n$, we write $J_1\le J_2$ if $J_1(s)\le J_2(s)$ holds for all $s\in S$.
+We use $\one \in \Re^n$ to denote a vector with all entries $1$.
 The maximum norm $\norm{\cdot}_{\infty}$ is defined by $ \norm{v}_{\infty} = \max_{s\in S} |v(s)|$.
 \end{comment}
 \begin{lemma}\label{tprop} The following hold:
 \begin{enumerate}[(i)]
-\item \label{monotone}$T$ is a monotone map, i.e., given $J_1,J_2 \in \R^n$ such that $J_1\leq J_2$, we have $T J_1\leq T J_2$.
+\item \label{monotone}$T$ is a monotone map, i.e., given $J_1,J_2 \in \Re^n$ such that $J_1\leq J_2$, we have $T J_1\leq T J_2$.
 \item \label{shift}
-Given $J\in \R^n$ and $t \in \R$, we have $T(J+t\one)=TJ+\alpha t\one$.
+Given $J\in \Re^n$ and $t \in \Re$, we have $T(J+t\one)=TJ+\alpha t\one$.
 \item \label{maxnorm}
-If $T: \R^n \to \R^n$ is any operator that is monotonous and satisfies~\eqref{shift} then
-$T$ is a $\max$-norm contraction operator with contraction factor $\alpha \in (0,1)$, i.e., given $J_1, J_2 \in \R^n$,
+If $T: \Re^n \to \Re^n$ is any operator that is monotonous and satisfies~\eqref{shift} then
+$T$ is a $\max$-norm contraction operator with contraction factor $\alpha \in (0,1)$, i.e., given $J_1, J_2 \in \Re^n$,
 $
 \norm{TJ_1-TJ_2}_\infty\leq \alpha \norm{J_1-J_2}_\infty.
 $
@@ -25,28 +25,28 @@ $J^*$ is a unique fixed point of $T$, i.e., $J^*=TJ^*$.
 \end{enumerate}
 \end{lemma}
 \begin{corollary}
-If $J\in \R^n$ is such that $J\geq TJ$ then $J\geq TJ^2\geq \ldots \geq J^*$.
+If $J\in \Re^n$ is such that $J\geq TJ$ then $J\geq TJ^2\geq \ldots \geq J^*$.
 \end{corollary}
 Though \cref{tprop} are stated for the Bellman operator $T$, the results also hold for $H$ as well.\par
 We now present the analysis to derive the improved bounds where the idea is to show that the novel projection operators ($\Gamma/\hg$) are contraction maps. To this end, we go through steps similar to \Cref{tprop}-\eqref{monotone},~\eqref{shift} and ~\eqref{maxnorm}. Much the results that ensue are based on `Lyapunov' analysis where the idea is to replace the constant function $\one$ by a certain Lyapunov function (see \Cref{def:lyap}) and the $\norm{\cdot}_{\infty}$ by a weighted max-norm (see \Cref{notations}-\eqref{norms}).
 \subsection{Analysis using Lyapunov Functions}
 \begin{definition}\label{def:lyap}
-Let $c,\rho,\chi:S \to \R_+$ be positive-valued functions. Then for $J\in \R^n$, $a\in A$ and $s\in S$, define
+Let $c,\rho,\chi:S \to \Re_+$ be positive-valued functions. Then for $J\in \Re^n$, $a\in A$ and $s\in S$, define
 the discounted maximal inflation of $\chi$ due to $P = (p_a)_{a\in A}$ as $\beta_{\chi}=\max_{s \in S} \frac{\underset{a \in A}{\max}\big(\alpha\sum_{s'}p_a(s,s')\chi(s')\big)}{\chi(s)}$.
-The function $\chi:S\to\R_+$ is a \emph{Lyapunov} function for $P = (p_a)_{a\in A}$ if $\beta_{\chi}<1$.
+The function $\chi:S\to\Re_+$ is a \emph{Lyapunov} function for $P = (p_a)_{a\in A}$ if $\beta_{\chi}<1$.
 \end{definition}
 \begin{assumption}\label{grlpassmp}
 \begin{enumerate}[(i)]
-%\item \label{one} The first column of the feature matrix $\Phi$ (i.e., $\phi_1$) is $\one \in \R^n$.
-\item \label{lyap} $\psi\colon S \ra \R_+$ is a Lyapunov function for $P$
-and is present in the column span of the feature matrix $\Phi$: For some $r_0\in \R^k$, $\Phi r_0 = \psi$.
-\item \label{ass:n4} The set $\N'$ is such that $\N' = \N + t r_0$ for any $t\in \R$, where $r_0\in \R^k$ such that $\Phi r_0 = \psi$.
-\item \label{wassmp} $W \in \R^{nd\times m}_+$ is a matrix with all positive entries.
+%\item \label{one} The first column of the feature matrix $\Phi$ (i.e., $\phi_1$) is $\one \in \Re^n$.
+\item \label{lyap} $\psi\colon S \ra \Re_+$ is a Lyapunov function for $P$
+and is present in the column span of the feature matrix $\Phi$: For some $r_0\in \Re^k$, $\Phi r_0 = \psi$.
+\item \label{ass:n4} The set $\N'$ is such that $\N' = \N + t r_0$ for any $t\in \Re$, where $r_0\in \Re^k$ such that $\Phi r_0 = \psi$.
+\item \label{wassmp} $W \in \Re^{nd\times m}_+$ is a matrix with all positive entries.
 \end{enumerate}
 \end{assumption}
 The authors of \cite{ALP} express the error bounds in terms of $\frac{1}{1-\beta_{\psi}}$.  A smaller $\beta_{\psi}$ loosely implies `stability' of the the underlying MDP,  with smaller values representative of higher stability. Prior works in ALP literature \cite{ALP,SALP,CS} make use of Lyapunov functions based analysis to obtain error bounds that exploit the structure of the underlying MDP. In particular, the prior bounds suggests that ALP is likely to generate good approximations when the underlying MDP is stable. We also adopt a similar approach by stating our results using Lyapunov function based arguments.
 
-We note in passing that if \cref{grlpassmp}-\eqref{lyap} holds, it follows that for any $J\in \R^n$ and $t>0$,
+We note in passing that if \cref{grlpassmp}-\eqref{lyap} holds, it follows that for any $J\in \Re^n$ and $t>0$,
 \begin{align}\label{eq:psilin}
 \begin{split}
 T(J+ t \psi ) \le TJ + \beta_{\psi}\,t\,  \psi,\\
@@ -56,8 +56,8 @@ H(J+ t \psi ) \le HJ + E \beta_{\psi}\,t\,  \psi\,.
 %\input{schematic}
 The next lemma is elementary, but will prove to be useful:
 \begin{lemma}\label{lpsol}
-Let $A\in \R^{u\times v}$, $b\in \R^u,d\in \R^v$ and $b_0=Ax_0$ for
-some $x_0 \in \R^v$, $\N' \subset \R^v$ such that $\N' =x_0+ \N'$. Then
+Let $A\in \Re^{u\times v}$, $b\in \Re^u,d\in \Re^v$ and $b_0=Ax_0$ for
+some $x_0 \in \Re^v$, $\N' \subset \Re^v$ such that $\N' =x_0+ \N'$. Then
 \begin{align}
 &\min\{d^\top x:Ax\geq b+b_0, x\in \N'\} \nn\\
 &=\min\{d^\top y:Ay \geq b, y \in \N' \}+d^\top x_0.
@@ -73,7 +73,7 @@ The claim follows by the change of variables $y := x-x_0$.
 %\end{align*}
 %where $\psi$ is a Lyapunov function as in \cref{lyap}.
 \begin{lemma}\label{bestbndmn}
-Let $r^*\eqdef\underset{r\in \R^k}{\min}\parallel J^*-\Phi r\parallel_{\mn}$. Then,
+Let $r^*\eqdef\underset{r\in \Re^k}{\min}\parallel J^*-\Phi r\parallel_{\mn}$. Then,
 \begin{align}
 \norm{J^*-\Gamma J^*}_{\mn}\leq 2 \norm{J^*-\Phi r^*}_{\mn}.
 \end{align}
@@ -83,14 +83,14 @@ Define $\eps = \norm{J^* - \Phi r^*}_{\mn}$ so that
 $ J^*-\Phi r^* \le \eps \psi$ and $\Phi r^* - J^*\le \eps \psi$. Then, from \cref{grlpassmp}-\eqref{ass:n4} it follows that $\Phi( r^* + \eps r_0 ) = \Phi r^* + \eps \psi \ge J^* = T J^*$. From the definition of $\Gamma$ in \eqref{gamdef} and \cref{ubrem}, we know that $\Phi r^*+\eps \psi \geq \Gamma J^*\geq J^*$. The result follows by noting that $2\eps\psi\geq \Phi r^*+\eps\psi -J^*\geq \Gamma J^*-J^*\geq 0$.
 \end{proof}
 \begin{lemma}\label{tgmonotone}
-For $J_1, J_2\in \R^n$ such that $J_1\leq J_2$, we have $\hg J_1\leq \hg J_2$.
+For $J_1, J_2\in \Re^n$ such that $J_1\leq J_2$, we have $\hg J_1\leq \hg J_2$.
 \end{lemma}
 \begin{proof}
-Given $J\in \R^n$, let $\F_J\eqdef\{\,\Phi r\,: W^\top E \Phi r\geq W^\top HJ, r\in \N'\,\}\,$. Choose any $i\in \{1, \ldots, n\}$. Since $J_1\leq J_2$, from \Cref{tprop}-\eqref{monotone} and \cref{grlpassmp}-\eqref{wassmp} it follows that $W^\top H J_1\leq W^\top H J_2$. Hence, $\F_{J_2} \subset \F_{J_1}$ and thus $(\hg J_1)(i) \le (\hg J_2)(i)$.  Since $i$ was arbitrary, the result follows.
+Given $J\in \Re^n$, let $\F_J\eqdef\{\,\Phi r\,: W^\top E \Phi r\geq W^\top HJ, r\in \N'\,\}\,$. Choose any $i\in \{1, \ldots, n\}$. Since $J_1\leq J_2$, from \Cref{tprop}-\eqref{monotone} and \cref{grlpassmp}-\eqref{wassmp} it follows that $W^\top H J_1\leq W^\top H J_2$. Hence, $\F_{J_2} \subset \F_{J_1}$ and thus $(\hg J_1)(i) \le (\hg J_2)(i)$.  Since $i$ was arbitrary, the result follows.
 \end{proof}
 \begin{lemma}\label{maxnormmn}
-Assume that $\hg: \R^n \to \R^n$ is monotone and 
-that there exists some $\beta\in [0,1)$ such that for any $J\in \R^n$ and $t>0$,
+Assume that $\hg: \Re^n \to \Re^n$ is monotone and 
+that there exists some $\beta\in [0,1)$ such that for any $J\in \Re^n$ and $t>0$,
 \begin{align}
 \label{eq:shiftmn}
 \hg( J + t \psi) \le \hg J + \beta t \psi.
@@ -98,10 +98,10 @@ that there exists some $\beta\in [0,1)$ such that for any $J\in \R^n$ and $t>0$,
 Then $\hg$ is a $\norm{\cdot}_{\mn}$ contraction with factor $\beta$.
 \end{lemma}
 \begin{proof}
-First, we show that for any $t\ge 0$,  $J\in \R^n$,
+First, we show that for any $t\ge 0$,  $J\in \Re^n$,
 $\hg( J - t \psi) \ge \hg J - \beta t \psi$ also holds.
 To see this define $J' = J-t\psi$. Then, $J = J'+t\psi$, hence $\hg J \le \hg J' + \beta t \psi$. Reordering this inequality gives the result.
-Let $\eps = \norm{J_1 - J_2}_{\mn}$, where $J_1,J_2\in \R^n$ are arbitrary.
+Let $\eps = \norm{J_1 - J_2}_{\mn}$, where $J_1,J_2\in \Re^n$ are arbitrary.
 Then $J_2 - \eps \psi \le J_1 \le J_2 + \eps \psi$. 
 By the monotonicity of $\hg$,
 $\hg(J_2 - \eps \psi) \le \hg J_1 \le \hg(J_2 + \eps \psi)$. 
@@ -114,7 +114,7 @@ $T$ is a $\norm{\cdot}_{\mn}$-contraction with factor $\beta_{\psi}$.
 %Returning to $\hg$, since we already now that $\hg$ is monotone (cf. \cref{gmonotone}), it remains to see that it satisfies \eqref{eq:shiftmn}:
 \begin{lemma}\label{gshiftmn}
 The operator $\hg$ satisfies \eqref{eq:shiftmn} with $\beta = \beta_\psi$.
-%For any $J\in \R^n$, $t\in \R_+$, $\Gamma (J+ t \psi ) \le \Gamma J + \beta_{\psi} t \psi$.
+%For any $J\in \Re^n$, $t\in \Re_+$, $\Gamma (J+ t \psi ) \le \Gamma J + \beta_{\psi} t \psi$.
 \end{lemma}
 \begin{proof}
 By definition, for $1\le i \le n$, $(\hg (J+t\psi) )(i) = \min\{ e_i^\top \Phi r \,:\, W^\top E\Phi r \ge W^\top H(J+t\psi), r\in \N' \}$.
@@ -127,12 +127,12 @@ and $x_0=t \beta_\psi r_0$, the statement follows since $A x_0 = b_0$ (from \cre
 %From this result and \cref{maxnormmn}, we immediately get that $\Gamma$ is a contraction in $\norm{\cdot}_{\mn}$:
 \begin{comment}
 \begin{theorem}\label{gmaxcontramn}
-The operator $\Gamma  \colon \R^n\ra \R^n$ is a contraction operator in $\norm{\cdot}_{\mn}$ with factor $\beta_{\psi}$.
+The operator $\Gamma  \colon \Re^n\ra \Re^n$ is a contraction operator in $\norm{\cdot}_{\mn}$ with factor $\beta_{\psi}$.
 \end{theorem}
 \end{comment}
 %In a similar way, one can also show that $\hg$ is also a contraction:
 \begin{theorem}\label{hgmaxcontramn}
-The operator $\hg:\R^n\to\R^n$  is a contraction operator in $\norm{\cdot}_{\mn}$ with factor $\beta_{\psi}$.
+The operator $\hg:\Re^n\to\Re^n$  is a contraction operator in $\norm{\cdot}_{\mn}$ with factor $\beta_{\psi}$.
 %$\hg$ is also a contraction map in the weighted $L_\infty$ norm.
 \end{theorem}
 \begin{proof}
@@ -151,7 +151,7 @@ The vectors $\hv,\hj$ obey $\hj\geq\hv$.
 \end{lemma}
 \begin{proof}
 For $i\in \{1,\dots,n\}$, $c=e_i$ let $r_i$ be a solution to GRLP in \eqref{grlp}
-and define $V_0\in \R^n$ by $V_0(i)=\underset{j=1,\ldots,n}{\min}(\Phi r_j)(i)$, $1\le i \le n$.
+and define $V_0\in \Re^n$ by $V_0(i)=\underset{j=1,\ldots,n}{\min}(\Phi r_j)(i)$, $1\le i \le n$.
 
 It suffices to show that $V_1\eqdef \hg V_0 \le V_0 \le \hj$ since then the desired result follows
 by defining $V_{n+1} = \hg V_n$, $n\ge 1$, noting that by \cref{tgmonotone}, $V_{n+1}\le V_{n}$ and by  \cref{tmaxnormmn}, $V_n \to \hv$.
@@ -172,12 +172,12 @@ The vectors $\hv,\tj$ obey $\tj\geq\hv$.
 \begin{proof}
 %The proof follows in a similar manner as the proof of \Cref{relation1}. To elaborate, 
 Let $ r_1,  r_2,\ldots, r_n$ be solutions to ALP in \eqref{alp} (with an additional constraint that the solution be restricted to $\N$) for $c=e_1, e_2,\ldots,e_n$, respectively,
-and define $V_0\in \R^n$ by $V_0(i)=\underset{j=1,\ldots,n}{\min}(\Phi r_j)(i)$, $1\le i \le n$. The rest of the proof 
+and define $V_0\in \Re^n$ by $V_0(i)=\underset{j=1,\ldots,n}{\min}(\Phi r_j)(i)$, $1\le i \le n$. The rest of the proof 
 follows in the same manner as the proof of \cref{relation1}.
 \end{proof}
 \begin{lemma}\label{srw}
 A vector
-$\hat{r} \in \R^k$ is a solution to GRLP \eqref{grlp} iff it solves the following program:
+$\hat{r} \in \Re^k$ is a solution to GRLP \eqref{grlp} iff it solves the following program:
 \begin{align}\label{grlpeqprog}
 \begin{split}
 \min_{r\in \N}\, &\norm{\Phi r-\hv}_{1,c}\,\mb
@@ -195,10 +195,10 @@ Now, under this constraint, minimizing $c^\top \Phi r$ is the same as minimizing
 \end{proof}
 \begin{lemma}\label{srwalp}
 A vector
-$\tr \in \R^k$ is a solution to ALP \eqref{alp} iff it solves the following program:
+$\tr \in \Re^k$ is a solution to ALP \eqref{alp} iff it solves the following program:
 \begin{align}\label{grlpeqprog}
 \begin{split}
-\min_{r\in \R^k}\, &\norm{\Phi r-\hv}_{1,c}\,\mb
+\min_{r\in \Re^k}\, &\norm{\Phi r-\hv}_{1,c}\,\mb
 \text{s.t.}\mb \, \Phi r\geq  T \Phi r.
 \end{split}
 \end{align}
@@ -232,10 +232,10 @@ and so by reordering and with another triangle inequality,
 The proof follows by combining this and \cref{bestbndmn}.
 \end{proof}
 We now recall Lemma~$5$ from Section 4.2 of \cite{ALP}. 
-For this result, recall that $r_0 \in \R^k$ is the vector such that $\psi = \Phi r_0$.
+For this result, recall that $r_0 \in \Re^k$ is the vector such that $\psi = \Phi r_0$.
 \begin{lemma}\label{restate}
 %Let $\psi$ be a Lyapunov function that belongs to the column span of $\Phi$ ,
-For  $r \in \R^k$ arbitrary, let $r'$ be
+For  $r \in \Re^k$ arbitrary, let $r'$ be
 \begin{align}
 r'= r+\norm{J^*-\Phi r}_{\mn} \left(\frac{1+\beta_{\psi}}{1-\beta_{\psi}}\right)\, r_0.
 \end{align}
@@ -332,7 +332,7 @@ Hence,
 where in the second inequality, we use Jensen's inequality and $|T\hj - \hj|$ stands for the 
 vector whose $i$th component is $|(T\hj)(i) - \hj(i)|$. Further, the last inequality follows
 since $T$ is a $\norm{\cdot}_{\mn}$ contraction with factor $\beta_{\psi}$ as noted earlier.
-%componentwise  $(I-\alpha P_{\hu})^{-1}$ is a positive operator for $x=(x_1,\ldots,x_n)^\top\in \R^n$, $|x|=(|x_1|,\ldots,|x_n|)^\top\in \R^n$. 
+%componentwise  $(I-\alpha P_{\hu})^{-1}$ is a positive operator for $x=(x_1,\ldots,x_n)^\top\in \Re^n$, $|x|=(|x_1|,\ldots,|x_n|)^\top\in \Re^n$. 
 Hence,
 \begin{align}
 &\norm{J^*-J_{\hu}}_{1,c}\nn\\
