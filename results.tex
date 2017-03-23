@@ -5,9 +5,11 @@
 
 The purpose of this section is to present our main results.
 \newcommand{\Jalpo}{J^*_{\alp}}
-\newcommand{\Jlro}{J^*_{\lralp}}
-\newcommand{\Jlr}{J_{\lralp}}
-Let $\Jlr$ be a solution to the LRALP given by \eqref{grlp}. When multiple solutions exist, we can choose any of them.
+\newcommand{\Jlro}{J^*_{\lralpshort}}
+\newcommand{\Jlr}{J_{\lralpshort}}
+\newcommand{\rlr}{r_{\lralpshort}}
+Let $\rlr$ be a solution to the LRALP given by \eqref{grlp}
+and let $\Jlr = \Phi \rlr$. When multiple solutions exist, we can choose any of them.
 For the result, we assume that the LRALP is not unbounded, and hence a solution exist. In fact, we will assume something much stronger. The discussion of why our assumptions are reasonable and how to ensure that they hold is postponed to after the presentation of our results.
 Our main results bounds the error $\norm{J^* - \Jlr}_{1,c}$.
 
@@ -101,6 +103,70 @@ The larger coefficient of $\epsilon$ is probably an artifact of our analysis.
 Note that when $W$ does not reduce the constraints, 
 our bound is only a constant factor larger than this previous result.
 The extra term $\norm{\Jalpo-\Jlro}_{\infty,\psi}$ can be seen as the price paid for relaxing the constraints.
+
+From linear programming theory, it follows that primal boundedness is equivalent to dual feasibility. 
+Since the dual of $\min\{c^\top x\,:\, Ax \ge b \}$ is 
+$\max\{ y^\top b\,:\, y \ge 0, c = A^\top y\}$, we get
+that a necessary and sufficient condition for $\Jlro$ 
+to be finite-valued is that for any $s\in \S$, $\phi(s)$ lies in the conic span of $U = \Phi^\top E^\top W$.
+%(Note that the boundedness of LRALP only requires that $\Phi^\top c$ lies in the conic span of $U$.)
+When $W$ is such that its constituents $W_1,\dots,W_A$ are all identical, 
+the conic span of $U$ is equal to the conic span of $\Phi^\top W_1$. 
+It is particularly instructive 
+to consider the case when the common matrix $W_a = (w_{1,a},\dots,w_{m,a})$ ``selects'' the $m$ states,
+i.e., when $\{w_{1,a},\dots,w_{m,a}\}= \{ e_{s}\,:\, s\in \S_0 \}$ for some $\S_0\subset \S$, $|\S_0|\le m$.
+In this case the condition that $\phi(s)$ lies in the conic span of $U$ is equivalent to that $\phi(s)$ lies in the conic
+span of $\{\phi(s')\,:\, s'\in \S_0\}$. 
+Thus, to ensure boundedness, 
+the chosen states should be selected to ``conicly cover'' $\phi(\S)\doteq \{\phi(s)\,:\,s\in \S\}$.
+
+\todoc[inline]{TODO: 
+Finish error bound (see theorem below).
+Discuss how this can be done with common choices of basis functions.
+State aggregation.
+Separable choices.
+Also, this conic cover is a bit stringent.
+}
+
+\begin{theorem}
+Let $\phi(s)$%
+\footnote{Here $\phi(s)$ is the $s^{th}$ row of the feature matrix $\Phi$} be the feature of the $s^{th}$ state. Let $i$ be a state whose constraints have not been retained and let $\{J\}$ denote the set of states whose constraints have been retained. Further, let $\phi(i)\in \Re^k$ lie in the linear span of vectors $\phi(j)\in \Re^k,\forall j\in \J$, then
+\begin{align*}
+\MoveEqLeft (\Gamma J^*-\hg J^*)(i)
+ \leq 
+(\Gamma J^*-J^*)(i) \\
+& {}+J^*(i)-\underset{j\in \J}{\sum} |\gamma_j| J^*(j)
++ \underset{j\in \J}{\sum}(|\gamma_j|-\gamma_j) B,
+\end{align*}
+where $\gamma_j$ are the co-efficients of the linear span and $B\eqdef \underset{\underset{s\in S}{r\in \N}}{\max}(\Phi r) (s)$
+\end{theorem}
+\begin{proof}
+Let $r^s_{\Gamma}$ and $r^s_{\hg}$ be such that $(\Phi r^s_{\Gamma})(s)=(\Gamma J^*)(s)$ and $(\Phi r^s_{\hg})(s)=(\hg J^*)(s)$
+\begin{align*}
+\MoveEqLeft (\Gamma J^*-\hg J^*)(i) 
+=\phi(i) r^s_{\Gamma}- \phi(i) r^s_{\Gamma}\\
+&=\phi(i) r^i_{\Gamma}- \underset{j\in \J}{\sum} (|\gamma_j|+\gamma_j -|\gamma_j|)\phi(j) r^i_{\hg}\\
+&\leq \phi(i) r^i_{\Gamma}- \underset{j\in \J}{\sum} |\gamma_j| J^*(j) + \underset{j\in \J} {\sum} (|\gamma_j|-\gamma_j)B\\
+&= \phi(i) r^i_{\Gamma}- J^*(i)+ J^*(i) -\underset{j\in \J}{\sum} |\gamma_j| J^*(j) \\
+& \quad + \underset{j\in \J}{\sum} (|\gamma_j|-\gamma_j)B\,.
+\end{align*}
+\end{proof}
+
+
+
+Note that the bound of \cite{CS} and our bound can be seen as largely complementary. 
+Recall that \citeauthor{CS} consider adding an extra constraint $r\in \N$, while they propose to select all $A$ constraints
+from the ALP corresponding to $m$ states chosen at random from some distribution $\mu$. 
+Then, with high probability,
+they show that, provided that $\ralp \in \N$,
+ the extra price paid for relaxing the constraints of the ALP is $O( \rho \epsilon_{\N} k/m)$,
+ where $\rho = \max_{s} \frac{\mu^*(s)}{\mu(s)}$, $\mu^* = (1-\alpha)c^\top (I-\alpha P_{u^*})^{-1}$, $u^*$ is an optimal policy,
+and $\epsilon_{\N} = \sup_{r\in \N} \norm{J^*-\Phi r}_{\infty,\psi}$.%
+\footnote{The paper presents the results for $\mu = \mu^*$ giving $\rho=1$, but the analysis easily extends to the general case.}
+The bound is nontrivial when $m\ge \rho \epsilon_{\N} k$.
+In general, it may be hard to control $\rho$, or even $\epsilon_{\N}$ while ensuring that $\ralp \in \N$.
+
+
 
 \if0
 \textbf{On Prediction Error:} The first factor in the right hand side of the prediction error in \Cref{cmt2} is related to the best possible approximation that can be achieved with the chosen feature matrix $\Phi$. This term is an carry over of the upper bound in ALP formulation as shown in \Cref{alpvanilla}. The second factor in the right hand side of the prediction error is related to constraint approximation and is completely defined in terms of $\Phi$, $W$ and $T$, and does not require knowledge of stationary distribution of the optimal policy.\par

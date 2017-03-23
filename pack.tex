@@ -60,10 +60,12 @@
 \tikzstyle{arrow} = [thick]
 \fi
 %\usepackage{subfig}
-\newcommand{\ralp}{r_{\text{ALP}}}
-\newcommand{\Jalp}{J_{\text{ALP}}}
-\newcommand{\alp}{\text{ALP}\xspace}
-\newcommand{\lralp}{\text{LRALP}\xspace}
+\newcommand{\ralp}{r_{\text{\sc ALP}}}
+\newcommand{\Jalp}{J_{\text{\sc ALP}}}
+\newcommand{\alp}{\text{\sc ALP}\xspace}
+%\newcommand{\lralp}{\text{L\!R\!A\!L\!P}\xspace}
+\newcommand{\lralp}{\text{\sc LRALP}\xspace}
+\newcommand{\lralpshort}{\text{\sc LRA}\xspace}
 \newcommand{\mb}{\mbox{ }}
 \newcommand{\one}{\mathbf{1}}
 \newcommand{\zero}{\mathbf{0}}
@@ -90,11 +92,11 @@
 \newcommand{\mut}{\tilde{\mu}}
 \newcommand{\mn}{\infty,\psi}
 \newcommand{\tj}{J_{\alp}} %{\tilde{J}}
-\newcommand{\hj}{J_{\lralp}} %{\hat{J}}
+\newcommand{\hj}{J_{\lralpshort}} %{\hat{J}}
 \newcommand{\jd}{J'}
 \newcommand{\bj}{\bar{J}}
 \newcommand{\tv}{V_{\alp}} %{\tilde{V}}
-\newcommand{\hv}{V_{\lralp}} % {\hat{V}}
+\newcommand{\hv}{V_{\lralpshort}} % {\hat{V}}
 
 \newcommand{\tu}{\tilde{u}}
 \newcommand{\hu}{\hat{u}}
@@ -103,9 +105,9 @@
 \newcommand{\mui}{{\mu}^i}
 
 \newcommand{\br}{\bar{r}}
-\newcommand{\hr}{\hat{r}}
-\newcommand{\har}{\hat{r}}
-\newcommand{\tr}{\tilde{r}}
+\newcommand{\hr}{r_{\lralpshort}} %{\hat{r}}
+\newcommand{\har}{\hr} %{\hat{r}}
+\newcommand{\tr}{r_{\alp}} %{\tilde{r}}
 \DeclareMathOperator{\argmin}{argmin}
 \DeclareMathOperator{\argmax}{argmax}
 \newcommand{\norm}[1]{\|#1\|}
