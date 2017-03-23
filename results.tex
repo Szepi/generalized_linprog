@@ -108,53 +108,132 @@ From linear programming theory, it follows that primal boundedness is equivalent
 Since the dual of $\min\{c^\top x\,:\, Ax \ge b \}$ is 
 $\max\{ y^\top b\,:\, y \ge 0, c = A^\top y\}$, we get
 that a necessary and sufficient condition for $\Jlro$ 
-to be finite-valued is that for any $s\in \S$, $\phi(s)$ lies in the conic span of $U = \Phi^\top E^\top W$.
+to be finite-valued is that for any $s\in \S$, $\phi(s)$ lies in the conic span, 
+$\{ U \lambda\,:\, \lambda\in \Re_+^{SA}\}$, of (the columns) of $U = \Phi^\top E^\top W$.
 %(Note that the boundedness of LRALP only requires that $\Phi^\top c$ lies in the conic span of $U$.)
 When $W$ is such that its constituents $W_1,\dots,W_A$ are all identical, 
 the conic span of $U$ is equal to the conic span of $\Phi^\top W_1$. 
 It is particularly instructive 
 to consider the case when the common matrix $W_a = (w_{1,a},\dots,w_{m,a})$ ``selects'' the $m$ states,
-i.e., when $\{w_{1,a},\dots,w_{m,a}\}= \{ e_{s}\,:\, s\in \S_0 \}$ for some $\S_0\subset \S$, $|\S_0|\le m$.
-In this case the condition that $\phi(s)$ lies in the conic span of $U$ is equivalent to that $\phi(s)$ lies in the conic
-span of $\{\phi(s')\,:\, s'\in \S_0\}$. 
-Thus, to ensure boundedness, 
-the chosen states should be selected to ``conicly cover'' $\phi(\S)\doteq \{\phi(s)\,:\,s\in \S\}$.
-
-\todoc[inline]{TODO: 
-Finish error bound (see theorem below).
-Discuss how this can be done with common choices of basis functions.
-State aggregation.
-Separable function approximation: $\phi_1(s_1)$, $\phi_2(s_2)$, etc.
-Also, this conic cover is a bit stringent.
+i.e., when $\{w_{1,a},\dots,w_{m,a}\}= \{ e_{s}\,:\, s\in \S_0 \}$ for some $\S_0\subset \S$, $|\S_0|\le m$,
+where $e_s\in \{0,1\}^\S$ are the $s\in \S$ vectors in the standard Euclidean basis.
+In this case, the condition that $\phi(s)$ lies in the conic span of $U$ 
+is equivalent to that $\phi(s)$ lies in the conic span of $\phi(\S_0) \doteq \{\phi(s')\,:\, s'\in \S_0\}$. 
+Thus, to ensure boundedness of $\Jlro$, 
+the chosen states should be selected to ``conicly cover'' all the vectors in $\phi(\S)\subset \Re^k$.%
+\footnote{The same implies that, under the same condition on $W$, boundedness of the LRALP 
+holds if and only if $\sum_s c(s) \phi(s)$ is in the conic span of $\phi(\S_0)$. Note that this is easy to fulfill
+if the support of $c$ has a small cardinality by add all states in the support of $c$ to $\S_0$.
 }
+\todoc{Add reference to the intro to Mausam's book.}
 
+The next theorem shows that magnitudes of the coefficients used in the conic cover control the size of 
+$\norm{\Jalpo-\Jlro}_{\infty,\psi}$. 
+For the theorem we let $\Lambda\in \Re_+^{\S\times \S_0}$ be the matrix of conic coefficients: 
+For any $s\in \S$, $\phi(s) = \sum_{s'\in \S_0} \Lambda(s,s') \phi(s')$. After the theorem we give constructions 
+for creating conic covers.
 \begin{theorem}
-Let $\phi(s)$%
-\footnote{Here $\phi(s)$ is the $s^{th}$ row of the feature matrix $\Phi$} be the feature of the $s^{th}$ state. Let $i$ be a state whose constraints have not been retained and let $\{J\}$ denote the set of states whose constraints have been retained. Further, let $\phi(i)\in \Re^k$ lie in the linear span of vectors $\phi(j)\in \Re^k,\forall j\in \J$, then
+Assume that $W_1 = \dots = W_A$, $\{w_{1,a}\,dots,w_{m,a}\} = \{ e_s\,:\, s\in \S_0 \}$ 
+and that $\phi(\S)$ lies in the conic span of $\phi(\S_0)$ with conic coefficients given by $\Lambda$.
+Let $\epsilon = \inf_{r}\norm{ J^* -  \Phi r }_{\infty,\psi}$.
+Then, 
 \begin{align*}
-\MoveEqLeft (\Gamma J^*-\hg J^*)(i)
- \leq 
-(\Gamma J^*-J^*)(i) \\
-& {}+J^*(i)-\underset{j\in \J}{\sum} |\gamma_j| J^*(j)
-+ \underset{j\in \J}{\sum}(|\gamma_j|-\gamma_j) B,
+\norm{\Jalpo-\Jlro}_{\infty,\psi}
+\le 
+\norm{\Jalpo-J^*}_{\infty,\psi} + (1+ \norm{\Lambda \psi}_{\psi,\infty}) \epsilon\,.
 \end{align*}
-where $\gamma_j$ are the co-efficients of the linear span and $B\eqdef \underset{\underset{s\in S}{r\in \N}}{\max}(\Phi r) (s)$
 \end{theorem}
 \begin{proof}
-Let $r^s_{\Gamma}$ and $r^s_{\hg}$ be such that $(\Phi r^s_{\Gamma})(s)=(\Gamma J^*)(s)$ and $(\Phi r^s_{\hg})(s)=(\hg J^*)(s)$
+Let $r^*$ be such that $\norm{J^* - \Phi r^*}_{\infty,\psi} = \epsilon$ (this exists by continuity) and let 
+$\delta = J^* - \Phi r^*$.
+Pick any $s\in \S$ and let $r_s = \argmin\{ r^\top \phi(s) \,:\, W^\top E \Phi r \ge W^\top E J^*,\, r\in \Re^k \}$ 
+so that $\Jlro(s) = r_s^\top \phi(s)$.
+Note that by assumption, for any $s'\in \S_0$, $\Jlro(s') = r_s^\top \phi(s') \ge J^*(s')$.
+Now, notice that by definition, $\Jlro \le \Jalpo$ (the LP defining $\Jlro$ is the relaxation of the LP defining $\Jalpo$).
+Hence,
 \begin{align*}
-\MoveEqLeft (\Gamma J^*-\hg J^*)(i) 
-=\phi(i) r^s_{\Gamma}- \phi(i) r^s_{\Gamma}\\
-&=\phi(i) r^i_{\Gamma}- \underset{j\in \J}{\sum} (|\gamma_j|+\gamma_j -|\gamma_j|)\phi(j) r^i_{\hg}\\
-&\leq \phi(i) r^i_{\Gamma}- \underset{j\in \J}{\sum} |\gamma_j| J^*(j) + \underset{j\in \J} {\sum} (|\gamma_j|-\gamma_j)B\\
-&= \phi(i) r^i_{\Gamma}- J^*(i)+ J^*(i) -\underset{j\in \J}{\sum} |\gamma_j| J^*(j) \\
-& \quad + \underset{j\in \J}{\sum} (|\gamma_j|-\gamma_j)B\,.
+0\le \Jalpo(s) - \Jlro(s) = \Jalpo(s) - J^*(s) + J^*(s) - \Jlro(s)
 \end{align*}
+and $\Jlro(s) = r_s^\top \phi(s) = r_s^\top \sum_{s'\in \S_0} \Lambda(s,s') \phi(s') = \sum_{s'\in \S_0} \Lambda(s,s') \Jlro(s')
+\ge \sum_{s'\in \S_0} \Lambda(s,s') J^*(s')$.
+Combining this with the previous inequality we get
+\begin{align*}
+0&\le 
+ \frac{\Jalpo(s) - \Jlro(s)}{\psi(s)}\\
+&\le
+\frac{\Jalpo(s)-J^*(s)}{\psi(s)} + \frac{J^*(s) - \sum_{s'\in \S_0} \Lambda(s,s') J^*(s')}{\psi(s)}\,.
+\end{align*}
+Plugging in $J^*(s) = \phi(s)^\top r^*+\delta(s)$, using again that $\phi(s) = \sum_{s'\in \S_0} \Lambda(s,s') \phi(s')$,
+and also using the triangle inequality after taking absolute values we get
+\begin{align*}
+\MoveEqLeft \frac{|J^*(s) - \sum_{s'\in \S_0} \Lambda(s,s') J^*(s')|}{\psi(s)} \\
+& \le
+  \frac{|\delta(s)|}{\psi(s)} + \frac{\sum_{s'\in \S_0} \Lambda(s,s') |\delta(s')|}{\psi(s)} \\
+& \le
+  \frac{|\delta(s)|}{\psi(s)} + \frac{1}{\psi(s)} \, \sum_{s'\in \S_0} \Lambda(s,s') \psi(s') \frac{|\delta(s')|}{\psi(s')} \\
+& \le
+  \frac{|\delta(s)|}{\psi(s)} + \norm{\delta}_{\infty,\psi} \frac{\sum_{s'\in \S_0} \Lambda(s,s') \psi(s')}{\psi(s)} \, .
+\end{align*}
+Combining this with the previous display and noting that $\norm{\delta}_{\infty,\psi} = \epsilon$ finishes the proof.
+\if0
+Putting things together, we get 
+\begin{align*}
+\norm{\Jalpo - \Jlro}_{\infty,\psi}
+\le
+\norm{\Jalpo(s)-J^*(s)}_{\infty,\psi}
++ 
+\norm{\delta}_{\infty,\psi} (1+ \norm{\Lambda \psi}_{\infty,\psi})\,,
+\end{align*}
+finishing the proof.
+\fi
 \end{proof}
 
+Given $\phi:\S \to \Re^k$, what is the minimum cardinality set $\S_0$ that 
+conicly covers $\phi(\S)$ and how to find such a set? Further, how to keep the magnitude of $\norm{\Lambda \psi}_{\infty,\psi}$ small? To control this latter quantity it seems essential to make sure $\S_0$ contains states with high $\psi$-values. 
+However, if one is content with a bound that depends on $\norm{\psi}_{\infty}$, one can bound 
+$\norm{\Lambda \psi}_{\infty,\psi}$ by $\norm{\psi}_{\infty} \zeta$ where $\zeta = \max_s \sum_{s'\in \S_0} \Lambda(s,s')$,
+hence, the second term in the previous bound will be bounded by $(1+\norm{\psi}_{\infty} \zeta) \eps$.
 
+Let us now return to the problem of finding conic covers. 
+We will proceed by considering some illustrative examples. 
+As a start, consider the case when the basis functions are binary valued.
+In this case, it is sufficient and necessary to choose one state for each binary vector 
+that appears in $\phi(\S)\subset \{0,1\}^k$.
+This gives that $m_0 \doteq |\S_0|\le 2^k$ representative states will be sufficient \emph{regardless of the cardinality of $\S$}.
+Further, in this case $\zeta = 1$.
+For moderate to large $k$ (e.g., $k\gg 20$), it will quickly become infeasible to keep $2^k$ constraints.
+In this case we may need to restrict what features are considered to guarantee the conic cover condition.
+Letting $A_i = \{s\in \S\,:\, \phi_i(s)=1 \}$, if for a many pairs $i\ne j$, $A_i$ and $A_j$ do not overlap 
+then $N = |\phi(\S)|$ can be much smaller than $2^k$. 
+For example, in the commonly used state aggregation procedures 
+$A_i \cap A_j = \emptyset$ for any $i\ne j$, giving $N=k$. 
+%In this case $N=k$: It suffices to choose one representative state from each of the $A_i$ sets and add them to the constraints. 
+In the more interesting case of 
+hierarchical aggregation (when the sets $\{A_i\}$ form a nested hierarchical partitioning of $\S$), 
+we have $m_0 \le D \cdot k$ where $D$ is the depth of the hierarchy.
 
-Note that the bound of \cite{CS} and our bound can be seen as largely complementary. 
+Another favourable example is the case of separable bases.
+In this case, the states are assumed to be factored 
+and the basis functions depend only on a few factors.
+Let us consider a simple illustration.
+By abusing notation (redefining $\S$), let $\S = \S_1 \times \S_2$, 
+let there be $k=2$ basis functions and assume that $\phi_i(s) = h_i(s)$ for some $h_i:\S_i \to \Re$, $i=1,2$.
+Assume further that $0\in h_i(\S_i)$ for both $i$ and specifically let $s_{i0}$ be such that $h_i(s_{i0})=0$.
+In this case it is not hard to verify that if $\S_{i0}$ is such that $h_i(\S_i)$ is in the conic span of $h_i(\S_{i0})$ then
+$\phi(\S)$ is also in the conic span of $\S_0 \doteq \S_1 \times \{ s_{20} \} \cup \{ s_{10} \} \times \S_2$.
+The point is that $|\S_0| \le |\S_1| + |\S_2|$, which is a tolerable increase of growth.
+This example is not hard to generalize to more general, ANOVA-like basis expansions. The moral
+is that as long as their limited order of interaction (which is usually necessary for information theoretic reasons as well),
+the number of constraints may grow moderately with the number of factors (dimensionality) of the state space.
+
+In some cases, finding a conic cover with a small cardinality is not possible. 
+This can already happen in simple examples such as when $\S = \{1,\dots,S\}$ (as before) and
+$\phi( s ) = (1,s,s^2)^\top$. In this case, the only choice is $\S_0 = \S$. 
+In examples similar to this one one possibility is to quantize the range of $\phi$, which may  loose
+little on approximation quality, while it creates the opportunity 
+to construct a small cardinality conic cover.
+
+Note that the bound of \cite{CS} and our main result can be seen as largely complementary. 
 Recall that \citeauthor{CS} consider adding an extra constraint $r\in \N$, while they propose to select all $A$ constraints
 from the ALP corresponding to $m$ states chosen at random from some distribution $\mu$. 
 Then, with high probability,
