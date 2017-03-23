@@ -1,0 +1,42 @@
+\FloatBarrier
+\begin{figure}[htp]
+\begin{minipage}{0.5\textwidth}
+\resizebox{1.0\textwidth}{!}{
+\begin{tabular}{cc}
+\begin{tikzpicture}[scale=1,font=\Large,]
+    \begin{axis}[
+        xlabel=$t$,
+        ylabel=$\theta_t$,legend style={at={(0.5,-0.1)},anchor=north}
+]
+
+    \addplot[smooth] plot file {./lralp_exp/V_LP};
+    \addplot[dashed] plot file {./lralp_exp/V_pol_CS};
+    \addplot[dotted] plot file {./lralp_exp/V_pol_cone};
+    \addlegendentry{$J^*$};
+    \addlegendentry{$J_{CS}$};
+    \addlegendentry{$J_{LRA}$};
+
+\end{axis}
+\end{tikzpicture}
+
+&
+\begin{tikzpicture}[scale=1,font=\Large]
+    \begin{axis}[
+        xlabel=$t$,
+        ylabel=$\theta_t$,legend style={at={(0.5,-0.1)},anchor=north}
+]
+
+\addplot[smooth] plot file {./lralp_exp/policy};
+\addplot[dashed] plot file {./lralp_exp/policy_CS};
+\addplot[dotted] plot file {./lralp_exp/policy_cone};
+\addlegendentry{$u^*$};
+\addlegendentry{$u_{CS}$};
+\addlegendentry{$u_{LRA}$};
+
+    \end{axis}
+    \end{tikzpicture}
+
+\end{tabular}
+}
+\end{minipage}
+\end{figure}
