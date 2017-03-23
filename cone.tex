@@ -7,7 +7,7 @@ Let $\phi(s)$%
  \leq 
 (\Gamma J^*-J^*)(i) \\
 & {}+J^*(i)-\underset{j\in \J}{\sum} |\gamma_j| J^*(j)
-+ \underset{j\in \J}(|\gamma_j|-\gamma_j) B,
++ \underset{j\in \J}{\sum}(|\gamma_j|-\gamma_j) B,
 \end{align*}
 where $\gamma_j$ are the co-efficients of the linear span and $B\eqdef \underset{\underset{s\in S}{r\in \N}}{\max}(\Phi r) (s)$
 \end{theorem}
@@ -16,9 +16,9 @@ Let $r^s_{\Gamma}$ and $r^s_{\hg}$ be such that $(\Phi r^s_{\Gamma})(s)=(\Gamma 
 \begin{align*}
 \MoveEqLeft (\Gamma J^*-\hg J^*)(i) 
 =\phi(i) r^s_{\Gamma}- \phi(i) r^s_{\Gamma}\\
-&=\phi(i) r^i_{\Gamma}- \underset{j\in \J}(|\gamma_j|+\gamma_j -|\gamma_j|)\phi(j) r^i_{\hg}\\
-&\leq \phi(i) r^i_{\Gamma}- \underset{j\in \J}|\gamma_j| J^*(j) + \underset{j\in \J} (|\gamma_j|-\gamma_j)B\\
-&= \phi(i) r^i_{\Gamma}- J^*(i)+ J^*(i) -\underset{j\in \J}|\gamma_j| J^*(j) \\
-& \quad + \underset{j\in \J} (|\gamma_j|-\gamma_j)B\,.
+&=\phi(i) r^i_{\Gamma}- \underset{j\in \J}{\sum} (|\gamma_j|+\gamma_j -|\gamma_j|)\phi(j) r^i_{\hg}\\
+&\leq \phi(i) r^i_{\Gamma}- \underset{j\in \J}{\sum} |\gamma_j| J^*(j) + \underset{j\in \J} {\sum} (|\gamma_j|-\gamma_j)B\\
+&= \phi(i) r^i_{\Gamma}- J^*(i)+ J^*(i) -\underset{j\in \J}{\sum} |\gamma_j| J^*(j) \\
+& \quad + \underset{j\in \J}{\sum} (|\gamma_j|-\gamma_j)B\,.
 \end{align*}
 \end{proof}
