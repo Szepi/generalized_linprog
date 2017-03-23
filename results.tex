@@ -1,0 +1,134 @@
+%!TEX root =  autocontgrlp.tex
+\section{Main Results}
+%We denote an arbitrary solution to GRLP by $\hr$, and the approximate value function by $\hj=\Phi \hr$ and use $\hu$ to denote the greedy policy w.r.t. $\hj$.\\
+
+
+The purpose of this section is to present our main results.
+\newcommand{\Jalpo}{J^*_{\alp}}
+\newcommand{\Jlro}{J^*_{\lralp}}
+\newcommand{\Jlr}{J_{\lralp}}
+Let $\Jlr$ be a solution to the LRALP given by \eqref{grlp}. When multiple solutions exist, we can choose any of them.
+For the result, we assume that the LRALP is not unbounded, and hence a solution exist. In fact, we will assume something much stronger. The discussion of why our assumptions are reasonable and how to ensure that they hold is postponed to after the presentation of our results.
+Our main results bounds the error $\norm{J^* - \Jlr}_{1,c}$.
+
+The bound is given in terms of the approximation error of $J^*$ with the basis functions $\Phi= (\phi_1,\dots,\phi_k)$, as well as the deviation between two functions, $\Jalpo,\Jlro: \S \to \Re$, which we define next. In particular,
+\begin{align*}
+\Jalpo(s) & = \min\{ r^\top\phi(s) \,|\, \Phi r \ge J^*, \, r\in \Re^k \}\,,\\
+\Jlro(s)    & = \min\{ r^\top\phi(s) \,|\, W^\top E \Phi r \ge W^\top E J^*, \, r\in \Re^k \}\,,
+\end{align*}
+where $s\in \S$. Recall that $E: \Re^S \to \Re^{SA}$ is defined so that $(E J)^\top = (J^\top, \dots, J^\top)$, i.e., $E$ stacks its argument $A$-fold. Hence, $W^\top E = \sum_a W_a^\top$. Our strong assumption is that $\Jlro$ is finite-valued. Note that $\Jalpo\ge J^*$ reflects the error due to using the basis functions $(\phi_j)_j$, and the magnitude of the deviation $\Jlro-\Jalpo$ reflects the error introduced due to the relaxed constraint system. \todoc{I commented out the figure. We can discuss whether we want to include it.}
+%The function $\Jalpo$ is an upper approximation to $J^*$
+
+Following \citet{ALP,CS}, 
+in the result the magnitude of the error $\Jlro-\Jalpo$ and also that of the error
+of approximating $J^*$ with the subspace spanned by $\Phi$, 
+will be measured in terms of a \emph{weighted maximum norm}, 
+$\norm{J}_{\infty,\psi} = \max_{s\in \S} |J(s)|/\psi(s)$, 
+where $\psi: \S \to \Re_{++}$ is a positive-valued weighting function.%
+\footnote{As opposed to \citet{ALP} and others, our definition uses division and not multiplication with the weights.
+We choose this form for mathematical convenience:
+With this definition, nice duality results hold between weighted $1$-norms and weighted maximum norms.
+}
+As also stressed by \citeauthor{ALP}, 
+the appropriate choice of $\psi$ is crucial for MDPs with huge state-spaces:
+The problem is that if the range of values of $|J^*(s)|$ in different parts of the state space
+differ in orders of magnitude, it is not meaningful to expect to control the error of approximating it uniformly.
+By choosing the weighting function to reflect the magnitude of $J^*$, controlling the weighted maximum norm
+is achieved by controlling relative errors, which may be much easier to ensure than controlling meaningfully small
+absolute errors.
+
+Just like \citet{ALP}, we will also require that $\psi$ is a \emph{stochastic Lyapunov-function} for the MDP.  In particular, we require that the $\alpha$-discounted stability coefficient
+\begin{align*}
+\beta_\psi \doteq \alpha  \max_{a} \norm{P_a \psi}_{\infty,\psi}
+\end{align*}
+is strictly less than one.
+This can be seen to imply that $H: (\Re^S,\norm{\cdot}_{\infty,\psi}) \to (\Re^{SA}, \norm{\cdot}_{\infty,\psi})$ is a contraction,
+where for $J = (J_1^\top,\dots,J_A^\top)^\top \in \Re^{SA}$ we let $\norm{J}_{\infty,\psi} = \max_a\norm{J}_{\infty,\psi}$.
+That $H$ is a contraction will play a crucial role in our results.
+Note that the condition $\beta_\psi<1$ is closely related to the condition that for any policy $u$, 
+$P_u \psi \le \psi$, which can be viewed as a stability condition on the MDP 
+and which appeared in a slightly altered form in studying the stability of MDPs with infinite 
+state spaces \citep[e.g.,][]{chemey99a}.
+Note that one can always choose $\psi = \one$: $\beta_\one = \alpha<1$. 
+With this, we are ready to state our main result:
+
+
+\if0
+\FloatBarrier
+%\input{cartoon}
+\begin{figure}
+\includegraphics[scale=0.7]{cartoon_grlp.pdf}
+\caption{
+%\normalsize
+The outer lightly shaded region corresponds to GRLP constraints and the inner dark shaded region corresponds to the original constraints. The main contribution of the paper is to bound $\norm{J^*-\hat{J}_c}$.}
+\label{cartoon}
+\end{figure}
+\Cref{cartoon} shows the solutions to the LP, ALP and GRLP respectively. The error in ALP solution has already been studied in \cite{ALP}. Our objective is to study the extra source of error due to constraint approximation.
+\fi
+
+%\subsection{Error Bounds}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{theorem}[Error Bound for LRALP]
+\label{cmt2}
+Assume that $c\in \Re_+^S$ is such that $1^\top c = 1$ and that $W \in \Re_+^{SA\times m}$ is nonnegative valued.
+Let $\psi\in \Re_+^S$ be in the column span of $\Phi$ and assume that the $\alpha$-discounted stability coefficient of $\psi$ is $\beta_\psi<1$. 
+Let $\eps = \inf_{r\in \Re^k}\norm{J^*-\Phi r}_{\infty,\psi}$ 
+be the error of approximation $J^*$ using the basis functions in $\Phi$.
+Then,
+\begin{align*}
+\norm{J^*-\hj}_{1,c} \leq 
+ \frac{2}{1-\beta_\psi} \left(
+	3 \eps
+     +\norm{\Jalpo-\Jlro}_{\infty,\psi}\right)\,.
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\if0
+\item The control error is bound as\\
+$\norm{J^* - J_{\hu}}_{1,c}
+\leq 2\left(\frac{1}{(1-\alpha)^2}\right)\, \big( 2~\us{\min}{r\in \Re^k} \norm{J^*-\Phi r}_{\infty}
++\norm{\Gamma J^*-\hg J^*}_{\infty}+\norm{\hj-\hg\hj}_{\infty}\big)$.
+\end{enumerate}
+\fi
+\end{theorem}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Note that the result implicitly assumes that $\hj$ exists, because if $\hj$ does not exist then $\Jlro$ is necessarily unbounded, making the last error term infinite. To ensure that $\psi$ is in the span of $\Phi$, after choosing $\psi$, one can add $\psi$ as one of the basis functions. Alternatively, the bound can also be interpreted to hold for any $\psi$ in the span of $\Phi$ with $\beta_\psi<1$.
+
+As noted earlier, \citet{ALP} prove a similar error bound for $\Jalp$, the solution of the ALP.
+In particular, their Theorem 3 states that  under identical assumptions as in our result,
+$\norm{J^* - \Jalp}_{1,c} \le \frac{2 c^\top \psi \epsilon}{1-\beta_\psi}$ for $\epsilon$ defined as above
+ (the result we cited previously is a simplified form of this bound).
+\todoc{Strange that we don't have $c^\top \psi$!?}
+The larger coefficient of $\epsilon$ is probably an artifact of our analysis. 
+Note that when $W$ does not reduce the constraints, 
+our bound is only a constant factor larger than this previous result.
+The extra term $\norm{\Jalpo-\Jlro}_{\infty,\psi}$ can be seen as the price paid for relaxing the constraints.
+
+\if0
+\textbf{On Prediction Error:} The first factor in the right hand side of the prediction error in \Cref{cmt2} is related to the best possible approximation that can be achieved with the chosen feature matrix $\Phi$. This term is an carry over of the upper bound in ALP formulation as shown in \Cref{alpvanilla}. The second factor in the right hand side of the prediction error is related to constraint approximation and is completely defined in terms of $\Phi$, $W$ and $T$, and does not require knowledge of stationary distribution of the optimal policy.\par
+\textbf{On Control Error:} The first two terms are quite similar to those in the bound for prediction error. The third term occurs due to the fact that $\Phi \geq T\Phi r$ that holds in the case of ALP does not hold in the case of GRLP.\par
+\begin{comment}
+\begin{theorem}[Control Error Bound in $\norm{\cdot}_{\infty}$]
+\label{polthe}
+Let $\hu$ be the greedy policy with respect to the solution $\hj$ of GRLP and $J_{\hu}$ be its value function.
+% Let $r^*$ be as in Theorem~\ref{mt2mn}, then
+Then,
+\begin{align}\label{polthebnd}
+\norm{J^* - J_{\hu}}_{1,c}
+&\leq 2\left(\frac{c^\top \psi}{(1-\beta_{\psi})^2}\right)\, \big( 2\norm{J^*-\Phi r^*}_{\infty}
+\nn\\&
++norm{\Gamma J^*-\hg J^*}_{\infty}+\norm{\hj-\hg\hj}_{\infty}\big).
+\end{align}
+\end{theorem}
+\end{comment}
+\begin{corollary}[Constraint Sampling]\label{st}
+$W\in \{0,1\}^{nd\times m}$Let $s\in S$ be a state whose constraint is selected by $W$ (i.e., for some $i$ and all $(s',a)\in S\times A$,
+$W_{s'a,i}=\delta_{s=s'}$.
+Then
+\begin{align*}%\label{sampexp}
+|\Gamma J^*(s)-\hg J^*(s)|<|\Gamma J^*(s)-J^*(s)|.
+\end{align*}
+\end{corollary}
+It is important to note that \Cref{rlpt} holds only in high probability and is valid only under idealized assumption of knowing the optimal policy $u^*$, while \Cref{cmt2} does not have these limitations.
+In addition, the error $|\Gamma J^*(s) -\hg J^*(s)|$ (in \Cref{st} ) due to constraint approximation is less than the original projection error $|\Gamma J^*(s)-J^*(s)|$ due to function approximation. This means that for RLP to perform well it is important to retain the constraints corresponding to those states for which the linear function approximation via $\Phi$ is known to perform well.
+\fi
+
