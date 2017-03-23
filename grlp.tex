@@ -81,7 +81,7 @@ combinations of them.
 Recalling that the constraints took the form $J \ge g_a + \alpha P_a J$ (with $J = \Phi r$),
 choosing $m$ to be target number of constraints, for $1\le i \le m$, the $i$th new constraint is given by
 $\sum_a w_{i,a}^\top J \ge \sum_a w_{i,a}^\top(g_a + \alpha P_a J)$, 
-where the choice of $m$ and that of the vectors $w_{i,a}\in [0,\infty)^S$ is left to the user.
+where the choice of $m$ and that of the vectors $w_{i,a}\in \R_+^S$ is left to the user.
 Note that this results in a linear program with $k$ variables and $m$ constraints, which can be written as
 \begin{align}\label{grlp}
 \begin{split}
@@ -89,33 +89,56 @@ Note that this results in a linear program with $k$ variables and $m$ constraint
 &\text{s.t.}\mb  \,\sum_a W_a^\top \Phi r\geq \sum_a W_a^\top (g_a + \alpha P_a) \Phi r\,,
 \end{split}
 \end{align}
-where $W_a = (w_{1,a},\dots,w_{m,a}) \in [0,\infty)^{S \times m}$. 
+where $W_a = (w_{1,a},\dots,w_{m,a}) \in \R_+^{S \times m}$. 
 \todoc{Do we need that $(w_{i,a}^\top)_i$ defines a probability distribution?}
 Note that the $(i,j)$th entry of the $m\times k$ constraint matrix of the resulting LP is
 $\sum_a  w_{i,a}^\top  \phi_j - \alpha \sum_a w_{i,a}^\top P_a \phi_j$ and assuming that $(w_{i,a})_{a}$ has $p$ nonzero
 elements, this can be calculated in $O( p )$ time, making the total cost of obtaining the constraint matrix to be $O(mkp)$ regardless the value of $S$ and $A$. \todoc{Somewhere discuss that the cost of obtaining a policy will depend on $A$. 
 We can also discuss how $A$ could be folded into states.}
 
-We will call the LP in \eqref{grlp} the \emph{linearly relaxed approximate linear program (LRALP)}. \todoc{Replace GRLP everywhere with LRALP.} Note that the LRALP may be unbounded. While unboundedness could be prevented by adding an extra constraint of the form $r\in \N$ for a ``sufficiently large'' and ``simple'' bounded polytope $\N \subset \R^k$ which can be chosen based on the knowledge of $\alpha$ alone. However, we see little value in this and thus stick to the above simple form.%
+We will call the LP in \eqref{grlp} the \emph{linearly relaxed approximate linear program (LRALP)}. \todoc{Replace GRLP everywhere with LRALP.} Any LP obtained using 
+any constraint selection/generation process can be represented by choosing an appropriate binary-valued matrix
+$W^\top = (W_1^\top,\dots,W_A^\top)\in \R_+^{m\times SA}$. In particular, when the constraints are selected
+in a random process as suggested by \citet{CS}, the matrix $W$ would be a random, binary-valued matrix.
+
+Note that the LRALP may be unbounded. 
+Unboundedness could be avoided by adding an extra constraint of the form $r\in \N$ to the LRALP,
+for a properly chosen polyhedron $\N \subset \R^k$.%
 \footnote{
-Note though that $\N$ would need to be chosen based on very little information,
-hence it would in general be chosen to provide an extremely loose constraint to avoid
-the accidental elimination of potentially good solutions. 
-Hence, on the occasion when the LP without the extra $r\in \N$ constraint is unbounded,
+In particular, to obtain their theoretical result, \citet{CS} need the assumption that the set $\N$ 
+is bounded and that it contains $\ralp$. In fact, 
+the error bound derived by \citeauthor{CS} depends on the \emph{worst} 
+error of approximating $J^*$ with $\Phi r$ when
+$r$ ranges over $\N$. Hence, if $\N$ is unbounded, their bound is vacuous. In the context of a particular application, 
+\citet{CS} demonstrate that $\N$ can be chosen properly to control this term. 
+However, no general construction is presented to choose $\N$.}
+However, it seems to us that it is downright misleading to think that guaranteeing a bounded solution 
+will also lead to reasonable solutions.
+Thus we will stick to the above simple form, forcing a discussion of how $W$ should be chosen to get meaningful results.%
+\footnote{
+The only question is whether there is some value in adding constraints beyond choosing $W$ properly.
+Our position is that the set $\N$ would most likely be chosen based on very little and general information;
+the useful knowledge is in choosing $W$, not in some general set $\N$. 
+Since randomization does not guarantee bounded solutions, \citet{ALP} needs to use $\N$, which incorporates
+all the knowledge which makes the LP bounded. Since 
+$\N$
+or we could incorporate the choice into $W$.
+On the occasion when the LP without the extra $r\in \N$ constraint would be unbounded,
 the solution found when $r\in \N$ is added would lie on the boundary of $\N$, which
 makes one expect the error of the resulting solution to be rather large.
 }
 
-Since the resulting program may become unbounded,  it is necessary to introduce an additional constraint $r\in \N$, where $\N$ will be chosen to be large enough so as not to exclude ``good solutions'', while constraining enough so as to prevent unbounded solutions. 
-This leads to what we call the Generalized Reduced Linear Program: \todoc{Again, Linearly Projected ALP, or ALP with Linear Constraint Projection, or with Linear Constrain Relaxation?} \todoc{I stopped here, need to sleep. The idea in this section is to just explain how the computation is done. In the next section I would just give the main result. In the next section I would give the proof. Rather than the present lemma, lemma, lemma.. organization it is probably better to organize the proof in a top-down. Starting to do the proof, required results can be stated as claims/lemmas. But maybe some of the lemmas can be saved (I have a specific plan, just saying, if you want to do something with this).}
-\begin{align}\label{grlp}
-\begin{split}
-&\underset{r\in \N\subset R^k}{\min}\, \, c^\top \Phi r\,\,\,\,\\
-&\text{s.t.}\mb  \,W^\top E\Phi r\geq W^\top H \Phi r,
-\end{split}
-\end{align}
-where we assume that $W \in \R^{nd\times m}_+$ is a matrix with all positive entries which specifies the linear combination of constraints.  We denote an arbitrary solution to GRLP by $\hr$, and the approximate value function by $\hj=\Phi \hr$ and use $\hu$ to denote the greedy policy w.r.t. $\hj$.\\
-\textbf{RLP as a special case:} Recovering RLP \eqref{rlp} as a special case of GRLP \eqref{grlp} can be accomplished by setting $W$ to the matrix with the $i^{th}$ column having $1$ corresponding to the constraint that was sampled (implicitly assuming that there is a natural ordering of the $nd$ constraints) and all the other entries as $0$. The $\N$ in RLP \eqref{rlp} is retained in GRLP \eqref{grlp} as well. For $m=nd$ and $W=I_{nd\times nd}$, GRLP is same as ALP.\\
+Further insight into the choice of $W$ can be gained by
+considering the Langrangians of the ALP and LRALP. To write both LP's in a similar form let us introduce $E = (I_{S\times S},\dots,I_{S\times S})^\top$, where $I_{S\times S}$ is the $S\times S$ identity matrix. Further, let $H:\R^S \times \R^{SA}$ be the operator defined by $(HJ)^\top = ( (T_1 J)^\top, \dots, (T_A J)^\top )$. Note that $H$ is a linear operator. Then, the ALP can be written as $\min\{ c^\top \Phi r \,|\, E \Phi r \ge H \Phi r \}$, while LRALP takes the form  
+$\min\{ c^\top \Phi r \,|\, W^\top E \Phi r \ge W^\top H \Phi r \}$. 
+Hence, their Langrangians are $\mathcal{L}_{\alp}(r,\lambda) = c^\top \Phi r+\lambda^\top (H\Phi r-E\Phi r)$
+$\mathcal{L}_{\lralp}(r,q) = c^\top \Phi r+q^\top W^\top (H\Phi r-E\Phi r)$. Thus, we can view $W q$ as a ``linear approximation''
+to the dual variable $\lambda \in \R_+^{SA}$. 
+This suggests that perhaps $W$ should be chosen such that it approximates well the optimal dual variable.
+If $\Phi$ spans $\R^{S}$, the optimal dual variable $\lambda^*$ is known to be the discounted occupancy measure underlying the optimal policy (Theorem 3.18, \cite{Kall}), suggesting that the role of $W$ is very similar to the role of $\Phi$ excepts that the subspace spanned by the columns of $W$ should ideally be close to $\lambda^*$.
+
+We denote an arbitrary solution to GRLP by $\hr$, and the approximate value function by $\hj=\Phi \hr$ and use $\hu$ to denote the greedy policy w.r.t. $\hj$.\\
+\if0
 \textbf{Linear function approximation in Primal and Dual Variables:} Let us look at the Lagrangian of ALP and GRLP in
 \eqref{lag} and \eqref{lag2} respectively, i.e.,
 \begin{align}\label{lag}
@@ -135,94 +158,4 @@ the optimal Lagrange multipliers are the discounted number of visits to the ``st
 \lambda^*(s,a)&=0, \qquad \text{for all } a \neq u^*(s),\nn
 \end{align}
 where $P_{u^*}$ is the probability transition matrix under $u^*$ ($P_{u^*}(s,s') = P_{u^*(s)}(s,s')$, $s,s'\in S$) \cite{dolgov}. Even though we might not have the optimal policy $u^*$ in practice, the fact that $\lambda^*$ is a probability distribution and that it is a linear combination of $\{P_{u^*},P^2_{u^*},\ldots\}$ hints at the kind of features that might be useful for constructing the $W$ matrix.
-\FloatBarrier
-%\input{cartoon}
-\begin{figure}
-\includegraphics[scale=0.7]{cartoon_grlp.pdf}
-\caption{
-%\normalsize
-The outer lightly shaded region corresponds to GRLP constraints and the inner dark shaded region corresponds to the original constraints. The main contribution of the paper is to bound $\norm{J^*-\hat{J}_c}$.}
-\label{cartoon}
-\end{figure}
-\Cref{cartoon} shows the solutions to the LP, ALP and GRLP respectively. The error in ALP solution has already been studied in \cite{ALP}. Our objective is to study the extra source of error due to constraint approximation.
-\section{Main Results}
-In this section we present the main results of this paper in \Cref{cmt2} (we state improved bounds in \Cref{sec:improv}). Our bounds are expressed in terms of two novel contractions operators which we define in \Cref{lubpop,alubpop}. We now define two projection operators that are central to our error analysis and in them we assume that the set $\N'\subset \R^k$ is such that $\N' = \N + t \one$ for any $t\in \R$.
-%The least upper bound (LUB) projection operator $\Gamma \colon \R^n \ra\R^n$ is defined below, see \eqref{gamdef}.
-\begin{definition}\label{lubpop}
-Given $J\in \R^n$ and the nonnegative valued vector $c\in \R^n_+$, define $r_{c,J}$ to be the solution to
-\begin{align}
-\label{lubplp}
-\begin{split}
-\underset{r\in \N'}{\min} &\,\, c^\top \Phi r\,\mb
-\text{s.t.} \mb \Phi r\geq  TJ.
-\end{split}
-\end{align}
-For $J\in \R^n$, $\Gamma J$, the \emph{least upper} (LU) projection of $J$ is defined as
-\begin{align}\label{gamdef}
-(\Gamma J)(i)\eqdef(\Phi r_{e_i,J})(i),\quad i=1,\ldots,n\,.
-\end{align}
-\end{definition}
-The definition of the second operator is as follows:
-\begin{definition}\label{alubpop}
-Given $J\in \R^n$ and the nonnegative valued vector $c\in \R^n_+$, define $r'_{c,J}$ to be the solution to
-\begin{align}\label{alubplp}
-\underset{r\in \N'}{\min}& \,\mb c^\top \Phi r\,\mb
-\text{s.t.} \,\,\, W^\top E \Phi r\geq W^\top HJ.
-\end{align}
-The \emph{approximate least upper} (ALU) projection operator
-$\hg \colon \R^n \ra \R^n$ is defined as
-\begin{align}\label{tgamdef}
-(\hg J)(i)\eqdef(\Phi r'_{e_i,J})(i), \mb i=1,\ldots,n\,, J\in \R^n\,.
-\end{align}
-\end{definition}
-\begin{remark}\label{ubrem}
-To understand the meaning of $\Gamma$ (and $\hg$) define
-\begin{align}\label{ubclass}
-\F_J\eqdef\{\,\Phi r\,:\,\Phi r\geq TJ, r\in \N'\,\},
-\end{align}
-where $J\in \R^n$.
-Disregarding the constraint $r\in \N'$,
-$\F_J$ contains all vectors in the span of $\Phi$ that upper bound $TJ$. Further, since $(\Gamma J)(i) = \min\{ V(i) \,:\, V\in \F_J \}$, it also follows that $ V\ge \Gamma J $ holds for any $V\in \F_J$. Also $\Gamma J\geq T J$.\par
-The operators $\Gamma$ and $\hg$ are closely related to ALP \eqref{alp} and GRLP \eqref{grlp} respectively and are only analytical tools that we will need to express our bounds and need not be computed in practice. It turns out that the novel operators ($\Gamma$ and $\hg$) are contraction maps (see \Cref{hgmaxcontramn}), a fact that is a key to our results (\Cref{cmt2mn,polthe}). At the outset we are interested in the candidate value functions in the constraint set $\N$ and want to study them using $\Gamma$ and $\hg$. However since the basis $\Phi$ contains $\one$ we make it helps our analysis to define the set $\N'$ in \Cref{lubplp,alubplp} to be `$\N$ plus its translations by $\one$'.
-\end{remark}
-%\subsection{Error Bounds}
-\begin{theorem}[Error Bound for GRLP]
-\label{cmt2}
-Let $\one\in\R^k$ be in the column span of $\Phi$, then it holds that
-\begin{enumerate}
-\item The prediction error is bound as\\
-$\norm{J^*-\hj}_{1,c}
-\leq\frac{1}{1-\alpha}(6~\us{\min}{r\in \R^k}\norm{J^*-\Phi r}_{\infty}
-+2\norm{\Gamma J^*-\hg J^*}_{\infty})$.
-\item The control error is bound as\\
-$\norm{J^* - J_{\hu}}_{1,c}
-\leq 2\left(\frac{1}{(1-\alpha)^2}\right)\, \big( 2~\us{\min}{r\in \R^k} \norm{J^*-\Phi r}_{\infty}
-+\norm{\Gamma J^*-\hg J^*}_{\infty}+\norm{\hj-\hg\hj}_{\infty}\big)$.
-\end{enumerate}
-\end{theorem}
-\textbf{On Prediction Error:} The first factor in the right hand side of the prediction error in \Cref{cmt2} is related to the best possible approximation that can be achieved with the chosen feature matrix $\Phi$. This term is an carry over of the upper bound in ALP formulation as shown in \Cref{alpvanilla}. The second factor in the right hand side of the prediction error is related to constraint approximation and is completely defined in terms of $\Phi$, $W$ and $T$, and does not require knowledge of stationary distribution of the optimal policy.\par
-\textbf{On Control Error:} The first two terms are quite similar to those in the bound for prediction error. The third term occurs due to the fact that $\Phi \geq T\Phi r$ that holds in the case of ALP does not hold in the case of GRLP.\par
-\begin{comment}
-\begin{theorem}[Control Error Bound in $\norm{\cdot}_{\infty}$]
-\label{polthe}
-Let $\hu$ be the greedy policy with respect to the solution $\hj$ of GRLP and $J_{\hu}$ be its value function.
-% Let $r^*$ be as in Theorem~\ref{mt2mn}, then
-Then,
-\begin{align}\label{polthebnd}
-\norm{J^* - J_{\hu}}_{1,c}
-&\leq 2\left(\frac{c^\top \psi}{(1-\beta_{\psi})^2}\right)\, \big( 2\norm{J^*-\Phi r^*}_{\infty}
-\nn\\&
-+norm{\Gamma J^*-\hg J^*}_{\infty}+\norm{\hj-\hg\hj}_{\infty}\big).
-\end{align}
-\end{theorem}
-\end{comment}
-\begin{corollary}[Constraint Sampling]\label{st}
-$W\in \{0,1\}^{nd\times m}$Let $s\in S$ be a state whose constraint is selected by $W$ (i.e., for some $i$ and all $(s',a)\in S\times A$,
-$W_{s'a,i}=\delta_{s=s'}$.
-Then
-\begin{align*}%\label{sampexp}
-|\Gamma J^*(s)-\hg J^*(s)|<|\Gamma J^*(s)-J^*(s)|.
-\end{align*}
-\end{corollary}
-It is important to note that \Cref{rlpt} holds only in high probability and is valid only under idealized assumption of knowing the optimal policy $u^*$, while \Cref{cmt2} does not have these limitations.
-In addition, the error $|\Gamma J^*(s) -\hg J^*(s)|$ (in \Cref{st} ) due to constraint approximation is less than the original projection error $|\Gamma J^*(s)-J^*(s)|$ due to function approximation. This means that for RLP to perform well it is important to retain the constraints corresponding to those states for which the linear function approximation via $\Phi$ is known to perform well.
+\fi
