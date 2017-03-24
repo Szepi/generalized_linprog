@@ -71,8 +71,8 @@ but the details of this are the beyond the scope of the present work. As shown b
 While the solving the ALP can be significantly cheaper than solving the LP underlying the MDP
 and thus it can be advantageous for moderate-scale MDPs,
  \todoc{Give the big-Oh costs!} the number of constraints in the ALP is $SA$, 
- hence the ALP is still infeasible for huge-scale MDPs. 
-%While evaluating the objective and checking a single constraint for constraint violations can be done in constant time, 
+hence the ALP is still infeasible for huge-scale MDPs.\todoch{Infeasible means no solution?}
+%While evaluating the objective and checking a single constraint for constraint violations can be done in constant time,
 %since the number of constraints in the ALP is equal to the number of state-action pairs, 
 %the ALP is still intractable in general.
 To reduce the number of constraints, we consider a relaxation of ALP 
