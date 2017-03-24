@@ -6,8 +6,7 @@ which bounded the error when the constraints are chosen based on selecting a set
  (further preliminary experimental results have been reported in \cite{aaaipaper}).
 
 \textbf{Model:} We run the experiments in the context of a queuing model similar to the one in Section~5.2 of \cite{ALP}. We consider a single queue with arrivals and departures. The state of the system is the queue length with the state space given by $\S=\{0,\ldots,S-1\}$, where $S-1$ is the buffer size of the queue. The action set $\A=\{1,\ldots,A\}$ is related to the service rates. We let $s_t$ denote the state at time $t$. The state at time $t+1$ when action $a_t \in \A$ is chosen is given by $s_{t+1}= s_{t}+1$ with probability $p$, $s_{t+1}= s_{t}-1$ with probability $q(a_t)$ and $s_{t+1}= s_t$, with probability $(1-p-q(a_t))$. For states $s_t=0$ and $s_t=S-1$, the system dynamics is given by $s_{t+1}= s_{t}+1$ with probability $p$ when $s_t=0$ and $s_{t+1}=s_t-1$ with probability $q(a_t)$ when $s_t=S-1$. The service rates satisfy $0<q(1)\leq \ldots\leq q(A)<1$ with $q(A)>p$ so as to ensure `stabilizability' of the queue.
-The reward associated with  action $a \in \A$ and state $s\in \S$ is given by $g_a(s)=-(s/n+q(a)^3)$.
-
+The reward associated with  action $a \in \A$ and state $s\in \S$ is given by $g_a(s)=-(s/N+q(a)^3)$ (the idea here is to penalize higher queue lengths and higher service rates).
 \textbf{Parameter Settings:} We ran our experiments for $S=1000$, $A=4$ with $q(1)=0.2$, $q(2)=0.4$, $q(3)=0.6$, $q(4)=0.8$, $p=0.4$ and $\alpha=1-\frac{1}{S}$.
 The moderate size of $S=1000$ enabled us to compute the exact value of $J^*$ (the most expensive part of the computation). 
 Despite that the conic span condition cannot be met with them, as a way of testing the limits of the theory,
