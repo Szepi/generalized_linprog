@@ -27,6 +27,8 @@ and if it is not infinite, the number of states scale \emph{exponentially} with 
 If planners are allowed to perform some fixed amount of calculations for each state encountered,
 it is possible to use sampling to make the per-state calculation-cost 
 independent of the size of the state space \cite{rust96:randomization,szepesvari2001,kearns2002sparse}.
+\todoc{Maybe we can cite Mausam's book here as discussing a whole range of methods originating from AI
+that target this problem, although without theoretical guarantees.}
 Nevertheless, the resulting methods are still quite limited. 
 In fact, various hardness results show that computing actions of (near-) optimal policies is intractable in various senses
 and in various compactly represented MDPs \cite{BlonTsi:00Complexity}.
@@ -98,19 +100,27 @@ While it is possible to extend this result
 to any sampling distribution, the bound then scales with the mismatch between the sampling and the idealized
 distributions, which, in general, will be uncontrolled. 
 Another weakness of the bound is related to that when constraints are dropped, the linear program may become
-unbounded. To prevent this, \citet{CS}  propose adding an extra constraint on the optimization variables.
+unbounded. To prevent this, \citet{CS}  propose imposing an extra constraint on the optimization variables.
 The bound they obtain, however, scales with the \emph{worst approximation error} over this constraint set.
 While in a specific example it is shown that this error can be controlled, no general results are derived in this direction.
 Later works, such as that of
 \citet{SALP,BhatFaMo12:SALPNP},  repeat the analysis of \citet{CS}
-in combinations with other ideas. However, no existing work that we know of addresses the above weaknesses of the result of \citet{CS}.
+in combinations with other ideas. However, no existing work that we know of addresses the above weaknesses of the result of \citet{CS}. \todoc{Yasin's paper should be cited here as an interesting alternative approach. My notes about his paper:
+Approximation in the dual. No control for infeasibility of resulting ALP. 
+Algorithm: Stochastic gradient descent for computing near-optimal solution on Langrangian with large Langrangian coefficients.
+Directly bounding loss of policy return as compared to best policy amongst those feasible. 
+For infeasible LP, result is vacuous (the error blows up when demanding a better solution).
+No bound on best feasible policy's return.
+Strong requirements: Result depends on ability to choose a sampling distributions to control a variance term. 
+"Few predecessor state-action pairs, which can be accessed, or sparse features", mixing. 
+}
 
 Our main contribution is a new suboptimality bound for the case when the constraint system is replaced with a smaller, 
 linearly projected constraint system. We also propose a specific way of adding the extra constraint to keep the resulting LP bounded.
 Rather than relying on combinatorial arguments (such as those at the heart of \citet{CS}), our argument uses previously unexploited geometric structure of the linear programs underlying MDPs.
 As a result our bound avoids distribution-mismatch terms and we also remove the scaling with worst approximation error.
 A specific outcome of our general result is the realization that it is beneficial to select states so that the ``feature vectors'' of all states when scaled with a fixed constant factor are included in the conic hull of the ``feature vectors'' underlying the selected states. This suggests to choose the basis functions so that this property can be satisfied by selecting only a few states. As we will argue, this property holds for several popular choices of basis functions.
-A preliminary version of this paper without the theoretical analysis and without the geometric arguments was published in a short conference communication \cite{aaaipaper}.
+A preliminary version of this paper without the theoretical analysis and without the geometric arguments was published in a short conference communication \cite{aaaipaper}. \todoc{This could be a footnote on page 1 if space works out better that way.}
 
 \if0
 
