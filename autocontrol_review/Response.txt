@@ -1,0 +1,11 @@
+Changes:
+Major revision. Restructured the text.
+Introduction: Motivation made clear.
+Placement w.r.t. existing literature.
+Main result stated upfront,  alongside discussion.
+Streamlined formulation of the main result.
+Added a corollary that illustrates the utility.
+Added examples.
+Proof: Simplified, restructured. Constants slightly improved.
+Numerical illustration: New example, to illustrate the choices
+available when choosing constraints.
