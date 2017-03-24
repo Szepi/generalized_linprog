@@ -14,7 +14,7 @@ The bound is given in terms of the approximation error of $J^*$ with the basis f
 \Jalpo(s) & = \min\{ r^\top\phi(s) \,|\, \Phi r \ge J^*, \, r\in \Re^k \}\,,\\
 \Jlro(s)    & = \min\{ r^\top\phi(s) \,|\, W^\top E \Phi r \ge W^\top E J^*, \, r\in \Re^k \}\,,
 \end{align*}
-where $s\in \S$. Recall that $E: \Re^S \to \Re^{SA}$ is defined so that $(E J)^\top = (J^\top, \dots, J^\top)$, i.e., $E$ stacks its argument $A$-fold. Hence, $W^\top E = \sum_a W_a^\top$. Our strong assumption is that $\Jlro$ is finite-valued. Note that $\Jalpo\ge J^*$ reflects the error due to using the basis functions $(\phi_j)_j$, and the magnitude of the deviation $\Jlro-\Jalpo$ reflects the error introduced due to the relaxed constraint system. \todoc{I commented out the figure. We can discuss whether we want to include it.}
+where $s\in \S$. Recall that $E: \Re^S \to \Re^{SA}$ is defined so that $(E J)^\top = (J^\top, \dots, J^\top)$, i.e., $E$ stacks its argument $A$-fold. Hence, $W^\top E = \sum_a W_a^\top$. Our strong assumption is that $\Jlro$ is finite-valued. Note that $\Jalpo\ge J^*$ reflects the error due to using the basis functions $(\phi_j)_j$, and the magnitude of the deviation $\Jlro-\Jalpo$ reflects the error introduced due to the relaxed constraint system. 
 %The function $\Jalpo$ is an upper approximation to $J^*$
 
 Following \citet{ALP,CS}, 
@@ -41,13 +41,13 @@ Just like \citet{ALP}, we will also require that $\psi$ is a \emph{stochastic Ly
 \end{align}
 is strictly less than one.
 This can be seen to imply that $H: (\Re^S,\norm{\cdot}_{\infty,\psi}) \to (\Re^{SA}, \norm{\cdot}_{\infty,\psi})$ is a contraction,
-where for $J = (J_1^\top,\dots,J_A^\top)^\top \in \Re^{SA}$ we let $\norm{J}_{\infty,\psi} = \max_a\norm{J}_{\infty,\psi}$.
+where for $J = (J_1^\top,\dots,J_A^\top)^\top \in \Re^{SA}$ we let $\norm{J}_{\infty,\psi} = \max_a\norm{J_a}_{\infty,\psi}$.
 That $H$ is a contraction will play a crucial role in our results.
 Note that the condition $\beta_\psi<1$ is closely related to the condition that for any policy $u$, 
 $P_u \psi \le \psi$, which can be viewed as a stability condition on the MDP 
 and which appeared in a slightly altered form in studying the stability of MDPs with infinite 
 state spaces \citep[e.g.,][]{chemey99a}.
-Note that one can always choose $\psi = \one$: $\beta_\one = \alpha<1$. 
+Note that one can always choose $\psi = \one$, which gives $\beta_\one = \alpha<1$. 
 With this, we are ready to state our main result:
 
 
@@ -121,7 +121,6 @@ the chosen states should be selected to ``conicly cover'' all the vectors in $\p
 holds if and only if $\sum_s c(s) \phi(s)$ is in the conic span of $\phi(\S_0)$. Note that this is easy to fulfill
 if the support of $c$ has a small cardinality by add all states in the support of $c$ to $\S_0$.
 }
-\todoc{Add reference to the intro to Mausam's book.}
 
 The next theorem shows that magnitudes of the coefficients used in the conic cover control the size of 
 $\norm{\Jalpo-\Jlro}_{\infty,\psi}$. 
@@ -130,7 +129,7 @@ For any $s\in \S$, $\phi(s) = \sum_{s'\in \S_0} \Lambda(s,s') \phi(s')$. After t
 for creating conic covers.
 \begin{theorem}
 \label{conetheorm}
-Assume that $W_1 = \dots = W_A$, $\{w_{1,a}\,dots,w_{m,a}\} = \{ e_s\,:\, s\in \S_0 \}$ 
+Assume that $W_1 = \dots = W_A$, $\{w_{1,a},\dots,w_{m,a}\} = \{ e_s\,:\, s\in \S_0 \}$ 
 and that $\phi(\S)$ lies in the conic span of $\phi(\S_0)$ with conic coefficients given by $\Lambda$.
 Let $\epsilon = \inf_{r}\norm{ J^* -  \Phi r }_{\infty,\psi}$.
 Then, 

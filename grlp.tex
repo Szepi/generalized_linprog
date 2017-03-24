@@ -90,13 +90,13 @@ Note that this results in a linear program with $k$ variables and $m$ constraint
 \end{split}
 \end{align}
 where $W_a = (w_{1,a},\dots,w_{m,a}) \in \Re_+^{S \times m}$. 
-\todoc{Do we need that $(w_{i,a}^\top)_i$ defines a probability distribution?}
 Note that the $(i,j)$th entry of the $m\times k$ constraint matrix of the resulting LP is
 $\sum_a  w_{i,a}^\top  \phi_j - \alpha \sum_a w_{i,a}^\top P_a \phi_j$ and assuming that $(w_{i,a})_{a}$ has $p$ nonzero
 elements, this can be calculated in $O( p )$ time, making the total cost of obtaining the constraint matrix to be $O(mkp)$ regardless the value of $S$ and $A$. \todoc{Somewhere discuss that the cost of obtaining a policy will depend on $A$. 
 We can also discuss how $A$ could be folded into states.}
 
-We will call the LP in \eqref{grlp} the \emph{linearly relaxed approximate linear program (LRALP)}. \todoc{Replace GRLP everywhere with LRALP.} Any LP obtained using 
+We will call the LP in \eqref{grlp} the \emph{linearly relaxed approximate linear program (LRALP)}. 
+Any LP obtained using 
 any constraint selection/generation process can be represented by choosing an appropriate binary-valued matrix
 $W^\top = (W_1^\top,\dots,W_A^\top)\in \Re_+^{m\times SA}$. In particular, when the constraints are selected
 in a random process as suggested by \citet{CS}, the matrix $W$ would be a random, binary-valued matrix.

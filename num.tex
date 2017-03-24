@@ -17,9 +17,9 @@ We chose $k=4$. % (i.e., we used $1, s,s^2$ and $s^3$ as basis vectors).
 
 \textbf{Experimental Methodology:} We compare two different sampling strategies $(i)$ based on the \emph{cone} conditions, and $(ii)$ based on constraint sampling. The two strategies are compared via  \emph{lookahead} policies, wherein, the action at state $s$ is obtained by computing the approximate value functions of the next states. The details are as follows:
 \emph{Case (i)}: Except for the corner states i.e., $s=0$ and $s=999$, each state $0<s<S-1$ has two next states namely $s'=s-1$ and $s'=s+1$. We formulate two separate LRALPs (or just one LRALP for $s=0$ and $s=S-1$) for next states. When formulating the LRALP for state $s'$, we let $c=e_{s'}$ and choose the constraint corresponding to state $s'$ to ensure the cone condition to be met for LRALP. We choose $5$ more constraints corresponding to states $1,200,400,600,800,999$ (uniformly spaced across the state space) and compute $\hat{J}_{e_{s'}}$. The lookahead policy is formulated as
-$u_{LRA}(s)=\argmin_{a\in A} g_a(s)+\sum_{s'\in S}p_a(s,s')\hat{J}_{e_s'}(s')$.
+$u_{LRA}(s)=\argmin_{a\in A} g_a(s)+\sum_{s'\in S}p_a(s,s')\hat{J}_{e_{s'}}(s')$.
 
-\emph{Case (ii)}: In a manner similar to \emph{Case (i)}, here too we formulate two separate LRALPs for next states. When formulating the LRALP for state $s'$, we first let $c_{s'}(i)=(1-\alpha)(\alpha)^{|s'-i|}$ and normalize $c$ and sample $m=6$ constraints randomly using $c$ and compute $\hat{J}_{c_s'}$. 
+\emph{Case (ii)}: In a manner similar to \emph{Case (i)}, here too we formulate two separate LRALPs for next states. When formulating the LRALP for state $s'$, we first let $c_{s'}(s)=(1-\alpha)(\alpha)^{|s'-s|}$ and normalize $c$ and sample $m=6$ constraints randomly using $c$ and compute $\hat{J}_{c_s'}$. 
 The lookahead policy is formulated as 
 $u_{CS}(s)=\argmin_{a\in A} g_a(s)+\sum_{s'\in S}p_a(s,s')\hat{J}_{c_{s'}}(s')$.
 

@@ -33,9 +33,12 @@ and in various compactly represented MDPs \cite{BlonTsi:00Complexity}.
 Given these negative results, 
 it is customary to adopt the \emph{modest goal of efficiently computing actions of a policy that 
 is nearly as good as a policy chosen by a suitable (computationally unbounded, and well-informed) oracle
-from a given restricted policy class}. \todoc{Is this better now? We should probably elaborate on the oracle idea space permitting.}
+from a given restricted policy class}. \todoc{We should probably elaborate on the oracle idea space permitting.
+Or in the future. Btw, the situation is similar to statistical learning theory: There competing with the best choice 
+is only information theoretically possible. And competing with best choice
+in hindsight is often computationally intractable. Maybe cite information theory result for competing with the best policy in a class?}
 Here, within some restrictions (see below), the policy class can be chosen by the user.
-The more flexibility the user is given in this choice, the stronger a planning method is.
+The more flexibility the user is given in this choice, the stronger a planning method is. \todoc{Add reference to the intro to Mausam's book. But where and what can be said?}
 
 A popular approach along these lines, which goes back to \citet{SchSei85}, 
 relies on considering linear approximations to the \emph{optimal value function}:
