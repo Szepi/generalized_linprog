@@ -129,6 +129,7 @@ For the theorem we let $\Lambda\in \Re_+^{\S\times \S_0}$ be the matrix of conic
 For any $s\in \S$, $\phi(s) = \sum_{s'\in \S_0} \Lambda(s,s') \phi(s')$. After the theorem we give constructions 
 for creating conic covers.
 \begin{theorem}
+\label{conetheorm}
 Assume that $W_1 = \dots = W_A$, $\{w_{1,a}\,dots,w_{m,a}\} = \{ e_s\,:\, s\in \S_0 \}$ 
 and that $\phi(\S)$ lies in the conic span of $\phi(\S_0)$ with conic coefficients given by $\Lambda$.
 Let $\epsilon = \inf_{r}\norm{ J^* -  \Phi r }_{\infty,\psi}$.
@@ -160,13 +161,13 @@ Combining this with the previous inequality we get
 \frac{\Jalpo(s)-J^*(s)}{\psi(s)} + \frac{J^*(s) - \sum_{s'\in \S_0} \Lambda(s,s') J^*(s')}{\psi(s)}\,.
 \end{align*}
 Plugging in $J^*(s) = \phi(s)^\top r^*+\delta(s)$, using again that $\phi(s) = \sum_{s'\in \S_0} \Lambda(s,s') \phi(s')$,
-and also using the triangle inequality after taking absolute values we get
+and also using the triangle inequality after taking absolute values, we get
 \begin{align*}
 \MoveEqLeft \frac{|J^*(s) - \sum_{s'\in \S_0} \Lambda(s,s') J^*(s')|}{\psi(s)} \\
 & \le
   \frac{|\delta(s)|}{\psi(s)} + \frac{\sum_{s'\in \S_0} \Lambda(s,s') |\delta(s')|}{\psi(s)} \\
-& \le
-  \frac{|\delta(s)|}{\psi(s)} + \frac{1}{\psi(s)} \, \sum_{s'\in \S_0} \Lambda(s,s') \psi(s') \frac{|\delta(s')|}{\psi(s')} \\
+%& \le
+%  \frac{|\delta(s)|}{\psi(s)} + \frac{1}{\psi(s)} \, \sum_{s'\in \S_0} \Lambda(s,s') \psi(s') \frac{|\delta(s')|}{\psi(s')} \\
 & \le
   \frac{|\delta(s)|}{\psi(s)} + \norm{\delta}_{\infty,\psi} \frac{\sum_{s'\in \S_0} \Lambda(s,s') \psi(s')}{\psi(s)} \, .
 \end{align*}
