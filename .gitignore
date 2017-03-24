@@ -32,3 +32,9 @@ autocontgrlp.brf
 *.xml
 
 autocontgrlp-blx.bib
+
+*.pdf
+
+autocontrol_review/response_letter-blx.bib
+
+autocontrol_review/pack.tex

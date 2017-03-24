@@ -1,49 +1,56 @@
-%\documentclass[12pt,draftcls,onecolumn]{IEEEtran}
-%\documentclass[12pt,twocolumn]{IEEEtran}
-\documentclass[twocolumn]{IEEEtran}
-\usepackage{times}
-
-% Packages, commands --------------------------------------------------------------------
-\input{pack}
-
-% BIBLIOGRAHY -----------------------------------------------------------------------------
-% Option 1: bibtex natbib
-%\usepackage[numbers]{natbib}
-%\usepackage[colorlinks=true,linkcolor=blue,citecolor=purple,pagebackref=true]{hyperref}
-% Option 2: biblatex 
-%\usepackage[backend=bibtex,style=ieee-alphabetic,natbib=true,backref=false]{biblatex}
-\usepackage[backend=bibtex,style=ieee,natbib=true,backref=false]{biblatex}
-\addbibresource{ref.bib}
-% Adding back references to bib entries:
-\DefineBibliographyStrings{english}{%
-  backrefpage = {page},% originally "cited on page"
-  backrefpages = {pages},% originally "cited on pages"
-}
-% Title, authors, etc. -------------------------------------------------------------------------
-
-%\documentstyle[nips14submit_09,times,art10]{article} % For LaTeX 2.09
-\title{A Linearly Relaxed Approximate Linear Program for Markov Decision Processes}
-%\author{Chandrashekar Lakshminarayanan$^\star$, Shalabh Bhatnagar$^\star$,
- and Csaba Szepesvari$^\dagger$\thanks{$^\star$Department of Computer
-Science and Automation, Indian Institute of Science, Bangalore 560012.
-E-mail: $\{$chandrul, shalabh$\}$@csa.iisc.ernet.in}
-\thanks{$^\dagger$Department of Computing Science, University of Alberta,
-Edmonton, Alberta, Canada T6G 2E8. E-mail: csaba.szepesvari@ualberta.ca}}
-% The \author macro works with any number of authors. There are two commands
-% used to separate the names and addresses of multiple authors: \And and \AND.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Thin Formal Letter
+% LaTeX Template
+% Version 1.11 (8/12/12)
 %
-% Using \And between authors leaves it to \LaTeX{} to determine where to break
-% the lines. Using \AND forces a linebreak at that point. So, if \LaTeX{}
-% puts 3 of 4 authors names on the first line, and the last on the second
-% line, try using \AND instead of \And before the third author name.
-\newcommand{\fix}{\marginpar{FIX}}
-\newcommand{\new}{\marginpar{NEW}}
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% WikiBooks (http://en.wikibooks.org/wiki/LaTeX/Letters)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Doc start ------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+%	DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{letter}
+
+% Adjust margins for aesthetics
+\addtolength{\voffset}{-0.5in}
+\addtolength{\hoffset}{-0.3in}
+\addtolength{\textheight}{2cm}
+
+%\longindentation=0pt % Un-commenting this line will push the closing "Sincerely," to the left of the page
+
+%----------------------------------------------------------------------------------------
+%	YOUR NAME & ADDRESS SECTION
+%----------------------------------------------------------------------------------------
+
+\signature{Chandrashekar L} % Your name for the signature at the bottom
+
+\address{Department of Computing Science\\ University of Alberta, Edmonton, Alberta\\ Canada, T6G 2E9.} % Your address and phone number
+
+%----------------------------------------------------------------------------------------
+
 \begin{document}
-%\maketitle
-Dear Editor,
-            We would like to re-submit the revised version of our paper. We now list the differences between the previous and current submission.
+
+%----------------------------------------------------------------------------------------
+%	ADDRESSEE SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{letter}{} % Name/title of the addressee
+
+%----------------------------------------------------------------------------------------
+%	LETTER CONTENT SECTION
+%----------------------------------------------------------------------------------------
+
+\opening{\textbf{Dear Editor,}}
+We would like to re-submit the revised version of our paper. We now list the differences between the previous and current submission.
 \begin{itemize}
 \item The title of the paper has been changed to ``A Linearly Relaxed Approximate Linear Program for Markov Decisions Processes''.
 \item The length of current draft has been increased to 8 pages.
@@ -54,8 +61,17 @@ Dear Editor,
 \item The proof has been simplified and restructured. The constants in the bound have been slightly improved.
 \item Numerical illustration: New example has been added to illustrate the choices available when choosing constraints.
 \end{itemize}
-We have taken care of all the reviewer comments, except for the following comment by Reviewer~$1$.
-\emph{Comment}: Explain the intuition behind stationary Markov deterministic policies being optimal.
-\emph{Our Response:} Markov property buys this. Since we are limited by space constraints we have added reference to literature.
-\end{itemize}
+We have taken care of all the reviewer comments, except for the following comment by Reviewer~$1$.\\
+\emph{Comment}: Explain the intuition behind stationary Markov deterministic policies being optimal.\\
+\emph{Our Response:} The fact follows from the Markov property. Since we are limited by space, we have added a reference to literature.
+
+
+\vspace{2\parskip} % Extra whitespace for aesthetics
+\closing{Sincerely,}
+\vspace{2\parskip} % Extra whitespace for aesthetics
+
+%----------------------------------------------------------------------------------------
+
+\end{letter}
+
 \end{document}
