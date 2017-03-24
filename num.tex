@@ -5,7 +5,7 @@ which bounded the error when the constraints are chosen based on selecting a set
 % (the \emph{cone} condition) derived based on the geometric intuition 
  (further preliminary experimental results have been reported in \cite{aaaipaper}).
 
-\textbf{Model:} We run the experiments in the context of a queuing model similar to the one in Section~5.2 of \cite{ALP}. We consider a single queue with arrivals and departures. The state of the system is the queue length with the state space given by $\S=\{0,\ldots,S-1\}$, where $S-1$ is the buffer size of the queue. The action set $\A=\{1,\ldots,A\}$ is related to the service rates. We let $s_t$ denote the state at time $t$. The state at time $t+1$ when action $a_t \in \A$ is chosen is given by $s_{t+1}= s_{t}+1$ with probability $p$, $s_{t+1}= s_{t}-1$ with probability $q(a_t)$ and $s_{t+1}= s_t$, with probability $(1-p-q(a_t))$. For states $s_t=0$ and $s_t=n-1$, the system dynamics is given by $s_{t+1}= s_{t}+1$ with probability $p$ when $s_t=0$ and $s_{t+1}=s_t-1$ with probability $q(a_t)$ when $s_t=n-1$. The service rates satisfy $0<q(1)\leq \ldots\leq q(A)<1$ with $q(A)>p$ so as to ensure `stabilizability' of the queue. 
+\textbf{Model:} We run the experiments in the context of a queuing model similar to the one in Section~5.2 of \cite{ALP}. We consider a single queue with arrivals and departures. The state of the system is the queue length with the state space given by $\S=\{0,\ldots,S-1\}$, where $S-1$ is the buffer size of the queue. The action set $\A=\{1,\ldots,A\}$ is related to the service rates. We let $s_t$ denote the state at time $t$. The state at time $t+1$ when action $a_t \in \A$ is chosen is given by $s_{t+1}= s_{t}+1$ with probability $p$, $s_{t+1}= s_{t}-1$ with probability $q(a_t)$ and $s_{t+1}= s_t$, with probability $(1-p-q(a_t))$. For states $s_t=0$ and $s_t=S-1$, the system dynamics is given by $s_{t+1}= s_{t}+1$ with probability $p$ when $s_t=0$ and $s_{t+1}=s_t-1$ with probability $q(a_t)$ when $s_t=S-1$. The service rates satisfy $0<q(1)\leq \ldots\leq q(A)<1$ with $q(A)>p$ so as to ensure `stabilizability' of the queue.
 The reward associated with  action $a \in \A$ and state $s\in \S$ is given by $g_a(s)=-(s/n+q(a)^3)$.
 
 \textbf{Parameter Settings:} We ran our experiments for $S=1000$, $A=4$ with $q(1)=0.2$, $q(2)=0.4$, $q(3)=0.6$, $q(4)=0.8$, $p=0.4$ and $\alpha=1-\frac{1}{S}$.
@@ -16,12 +16,12 @@ since they are known to work reasonably well for this domain \cite{ALP}.
 We chose $k=4$. % (i.e., we used $1, s,s^2$ and $s^3$ as basis vectors).
 
 \textbf{Experimental Methodology:} We compare two different sampling strategies $(i)$ based on the \emph{cone} conditions, and $(ii)$ based on constraint sampling. The two strategies are compared via  \emph{lookahead} policies, wherein, the action at state $s$ is obtained by computing the approximate value functions of the next states. The details are as follows:
-\emph{Case (i)}: Except for the corner states i.e., $s=0$ and $s=999$, each state $0<s<n-1$ has two next states namely $s'=s-1$ and $s'=s+1$. We formulate two separate LRALPs (or just one LRALP for $s=0$ and $s=n-1$) for next states. When formulating the LRALP for state $s'$, we let $c=e_{s'}$ and choose the constraint corresponding to state $s'$ to ensure the cone condition to be met for LRALP. We choose $5$ more constraints corresponding to states $1,200,400,600,800,999$ (uniformly spaced across the state space) and compute $\hat{J}_{e_s'}$. The lookahead policy is formulated as 
+\emph{Case (i)}: Except for the corner states i.e., $s=0$ and $s=999$, each state $0<s<S-1$ has two next states namely $s'=s-1$ and $s'=s+1$. We formulate two separate LRALPs (or just one LRALP for $s=0$ and $s=S-1$) for next states. When formulating the LRALP for state $s'$, we let $c=e_{s'}$ and choose the constraint corresponding to state $s'$ to ensure the cone condition to be met for LRALP. We choose $5$ more constraints corresponding to states $1,200,400,600,800,999$ (uniformly spaced across the state space) and compute $\hat{J}_{e_{s'}}$. The lookahead policy is formulated as
 $u_{LRA}(s)=\argmin_{a\in A}(g_a(s)+\sum_{s'\in S}p_a(s,s')\hat{J}_{e_s'}(s')$.
 
 \emph{Case (ii)}: In a manner similar to \emph{Case (i)}, here too we formulate two separate LRALPs for next states. When formulating the LRALP for state $s'$, we first let $c_{s'}(i)=(1-\alpha)(\alpha)^{|s'-i|}$ and normalize $c$ and sample $m=6$ constraints randomly using $c$ and compute $\hat{J}_{c_s'}$. 
 The lookahead policy is formulated as 
-$u_{CS}(s)=\argmin_{a\in A}(g_a(s)+\sum_{s'\in S}p_a(s,s')\hat{J}_{c_s'}(s')$.
+$u_{CS}(s)=\argmin_{a\in A}(g_a(s)+\sum_{s'\in S}p_a(s,s')\hat{J}_{c_{s'}}(s')$.
 
 The results are shown in the figures below:
 \input{plt.tex}
