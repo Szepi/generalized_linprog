@@ -1,0 +1,214 @@
+%!TEX root =  autocontgrlp.tex
+\usepackage{etex}
+\usepackage{multicol}
+\setlength{\marginparwidth}{13mm}
+\usepackage[textsize=tiny]{todonotes}
+%\usepackage[disable]{todonotes}
+\newcommand{\todoc}[2][]{\todo[color=red!20!white,#1]{Cs: #2}}
+\newcommand{\todoch}[2][]{\todo[color=blue!20!white,#1]{C: #2}}
+\newcommand{\todos}[2][]{\todo[inline,color=blue!20!white,#1]{S: #2}}
+%\usepackage{enumitem}
+%\usepackage[fleqn]{amsmath}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{times}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage{paralist}
+\usepackage{latexsym}
+\usepackage{url}
+\usepackage[all]{xy}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{nccmath} % mfrac
+\usepackage{comment}
+%\usepackage{enumitem}
+\usepackage{paralist}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=purple]{hyperref}
+%\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{pifont}
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+%\usepackage{pseudocode}
+%\usepackage{algpseudocode}
+\usepackage{savesym}
+\savesymbol{AND}
+\usepackage{xspace}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{pgf}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{xspace}
+\usepackage{comment}
+\usepackage{placeins}
+\usepackage[capitalize]{cleveref}
+
+
+%\usepackage{style/ssltr}
+%\usepackage{style/macros}
+\if0
+\usetikzlibrary{intersections}
+\usetikzlibrary{arrows,calc,fit,patterns,plotmarks,shapes.geometric,shapes.misc,shapes.symbols,   shapes.arrows,   shapes.callouts,   shapes.multipart,   shapes.gates.logic.US,   shapes.gates.logic.IEC,   er,   automata,   backgrounds,   chains,   topaths,   trees,   petri,   mindmap,   matrix,   calendar,   folding, fadings,   through,   positioning,   scopes,   decorations.fractals,   decorations.shapes,   decorations.text,   decorations.pathmorphing,   decorations.pathreplacing,   decorations.footprints,   decorations.markings, shadows,circuits}
+\tikzstyle{decision}=[diamond,draw]
+\tikzstyle{line}=[draw]
+\tikzstyle{elli}=[draw,ellipse]
+\tikzstyle{arrow} = [thick]
+\fi
+%\usepackage{subfig}
+\newcommand{\ralp}{r_{\text{\sc ALP}}}
+\newcommand{\Jalp}{J_{\text{\sc ALP}}}
+\newcommand{\alp}{\text{\sc ALP}\xspace}
+%\newcommand{\lralp}{\text{L\!R\!A\!L\!P}\xspace}
+\newcommand{\lralp}{\text{\sc LRALP}\xspace}
+\newcommand{\lralpshort}{\text{\sc LRA}\xspace}
+\newcommand{\mb}{\mbox{ }}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\zero}{\mathbf{0}}
+\newcommand{\nn}{\nonumber}
+\newcommand{\minp}{(\min,+)}
+\newcommand{\R}{\Re} %{\mathbb{R}}
+\newcommand{\Rm}{\mathbf{R}_{\min}}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\om}{\otimes}
+\newcommand{\op}{\oplus}
+\newcommand{\RA}{\Rightarrow}
+\newcommand{\LA}{\Leftarrow}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\et}{||\Gamma J^*-\hg J^*||_\infty}
+\newcommand{\etmn}{||\Gamma J^*-\hg J^*||_{\mn}}
+\newcommand{\ini}{\lceil \frac{n}{k}\rceil}
+\newcommand{\I}{\mathcal{I}}
+\newcommand{\mut}{\tilde{\mu}}
+\newcommand{\mn}{\infty,\psi}
+\newcommand{\tj}{J_{\alp}} %{\tilde{J}}
+\newcommand{\hj}{J_{\lralpshort}} %{\hat{J}}
+\newcommand{\Jlr}{\hj}
+\newcommand{\Jlralp}{\hj}
+\newcommand{\jd}{J'}
+\newcommand{\bj}{\bar{J}}
+\newcommand{\tv}{V_{\alp}} %{\tilde{V}}
+\newcommand{\hv}{V_{\lralpshort}} % {\hat{V}}
+
+\newcommand{\Jalpo}{J^*_{\alp}}
+\newcommand{\Jlro}{J^*_{\lralpshort}}
+\newcommand{\rlr}{r_{\lralpshort}}
+
+\newcommand{\tu}{\tilde{u}}
+\newcommand{\hu}{\hat{u}}
+
+\newcommand{\muh}{\hat{\mu}}
+\newcommand{\mui}{{\mu}^i}
+
+\newcommand{\br}{\bar{r}}
+\newcommand{\hr}{r_{\lralpshort}} %{\hat{r}}
+\newcommand{\har}{\hr} %{\hat{r}}
+\newcommand{\tr}{r_{\alp}} %{\tilde{r}}
+\DeclareMathOperator{\argmin}{argmin}
+\DeclareMathOperator{\argmax}{argmax}
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\inorm}[1]{\|#1\|_{\infty}}
+\newcommand{\snorm}[1]{\left\|#1\right\|}
+\newcommand{\sinorm}[1]{\left\|#1\right\|_{\infty}}
+
+
+%\newcommand{\eqdef}{\stackrel{\text{\footnotesize def}}{=}}
+%\newcommand{\eqdef}{\stackrel{\Delta}{=}}
+\newcommand{\eqdef}{\doteq}
+\newcommand{\defeq}{\doteq}
+
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\epsilon}{\varepsilon}
+
+
+
+\newcommand{\tg}{\tilde{\Gamma}}
+
+
+
+\newcommand{\conf}{\sqrt{\frac{2\ln t}{t_i}}}
+%\newcommand{\tg}{\tilde{\Gamma}}
+\newcommand{\hg}{\hat{\Gamma}}
+%\newcommand{\hg}{{\Gamma}_W}
+\newcommand{\gd}{\Gamma'}
+\newcommand{\vd}{V'}
+%\newcommand{\qed}{\blacksquare}
+
+\newcommand{\keywords}[1]{{\bf Keywords: } #1\par}
+%\newenvironment{proof}{{\bf Proof:} }{}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{assumption}{Assumption}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{note}{Note}[section]
+\newcommand{\alert}[1]{\textcolor{red}{#1}} 
+\newcommand{\J}{\mathcal{J}}
+
+
+\def\v{\mathbf{v}}
+\def\r{\mathbf{r}}
+\def\p{\mathbf{p}}
+\def\q{\mathbf{q}}
+%\def\R{\mathrm{R}}
+\def\Re{\mathbb{R}}
+\def\Z{\mathbb{Z}}
+\def\P{\mathrm{P}}
+\def\S{\mathcal{S}}
+\def\A{\mathcal{A}}
+
+\newcommand{\ith}[2][th]{$#2^{\text{#1}}$}
+\newcommand{\us}[2]{\underset{#2}{#1}~}
+\newcounter{subequation}[equation]
+\newcommand{\thesubequationonly}{\alph{subequation}}
+\renewcommand{\thesubequation}{\text{\theequation(\thesubequationonly)}}
+\newcommand{\subequationitem}{\refstepcounter{subequation}(\thesubequationonly)\thinspace}
+
+\def\mathdisplay#1{%
+  \ifmmode \@badmath
+  \else
+    $$\def\@currenvir{#1}%
+    \let\dspbrk@context\z@
+    \let\tag\tag@in@display \SK@equationtrue %\let\label\label@in@display
+    \global\let\df@label\@empty \global\let\df@tag\@empty
+    \global\tag@false
+    \let\mathdisplay@push\mathdisplay@@push
+    \let\mathdisplay@pop\mathdisplay@@pop
+    \if@fleqn
+      \edef\restore@hfuzz{\hfuzz\the\hfuzz\relax}%
+      \hfuzz\maxdimen
+      \setbox\z@\hbox to\displaywidth\bgroup
+        \let\split@warning\relax \restore@hfuzz
+        \everymath\@emptytoks \m@th $\displaystyle
+    \fi
+%   \fi
+}
+
+\newcommand{\algorithmicinput}{\textbf{Input:} }
+\newcommand{\INPUT}{\item[\algorithmicinput]}
+\newcommand{\algorithmicoutput}{\textbf{Output:} }
+\newcommand{\OUTPUT}{\item[\algorithmicoutput]}
+\newcounter{algostep}
+\newcommand{\Step}[1][\STATE]{#1\textbf{\refstepcounter{algostep}\thealgostep}. }
+
+\newenvironment{algoequation}{\refstepcounter{equation}$}{$\hfill (\theequation)}
+
+\newenvironment{nonfloatalgorithm}[1]{\vspace{1ex}\hrule\vspace{0.5ex} \refstepcounter{algorithm}\textbf{Algorithm \thealgorithm}\hspace{1em} #1 \vspace{0.5ex}\hrule}{\hrule\vspace{1.5ex}\setcounter{algostep}{0}}
+
+\newcounter{acalgorithm}
+
+\newenvironment{nonfloatactorcriticalgorithm}[1]{\vspace{1ex}\hrule\vspace{0.5ex} \textbf{Actor-Critic Algorithm \refstepcounter{acalgorithm}\theacalgorithm}\hspace{1em} #1 \vspace{0.5ex}\hrule\addcontentsline{loa}{algorithm}{\protect\numberline{\theacalgorithm}{\ignorespaces #1}}}{\hrule\vspace{1.5ex}\setcounter{algostep}{0}}

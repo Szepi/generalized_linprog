@@ -1,0 +1,61 @@
+%\documentclass[12pt,draftcls,onecolumn]{IEEEtran}
+%\documentclass[12pt,twocolumn]{IEEEtran}
+\documentclass[twocolumn]{IEEEtran}
+\usepackage{times}
+
+% Packages, commands --------------------------------------------------------------------
+\input{pack}
+
+% BIBLIOGRAHY -----------------------------------------------------------------------------
+% Option 1: bibtex natbib
+%\usepackage[numbers]{natbib}
+%\usepackage[colorlinks=true,linkcolor=blue,citecolor=purple,pagebackref=true]{hyperref}
+% Option 2: biblatex 
+%\usepackage[backend=bibtex,style=ieee-alphabetic,natbib=true,backref=false]{biblatex}
+\usepackage[backend=bibtex,style=ieee,natbib=true,backref=false]{biblatex}
+\addbibresource{ref.bib}
+% Adding back references to bib entries:
+\DefineBibliographyStrings{english}{%
+  backrefpage = {page},% originally "cited on page"
+  backrefpages = {pages},% originally "cited on pages"
+}
+% Title, authors, etc. -------------------------------------------------------------------------
+
+%\documentstyle[nips14submit_09,times,art10]{article} % For LaTeX 2.09
+\title{A Linearly Relaxed Approximate Linear Program for Markov Decision Processes}
+%\author{Chandrashekar Lakshminarayanan$^\star$, Shalabh Bhatnagar$^\star$,
+ and Csaba Szepesvari$^\dagger$\thanks{$^\star$Department of Computer
+Science and Automation, Indian Institute of Science, Bangalore 560012.
+E-mail: $\{$chandrul, shalabh$\}$@csa.iisc.ernet.in}
+\thanks{$^\dagger$Department of Computing Science, University of Alberta,
+Edmonton, Alberta, Canada T6G 2E8. E-mail: csaba.szepesvari@ualberta.ca}}
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to \LaTeX{} to determine where to break
+% the lines. Using \AND forces a linebreak at that point. So, if \LaTeX{}
+% puts 3 of 4 authors names on the first line, and the last on the second
+% line, try using \AND instead of \And before the third author name.
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+% Doc start ------------------------------------------------------------------------------------
+\begin{document}
+%\maketitle
+Dear Editor,
+            We would like to re-submit the revised version of our paper. We now list the differences between the previous and current submission.
+\begin{itemize}
+\item The title of the paper has been changed to ``A Linearly Relaxed Approximate Linear Program for Markov Decisions Processes''.
+\item The length of current draft has been increased to 8 pages.
+\item We have incorporated major revisions in the paper and restructure the presentation.
+\item The length of the introduction has been increased to make the motivation clear. Proper placement with respect to existing literature has been done.
+\item The main result has been stated up front alongside a discussion.
+\item Streamlined formulation of the main result, with additional corollary that illustrates the utility. Added examples.
+\item The proof has been simplified and restructured. The constants in the bound have been slightly improved.
+\item Numerical illustration: New example has been added to illustrate the choices available when choosing constraints.
+\end{itemize}
+We have taken care of all the reviewer comments, except for the following comment by Reviewer~$1$.
+\emph{Comment}: Explain the intuition behind stationary Markov deterministic policies being optimal.
+\emph{Our Response:} Markov property buys this. Since we are limited by space constraints we have added reference to literature.
+\end{itemize}
+\end{document}
