@@ -4,10 +4,6 @@
 
 
 The purpose of this section is to present our main results.
-\newcommand{\Jalpo}{J^*_{\alp}}
-\newcommand{\Jlro}{J^*_{\lralpshort}}
-\newcommand{\Jlr}{J_{\lralpshort}}
-\newcommand{\rlr}{r_{\lralpshort}}
 Let $\rlr$ be a solution to the LRALP given by \eqref{grlp}
 and let $\Jlr = \Phi \rlr$. When multiple solutions exist, we can choose any of them.
 For the result, we assume that the LRALP is not unbounded, and hence a solution exist. In fact, we will assume something much stronger. The discussion of why our assumptions are reasonable and how to ensure that they hold is postponed to after the presentation of our results.
@@ -40,9 +36,9 @@ is achieved by controlling relative errors, which may be much easier to ensure t
 absolute errors.
 
 Just like \citet{ALP}, we will also require that $\psi$ is a \emph{stochastic Lyapunov-function} for the MDP.  In particular, we require that the $\alpha$-discounted stability coefficient
-\begin{align*}
+\begin{align} \label{eq:betadef}
 \beta_\psi \doteq \alpha  \max_{a} \norm{P_a \psi}_{\infty,\psi}
-\end{align*}
+\end{align}
 is strictly less than one.
 This can be seen to imply that $H: (\Re^S,\norm{\cdot}_{\infty,\psi}) \to (\Re^{SA}, \norm{\cdot}_{\infty,\psi})$ is a contraction,
 where for $J = (J_1^\top,\dots,J_A^\top)^\top \in \Re^{SA}$ we let $\norm{J}_{\infty,\psi} = \max_a\norm{J}_{\infty,\psi}$.

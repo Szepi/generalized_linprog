@@ -1,7 +1,95 @@
 %!TEX root =  autocontgrlp.tex
-\section{Proofs}\label{sec:improv}
+\section{Proof of \cref{cmt2}}\label{sec:improv}
+In this section we present the proof of the main result, \cref{cmt2}. 
+The proof uses contraction-arguments. 
+\newcommand{\G}{\Gamma}
+We will introduce two novel contraction operators, $\G,\hg: \Re^S \to \Re^S$, that capture the distortion introduced
+by the extra constraint in ALP and the relaxation in LRALP, respectively. 
+Then we relate the solution of LRALP to the fixed point of $\hg$.
 
+Note that for the proof it suffices to consider the case when $\Jlro$ is finite-valued because otherwise the bound is vacuous.
+Also, recall that it was assumed that $\psi$ lies in the column space of $\Phi$, while $\beta_\psi$, the $\alpha$-discounted stability of $\psi$ w.r.t. the MDP (cf. \eqref{eq:betadef}) is strictly below one. 
+We also assumed that the matrix $W$ is nonnegative valued, while $c$ specifies a probability distribution over $\S$: $\sum_s c(s) = 1$ and $c\in \R_+^S$.
 
+The operators $\G,\hg$ are defined as follows: For $J\in \Re^S$, $s\in \S$,
+\begin{align*}
+(\G J)(s) & = \min\{ r^\top \phi(s) \,:\, \Phi r \ge T J ,\, r\in \Re^k \}\,,\\
+(\hg J)(s) & = \min\{ r^\top \phi(s) \,:\, W^\top E \Phi r \ge W^\top E H J ,\, r\in \Re^k\}\,.
+\end{align*}
+Note that $(\G J)(s)$ mimics the definition of ALP with $c = e_s$, except that the constraint $J = \Phi r$ is dropped.
+The same holds for $\hg$ in relation to LRALP.
+Letting $\F(J) = \{ \Phi r\,:\, \Phi r \ge T J, r\in \Re^k \}$ be the \emph{common} feasible set of the LP defining $(\G J)(s)$.
+It follows that for any $V\in \F(J)$, $V \ge \Gamma J$. Further, $\Gamma J \ge T J$.
+
+Let us now recall some basic results from the theory of contraction maps.
+First, let us recall the definition of contractions. Let $\norm{\cdot}$ be a norm on $\Re^S$ and $\rho>0$.
+We say that the map $B: \Re^S \to \Re^S$ is $(\rho,\norm{\cdot})$-Lipschitz if for any $J,J'\in \Re^S$, $\norm{ BJ - BJ' } \le \rho \norm{J-J'}$. We say that $B$ is a \emph{$\norm{\cdot}$-contraction} with factor $\rho$ 
+if it is $(\rho,\norm{\cdot})$-Lipschitz and $\rho<1$. It is particularly easy to check whether a map is a contraction map with respect to a weighted maximum norm 
+if it is known to be \emph{monotone}.
+Here, $B$ is said to be monotone if for any $J\le J'$, $J,J'\in \R^S$, $BJ \le BJ'$ also holds, where $\le$ is the componentwise
+partial order between vectors. We start with the following characterization of monotone contractions with respect to weighted maximum norms: 
+\begin{lemma}
+\label{lem:maxnormmn}
+Let $B:\R^S \to \R^S$, $\psi: \S \to \R_{++}$, $\beta\in (0,1)$.
+The following are equivalent:
+\begin{enumerate}[(i)]
+\item $B$ is a monotone contraction map with contraction factor $\beta$ with respect to $\norm{\cdot}_{\psi,\infty}$.
+\label{lem:item:mc}
+\item For any $J,J'\in \R^S$, $d\ge 0$, $J \le J' + d \psi$ implies that $BJ \le BJ' + \beta d \psi$.
+\label{lem:item:iq}
+\end{enumerate}
+\end{lemma}
+%The proof, which essentially copies Lemma 3.1 of \cite{Kall17}, is given for completeness:
+\begin{proof}
+The proof is  trivial modification of the proof of Lemma 3.1 of \cite{Kall17} and is thus left as an exercise.
+\if0
+%Note first that for any $\eps\ge 0$, $-\eps \psi \le J - J' \le \eps \psi$ implies that $\norm{J-J'}_{\mn} \le \eps$.
+Introduce $\cdot$ to denote elementwise products: Thus, $(\psi \cdot J)(s) = \psi(s) J(s)$. 
+We also let $\psi^{-1}(s) = 1/\psi(s)$ and we will use the shorthand $\norm{\cdot} = \norm{\cdot}_{\mn}$.
+
+Let us first prove \eqref{lem:item:mc} $\Rightarrow $ \eqref{lem:item:iq}. 
+Thus, assume that $B$ is a monotone contraction
+map with factor $\beta$. Take any $J,J'$, $d>0$, $J \le J'+ d\psi$. 
+We have $BJ = B(J + d \psi) - B J' + B J' \le (\psi^{-1} \cdot (B(J + d \psi) - B J' ))\cdot \psi + BJ'
+\le \norm{B(J+d\psi) - BJ'} \psi + BJ' \le \beta d \norm{J-J'} \psi +  BJ'$.
+
+For the reverse direction, note that monotinicity follows by taking $d=0$.
+Now, let $\eps = \norm{J-J'}$. Then, $J \le J'+ \eps \psi$ and $J' \le J+\eps \psi$.
+By monotonicity and the assumed property of $B$ (using $d=\eps\ge 0$), 
+$-\beta \eps \psi \le BJ - BJ' \le \beta \eps \psi$, which implies
+that $\norm{BJ - BJ'} \le \beta$.
+\fi
+\end{proof}
+\begin{corollary}
+\label{maxnormmn}
+\label{cor:maxnormmn}
+If $B$ is monotone and there exists some $\beta\in [0,1)$ such that for any $J\in \Re^S$ and $d>0$,
+\begin{align}
+\label{eq:shiftmn}
+B( J + d \psi) \le B J + \beta d \psi
+\end{align} 
+then $B$ is a $\norm{\cdot}_{\mn}$ contraction with factor $\beta$.
+\end{corollary}
+\begin{proof}
+Let $J,J'\in \R^S$, $d\ge 0$ and assume that $J\le J' + d \psi$. By monotonicity $BJ \le B(J'+ d \psi)$, while
+by~\eqref{eq:shiftmn}, $B(J'+d\psi) \le BJ' + \beta d \psi$. Hence, $BJ \le BJ' + \beta d \psi$. 
+This shows that \eqref{lem:item:iq} of \cref{lem:maxnormmn} holds. Hence, by this lemma, $B$ is a contraction with factor $\beta$ with respect to $\norm{\cdot}_{\mn}$.
+\end{proof}
+\if0
+\begin{proof}
+First, we show that for any $t\ge 0$,  $J\in \Re^n$,
+$B( J - t \psi) \ge B J - \beta t \psi$ also holds.
+To see this define $J' = J-t\psi$. Then, $J = J'+t\psi$, hence $B J \le B J' + \beta t \psi$. Reordering this inequality gives the result.
+Let $\eps = \norm{J_1 - J_2}_{\mn}$, where $J_1,J_2\in \Re^n$ are arbitrary.
+Then $J_2 - \eps \psi \le J_1 \le J_2 + \eps \psi$. 
+By the monotonicity of $B$,
+$B(J_2 - \eps \psi) \le B J_1 \le B(J_2 + \eps \psi)$. 
+Using~\eqref{eq:shiftmn}, we get 
+$B J_2 - \beta \eps \psi \le B J_1 \le B J_2 + \beta \eps \psi$, i.e., $-\beta \eps \psi \le B J_1 - B J_2 \le \beta \eps \psi$, from which the result follows.
+\end{proof}
+\fi
+
+\if0
 In this section we present the main results of this paper in \Cref{cmt2} (we state improved bounds in \Cref{sec:improv}). Our bounds are expressed in terms of two novel contractions operators which we define in \Cref{lubpop,alubpop}. We now define two projection operators that are central to our error analysis and in them we assume that the set $\N'\subset \Re^k$ is such that $\N' = \N + t \one$ for any $t\in \Re$.
 %The least upper bound (LUB) projection operator $\Gamma \colon \Re^n \ra\Re^n$ is defined below, see \eqref{gamdef}.
 \begin{definition}\label{lubpop}
@@ -42,9 +130,9 @@ $\F_J$ contains all vectors in the span of $\Phi$ that upper bound $TJ$. Further
 The operators $\Gamma$ and $\hg$ are closely related to ALP \eqref{alp} and GRLP \eqref{grlp} respectively and are only analytical tools that we will need to express our bounds and need not be computed in practice. It turns out that the novel operators ($\Gamma$ and $\hg$) are contraction maps (see \Cref{hgmaxcontramn}), a fact that is a key to our results (\Cref{cmt2mn,polthe}). At the outset we are interested in the candidate value functions in the constraint set $\N$ and want to study them using $\Gamma$ and $\hg$. However since the basis $\Phi$ contains $\one$ we make it helps our analysis to define the set $\N'$ in \Cref{lubplp,alubplp} to be `$\N$ plus its translations by $\one$'.
 \end{remark}
 
+\fi
 
-
-
+\if0
 \subsection{Properties of the Bellman Operator}
 We now state without proof the most important properties of the Bellman operator(s).
 The proofs are immediate from the definitions, but can also be found in \cite{BertB}.
@@ -91,7 +179,67 @@ and is present in the column span of the feature matrix $\Phi$: For some $r_0\in
 \end{enumerate}
 \end{assumption}
 The authors of \cite{ALP} express the error bounds in terms of $\frac{1}{1-\beta_{\psi}}$.  A smaller $\beta_{\psi}$ loosely implies `stability' of the the underlying MDP,  with smaller values representative of higher stability. Prior works in ALP literature \cite{ALP,SALP,CS} make use of Lyapunov functions based analysis to obtain error bounds that exploit the structure of the underlying MDP. In particular, the prior bounds suggests that ALP is likely to generate good approximations when the underlying MDP is stable. We also adopt a similar approach by stating our results using Lyapunov function based arguments.
+\fi
 
+Let us now return to the proof of our main result. Recall that the goal is to bound 
+$\norm{J^*-\Jlr}_{1,c}$ through relating this deviations from the fixed point of $\hg$, which was promised to be a contraction.
+Let us thus now prove this.
+%\emph{Since all $1$-norms will use the same weighting $c$, we will abbreviate $\norm{\cdot}_{1,c}$ to $\norm{\cdot}_1$. Similarly, since all maximum norms use the same weighting $\psi$, we will abbreviate $\norm{\cdot}_{\infty,\psi}$ to $\norm{\cdot}_{\infty}$.}
+For this, it suffices to show that $\hg$ satisfies the conditions of \cref{cor:maxnormmn}.
+In fact, we will see this holds with $\beta =\beta_\psi$. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{lemma}\label{tgmonotone}\label{gshiftmn}
+The operator satisfies the conditions of \cref{cor:maxnormmn} with $\beta =\beta_\psi$, and is thus a 
+$\norm{\cdot}_{\mn}$-contraction with coefficient $\beta_\psi$. 
+%For $J_1, J_2\in \Re^n$ such that $J_1\leq J_2$, we have $\hg J_1\leq \hg J_2$.
+\end{lemma}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{proof}
+First, recall that $H$ is monotone (all 
+the $P_a$ matrices in the definition of $H$ are nonnegative valued) 
+and that it satisfies an inequality similar to \eqref{eq:shiftmn}: For any $t\ge 0$, $J\in \R^S$,
+\begin{align}\label{eq:psilin}
+\begin{split}
+%T(J+ t \psi ) \le TJ + \beta_{\psi}\,t\,  \psi,\\
+H(J+ t \psi ) \le HJ + E \beta_{\psi}\,t\,  \psi\,.
+\end{split}
+\end{align}
+
+Let us now prove that $\hg$ is monotone. 
+Given $J\in \Re^n$, let $\F_J\eqdef\{\,\Phi r\,: W^\top E \Phi r\geq W^\top HJ, r\in \N'\,\}\,$. Choose any $i\in \{1, \ldots, n\}$. Since $J_1\leq J_2$, from $W$ is nonnegative valued and $H$ is monotone, 
+%\Cref{tprop}-\eqref{monotone} and \cref{grlpassmp}-\eqref{wassmp} 
+it follows that $W^\top H J_1\leq W^\top H J_2$. Hence, $\F_{J_2} \subset \F_{J_1}$ and thus $(\hg J_1)(i) \le (\hg J_2)(i)$.  Since $i$ was arbitrary, monotonicity of $\hg$ follows. 
+
+Let us now turn to proving that \eqref{eq:shiftmn} holds with $\beta =\beta_\psi$.
+By definition, for $1\le i \le n$, $(\hg (J+t\psi) )(i) = \min\{ e_i^\top \Phi r \,:\, W^\top E\Phi r \ge W^\top H(J+t\psi), r\in \N' \}$.
+By \eqref{eq:psilin}, as $t>0$, $H(J+t\psi) \le HJ + t \beta_\psi \psi$ and hence $W^\top H(J+t\psi) \le W^\top (HJ + t \beta_\psi \psi)$. Thus,
+$(\hg (J+t\psi) )(i) \le 
+ \min\{ e_i^\top \Phi r \,:\, W^\top E\Phi r \ge W^\top HJ+t\beta_\psi \psi), r\in \N' \}$.
+Now, using \Cref{lpsol} with $A=W^\top E \Phi$, $b=W^\top HJ$, $d=e_i\Phi$, $b_0=t\beta_\psi \psi$
+and $x_0=t \beta_\psi r_0$, the statement follows since $A x_0 = b_0$ (from \cref{grlpassmp}-\eqref{lyap}) and $\N' = \N' + \alpha t r_0$ (from \cref{grlpassmp}-\eqref{ass:n4}).
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Now, recall further that if $B:\R^S \to \R^S$ is a $(\beta,\norm{\cdot})$-contraction then it has a unique fixed point $J^*_B\in \R^S$ (i.e., $B J^*_B= J^*_B$). Further, for any $J\in \R^S$,
+\begin{align}
+\label{eq:csdw}
+\frac{\norm{J-J^*_B}}{1-\beta} \le \norm{ BJ - J } \le (1+\beta) \norm{J-J^*_B}\,.
+\end{align}
+That is, $\norm{BJ-J}$ is closely tied to the distance of $J$ from $J^*_B$.%
+\footnote{This is also a standard result. The upper bound can be obtained using a triangle inequality and exploiting that $J^*_B$ is a fixed point of $B$ which is a contraction. The lower bound follows by writing $J - J^*_B = (\sum_{k=0}^n B^k J - B^{k+1} J ) + B^{n+1} J - B^{n+1} J^*_B$, taking norms using the triangle inequality together with the contraction property of $B$ and finally letting $n\to \infty$.}
+We will repeatedly apply this inequality.
+
+Let $\hv$ be the fixed point $\hg$.
+Then, by the triangle inequality,
+\begin{align*}
+\norm{J^*-\Jlr}_{1,c} \le \norm{J^*-\hv}_{1,c} +\norm{\hv-\Jlr}_{1,c}\,.
+\end{align*}
+Let us first bound the second term. Recall that $\Jlr = \Phi \rlr$.
+We claim the following:
+\begin{lemma}
+aaa
+\end{lemma}
+
+\if0
 We note in passing that if \cref{grlpassmp}-\eqref{lyap} holds, it follows that for any $J\in \Re^n$ and $t>0$,
 \begin{align}\label{eq:psilin}
 \begin{split}
@@ -99,6 +247,7 @@ T(J+ t \psi ) \le TJ + \beta_{\psi}\,t\,  \psi,\\
 H(J+ t \psi ) \le HJ + E \beta_{\psi}\,t\,  \psi\,.
 \end{split}
 \end{align}
+\fi
 %\input{schematic}
 The next lemma is elementary, but will prove to be useful:
 \begin{lemma}\label{lpsol}
@@ -128,48 +277,14 @@ Let $r^*\eqdef\underset{r\in \Re^k}{\min}\parallel J^*-\Phi r\parallel_{\mn}$. T
 Define $\eps = \norm{J^* - \Phi r^*}_{\mn}$ so that
 $ J^*-\Phi r^* \le \eps \psi$ and $\Phi r^* - J^*\le \eps \psi$. Then, from \cref{grlpassmp}-\eqref{ass:n4} it follows that $\Phi( r^* + \eps r_0 ) = \Phi r^* + \eps \psi \ge J^* = T J^*$. From the definition of $\Gamma$ in \eqref{gamdef} and \cref{ubrem}, we know that $\Phi r^*+\eps \psi \geq \Gamma J^*\geq J^*$. The result follows by noting that $2\eps\psi\geq \Phi r^*+\eps\psi -J^*\geq \Gamma J^*-J^*\geq 0$.
 \end{proof}
-\begin{lemma}\label{tgmonotone}
-For $J_1, J_2\in \Re^n$ such that $J_1\leq J_2$, we have $\hg J_1\leq \hg J_2$.
-\end{lemma}
-\begin{proof}
-Given $J\in \Re^n$, let $\F_J\eqdef\{\,\Phi r\,: W^\top E \Phi r\geq W^\top HJ, r\in \N'\,\}\,$. Choose any $i\in \{1, \ldots, n\}$. Since $J_1\leq J_2$, from \Cref{tprop}-\eqref{monotone} and \cref{grlpassmp}-\eqref{wassmp} it follows that $W^\top H J_1\leq W^\top H J_2$. Hence, $\F_{J_2} \subset \F_{J_1}$ and thus $(\hg J_1)(i) \le (\hg J_2)(i)$.  Since $i$ was arbitrary, the result follows.
-\end{proof}
-\begin{lemma}\label{maxnormmn}
-Assume that $\hg: \Re^n \to \Re^n$ is monotone and 
-that there exists some $\beta\in [0,1)$ such that for any $J\in \Re^n$ and $t>0$,
-\begin{align}
-\label{eq:shiftmn}
-\hg( J + t \psi) \le \hg J + \beta t \psi.
-\end{align} 
-Then $\hg$ is a $\norm{\cdot}_{\mn}$ contraction with factor $\beta$.
-\end{lemma}
-\begin{proof}
-First, we show that for any $t\ge 0$,  $J\in \Re^n$,
-$\hg( J - t \psi) \ge \hg J - \beta t \psi$ also holds.
-To see this define $J' = J-t\psi$. Then, $J = J'+t\psi$, hence $\hg J \le \hg J' + \beta t \psi$. Reordering this inequality gives the result.
-Let $\eps = \norm{J_1 - J_2}_{\mn}$, where $J_1,J_2\in \Re^n$ are arbitrary.
-Then $J_2 - \eps \psi \le J_1 \le J_2 + \eps \psi$. 
-By the monotonicity of $\hg$,
-$\hg(J_2 - \eps \psi) \le \hg J_1 \le \hg(J_2 + \eps \psi)$. 
-Using~\eqref{eq:shiftmn}, we get 
-$\hg J_2 - \beta \eps \psi \le \hg J_1 \le \hg J_2 + \beta \eps \psi$, i.e., $-\beta \eps \psi \le \hg J_1 - \hg J_2 \le \beta \eps \psi$, from which the result follows.
-\end{proof}
+
+
+
 \begin{corollary}\label{tmaxnormmn}
 $T$ is a $\norm{\cdot}_{\mn}$-contraction with factor $\beta_{\psi}$.
 \end{corollary}
 %Returning to $\hg$, since we already now that $\hg$ is monotone (cf. \cref{gmonotone}), it remains to see that it satisfies \eqref{eq:shiftmn}:
-\begin{lemma}\label{gshiftmn}
-The operator $\hg$ satisfies \eqref{eq:shiftmn} with $\beta = \beta_\psi$.
-%For any $J\in \Re^n$, $t\in \Re_+$, $\Gamma (J+ t \psi ) \le \Gamma J + \beta_{\psi} t \psi$.
-\end{lemma}
-\begin{proof}
-By definition, for $1\le i \le n$, $(\hg (J+t\psi) )(i) = \min\{ e_i^\top \Phi r \,:\, W^\top E\Phi r \ge W^\top H(J+t\psi), r\in \N' \}$.
-By \eqref{eq:psilin}, as $t>0$, $H(J+t\psi) \le HJ + t \beta_\psi \psi$ and hence $W^\top H(J+t\psi) \le W^\top (HJ + t \beta_\psi \psi)$. Thus,
-$(\hg (J+t\psi) )(i) \le 
- \min\{ e_i^\top \Phi r \,:\, W^\top E\Phi r \ge W^\top HJ+t\beta_\psi \psi), r\in \N' \}$.
-Now, using \Cref{lpsol} with $A=W^\top E \Phi$, $b=W^\top HJ$, $d=e_i\Phi$, $b_0=t\beta_\psi \psi$
-and $x_0=t \beta_\psi r_0$, the statement follows since $A x_0 = b_0$ (from \cref{grlpassmp}-\eqref{lyap}) and $\N' = \N' + \alpha t r_0$ (from \cref{grlpassmp}-\eqref{ass:n4}).
-\end{proof}
+
 %From this result and \cref{maxnormmn}, we immediately get that $\Gamma$ is a contraction in $\norm{\cdot}_{\mn}$:
 \begin{comment}
 \begin{theorem}\label{gmaxcontramn}
@@ -191,6 +306,7 @@ Then, \cref{gmaxcontramn} gives the desired result.
 \end{comment}
 \end{proof}
 In what follows we denote by $\hv$ the unique fixed point of $\hg$, i.e., $\hv = \hg \hv\,$. 
+
 We now show that vector $\hj$ dominates $\hv$:
 \begin{lemma}\label{relation1}
 The vectors $\hv,\hj$ obey $\hj\geq\hv$.

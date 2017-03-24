@@ -44,16 +44,16 @@ a relaxation of the ALP.
 As discussed in the introduction, we are interested in methods that compute a good approximation to the optimal value function.
 As noted earlier, at the expense of a modest additional cost, knowing an $O(\epsilon)$ approximation to $J^*$ at a few states suffices to compute actions of an $O(\epsilon)$-optimal policy. We will take a more general view, and we will consider calculating good approximations to $J^*$ with respect to a weighted $1$-norm, where the weights $c$ form a probability distribution over $\S$. Recall that the weighted $1$-norm $\norm{J}_{1,c}$ of a vector $J\in \Re^S$ is defined as $\norm{J}_{1,c}  = \sum_s c(s) |J(s)|$. Note that here and in what follows we identify elements of $\Re^\S$ (functions, mapping $\S = \{1,\dots,S\}$ to the reals) with elements of $\Re^S$ in the obvious way. This allows us to write e.g. $c^\top J$, which denotes $\sum_s c(s) J(s)$.
 
-To introduce the optimization problem we study first recall that 
+To introduce the optimization problem we study, first recall that 
 the optimal value function $J^*$ is the solution of the fixed point equation $TJ^* = J^*$. 
 It follows from the definition of $T$ that $J^* = \max_u T_u J^* \ge T_u J^*$ for any $u$, 
-where $\ge$ is the componentwise partial ordering of vectors. 
+where $\ge$ is the componentwise partial ordering of vectors ($\le$ is the reverse relation).
 With some abuse of notation, we also introduce $T_a$ to denote $T_u$ where $u(s) = a$ for any $s\in \S$. 
 It follows that $J^* \ge T_a J^*$ for any $a\in \A$ and also that $T = \max_a T_a$, where again the maximization is componentwise.
 We call a vector $J$ that satisfies $J \ge T_a J$ for any $a\in A$ \emph{superharmonic}. Note that this is a set of linear inequalities. 
 By our note on $T$ and $(T_a)_a$, these inequalities can also be written compactly as $J \ge T J$.
 \if0
-Since $T$ is monotone (i.e., for any $J_1\le J_2$ it holds that $TJ_1 \le T J_2$) and can be seen to be an $\alpha$-contraction with respect to the maximum norm, if $J$ is superharmonic then $J \ge T J \ge T^2 J \ge \dots \ge J^*$, where the last inequality follows since $T$ is an $\alpha$-contraction and hence $T^n J \to J^*$ in the maximum norm, and hence also componentwise.
+Since $T$ is \emph{monotone} (i.e., for any $J_1\le J_2$ it holds that $TJ_1 \le T J_2$) and can be seen to be an $\alpha$-contraction with respect to the maximum norm, if $J$ is superharmonic then $J \ge T J \ge T^2 J \ge \dots \ge J^*$, where the last inequality follows since $T$ is an $\alpha$-contraction and hence $T^n J \to J^*$ in the maximum norm, and hence also componentwise.
 Thus, $J^*$ is the ``smallest'' superharmonic function. It follows than that 
 for any $c\in \Re_+^S \doteq [0,\infty)^S$ and any superharmonic $J$, $c^\top J^*\le c^\top J$ and since $J^*$ is also superharmonic, $\min \{ c^\top J\,:\, J \ge T J \} = c^\top J^*$ and if $c$ is positive-valued then the minimizer of $c^\top J$ amongst all superharminoc functions is $J^*$.
 \fi
