@@ -9,3 +9,14 @@ Added examples.
 Proof: Simplified, restructured. Constants slightly improved.
 Numerical illustration: New example, to illustrate the choices
 available when choosing constraints.
+
+Reviewer 1:
+Explain intuition behind stationary Markov deterministic policies being optimal:
+Markov property buys thus. No space in paper. Added reference to
+literature.
+
+Reward form: Taken from other paper.
+
+Weight used in CS: 
+
+Everything else: Either answered or taken care by restructuring.
