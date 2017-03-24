@@ -238,7 +238,7 @@ Then
 \end{align*}
 \end{claim}
 \begin{proof}[Proof of \cref{lpsol}]
-The claim follows by the change of variables $y := x-x_0$.
+Set $y = x-x_0$.
 \end{proof}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Now, using \Cref{lpsol} with $A=W^\top E \Phi$, $b=W^\top HJ$, $d=\phi(s)$, $b_0=t\beta_\psi W^\top E \psi$
@@ -255,7 +255,7 @@ we will write $(J)^-$ to denote the vector obtained by applying the negative par
 We consider the decomposition
 \begin{align}
 \label{eq:maindec}
-\norm{\Jlr-J^*}_{1,c} = c^\top ( \Jlr - J^* ) + 2c^\top ( \Jlr - J^* )^-\,.
+\norm{\Jlr-J^*}_{1,c} = c^\top\!( \Jlr - J^* ) + 2c^\top\!( \Jlr - J^* )^-\,.
 \end{align}
 Let $\hv$ be the fixed point $\hg$. We know claim the following:
 \begin{claim}
@@ -319,9 +319,9 @@ Reordering and using another triangle inequality we get
 We bound the term $\norm{J^* - \Jalpo}_{\mn}$ in the following lemma:
 \begin{lemma}\label{bestbndmn}
 We have
-\begin{align}
-\norm{J^*-\Jalpo}_{\mn}\leq 2 \epsilon\,,
-\end{align}
+$ % \begin{align}
+\norm{J^*-\Jalpo}_{\mn}\leq 2 \epsilon
+$, %\end{align}
 where recall that $\epsilon = \inf_{r\in \Re^k} \norm{ J^*-\Phi r }_{\mn}$. 
 \end{lemma}
 \begin{proof}

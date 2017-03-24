@@ -76,7 +76,7 @@ Then,
 \begin{align*}
 \norm{J^*-\hj}_{1,c} \leq 
  \frac{2 c^\top \psi}{1-\beta_\psi} \left(
-	3 \eps
+	2.5 \eps
      +\norm{\Jalpo-\Jlro}_{\infty,\psi}\right)\,.
 \end{align*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -148,18 +148,21 @@ so that $\Jlro(s) = r_s^\top \phi(s)$.
 Note that by assumption, for any $s'\in \S_0$, $\Jlro(s') = r_s^\top \phi(s') \ge J^*(s')$.
 Now, notice that by definition, $\Jlro \le \Jalpo$ (the LP defining $\Jlro$ is the relaxation of the LP defining $\Jalpo$).
 Hence,
-\begin{align*}
+$%\begin{align*}
 0\le \Jalpo(s) - \Jlro(s) = \Jalpo(s) - J^*(s) + J^*(s) - \Jlro(s)
-\end{align*}
+$% \end{align*}
 and $\Jlro(s) = r_s^\top \phi(s) = r_s^\top \sum_{s'\in \S_0} \Lambda(s,s') \phi(s') = \sum_{s'\in \S_0} \Lambda(s,s') \Jlro(s')
 \ge \sum_{s'\in \S_0} \Lambda(s,s') J^*(s')$.
 Combining this with the previous inequality we get
-\begin{align*}
-0&\le 
+$%\begin{align*}
+0\le
+%&\le 
  \frac{\Jalpo(s) - \Jlro(s)}{\psi(s)}\\
-&\le
-\frac{\Jalpo(s)-J^*(s)}{\psi(s)} + \frac{J^*(s) - \sum_{s'\in \S_0} \Lambda(s,s') J^*(s')}{\psi(s)}\,.
-\end{align*}
+ \le
+%&\le
+\frac{\Jalpo(s)-J^*(s)}{\psi(s)} + \frac{J^*(s) - \sum_{s'\in \S_0} \Lambda(s,s') J^*(s')}{\psi(s)}
+%\,.
+$. % \end{align*}
 Plugging in $J^*(s) = \phi(s)^\top r^*+\delta(s)$, using again that $\phi(s) = \sum_{s'\in \S_0} \Lambda(s,s') \phi(s')$,
 and also using the triangle inequality after taking absolute values, we get
 \begin{align*}
