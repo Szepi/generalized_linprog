@@ -86,7 +86,7 @@ Note that this results in a linear program with $k$ variables and $m$ constraint
 \begin{align}\label{grlp}
 \begin{split}
 &\underset{r\in \Re^k}{\min}\, \, c^\top \Phi r\\
-&\text{s.t.}\mb  \,\sum_a W_a^\top \Phi r\geq \sum_a W_a^\top (g_a + \alpha P_a) \Phi r\,,
+&\text{s.t.}\mb  \,\sum_a W_a^\top \Phi r\geq \sum_a W_a^\top (g_a + \alpha P_a \Phi r)\,,
 \end{split}
 \end{align}
 where $W_a = (w_{1,a},\dots,w_{m,a}) \in \Re_+^{S \times m}$. 
