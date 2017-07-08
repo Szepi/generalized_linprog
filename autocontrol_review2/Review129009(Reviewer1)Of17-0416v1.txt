@@ -1,0 +1,17 @@
+The work is, as I said previously, good as it goves a nice theoretical
+analysis. The introduction is a pretty nice review and a succinct
+summary of this line of work in MDPs.
+
+Nevertheless, the writing of the main body is still difficult to
+follow. The authors may further work on simplifying the manuscript
+presentation. 
+Though they have explained almost all the assumption in intuitive way
+now, so I am satisfied with the authors response.
+
+
+Though I do not think that the experiments in the paper represent a
+main part of the contribution, this section seems weak with respect to
+the rest of the contribution and the setup could be explained  in a
+better way.
+
+I think the paper is ready with minor modifications.
